@@ -43,8 +43,8 @@ kaji_quest:
   repo: peirin1230-ship-it/kaji-quest
   branch: main
   import_shopping: true           # kaji-quest の買い物記録（mode: shop）を在庫に取り込む
-  push_shopping: false            # 足りない物を kaji-quest の買い物メモに足す（PAT に両方のリポジトリが要る）
-  write_cook_log: false           # 調理の記録を kaji-quest の dinner-cook の完了としても書く
+  push_shopping: true             # 足りない物を kaji-quest の買い物メモに足す（PAT に両方のリポジトリが要る）
+  write_cook_log: true            # 調理の記録を kaji-quest の dinner-cook（夜ご飯を作る）の完了としても書く
 
 privacy:
   log_time: true                  # false で記録の ts を日付だけにする

@@ -24,7 +24,7 @@ const LOC_JA = { fridge: '冷蔵', freezer: '冷凍', pantry: '常温' };
 const KIND_JA = { prep: '下ごしらえ', heat: '加熱', wait: '待つ', serve: '盛る' };
 const DOW_JA = ['日', '月', '火', '水', '木', '金', '土'];
 const WDAYS = [['mon', '月'], ['tue', '火'], ['wed', '水'], ['thu', '木'], ['fri', '金'], ['sat', '土'], ['sun', '日']];
-const POLL_MS = 5000, POLL_SLOW_AFTER_MS = 6 * 60 * 1000, POLL_SLOW_MS = 60 * 1000, POLL_MAX_MS = 24 * 60 * 60 * 1000;   // 6 分までは 5 秒ごと、その後は 1 分ごとに 24 時間待つ（ルーティンが毎時動く運用のため）
+const POLL_MS = 5000, POLL_SLOW_AFTER_MS = 6 * 60 * 1000, POLL_SLOW_MS = 60 * 1000, POLL_MAX_MS = 24 * 60 * 60 * 1000;   // 6 分までは 5 秒ごと、その後は 1 分ごとに 24 時間待つ
 
 const emptyPantry = () => ({ updated: null, items: [], staples: {}, discarded: [], imported_shop_ids: [] });
 function normalizePantry(d) {
@@ -287,7 +287,7 @@ function setPending(p) { state.pending = p; if (p) lsSet(LS.pending, p); else ls
 let pollTimer = 0;
 async function pollTick() {
   clearTimeout(pollTimer); const p = state.pending; if (!p) return;
-  if (Date.now() - p.since > POLL_MAX_MS) { setPending(null); state.lastError = { type: p.type, error: '24 時間たっても結果が来ない。GitHub の Actions かルーティンを確認してからもう一度' }; renderPending(); toast(state.lastError.error, true); return; }
+  if (Date.now() - p.since > POLL_MAX_MS) { setPending(null); state.lastError = { type: p.type, error: '24 時間たっても結果が来ない。GitHub の Actions の実行ログを確認してからもう一度' }; renderPending(); toast(state.lastError.error, true); return; }
   try {
     const { data } = await gh.getJson(`requests/${p.id}.json`);
     if (data && (data.status === 'done' || data.status === 'error')) { setPending(null); onRequestDone(data); return; }
@@ -301,7 +301,7 @@ function pendingHTML(scope) {
   if (p && ((p.type === 'pantry_photo') === pantry)) {
     const s = Math.max(0, Math.round((Date.now() - p.since) / 1000));
     const slow = s * 1000 > POLL_SLOW_AFTER_MS;
-    html += `<div class="pending"><span>${pantry ? '写真を読み取り中' : '考え中'}${slow ? '。処理が始まれば数分で出る（毎時のルーティン待ち）' : '（1〜4 分）'}。閉じても大丈夫<br><span class="sub">${p.status === 'running' ? '生成中' : '順番待ち'} ・ ${fmtSec(s)}</span></span><button type="button" class="ghost tiny" data-act="pending-cancel">やめる</button></div>`;
+    html += `<div class="pending"><span>${pantry ? '写真を読み取り中' : '考え中'}${slow ? '。処理が始まれば数分で出る' : '（2〜4 分）'}。閉じても大丈夫<br><span class="sub">${p.status === 'running' ? '生成中' : '順番待ち'} ・ ${fmtSec(s)}</span></span><button type="button" class="ghost tiny" data-act="pending-cancel">やめる</button></div>`;
   }
   if (err && ((err.type === 'pantry_photo') === pantry)) html += `<div class="errbox">生成できなかった: ${esc(err.error || '理由不明')}<br><button type="button" class="ghost tiny" data-act="error-clear">${ic('x')}閉じる</button></div>`;
   return html;

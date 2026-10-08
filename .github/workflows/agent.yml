@@ -7,7 +7,7 @@
 #                             Claude Code が .claude/skills/recipi-orders の手順で Generator を務める（API 課金なし）
 #   ROUTINE_FIRE_URL + ROUTINE_FIRE_TOKEN … Claude Code のルーティン「recipi: 注文を処理」の API トリガー（claude.ai/code/routines で
 #                             作れる。スマホだけで設定できる）。この workflow が呼ぶと、ルーティンのセッションが注文を処理する（API 課金なし）
-# どれも無ければ注文に error を書いて終わる（毎時のルーティンが拾う）。
+# どれも無ければ注文に error を書いて終わる。
 name: agent
 
 on:
@@ -97,7 +97,7 @@ jobs:
           sys.path.insert(0, "scripts"); import common
           rid = os.environ["REQUEST_ID"]
           req = common.read_json(f"requests/{rid}.json") or {"id": rid}
-          req.update({"status": "pending", "error": None, "note_system": "Actions に生成の認証が無い。毎時のルーティンが拾う（README の初回セットアップ）"})
+          req.update({"status": "error", "error": "生成の設定がまだ無い。README の「レシピ生成の設定」のとおり、ルーティンの API トリガーの URL とトークンを Secrets（ROUTINE_FIRE_URL / ROUTINE_FIRE_TOKEN）に登録する"})
           common.write_json(f"requests/{rid}.json", req)
-          common.git_commit_push([f"requests/{rid}.json"], f"agent: {rid} left for routine [skip ci]")
+          common.git_commit_push([f"requests/{rid}.json"], f"agent: {rid} error (no credentials) [skip ci]")
           PY

@@ -9,7 +9,7 @@
 | **ページ**（ホーム画面に追加して使う） | https://peirin1230-ship-it.github.io/recipi/ |
 | リポジトリ | https://github.com/peirin1230-ship-it/recipi |
 | Actions の実行ログ（ページの組み立て・生成・夜間の学習） | https://github.com/peirin1230-ship-it/recipi/actions |
-| ルーティン（レシピ生成を毎時行う Claude Code の定期実行） | https://claude.ai/code → ルーティン →「recipi: 注文を処理（毎時）」 |
+| ルーティン（ページのボタンで呼ばれる Claude Code の実行） | https://claude.ai/code/routines →「recipi: 注文を処理（ページのボタンで起動）」 |
 | kaji-quest のページ | https://peirin1230-ship-it.github.io/kaji-quest/ |
 
 ## 使い方
@@ -30,7 +30,7 @@ github.com にログインしておく。ターミナルは要らない。
 
 1. **Pages を有効にする（1 回だけ）**: https://github.com/peirin1230-ship-it/recipi/settings/pages → Build and deployment → Source: **Deploy from a branch** → Branch: **gh-pages** / (root) → Save。数分後に https://peirin1230-ship-it.github.io/recipi/ が開く（`main` に push するたびに `build-pages` が `gh-pages` を作り直す）
 2. **ページ用トークン（1 回だけ）**: https://github.com/settings/personal-access-tokens/new
-   - Repository access: Only select repositories → `recipi`（kaji-quest の買い物メモに書くなら `kaji-quest` も）
+   - Repository access: Only select repositories → `recipi` と `kaji-quest`（買い物メモと夜ご飯の記録を kaji-quest に書くため）
    - Permissions → Repository permissions: **Contents → Read and write**
    - 発行した `github_pat_…` をページの ⚙ に貼って保存する。トークンはそのブラウザにだけ残り、GitHub API 以外には送られない
 3. **ホーム画面に追加**: iPhone は Safari の共有 → 「ホーム画面に追加」。Android は Chrome のメニュー → 「ホーム画面に追加」
@@ -40,32 +40,42 @@ github.com にログインしておく。ターミナルは要らない。
    - 在庫: ページの「在庫」から（`pantry.json`）
    - **名前・生年月日は書かない**（公開リポジトリ）
 
-## レシピ生成の仕組み（3 つの経路）
+## レシピ生成の設定（スマホだけでできる。コマンド不要）
 
-ページで注文すると `requests/<id>.json` ができる。それを誰が処理するかが 3 通りある。どれで作っても同じ検査・同じファイル形式で、学習は区別しない。
+ページの「考えてもらう」を押すと `requests/<id>.json` ができ、GitHub Actions が Claude Code の**ルーティン**を呼ぶ。ルーティンのセッションがその注文を処理して push し、2〜4 分でページのレシピカードに出る。費用はかからない（Claude の契約の枠内）。定期実行は無く、ボタンを押したときだけ動く。
 
-| 経路 | 費用 | 待ち時間 | 要るもの | 状態 |
-|---|---|---|---|---|
-| **ルーティン**（既定） | 無料（Claude の契約の枠内） | 10〜21 時の毎時 7 分に処理。最長 1 時間 | 無し | 設定済み。できるとスマホに通知 |
-| **手動** `/recipi-orders` | 無料 | 2〜4 分 | スマホの Claude アプリで Claude Code のセッションを開いて打つ | いつでも |
-| **Actions → ルーティン**（API トリガー） | 無料 | 注文の直後 2〜4 分 | スマホだけで設定できる。下の「注文の直後に処理させる」 | 未設定（登録すれば自動で切り替わる） |
-| Actions（契約トークン） | 無料 | 注文の直後 2〜4 分 | PC で `claude setup-token` を 1 回実行し、出たトークンを [Secrets](https://github.com/peirin1230-ship-it/recipi/settings/secrets/actions) に `CLAUDE_CODE_OAUTH_TOKEN` として登録 | 任意 |
-| Actions（API キー） | 従量課金。1 回 0.1 USD 前後、月 5 USD 前後 | 1〜2 分 | [Secrets](https://github.com/peirin1230-ship-it/recipi/settings/secrets/actions) に `ANTHROPIC_API_KEY` | 任意。上限は `config.yml` の `generation.budget_usd_per_month` |
+初回に 1 回だけ、ルーティンに「リポジトリ」と「API トリガー」を付け、その URL とトークンを GitHub の Secrets に入れる（5 分）。
 
-### 注文の直後に処理させる（スマホだけでできる。コマンド不要）
+1. https://claude.ai/code/routines を開き、「recipi: 注文を処理（ページのボタンで起動）」→ 名前の横のメニュー → **Edit**
+2. **Repositories**（リポジトリ）に `peirin1230-ship-it/recipi` を追加する（ルーティンが push できるようにするため。これが無いと「403」で失敗する）
+3. **Select a trigger** の **Add another trigger** → **API** を選び、保存する
+4. 表示された **URL** をコピーし、**Generate token** を押してトークン（`sk-ant-oat01-…`）をコピーする（1 回しか表示されない）
+5. https://github.com/peirin1230-ship-it/recipi/settings/secrets/actions で **New repository secret** を 2 つ作る: `ROUTINE_FIRE_URL`（URL）と `ROUTINE_FIRE_TOKEN`（トークン）
+6. ページで注文して試す。失敗したときは注文のところに理由が出る（Actions の実行ログは https://github.com/peirin1230-ship-it/recipi/actions ）
 
-毎時の待ちを無くすには、ルーティンに「API トリガー」を付け、その URL とトークンを GitHub の Secrets に入れる。ページで注文すると GitHub Actions がその URL を呼び、ルーティンのセッションがすぐ起動して 2〜4 分でレシピを作る。
+| 経路 | 費用 | 待ち時間 | 要るもの |
+|---|---|---|---|
+| **ページのボタン → ルーティン**（上の設定） | 無料 | 2〜4 分 | 上の 1 回の設定 |
+| 手動 `/recipi-orders` | 無料 | 2〜4 分 | スマホの Claude アプリで Claude Code のセッションを開いて打つ（ページで注文したあと） |
+| Actions（契約トークン） | 無料 | 2〜4 分 | PC で `claude setup-token` を 1 回実行し、[Secrets](https://github.com/peirin1230-ship-it/recipi/settings/secrets/actions) に `CLAUDE_CODE_OAUTH_TOKEN`。あればルーティンより優先 |
+| Actions（API キー） | 従量課金。1 回 0.1 USD 前後 | 1〜2 分 | [Secrets](https://github.com/peirin1230-ship-it/recipi/settings/secrets/actions) に `ANTHROPIC_API_KEY`。あれば最優先。上限は `config.yml` の `generation.budget_usd_per_month` |
 
-1. https://claude.ai/code/routines を開き、「recipi: 注文を処理（毎時）」→ 名前の横のメニュー → **Edit**
-2. **Select a trigger** の **Add another trigger** → **API** を選んで保存する
-3. 表示された **URL** をコピーし、**Generate token** を押してトークン（`sk-ant-oat01-…`）をコピーする（トークンは 1 回しか表示されない）
-4. https://github.com/peirin1230-ship-it/recipi/settings/secrets/actions で **New repository secret** を 2 つ作る: `ROUTINE_FIRE_URL`（URL）と `ROUTINE_FIRE_TOKEN`（トークン）
-5. 以後、ページの「考えてもらう」の直後に処理が始まる。毎時のスケジュールは残しておいてよい（拾い漏れの保険）。止めるならルーティンの on/off スイッチ
-
+- どの経路で作っても同じ検査・同じファイル形式で、学習は区別しない
 - ページは注文の結果を 6 分までは 5 秒ごと、その後は 1 分ごとに最長 24 時間確認する。閉じても、開き直せば続きから
-- ルーティンの一時停止・削除は https://claude.ai/code のルーティン一覧から。注文が無い時間帯は数十秒で終わる
 - 手元の Claude Code からは `/recipi-tonight 25 大人2 子1 さっぱり` で、注文からレシピまでその場で作れる
 - 中身は `python3 scripts/agent.py context --request <id>`（Generator に渡す物を全部表示）→ Claude Code が JSON を書く → `python3 scripts/agent.py finish --request <id> --json …`（検査・整形・保存・push）。API キーがあるときは `scripts/agent.py auto` が同じことを API で行う
+
+## kaji-quest との連携
+
+| 向き | 何が起きるか | 設定 |
+|---|---|---|
+| kaji-quest → recipi | kaji-quest で「買い物を記録」した物を、ページの「在庫」の「kaji-quest の買い物を取り込む」で在庫に入れる（確認してから反映） | `config.yml` の `kaji_quest.import_shopping`（on） |
+| recipi → kaji-quest | レシピカードの「足りない物を買い物メモへ」で、在庫に無い材料を kaji-quest の買い物メモに足す | `kaji_quest.push_shopping`（on。ページ用トークンに kaji-quest も含める） |
+| recipi → kaji-quest | 調理を記録すると、kaji-quest の「夜ご飯を作る」も実時間つきで完了として記録される（kaji-quest 側で重ねて記録しなくてよい） | `kaji_quest.write_cook_log`（on） |
+| kaji-quest → recipi | kaji-quest のページ右上の家のアイコン横にある 🍳 から recipi へ。「翌日の献立を決める」「夜ご飯を作る」「翌日分の仕込み」の詳細にも recipi の URL | kaji-quest 側 |
+| recipi → kaji-quest | recipi のページ右上の家のアイコンから kaji-quest へ | — |
+
+XP・バッジ・ストリークは kaji-quest が数える。recipi は料理の中身（レシピ・写真・評価）だけを持つ。
 
 ## 変えたいとき
 
@@ -84,7 +94,7 @@ github.com にログインしておく。ターミナルは要らない。
 | レシピを手で直す | `recipes/<id>.md`（front matter が本体。本文は人が読む用） |
 | 見た目や動き | `site/`（`index.html` / `app.js` / `style.css`） |
 | 学習・ダイジェストの時刻 | `.github/workflows/nightly-learn.yml`（03:30 JST）/ `weekly-digest.yml`（日曜 20:00 JST） |
-| ルーティンの時間帯 | https://claude.ai/code のルーティン一覧（いまは 10〜21 時の毎時 7 分） |
+| ルーティンの指示文 | https://claude.ai/code/routines（Edit。定期実行は無し） |
 
 ## 開発
 
