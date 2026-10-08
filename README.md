@@ -8,7 +8,7 @@
 
 ## 使い方
 
-1. ページを開く。スマホなら「ホーム画面に追加」。初回だけ ⚙ から GitHub トークンを保存する（下記）
+1. ページを開く。スマホなら「ホーム画面に追加」（iPhone: Safari の共有 → ホーム画面に追加 / Android: Chrome のメニュー → ホーム画面に追加）。アプリのように全画面で開く。初回だけ ⚙ から GitHub トークンを保存する（下記）
 2. **今夜** で時間（15/20/30/45/60 分）を選んで「考えてもらう」。1〜2 分で本命のレシピ 1 本と別案 2 つが出る（閉じても大丈夫。開き直せば続きから）。別案をタップすると、その案で詳細を作る。「ほかの案」でもう一度
 3. **レシピ** は、うちの器具の火加減・分量（g と大さじ）・段取り表（コンロの口ごとのレーン×分）・仕上がりの目安・子どもの取り分け・保存・片付けまで書いてある。「作る」で **調理モード**（大きな字、タイマー、画面が消えない）
 4. 作り終えたら **記録**: 写真 1 枚、時間（自動）、手順どおり？、仕上がり ★、自分と家族の ★、子どもは完食／半分／少し／食べない、気づき 1 行。全部任意。60 秒で終わる
@@ -24,7 +24,7 @@
    - **無料（おすすめ）** `CLAUDE_CODE_OAUTH_TOKEN`: Claude の定額契約（Pro / Max / Team）で動かす。手元のターミナルで `claude setup-token` を実行して出たトークンを登録する。Claude Code が `.claude/skills/recipi-orders` の手順で Generator を務め、API の課金は無い（契約の利用枠を使う）。所要は 2〜4 分
    - **従量課金** `ANTHROPIC_API_KEY`: Claude API を直接呼ぶ。1 回 0.1 USD 前後、月 5 USD 前後。所要は 1〜2 分。上限は `config.yml` の `generation.budget_usd_per_month`
    - どちらも無いときは、ページの注文に「Secrets に置く」とエラーが出る。Claude Code を開いて `/recipi-orders` と打てば、その場で処理できる（下記）
-2. **Pages**: `main` に push すると `build-pages` が `gh-pages` ブランチを作り、Pages が有効になる。404 のままなら Settings → Pages → Source: Deploy from a branch → `gh-pages` / (root) を 1 回だけ選ぶ
+2. **Pages（1 回だけ）**: Settings → Pages → Build and deployment → Source: **Deploy from a branch** → Branch: **gh-pages** / (root) → Save。`main` に push するたびに `build-pages` が `gh-pages` を作り直す。数分後に https://peirin1230-ship-it.github.io/recipi/ が開く
 3. **トークン（ページ用、初回 1 回）**: [Fine-grained personal access token](https://github.com/settings/personal-access-tokens/new) を作る
    - Repository access: Only select repositories → `recipi`（kaji-quest の買い物メモに書くなら `kaji-quest` も）
    - Permissions → Repository permissions: **Contents → Read and write**
