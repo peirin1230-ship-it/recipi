@@ -38,7 +38,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - run: pip install pyyaml markdown
+      - run: pip install -r requirements.txt
       - run: python3 scripts/build_site.py _site
       - name: Push _site to gh-pages as a single orphan commit
         env:

@@ -44,7 +44,7 @@ jobs:
         with:
           python-version: "3.12"
           cache: pip
-      - run: pip install pyyaml anthropic
+      - run: pip install -r requirements.txt
       - name: Pull latest (ページが直前に書いた注文を取り込む)
         run: git pull --rebase -q origin ${{ github.ref_name || 'main' }} || true
 
