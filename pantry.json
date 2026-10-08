@@ -1,28 +1,13 @@
 {
-  "updated": "2026-10-08T12:00:00+09:00",
-  "items": [
-    { "id": "p0001", "name": "鶏もも肉", "qty": 300, "unit": "g", "loc": "fridge", "added": "2026-10-07", "use_by": "2026-10-09", "src": "manual" },
-    { "id": "p0002", "name": "豚こま切れ肉", "qty": 250, "unit": "g", "loc": "fridge", "added": "2026-10-07", "use_by": "2026-10-09", "src": "manual" },
-    { "id": "p0003", "name": "卵", "qty": 6, "unit": "個", "loc": "fridge", "added": "2026-10-05", "use_by": "2026-10-19", "src": "manual" },
-    { "id": "p0004", "name": "豆腐", "qty": 1, "unit": "丁", "loc": "fridge", "added": "2026-10-07", "use_by": "2026-10-10", "src": "manual" },
-    { "id": "p0005", "name": "小松菜", "qty": 1, "unit": "束", "loc": "fridge", "added": "2026-10-06", "use_by": "2026-10-09", "src": "manual" },
-    { "id": "p0006", "name": "にんじん", "qty": 2, "unit": "本", "loc": "fridge", "added": "2026-10-04", "use_by": "2026-10-18", "src": "manual" },
-    { "id": "p0007", "name": "玉ねぎ", "qty": 3, "unit": "個", "loc": "pantry", "added": "2026-10-01", "use_by": "2026-10-31", "src": "manual" },
-    { "id": "p0008", "name": "じゃがいも", "qty": 4, "unit": "個", "loc": "pantry", "added": "2026-10-01", "use_by": "2026-10-31", "src": "manual" },
-    { "id": "p0009", "name": "牛乳", "qty": 1, "unit": "本", "loc": "fridge", "added": "2026-10-07", "use_by": "2026-10-13", "src": "manual" },
-    { "id": "p0010", "name": "ヨーグルト", "qty": 1, "unit": "個", "loc": "fridge", "added": "2026-10-07", "use_by": "2026-10-17", "src": "manual" },
-    { "id": "p0011", "name": "冷凍ご飯", "qty": 4, "unit": "個", "loc": "freezer", "added": "2026-10-04", "src": "manual" },
-    { "id": "p0012", "name": "冷凍うどん", "qty": 3, "unit": "玉", "loc": "freezer", "added": "2026-09-28", "src": "manual" },
-    { "id": "p0013", "name": "ミックスベジタブル", "qty": 1, "unit": "袋", "loc": "freezer", "added": "2026-09-20", "src": "manual" },
-    { "id": "p0014", "name": "かまぼこ", "qty": 1, "unit": "本", "loc": "fridge", "added": "2026-10-03", "use_by": "2026-10-12", "src": "manual" },
-    { "id": "p0015", "name": "塩昆布", "qty": 1, "unit": "袋", "loc": "pantry", "added": "2026-10-03", "src": "manual" }
-  ],
+  "updated": "2026-10-09T06:40:00+09:00",
+  "items": [],
   "staples": {
-    "醤油": "ok", "みりん": "ok", "酒": "ok", "砂糖": "ok", "塩": "ok", "味噌": "ok", "酢": "ok",
-    "サラダ油": "ok", "ごま油": "ok", "オリーブオイル": "ok", "バター": "ok", "マヨネーズ": "ok", "ケチャップ": "ok",
-    "めんつゆ": "ok", "ポン酢": "ok", "鶏がらスープの素": "ok", "コンソメ": "ok", "だしパック": "ok",
-    "片栗粉": "ok", "小麦粉": "ok", "パン粉": "ok", "白ごま": "ok", "かつお節": "ok", "のり": "ok", "わかめ（乾燥）": "ok",
-    "にんにくチューブ": "ok", "しょうがチューブ": "ok", "こしょう": "ok", "カレールウ": "ok", "米": "ok"
+    "醤油": "ok", "みりん": "ok", "酒": "ok", "砂糖": "ok", "塩": "ok", "味噌": "ok", "サラダ油": "ok",
+    "酢": "none", "ごま油": "none", "オリーブオイル": "none", "バター": "none", "マヨネーズ": "none", "ケチャップ": "none",
+    "めんつゆ": "none", "ポン酢": "none", "鶏がらスープの素": "none", "コンソメ": "none", "だしパック": "none",
+    "片栗粉": "none", "小麦粉": "none", "パン粉": "none", "白ごま": "none", "かつお節": "none", "のり": "none", "わかめ（乾燥）": "none",
+    "にんにくチューブ": "none", "しょうがチューブ": "none", "こしょう": "none", "カレールウ": "none", "米": "ok"
   },
-  "discarded": []
+  "discarded": [],
+  "imported_shop_ids": []
 }

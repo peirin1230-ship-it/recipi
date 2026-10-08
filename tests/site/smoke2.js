@@ -1,7 +1,7 @@
 // 流れのテスト: 注文→生成完了→レシピ表示 / 冷蔵庫写真→差分→反映 / kaji-quest 取り込み→差分→反映 / 聞いてない評価の追記
 const { chromium } = require(process.env.PW_ROOT ? require('path').join(process.env.PW_ROOT, 'playwright') : 'playwright');
 const fs = require('fs'); const SHOTS = (process.env.SHOTS || '/tmp/recipi-shots');
-const pantry = fs.readFileSync(require('path').join(__dirname, '..', '..', 'pantry.json'), 'utf8');
+const pantry = fs.readFileSync(require('path').join(__dirname, '..', 'fixtures', 'pantry.json'), 'utf8');
 const fixture = JSON.parse(fs.readFileSync('/home/user/recipi/tests/fixtures/recipe_teriyaki.json', 'utf8'));
 const b64 = s => Buffer.from(s, 'utf8').toString('base64'); const unb64 = s => Buffer.from(s, 'base64').toString('utf8');
 const results = []; const assert = (c, l) => { results.push(`${c ? 'PASS' : 'FAIL'}: ${l}`); if (!c) process.exitCode = 1; };

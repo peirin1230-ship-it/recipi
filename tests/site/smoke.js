@@ -2,7 +2,7 @@
 const { chromium } = require(process.env.PW_ROOT ? require('path').join(process.env.PW_ROOT, 'playwright') : 'playwright');
 const fs = require('fs');
 const SHOTS = (process.env.SHOTS || '/tmp/recipi-shots');
-const pantry = fs.readFileSync(require('path').join(__dirname, '..', '..', 'pantry.json'), 'utf8');
+const pantry = fs.readFileSync(require('path').join(__dirname, '..', 'fixtures', 'pantry.json'), 'utf8');
 const b64 = s => Buffer.from(s, 'utf8').toString('base64');
 const results = [];
 const assert = (cond, label) => { results.push(`${cond ? 'PASS' : 'FAIL'}: ${label}`); if (!cond) process.exitCode = 1; };
@@ -42,7 +42,7 @@ async function setup(browser, viewport) {
     const laneCols = await page.$$eval('#recipe table.tl thead th', ths => ths.length - 1);
     assert(laneCols === 3, `段取り表 has 3 lane columns (got ${laneCols})`);
     const laneLabels = await page.$$eval('#recipe table.tl thead th', ths => ths.map(t => t.textContent));
-    assert(laneLabels.join('|') === '分|ガスコンロ右（強火力）|レンジ|手', `lane labels in equipment order: ${laneLabels.join('|')}`);
+    assert(laneLabels.join('|') === '分|ガスコンロ右|レンジ|手', `lane labels in equipment order: ${laneLabels.join('|')}`);
     const tlRows = await page.$$eval('#recipe table.tl tbody tr', r => r.length);
     assert(tlRows === 11, `段取り表 rows = 11 (got ${tlRows})`);
     const steps = await page.$$eval('#recipe .step', s => s.length);
@@ -52,7 +52,7 @@ async function setup(browser, viewport) {
     assert(await page.$$eval('#recipe details.tip', e => e.length) >= 3, 'tips attached to steps');
     assert(await page.$$eval('#recipe table.ing tbody tr', r => r.length) === 12, 'ingredients table 12 rows');
     assert(await page.$eval('#recipe', e => e.textContent.includes('使い切り')), 'use_up mark shown');
-    assert(await page.$eval('#recipe', e => e.textContent.includes('フライパン 26cm')), 'cleanup uses equipment labels');
+    assert(await page.$eval('#recipe', e => /手洗い[^\n]*フライパン/.test(e.textContent)), 'cleanup uses equipment labels');
     const chips = await page.$$eval('#o-budget .chip[data-act="o-budget"]', c => c.map(x => x.dataset.v));
     assert(chips.join(',') === '15,20,30,45,60', `budget chips: ${chips.join(',')}`);
     assert(await page.$eval('#o-budget', e => !!e.querySelector('#o-free')), 'free budget input present');
