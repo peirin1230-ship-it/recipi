@@ -69,20 +69,25 @@ jobs:
           ROUTINE_FIRE_URL: ${{ secrets.ROUTINE_FIRE_URL }}
           ROUTINE_FIRE_TOKEN: ${{ secrets.ROUTINE_FIRE_TOKEN }}
         run: |
-          code=$(curl -sS -o /tmp/fire.json -w "%{http_code}" -X POST "$ROUTINE_FIRE_URL" \
-            -H "Authorization: Bearer $ROUTINE_FIRE_TOKEN" \
+          # Secrets に混ざった改行・空白を落とす（スマホで貼ると末尾に改行が入りやすい）
+          URL=$(printf '%s' "$ROUTINE_FIRE_URL" | tr -d '[:space:]')
+          TOKEN=$(printf '%s' "$ROUTINE_FIRE_TOKEN" | tr -d '[:space:]')
+          code=$(curl -sS -o /tmp/fire.json -w "%{http_code}" -X POST "$URL" \
+            -H "Authorization: Bearer $TOKEN" \
             -H "anthropic-beta: experimental-cc-routine-2026-04-01" \
             -H "anthropic-version: 2023-06-01" \
             -H "Content-Type: application/json" \
-            -d "{\"text\": \"$REQUEST_ID\"}")
-          echo "fire: HTTP $code"; cat /tmp/fire.json; echo
+            -d "{\"text\": \"$REQUEST_ID\"}") || code="000"
+          echo "fire: HTTP $code"; cat /tmp/fire.json 2>/dev/null; echo
           if [ "$code" -lt 200 ] || [ "$code" -ge 300 ]; then
             python3 - "$code" <<'PY'
           import os, sys
           sys.path.insert(0, "scripts"); import common
           rid = os.environ["REQUEST_ID"]
           req = common.read_json(f"requests/{rid}.json") or {"id": rid}
-          req.update({"status": "error", "error": f"ルーティンを呼べなかった（HTTP {sys.argv[1]}）。claude.ai/code/routines の API トリガーと Secrets の ROUTINE_FIRE_URL / ROUTINE_FIRE_TOKEN を確認"})
+          code = sys.argv[1]
+          why = {"000": "URL が不正（Secrets の ROUTINE_FIRE_URL を確認）", "401": "トークンが違う（ROUTINE_FIRE_TOKEN を確認。Regenerate したら貼り直す）", "404": "URL のルーティン id が違う"}.get(code, f"HTTP {code}")
+          req.update({"status": "error", "error": f"ルーティンを呼べなかった: {why}。claude.ai/code/routines の API トリガーと Secrets の ROUTINE_FIRE_URL / ROUTINE_FIRE_TOKEN を確認"})
           common.write_json(f"requests/{rid}.json", req)
           common.git_commit_push([f"requests/{rid}.json"], f"agent: {rid} error (routine fire failed) [skip ci]")
           PY
