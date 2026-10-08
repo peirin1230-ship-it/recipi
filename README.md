@@ -31,6 +31,21 @@
    - 発行した `github_pat_…` をページの ⚙ に貼って保存する。トークンはそのブラウザにだけ残り、GitHub API 以外には送られない
 4. **家の情報**: `equipment.yml`（コンロの種類と口数、レンジの W 数、フライパンの大きさ、無い道具）、`family.yml`（人数、子どもの年齢帯、アレルギー、塩分の方針）、`pantry.json`（いまある物。ページからも書ける）を直す。**名前・生年月日は書かない**（公開リポジトリ）
 
+## スマホだけで設定する
+
+ターミナルが無くても、次はすべてスマホのブラウザ（github.com にログイン）でできる。
+
+| すること | 場所 |
+|---|---|
+| Pages を有効にする（1 回） | リポジトリの Settings → Pages → Source: Deploy from a branch → `gh-pages` / (root) → Save |
+| ページ用トークンを作る | https://github.com/settings/personal-access-tokens/new → Only select repositories: recipi → Contents: Read and write → 発行 → ページの ⚙ に貼る |
+| ホーム画面に追加 | iPhone: Safari の共有 → ホーム画面に追加 / Android: Chrome のメニュー → ホーム画面に追加 |
+| 家の情報を直す | github.com でファイルを開いて鉛筆（`equipment.yml` / `family.yml`）。在庫はページの「在庫」から |
+
+**生成はルーティンが行う**（API キーもターミナルも要らない）。Claude Code の cloud 側にルーティン「recipi: 注文を処理（毎時）」があり、10 時〜21 時の毎時 7 分に `requests/` の未処理の注文を拾ってレシピを作り、push する。ページは注文したまま閉じてよく、できるとレシピカードに出る（最長 1 時間待つ。6 分を過ぎると 1 分ごとの確認に落ちる）。すぐ欲しいときは、スマホの Claude アプリで Claude Code のセッションを開いて `/recipi-orders` と打てば 2〜4 分で出る。
+ルーティンの一時停止・削除は claude.ai/code のルーティン一覧から。
+あとで PC を使えるときに `claude setup-token` で契約トークンを作って Secrets `CLAUDE_CODE_OAUTH_TOKEN` に登録すれば、注文の直後（2〜4 分）に Actions が処理する形に切り替わる（ルーティンは止めてよい）。
+
 ## Claude Code で直接回す（無料・手動）
 
 Actions を使わなくても、このリポジトリを Claude Code で開いて次を打てば同じ形のレシピができる（契約の範囲内。API キー不要）。
