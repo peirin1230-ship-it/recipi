@@ -20,7 +20,10 @@
 
 ## 初回セットアップ
 
-1. **API キー**: Settings → Secrets and variables → Actions → New repository secret で `ANTHROPIC_API_KEY` を登録する（レシピ生成はすべて GitHub Actions の中で行う。キーは端末に置かない）。月の上限は `config.yml` の `generation.budget_usd_per_month`（初期 15 USD。目安は月 5 USD 前後）
+1. **生成の認証**（どちらか 1 つを Settings → Secrets and variables → Actions に登録する。レシピ生成はすべて GitHub Actions の中で行い、キーは端末に置かない）
+   - **無料（おすすめ）** `CLAUDE_CODE_OAUTH_TOKEN`: Claude の定額契約（Pro / Max / Team）で動かす。手元のターミナルで `claude setup-token` を実行して出たトークンを登録する。Claude Code が `.claude/skills/recipi-orders` の手順で Generator を務め、API の課金は無い（契約の利用枠を使う）。所要は 2〜4 分
+   - **従量課金** `ANTHROPIC_API_KEY`: Claude API を直接呼ぶ。1 回 0.1 USD 前後、月 5 USD 前後。所要は 1〜2 分。上限は `config.yml` の `generation.budget_usd_per_month`
+   - どちらも無いときは、ページの注文に「Secrets に置く」とエラーが出る。Claude Code を開いて `/recipi-orders` と打てば、その場で処理できる（下記）
 2. **Pages**: `main` に push すると `build-pages` が `gh-pages` ブランチを作り、Pages が有効になる。404 のままなら Settings → Pages → Source: Deploy from a branch → `gh-pages` / (root) を 1 回だけ選ぶ
 3. **トークン（ページ用、初回 1 回）**: [Fine-grained personal access token](https://github.com/settings/personal-access-tokens/new) を作る
    - Repository access: Only select repositories → `recipi`（kaji-quest の買い物メモに書くなら `kaji-quest` も）
@@ -28,7 +31,16 @@
    - 発行した `github_pat_…` をページの ⚙ に貼って保存する。トークンはそのブラウザにだけ残り、GitHub API 以外には送られない
 4. **家の情報**: `equipment.yml`（コンロの種類と口数、レンジの W 数、フライパンの大きさ、無い道具）、`family.yml`（人数、子どもの年齢帯、アレルギー、塩分の方針）、`pantry.json`（いまある物。ページからも書ける）を直す。**名前・生年月日は書かない**（公開リポジトリ）
 
-Actions が動いていないときや、ページを作る前（Phase 0）は、このリポジトリを Claude Code で開いて「今夜 25 分、大人 2 子 1」と頼めば同じ形のレシピができる（`CLAUDE.md`）。
+## Claude Code で直接回す（無料・手動）
+
+Actions を使わなくても、このリポジトリを Claude Code で開いて次を打てば同じ形のレシピができる（契約の範囲内。API キー不要）。
+
+| 打つこと | 何が起きるか |
+|---|---|
+| `/recipi-tonight 25 大人2 子1 さっぱり` | 注文を作り、その場でレシピを `recipes/` に書いて push。ページにも出る |
+| `/recipi-orders` | ページで出した注文（`requests/` の pending）をまとめて処理。冷蔵庫写真・改訂・週の献立も |
+
+中身は `python3 scripts/agent.py context --request <id>`（Generator に渡す物を全部表示）→ Claude Code が JSON を書く → `python3 scripts/agent.py finish --request <id> --json …`（検査・整形・保存・push）。
 
 ## 変えたいとき
 

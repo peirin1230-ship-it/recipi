@@ -581,6 +581,10 @@ changes:
 - `stop_reason` が `refusal` のときは「生成できなかった」としてエラーに落とす。料理で起きる想定はないが、握りつぶさない。
 - **ブラウザから API を直接呼ぶ案は採らない。** API キーを端末に置くことになる。生成は必ず Actions（§12）で行い、キーは GitHub Secrets にだけ置く。
 
+**無料の経路（Claude Code が Generator を務める）**: API キーの代わりに Claude の定額契約（Pro / Max / Team）の OAuth トークン（`claude setup-token`）を Secrets `CLAUDE_CODE_OAUTH_TOKEN` に置くと、`agent.yml` は `anthropics/claude-code-action` で Claude Code を起動し、スキル `.claude/skills/recipi-orders` の手順で同じ注文を処理する。API 課金は無く、契約の利用枠を使う。所要は 2〜4 分。
+仕組みは `scripts/agent.py context`（§7.1 の文脈と JSON スキーマをそのまま表示）→ Claude Code が JSON を書く → `scripts/agent.py finish`（§7.3 の検査・整形・結果の書き戻し・コミット）。検査に通らなければ理由を返して書き直させる。API の経路と**同じ検査・同じファイル形式**なので、どちらで作ったレシピも区別なく学習に入る（`generated_by.model: claude-code`）。
+手元の Claude Code からは `/recipi-tonight`（注文からレシピまで）と `/recipi-orders`（ページの注文をまとめて処理）で同じ事ができる。
+
 ### 7.8 プロンプトの管理
 
 `prompts/*.md` にプロンプトを置き、`prompt_version` を front matter で持つ。変えたら版を上げる。レシピの `generated_by.prompt_version` と、§9.6 の週次指標を版ごとに見られるようにし、**プロンプトの変更が提案の質を上げたか下げたかを数字で判断する**。感覚で戻さない。
@@ -962,6 +966,7 @@ privacy:
 | **合計** | | | **5 USD 前後** |
 
 `requests/<id>.json` の `result.cost_usd` に毎回の実費を書き、「今週」に月の累計を出す。上限（`config.yml` に `budget_usd_per_month`、初期 15）を超えたら生成を止めて知らせる。
+**無料の経路**（§7.7。`CLAUDE_CODE_OAUTH_TOKEN`）なら API 費用は 0。Claude の契約の利用枠（5 時間ごとの上限）を 1 注文あたり数分ぶん使う。Actions の分数は公開リポジトリなので無料。
 
 ### 15.3 可用性・フォールバック
 - **Actions が落ちても手で回せる**: `pantry.json` / `equipment.yml` / `family.yml` / `profile/learned.yml` を読んで Claude Code（または Claude アプリ）に聞けば同じレシピが作れる（付録 D）。レシピは手で書いた Markdown でもページに出る。

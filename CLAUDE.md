@@ -4,15 +4,15 @@
 Actions が動いていないとき（Phase 0、または障害時）は、あなたが Generator（SPEC §4）を務める。
 
 ## 頼まれたらやること（レシピ）
-「今夜 25 分、大人 2 子 1」のように頼まれたら:
-1. `equipment.yml` / `family.yml` / `pantry.json` / `profile/learned.yml` / `profile/overrides.yml` / `knowledge/safety.md` / `knowledge/basics/*.md` を読む
-2. `logs/` の直近 14 日の `recipe_id` を見て、同じ物を出さない
-3. `prompts/recipe.md` の規則と `scripts/schema.py` の JSON スキーマに従ってレシピを JSON で組み、
-   `python3 scripts/render_recipe.py <json ファイル>` で `recipes/<id>.md` を書く（id は `r-YYYYMMDD-<ローマ字>`）。
-   手で書くなら SPEC §6.5 の形式で、front matter に全項目を入れる
-4. `python3 scripts/validate.py recipes/<id>.md` が通ることを確認する
-5. 別案 2 つは一行で答える（ファイルにしない）
-6. 時間予算に収まらないなら、収まらないと言い、近い案を出す
+「今夜 25 分、大人 2 子 1」のように頼まれたら `/recipi-tonight` の手順（`.claude/skills/recipi-tonight/SKILL.md`）:
+1. `python3 scripts/agent.py new --type dinner --budget 25 --adults 2 --kids 1 ...` で注文を作る（出力が注文 id）
+2. `python3 scripts/agent.py context --request <id>` の出力（規則・安全・器具・家族・学習結果・在庫・注文・JSON スキーマ）を全部読む
+3. JSON を `/tmp/recipi-<id>.json` に書き、`python3 scripts/agent.py finish --request <id> --json /tmp/recipi-<id>.json` を実行する
+   （検査・`recipes/<id>.md` の書き出し・注文への結果の書き戻し・コミット・push まで行う。不合格なら理由が出るので直してやり直す）
+4. 別案 2 つは一行で答える
+5. 時間予算に収まらないなら feasible を false にし、近い案を出す
+
+ページから来た注文（`requests/` の pending）をまとめて処理するなら `/recipi-orders`。
 
 ## 作った後に頼まれたら（記録）
 「作った。26 分、少し変えた（醤油を減らした）、仕上がり 4、自分 4、妻 5、子ども完食」と言われたら:

@@ -256,7 +256,7 @@ def finish_recipe(ctx: Context, L: llmmod.LLM, req: dict, data: dict, usage: dic
     if errors:
         raise ValueError("検査に通らなかった: " + "; ".join(errors[:6]))
     if data.get("feasible") and data.get("recipe"):
-        version_info = {"model": L.model if not L.mock else "mock", "prompt_version": data.get("_prompt_version", 0)}
+        version_info = {"model": L.label, "prompt_version": data.get("_prompt_version", 0)}
         meta = make_meta(ctx, data["recipe"], req, version_info)
         rel = render_recipe.write_recipe(meta, ctx.equipment)
         meta["memo"] = []
@@ -330,7 +330,7 @@ def action_revise(ctx: Context, L: llmmod.LLM, req: dict) -> dict:
         new_version += 1
         new_id = f"{base}-v{new_version}"
     pseudo_req = {"id": req.get("id"), "time_budget": (orig.get("time") or {}).get("budget"), "servings": orig.get("servings"), "type": orig.get("type", "dinner")}
-    meta = make_meta(ctx, data["recipe"], pseudo_req, {"model": L.model if not L.mock else "mock", "prompt_version": version},
+    meta = make_meta(ctx, data["recipe"], pseudo_req, {"model": L.label, "prompt_version": version},
                      rid=new_id, version=new_version, supersedes=rid, changes=data.get("changes") or [])
     rel = render_recipe.write_recipe(meta, ctx.equipment)
     meta["memo"] = []
@@ -396,6 +396,124 @@ def rewrite_log(log_id: str, patch: dict) -> bool:
     return False
 
 
+# ---- 無料の経路（Claude Code が Generator を務める。docs/SPEC.md §7.7）----
+
+class Captured(Exception):
+    """CaptureLLM が API の代わりに投げる。Generator に渡すはずだった物を持つ。"""
+
+    def __init__(self, name: str, system: str, blocks: list, schema_: dict):
+        super().__init__(name)
+        self.name, self.system, self.blocks, self.schema = name, system, blocks, schema_
+
+
+class CaptureLLM(llmmod.LLM):
+    def structured(self, *, name, system, blocks, schema, **kw):  # noqa: A002
+        raise Captured(name, system, blocks, schema)
+
+
+def action_name_for(req: dict) -> str:
+    action = TYPE_TO_ACTION.get(req.get("type"), "")
+    if not action:
+        raise ValueError(f"注文の type が不正: {req.get('type')}")
+    return action
+
+
+def context_text(rid: str) -> str:
+    """注文 rid について、Generator に渡す物（system・文脈・JSON スキーマ）を Markdown で返す。Claude Code がこれを読んで JSON を書く。"""
+    ctx = Context()
+    req = load_request(rid)
+    action = action_name_for(req)
+    fn = {"recipe": action_recipe, "recipe_detail": action_recipe_detail, "pantry_photo": action_pantry_photo,
+          "revise": action_revise, "weekly": action_weekly}[action]
+    L = CaptureLLM(ctx.cfg, mock=True)
+    try:
+        fn(ctx, L, req)
+    except Captured as c:
+        out = [f"# Generator への入力（注文 {rid} / {c.name}）", "", "## system", "", c.system, "", "## user", ""]
+        for b in c.blocks:
+            if b.get("type") == "image":
+                out.append(f"（画像 `{b.get('path')}` を Read で見る）\n")
+            else:
+                out.append(b["text"] + "\n")
+        out += ["## 出力の JSON スキーマ（この形で 1 つの JSON を書く）", "", "```json", json.dumps(c.schema, ensure_ascii=False), "```", "",
+                "## 次にやること", "",
+                f"1. 上の規則と文脈に従って JSON を組み、`/tmp/recipi-{rid}.json` に書く",
+                f"2. `python3 scripts/agent.py finish --request {rid} --json /tmp/recipi-{rid}.json` を実行する",
+                "3. 検査に通らなければ理由が出るので、JSON を直して 2 をやり直す（最大 3 回）", ""]
+        return "\n".join(out)
+    raise RuntimeError("Generator を呼ばずに終わった（注文の type を確認）")
+
+
+def finish(rid: str, json_path: str, *, use_git: bool) -> int:
+    """Claude Code が書いた JSON を Generator の応答として扱い、検査・整形・結果の書き戻し・コミットまで行う。
+    検査に通らなければ理由を出して 2 を返す（注文ファイルは変えない）。"""
+    ctx = Context()
+    ctx.cfg.setdefault("generation", {})["max_retries"] = 0
+    req = load_request(rid)
+    action = action_name_for(req)
+    with open(json_path, encoding="utf-8") as f:
+        data = json.load(f)
+    name = "recipe" if action == "recipe" else action
+    L = llmmod.LLM(ctx.cfg, mock=True, mock_responses={name: data})
+    L.label = "claude-code"
+    started = common.now()
+    try:
+        fn = {"recipe": action_recipe, "recipe_detail": action_recipe_detail, "pantry_photo": action_pantry_photo,
+              "revise": action_revise, "weekly": action_weekly}[action]
+        result = fn(ctx, L, req)
+    except (ValueError, KeyError) as e:
+        print(f"不合格: {e}", file=sys.stderr)
+        return 2
+    extra_paths = result.pop("_paths", [])
+    result.update({"model": "claude-code", "prompt_version": common.read_prompt(action if action in ("revise", "weekly", "pantry_photo") else "recipe")[0],
+                   "tokens": {"input": 0, "output": 0, "cache_read": 0, "cache_write": 0}, "cost_usd": 0.0,
+                   "seconds": round((common.now() - started).total_seconds())})
+    req.update({"status": "done", "error": None, "result": result, "finished": common.now().isoformat(timespec="seconds")})
+    paths = [save_request(req)] + extra_paths
+    print(json.dumps({"status": "done", "recipe_id": result.get("recipe_id")}, ensure_ascii=False))
+    if use_git:
+        common.git_commit_push(paths, f"agent: {action} {rid} done [skip ci]", ctx.cfg["repo"].get("branch", "main"))
+    return 0
+
+
+def new_request(args) -> str:
+    """注文ファイルを作って id を返す（手動運用・スラッシュコマンド用）。"""
+    cfg = common.load_config()
+    fam = common.read_yaml("family.yml", {}) or {}
+    default = (fam.get("meals") or {}).get("dinner_default") or {}
+    rid = f"req-{common.now().strftime('%Y%m%d-%H%M')}-{common.new_id(4)}"
+    req = {"id": rid, "ts": common.now().isoformat(timespec="seconds"), "type": args.type, "status": "pending", "error": None, "result": None}
+    if args.type in TYPE_NOTES:
+        req.update({
+            "time_budget": args.budget or int(cfg["request"].get("default_budget", 25)),
+            "servings": {"adults": args.adults if args.adults is not None else int(default.get("adults", 2)),
+                         "kids": args.kids if args.kids is not None else int(default.get("kids", 0))},
+            "dishes": args.dishes or default.get("dishes") or "main+side",
+            "mood": [m for m in (args.mood or "").replace("、", ",").split(",") if m.strip()],
+            "use_up": [m for m in (args.use_up or "").replace("、", ",").split(",") if m.strip()],
+            "exclude": [], "note": args.note or "", "mode": args.mode or cfg["request"].get("default_mode", "auto"),
+        })
+    elif args.type == "revise":
+        req["recipe_id"] = args.recipe
+    elif args.type == "pantry_photo":
+        req.update({"image": args.image, "hint": args.hint or "fridge"})
+    elif args.type == "weekly":
+        req.update({"start_date": args.start, "servings": {"adults": args.adults or int(default.get("adults", 2)), "kids": args.kids if args.kids is not None else int(default.get("kids", 0))}, "note": args.note or ""})
+    elif args.type == "recipe_detail":
+        req.update({"parent": args.parent, "alternative": args.alternative or 0})
+    save_request(req)
+    return rid
+
+
+def pending_ids() -> list[str]:
+    out = []
+    for p in sorted(glob.glob(common.path("requests", "*.json"))):
+        d = common.read_json(os.path.relpath(p, common.ROOT)) or {}
+        if d.get("status") in ("pending", "running"):
+            out.append(d.get("id") or os.path.splitext(os.path.basename(p))[0])
+    return out
+
+
 # ---- main ----
 
 def load_request(rid: str) -> dict:
@@ -447,7 +565,7 @@ def run(action: str, rid: str | None, *, mock: bool, use_git: bool, recipe_id: s
         result = fn(ctx, L, req)
         extra_paths = result.pop("_paths", [])
         usage = L.total_usage()
-        model = L.calls[-1]["usage"].get("model", L.model) if L.calls else L.model
+        model = L.calls[-1]["usage"].get("model", L.label) if (L.calls and not L.mock) else L.label
         result.update({"model": model, "prompt_version": common.read_prompt(action if action in ("revise", "weekly", "pantry_photo") else "recipe")[0],
                        "tokens": usage, "cost_usd": llmmod.cost_usd(L.model, usage) if not L.mock else 0.0,
                        "seconds": round((common.now() - started).total_seconds())})
@@ -467,13 +585,45 @@ def run(action: str, rid: str | None, *, mock: bool, use_git: bool, recipe_id: s
 
 def main(argv: list[str]) -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("action", choices=["auto", "recipe", "recipe_detail", "pantry_photo", "revise", "weekly", "photo_note"])
+    ap.add_argument("action", choices=["auto", "recipe", "recipe_detail", "pantry_photo", "revise", "weekly", "photo_note",
+                                       "context", "finish", "new", "pending"])
     ap.add_argument("--request")
     ap.add_argument("--recipe")
     ap.add_argument("--log")
+    ap.add_argument("--json", help="finish: Claude Code が書いた応答 JSON")
     ap.add_argument("--mock", action="store_true")
     ap.add_argument("--no-git", action="store_true")
+    # new の引数
+    ap.add_argument("--type", default="dinner")
+    ap.add_argument("--budget", type=int)
+    ap.add_argument("--adults", type=int)
+    ap.add_argument("--kids", type=int)
+    ap.add_argument("--dishes")
+    ap.add_argument("--mood")
+    ap.add_argument("--use-up", dest="use_up")
+    ap.add_argument("--note")
+    ap.add_argument("--mode")
+    ap.add_argument("--image")
+    ap.add_argument("--hint")
+    ap.add_argument("--start")
+    ap.add_argument("--parent")
+    ap.add_argument("--alternative", type=int)
     a = ap.parse_args(argv)
+    if a.action == "pending":
+        print("\n".join(pending_ids()))
+        return 0
+    if a.action == "new":
+        print(new_request(a))
+        return 0
+    if a.action == "context":
+        if not a.request:
+            ap.error("--request が要る")
+        print(context_text(a.request))
+        return 0
+    if a.action == "finish":
+        if not a.request or not a.json:
+            ap.error("--request と --json が要る")
+        return finish(a.request, a.json, use_git=not a.no_git)
     if a.action not in ("photo_note", "revise") and not a.request:
         ap.error("--request が要る")
     return run(a.action, a.request, mock=a.mock, use_git=not a.no_git, recipe_id=a.recipe, log_id=a.log)

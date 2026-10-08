@@ -47,7 +47,7 @@ def image_block(rel_path: str) -> dict:
     mt = mimetypes.guess_type(p)[0] or "image/jpeg"
     with open(p, "rb") as f:
         data = base64.standard_b64encode(f.read()).decode("ascii")
-    return {"type": "image", "source": {"type": "base64", "media_type": mt, "data": data}}
+    return {"type": "image", "path": rel_path, "source": {"type": "base64", "media_type": mt, "data": data}}
 
 
 class LLM:
@@ -58,6 +58,7 @@ class LLM:
         self.fallbacks = gen.get("fallbacks", "default")
         self.mock = mock or os.environ.get("RECIPI_MOCK") == "1"
         self.mock_responses = mock_responses or {}
+        self.label = "mock" if self.mock else self.model   # 結果に書くモデル名（finish では claude-code）
         self.calls: list[dict] = []
         self._client = None
 
@@ -87,7 +88,7 @@ class LLM:
         content = []
         for b in blocks:
             if b.get("type") == "image":
-                content.append({k: v for k, v in b.items() if k != "cache"})
+                content.append({k: v for k, v in b.items() if k not in ("cache", "path")})
             else:
                 blk = {"type": "text", "text": b["text"]}
                 if b.get("cache"):

@@ -1,6 +1,11 @@
 # ページからの注文（requests/<id>.json）を受けて Generator を動かす（docs/SPEC.md §12.2）。
 # ページが POST /repos/{owner}/{repo}/dispatches に {"event_type":"agent","client_payload":{"request_id":"req-..."}} を送ると動く。
-# API キーは Secrets の ANTHROPIC_API_KEY にだけ置く（Settings → Secrets and variables → Actions）。
+#
+# 認証は Secrets のどちらか（Settings → Secrets and variables → Actions）:
+#   ANTHROPIC_API_KEY       … Claude API（従量課金）。scripts/agent.py が直接呼ぶ
+#   CLAUDE_CODE_OAUTH_TOKEN … Claude の定額契約（Pro / Max / Team）。`claude setup-token` で作る。
+#                             Claude Code が .claude/skills/recipi-orders の手順で Generator を務める（API 課金なし）
+# 両方あれば API キーを使う。どちらも無ければ注文に error を書いて終わる。
 name: agent
 
 on:
@@ -14,6 +19,7 @@ on:
 
 permissions:
   contents: write
+  id-token: write
 
 concurrency:
   group: agent
@@ -22,7 +28,11 @@ concurrency:
 jobs:
   run:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20
+    env:
+      REQUEST_ID: ${{ github.event.client_payload.request_id || github.event.inputs.request_id }}
+      HAS_API_KEY: ${{ secrets.ANTHROPIC_API_KEY != '' }}
+      HAS_OAUTH: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN != '' }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -34,10 +44,31 @@ jobs:
       - run: pip install pyyaml anthropic
       - name: Pull latest (ページが直前に書いた注文を取り込む)
         run: git pull --rebase -q origin ${{ github.ref_name || 'main' }} || true
-      - name: Run agent
+
+      - name: Run agent (Claude API)
+        if: env.HAS_API_KEY == 'true'
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-          REQUEST_ID: ${{ github.event.client_payload.request_id || github.event.inputs.request_id }}
+        run: python3 scripts/agent.py auto --request "$REQUEST_ID"
+
+      - name: Run agent (Claude Code with subscription)
+        if: env.HAS_API_KEY != 'true' && env.HAS_OAUTH == 'true'
+        uses: anthropics/claude-code-action@v1
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          prompt: "/recipi-orders ${{ env.REQUEST_ID }}"
+          claude_args: "--max-turns 40"
+
+      - name: No credentials
+        if: env.HAS_API_KEY != 'true' && env.HAS_OAUTH != 'true'
         run: |
-          if [ -z "$ANTHROPIC_API_KEY" ]; then echo "ANTHROPIC_API_KEY が Secrets に無い" >&2; fi
-          python3 scripts/agent.py auto --request "$REQUEST_ID"
+          python3 - <<'PY'
+          import json, os, sys
+          sys.path.insert(0, "scripts"); import common
+          rid = os.environ["REQUEST_ID"]
+          req = common.read_json(f"requests/{rid}.json") or {"id": rid}
+          req.update({"status": "error", "error": "ANTHROPIC_API_KEY か CLAUDE_CODE_OAUTH_TOKEN を Secrets に置く（README の初回セットアップ）"})
+          common.write_json(f"requests/{rid}.json", req)
+          common.git_commit_push([f"requests/{rid}.json"], f"agent: {rid} error (no credentials) [skip ci]")
+          PY
