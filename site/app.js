@@ -961,7 +961,12 @@ $('#settings-save').addEventListener('click', () => {
 $('#settings-test').addEventListener('click', async () => {
   const tok = $('#token').value.trim(); const st = $('#settings-status'); if (!tok) { st.textContent = 'トークンが空'; return; }
   st.textContent = '確認中…';
-  try { const r = await gh.checkToken(tok); st.textContent = r.ok ? `OK: ${r.name} ・ 書き込み ${r.push ? '可' : '不可（Contents: Read and write を確認）'}` : `NG（${r.status}）`; }
+  try {
+    const line = r => r.ok ? `OK: ${r.name} ・ 書き込み ${r.push ? '可' : '不可（Permissions の Contents を Read and write にする）'}` : `NG（${r.status}）: ${r.hint}`;
+    const r = await gh.checkToken(tok); let text = line(r);
+    const k = kqRepo(); if (k.owner && (kq().push_shopping || kq().write_cook_log)) { const r2 = await gh.checkToken(tok, k); text += `\nkaji-quest: ${line(r2)}`; }
+    st.textContent = text;
+  }
   catch (e) { st.textContent = 'NG: ' + e.message; }
 });
 $('#dlg-diff').addEventListener('close', () => { if (state.diff && !state.busy) { /* やめた → 次に取り込むとき、また出る */ } });

@@ -421,3 +421,5 @@ body.busy::after { content: ""; position: fixed; top: 0; left: 0; right: 0; z-in
 .foot-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 0 18px; margin-top: 4px; }
 .foot-links a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 6px; color: inherit; }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; } }
+
+#settings-status { white-space: pre-line; }

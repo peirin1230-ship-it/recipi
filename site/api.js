@@ -28,10 +28,13 @@ const encPath = path => path.split('/').map(encodeURIComponent).join('/');
 const fileUrl = (path, r) => `${API}/repos/${r.owner}/${r.name}/contents/${encPath(path)}`;
 export const rawUrl = (path, r = mainRepo()) => `${RAW}/${r.owner}/${r.name}/${r.branch}/${encPath(path)}`;
 
-function writeError(res, path, r) {
-  if (res.status === 401 || res.status === 403) return new Error('トークンが無効か権限不足。Contents: Read and write が必要');
-  if (res.status === 404) return new Error(`書き込めない。トークンの Repository access に ${r.name} が入っているか確認`);
-  return new Error(`${path} の書き込みに失敗（${res.status}）`);
+// GitHub の応答から、何を直せばよいかが分かる文にする（401: トークンが違う / 403: 権限 / 404: トークンの対象外）
+async function writeError(res, path, r, what = '書き込み') {
+  let msg = ''; try { msg = (await res.json()).message || ''; } catch { msg = ''; }
+  if (res.status === 401) return new Error(`トークンが違う（${msg || 'Bad credentials'}）。⚙ に github_pat_ で始まるトークンを貼る（ルーティンの sk-ant-… ではない）`);
+  if (res.status === 403) return new Error(`${r.owner}/${r.name} に${what}できない（${msg || '403'}）。トークンの Repository access に ${r.name} を入れ、Permissions の Contents を Read and write にする`);
+  if (res.status === 404) return new Error(`${r.owner}/${r.name} に${what}できない（404）。トークンの Repository access に ${r.name} が入っていない`);
+  return new Error(`${path} の${what}に失敗（${res.status} ${msg}）`);
 }
 
 // ファイルを読む。無ければ { sha: null, text: null }
@@ -62,7 +65,7 @@ export async function putFile(path, content, message, sha, r = mainRepo()) {
   if (sha) body.sha = sha;
   const res = await fetch(fileUrl(path, r), { method: 'PUT', headers: headers(true), body: JSON.stringify(body) });
   if (res.status === 409 || res.status === 422) { const e = new Error(`${path} が同時に書き換えられた`); e.conflict = true; throw e; }
-  if (!res.ok) throw writeError(res, path, r);
+  if (!res.ok) throw await writeError(res, path, r);
   const j = await res.json(); return (j.content && j.content.sha) || null;
 }
 // 読んで → 変換して → 書く。sha 競合なら読み直して最大 3 回。fn が null を返したら書かない
@@ -81,9 +84,7 @@ export async function mutateFile(path, fn, message, r = mainRepo()) {
 export async function dispatch(requestId, r = mainRepo()) {
   const res = await fetch(`${API}/repos/${r.owner}/${r.name}/dispatches`, { method: 'POST', headers: headers(true), body: JSON.stringify({ event_type: 'agent', client_payload: { request_id: requestId } }) });
   if (res.status === 204) return;
-  if (res.status === 401 || res.status === 403) throw new Error('トークンが無効か権限不足。Contents: Read and write が必要');
-  if (res.status === 404) throw new Error(`生成を起動できない。トークンの Repository access に ${r.name} が入っているか確認`);
-  throw new Error(`生成の起動に失敗（${res.status}）`);
+  throw await writeError(res, 'dispatches', r, '生成の起動');
 }
 // raw.githubusercontent.com から読む（公開リポジトリ。トークン不要）。無ければ null
 export async function fetchRawText(path, r = mainRepo()) {
@@ -96,5 +97,9 @@ export async function fetchRawText(path, r = mainRepo()) {
 export async function checkToken(token, r = mainRepo()) {
   const res = await fetch(`${API}/repos/${r.owner}/${r.name}`, { headers: { Accept: 'application/vnd.github+json', Authorization: 'Bearer ' + token }, cache: 'no-store' });
   let j = {}; try { j = await res.json(); } catch { j = {}; }
-  return { ok: res.ok, status: res.status, name: j.full_name || '', push: !!(j.permissions && j.permissions.push) };
+  const hint = res.status === 401 ? 'トークンが違う。github_pat_ で始まる物を貼る（ルーティンの sk-ant-… ではない）'
+    : res.status === 404 ? `トークンの Repository access に ${r.name} が入っていない`
+    : res.status === 403 ? `権限不足（${j.message || '403'}）。Contents を Read and write にする`
+    : res.ok ? '' : `GitHub が ${res.status} を返した`;
+  return { ok: res.ok, status: res.status, name: j.full_name || '', push: !!(j.permissions && j.permissions.push), hint };
 }
