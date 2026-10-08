@@ -1,6 +1,6 @@
 # equipment.yml — 家の調理器具（docs/SPEC.md §6.2）。Generator はここに無い道具を使わない。
 # note: は Generator にそのまま渡る。「右は火力が強い」「強火は焦げる」など、うちの癖を書く。
-# 2026-10-09: 実際にある物に合わせて整理（フライパン・鍋・低温調理器・ぶんぶんチョッパー・スライサー 1.2mm・包丁）。
+# 2026-10-09: 実際にある物に合わせて整理（フライパン・鍋・低温調理器・ぶんぶんチョッパー・スライサー 1.2mm・包丁・電気ケトル・トースター・ミキサー）。
 #   コンロ・レンジ・炊飯器・食洗機は kaji-quest の記録（五徳の掃除、レンジの庫内、米を研いで炊く、食洗機用洗剤の補充）から推定。無ければ消す。
 #   フライパンと鍋の大きさは推定（26cm / 20cm）。違えば size_cm を直す。
 #
@@ -20,6 +20,9 @@ appliances:
   - { id: rice-cooker, type: rice_cooker, capacity_go: 5, normal_minutes: 50, fast_minutes: 28, note: "時間は推定" }
   - { id: sous-vide, type: sous_vide, label: 低温調理器, note: "鶏むね・ささみ・豚ロースをしっとり仕上げる。1 時間以上かかるので『仕込み』向き。夕食の 25 分には収まらない。温度と時間は knowledge/basics/07_sous_vide.md の表を守る" }
   - { id: dishwasher, type: dishwasher, note: "フライパンと鍋は入らない前提。入るなら cookware の dishwasher を true に" }
+  - { id: kettle, type: kettle, label: 電気ケトル, liters: 1.0, note: "湯を沸かすのが一番早い。茹でる・汁物の湯はケトルで沸かして鍋へ（5 分短くなる）" }
+  - { id: toaster, type: toaster_oven, label: トースター, watts: 1000, note: "トースト・油揚げ・ちくわの焼き目、小さい耐熱皿のグラタン。W 数は推定" }
+  - { id: blender, type: blender, label: ミキサー, note: "ポタージュ・スムージー・バナナジュース・ソース。熱い物は粗熱を取ってから" }
 
 cookware:
   - { id: fp26, type: frying_pan, label: フライパン, size_cm: 26, lid: true, material: fluoro, dishwasher: false, note: "大きさは推定" }
@@ -34,7 +37,7 @@ tool_notes:
   - "低温調理器: 鶏むね 300g を袋に入れて 63℃ で 1 時間 30 分、などの仕込みに。できた物は 2 日以内に食べる"
 storage: [保存容器, 冷凍用保存袋, ラップ]
 
-missing: [オーブン, トースター, 圧力鍋, ミキサー, ホットクック, 揚げ物鍋, 魚焼きグリル, 電気ケトル]
+missing: [オーブン, 圧力鍋, ホットクック, 揚げ物鍋, 魚焼きグリル]
 
 preferences:
   avoid_deep_fry: true        # 揚げ物を提案しない（片付けの理由）
