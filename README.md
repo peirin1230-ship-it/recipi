@@ -57,6 +57,7 @@ python3 -m pytest -q                     # テスト（API は呼ばない）
 python3 scripts/agent.py auto --request <req-id> --mock --no-git   # Generator の動作確認
 python3 scripts/learn.py --no-llm --dry-run --force                # 夜間ジョブの動作確認
 python3 scripts/validate.py --all                                  # レシピの検査
+node tests/site/smoke.js                                           # ページのスモークテスト（tests/site/README.md）
 ```
 
 ## 公開リポジトリでの注意

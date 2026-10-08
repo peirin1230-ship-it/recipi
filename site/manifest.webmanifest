@@ -1,0 +1,12 @@
+{
+  "name": "recipi — 今夜の一皿",
+  "short_name": "recipi",
+  "description": "家にある食材と道具で、今日使える時間に収まるレシピを組み立てて、作った記録を図鑑にする。",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f6f1e6",
+  "theme_color": "#f6f1e6",
+  "lang": "ja",
+  "icons": [{ "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }]
+}
