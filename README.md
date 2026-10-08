@@ -4,58 +4,57 @@
 作るたびに写真・所要時間・再現できたか・家族の反応を記録し、次の提案に活かす。
 仕様は [docs/SPEC.md](docs/SPEC.md)。[kaji-quest](https://github.com/peirin1230-ship-it/kaji-quest) の弟分で、運用の型（GitHub Pages のページ 1 枚、Issue は使わない、記録は `logs/` にコミット）は同じ。
 
-**ページ**: https://peirin1230-ship-it.github.io/recipi/（初回セットアップ後に有効になる）
+| | URL |
+|---|---|
+| **ページ**（ホーム画面に追加して使う） | https://peirin1230-ship-it.github.io/recipi/ |
+| リポジトリ | https://github.com/peirin1230-ship-it/recipi |
+| Actions の実行ログ（ページの組み立て・生成・夜間の学習） | https://github.com/peirin1230-ship-it/recipi/actions |
+| ルーティン（レシピ生成を毎時行う Claude Code の定期実行） | https://claude.ai/code → ルーティン →「recipi: 注文を処理（毎時）」 |
+| kaji-quest のページ | https://peirin1230-ship-it.github.io/kaji-quest/ |
 
 ## 使い方
 
 1. ページを開く。スマホなら「ホーム画面に追加」（iPhone: Safari の共有 → ホーム画面に追加 / Android: Chrome のメニュー → ホーム画面に追加）。アプリのように全画面で開く。初回だけ ⚙ から GitHub トークンを保存する（下記）
-2. **今夜** で時間（15/20/30/45/60 分）を選んで「考えてもらう」。1〜2 分で本命のレシピ 1 本と別案 2 つが出る（閉じても大丈夫。開き直せば続きから）。別案をタップすると、その案で詳細を作る。「ほかの案」でもう一度
+2. **今夜** で時間（15/20/30/45/60 分）を選んで「考えてもらう」。本命のレシピ 1 本と別案 2 つが出る（閉じても大丈夫。開き直せば続きから）。別案をタップすると、その案で詳細を作る。「ほかの案」でもう一度
 3. **レシピ** は、うちの器具の火加減・分量（g と大さじ）・段取り表（コンロの口ごとのレーン×分）・仕上がりの目安・子どもの取り分け・保存・片付けまで書いてある。「作る」で **調理モード**（大きな字、タイマー、画面が消えない）
 4. 作り終えたら **記録**: 写真 1 枚、時間（自動）、手順どおり？、仕上がり ★、自分と家族の ★、子どもは完食／半分／少し／食べない、気づき 1 行。全部任意。60 秒で終わる
 5. **在庫** は「鶏もも 300g、小松菜、卵 6個」のように「、」区切りで足す。📷 で冷蔵庫の写真から読み取り（差分を確認してから反映）。kaji-quest で記録した買い物も取り込める。調味料は「ある／少ない／ない」の 3 段階だけ
 6. **図鑑** に作った料理が写真つきで並ぶ。**レシピ一覧** で定番・試した・下書き・封印を見る。**今週** に家族評価 F・再現性 R・時間誤差の推移と、週次ダイジェストの「来週の提案」が出る
-7. 夜中に学習が走る（`profile/learned.yml`）。速度係数・好み・器具の癖・定番の昇格・改訂版の生成は自動。学習が間違っていたら `profile/overrides.yml` に 1 行書く
+7. 夜中に学習が走る（`profile/learned.yml`）。速度係数・好み・器具の癖・定番の昇格は自動。学習が間違っていたら `profile/overrides.yml` に 1 行書く
 
 記録は `logs/YYYY/MM.jsonl` に 1 行ずつ、レシピは `recipes/<id>.md` に 1 ファイルずつコミットされる。集計はページを開くたびにログから計算する。
 
-## 初回セットアップ
+## 初回セットアップ（スマホのブラウザだけでできる）
 
-1. **生成の認証**（どちらか 1 つを Settings → Secrets and variables → Actions に登録する。レシピ生成はすべて GitHub Actions の中で行い、キーは端末に置かない）
-   - **無料（おすすめ）** `CLAUDE_CODE_OAUTH_TOKEN`: Claude の定額契約（Pro / Max / Team）で動かす。手元のターミナルで `claude setup-token` を実行して出たトークンを登録する。Claude Code が `.claude/skills/recipi-orders` の手順で Generator を務め、API の課金は無い（契約の利用枠を使う）。所要は 2〜4 分
-   - **従量課金** `ANTHROPIC_API_KEY`: Claude API を直接呼ぶ。1 回 0.1 USD 前後、月 5 USD 前後。所要は 1〜2 分。上限は `config.yml` の `generation.budget_usd_per_month`
-   - どちらも無いときは、ページの注文に「Secrets に置く」とエラーが出る。Claude Code を開いて `/recipi-orders` と打てば、その場で処理できる（下記）
-2. **Pages（1 回だけ）**: Settings → Pages → Build and deployment → Source: **Deploy from a branch** → Branch: **gh-pages** / (root) → Save。`main` に push するたびに `build-pages` が `gh-pages` を作り直す。数分後に https://peirin1230-ship-it.github.io/recipi/ が開く
-3. **トークン（ページ用、初回 1 回）**: [Fine-grained personal access token](https://github.com/settings/personal-access-tokens/new) を作る
+github.com にログインしておく。ターミナルは要らない。
+
+1. **Pages を有効にする（1 回だけ）**: https://github.com/peirin1230-ship-it/recipi/settings/pages → Build and deployment → Source: **Deploy from a branch** → Branch: **gh-pages** / (root) → Save。数分後に https://peirin1230-ship-it.github.io/recipi/ が開く（`main` に push するたびに `build-pages` が `gh-pages` を作り直す）
+2. **ページ用トークン（1 回だけ）**: https://github.com/settings/personal-access-tokens/new
    - Repository access: Only select repositories → `recipi`（kaji-quest の買い物メモに書くなら `kaji-quest` も）
    - Permissions → Repository permissions: **Contents → Read and write**
    - 発行した `github_pat_…` をページの ⚙ に貼って保存する。トークンはそのブラウザにだけ残り、GitHub API 以外には送られない
-4. **家の情報**: `equipment.yml`（コンロの種類と口数、レンジの W 数、フライパンの大きさ、無い道具）、`family.yml`（人数、子どもの年齢帯、アレルギー、塩分の方針）、`pantry.json`（いまある物。ページからも書ける）を直す。**名前・生年月日は書かない**（公開リポジトリ）
+3. **ホーム画面に追加**: iPhone は Safari の共有 → 「ホーム画面に追加」。Android は Chrome のメニュー → 「ホーム画面に追加」
+4. **家の情報を直す**（github.com の鉛筆マークで編集できる）
+   - 器具: https://github.com/peirin1230-ship-it/recipi/edit/main/equipment.yml（コンロの種類と口数、レンジの W 数、フライパンの大きさ、無い道具）
+   - 家族: https://github.com/peirin1230-ship-it/recipi/edit/main/family.yml（人数、子どもの年齢帯、アレルギー、塩分の方針）
+   - 在庫: ページの「在庫」から（`pantry.json`）
+   - **名前・生年月日は書かない**（公開リポジトリ）
 
-## スマホだけで設定する
+## レシピ生成の仕組み（3 つの経路）
 
-ターミナルが無くても、次はすべてスマホのブラウザ（github.com にログイン）でできる。
+ページで注文すると `requests/<id>.json` ができる。それを誰が処理するかが 3 通りある。どれで作っても同じ検査・同じファイル形式で、学習は区別しない。
 
-| すること | 場所 |
-|---|---|
-| Pages を有効にする（1 回） | リポジトリの Settings → Pages → Source: Deploy from a branch → `gh-pages` / (root) → Save |
-| ページ用トークンを作る | https://github.com/settings/personal-access-tokens/new → Only select repositories: recipi → Contents: Read and write → 発行 → ページの ⚙ に貼る |
-| ホーム画面に追加 | iPhone: Safari の共有 → ホーム画面に追加 / Android: Chrome のメニュー → ホーム画面に追加 |
-| 家の情報を直す | github.com でファイルを開いて鉛筆（`equipment.yml` / `family.yml`）。在庫はページの「在庫」から |
+| 経路 | 費用 | 待ち時間 | 要るもの | 状態 |
+|---|---|---|---|---|
+| **ルーティン**（既定） | 無料（Claude の契約の枠内） | 10〜21 時の毎時 7 分に処理。最長 1 時間 | 無し | 設定済み。できるとスマホに通知 |
+| **手動** `/recipi-orders` | 無料 | 2〜4 分 | スマホの Claude アプリで Claude Code のセッションを開いて打つ | いつでも |
+| **Actions**（契約トークン） | 無料 | 注文の直後 2〜4 分 | PC で `claude setup-token` を 1 回実行し、出たトークンを [Secrets](https://github.com/peirin1230-ship-it/recipi/settings/secrets/actions) に `CLAUDE_CODE_OAUTH_TOKEN` として登録 | 未設定（登録すれば自動で切り替わる。ルーティンは止めてよい） |
+| Actions（API キー） | 従量課金。1 回 0.1 USD 前後、月 5 USD 前後 | 1〜2 分 | [Secrets](https://github.com/peirin1230-ship-it/recipi/settings/secrets/actions) に `ANTHROPIC_API_KEY` | 任意。上限は `config.yml` の `generation.budget_usd_per_month` |
 
-**生成はルーティンが行う**（API キーもターミナルも要らない）。Claude Code の cloud 側にルーティン「recipi: 注文を処理（毎時）」があり、10 時〜21 時の毎時 7 分に `requests/` の未処理の注文を拾ってレシピを作り、push する。ページは注文したまま閉じてよく、できるとレシピカードに出る（最長 1 時間待つ。6 分を過ぎると 1 分ごとの確認に落ちる）。すぐ欲しいときは、スマホの Claude アプリで Claude Code のセッションを開いて `/recipi-orders` と打てば 2〜4 分で出る。
-ルーティンの一時停止・削除は claude.ai/code のルーティン一覧から。
-あとで PC を使えるときに `claude setup-token` で契約トークンを作って Secrets `CLAUDE_CODE_OAUTH_TOKEN` に登録すれば、注文の直後（2〜4 分）に Actions が処理する形に切り替わる（ルーティンは止めてよい）。
-
-## Claude Code で直接回す（無料・手動）
-
-Actions を使わなくても、このリポジトリを Claude Code で開いて次を打てば同じ形のレシピができる（契約の範囲内。API キー不要）。
-
-| 打つこと | 何が起きるか |
-|---|---|
-| `/recipi-tonight 25 大人2 子1 さっぱり` | 注文を作り、その場でレシピを `recipes/` に書いて push。ページにも出る |
-| `/recipi-orders` | ページで出した注文（`requests/` の pending）をまとめて処理。冷蔵庫写真・改訂・週の献立も |
-
-中身は `python3 scripts/agent.py context --request <id>`（Generator に渡す物を全部表示）→ Claude Code が JSON を書く → `python3 scripts/agent.py finish --request <id> --json …`（検査・整形・保存・push）。
+- ページは注文の結果を 6 分までは 5 秒ごと、その後は 1 分ごとに最長 24 時間確認する。閉じても、開き直せば続きから
+- ルーティンの一時停止・削除は https://claude.ai/code のルーティン一覧から。注文が無い時間帯は数十秒で終わる
+- 手元の Claude Code からは `/recipi-tonight 25 大人2 子1 さっぱり` で、注文からレシピまでその場で作れる
+- 中身は `python3 scripts/agent.py context --request <id>`（Generator に渡す物を全部表示）→ Claude Code が JSON を書く → `python3 scripts/agent.py finish --request <id> --json …`（検査・整形・保存・push）。API キーがあるときは `scripts/agent.py auto` が同じことを API で行う
 
 ## 変えたいとき
 
@@ -74,6 +73,7 @@ Actions を使わなくても、このリポジトリを Claude Code で開い�
 | レシピを手で直す | `recipes/<id>.md`（front matter が本体。本文は人が読む用） |
 | 見た目や動き | `site/`（`index.html` / `app.js` / `style.css`） |
 | 学習・ダイジェストの時刻 | `.github/workflows/nightly-learn.yml`（03:30 JST）/ `weekly-digest.yml`（日曜 20:00 JST） |
+| ルーティンの時間帯 | https://claude.ai/code のルーティン一覧（いまは 10〜21 時の毎時 7 分） |
 
 ## 開発
 
