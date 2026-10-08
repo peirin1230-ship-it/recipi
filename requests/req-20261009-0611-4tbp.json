@@ -1,0 +1,25 @@
+{
+ "id": "req-20261009-0611-4tbp",
+ "ts": "2026-10-09T06:11:07+09:00",
+ "type": "dinner",
+ "time_budget": 25,
+ "servings": {
+  "adults": 2,
+  "kids": 1
+ },
+ "dishes": "main+side",
+ "mood": [],
+ "use_up": [
+  "鶏もも肉",
+  "豚こま切れ肉",
+  "小松菜",
+  "豆腐",
+  "かまぼこ"
+ ],
+ "exclude": [],
+ "note": "",
+ "mode": "auto",
+ "status": "pending",
+ "error": null,
+ "result": null
+}
