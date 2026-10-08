@@ -48,8 +48,19 @@ github.com にログインしておく。ターミナルは要らない。
 |---|---|---|---|---|
 | **ルーティン**（既定） | 無料（Claude の契約の枠内） | 10〜21 時の毎時 7 分に処理。最長 1 時間 | 無し | 設定済み。できるとスマホに通知 |
 | **手動** `/recipi-orders` | 無料 | 2〜4 分 | スマホの Claude アプリで Claude Code のセッションを開いて打つ | いつでも |
-| **Actions**（契約トークン） | 無料 | 注文の直後 2〜4 分 | PC で `claude setup-token` を 1 回実行し、出たトークンを [Secrets](https://github.com/peirin1230-ship-it/recipi/settings/secrets/actions) に `CLAUDE_CODE_OAUTH_TOKEN` として登録 | 未設定（登録すれば自動で切り替わる。ルーティンは止めてよい） |
+| **Actions → ルーティン**（API トリガー） | 無料 | 注文の直後 2〜4 分 | スマホだけで設定できる。下の「注文の直後に処理させる」 | 未設定（登録すれば自動で切り替わる） |
+| Actions（契約トークン） | 無料 | 注文の直後 2〜4 分 | PC で `claude setup-token` を 1 回実行し、出たトークンを [Secrets](https://github.com/peirin1230-ship-it/recipi/settings/secrets/actions) に `CLAUDE_CODE_OAUTH_TOKEN` として登録 | 任意 |
 | Actions（API キー） | 従量課金。1 回 0.1 USD 前後、月 5 USD 前後 | 1〜2 分 | [Secrets](https://github.com/peirin1230-ship-it/recipi/settings/secrets/actions) に `ANTHROPIC_API_KEY` | 任意。上限は `config.yml` の `generation.budget_usd_per_month` |
+
+### 注文の直後に処理させる（スマホだけでできる。コマンド不要）
+
+毎時の待ちを無くすには、ルーティンに「API トリガー」を付け、その URL とトークンを GitHub の Secrets に入れる。ページで注文すると GitHub Actions がその URL を呼び、ルーティンのセッションがすぐ起動して 2〜4 分でレシピを作る。
+
+1. https://claude.ai/code/routines を開き、「recipi: 注文を処理（毎時）」→ 名前の横のメニュー → **Edit**
+2. **Select a trigger** の **Add another trigger** → **API** を選んで保存する
+3. 表示された **URL** をコピーし、**Generate token** を押してトークン（`sk-ant-oat01-…`）をコピーする（トークンは 1 回しか表示されない）
+4. https://github.com/peirin1230-ship-it/recipi/settings/secrets/actions で **New repository secret** を 2 つ作る: `ROUTINE_FIRE_URL`（URL）と `ROUTINE_FIRE_TOKEN`（トークン）
+5. 以後、ページの「考えてもらう」の直後に処理が始まる。毎時のスケジュールは残しておいてよい（拾い漏れの保険）。止めるならルーティンの on/off スイッチ
 
 - ページは注文の結果を 6 分までは 5 秒ごと、その後は 1 分ごとに最長 24 時間確認する。閉じても、開き直せば続きから
 - ルーティンの一時停止・削除は https://claude.ai/code のルーティン一覧から。注文が無い時間帯は数十秒で終わる

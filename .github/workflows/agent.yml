@@ -1,11 +1,13 @@
 # ページからの注文（requests/<id>.json）を受けて Generator を動かす（docs/SPEC.md §12.2）。
 # ページが POST /repos/{owner}/{repo}/dispatches に {"event_type":"agent","client_payload":{"request_id":"req-..."}} を送ると動く。
 #
-# 認証は Secrets のどちらか（Settings → Secrets and variables → Actions）:
+# 生成の経路は Secrets で決まる（Settings → Secrets and variables → Actions）。上から順に使える物を使う:
 #   ANTHROPIC_API_KEY       … Claude API（従量課金）。scripts/agent.py が直接呼ぶ
-#   CLAUDE_CODE_OAUTH_TOKEN … Claude の定額契約（Pro / Max / Team）。`claude setup-token` で作る。
+#   CLAUDE_CODE_OAUTH_TOKEN … Claude の定額契約（Pro / Max / Team）。`claude setup-token` で作る（PC のターミナルが要る）。
 #                             Claude Code が .claude/skills/recipi-orders の手順で Generator を務める（API 課金なし）
-# 両方あれば API キーを使う。どちらも無ければ注文に error を書いて終わる。
+#   ROUTINE_FIRE_URL + ROUTINE_FIRE_TOKEN … Claude Code のルーティン「recipi: 注文を処理」の API トリガー（claude.ai/code/routines で
+#                             作れる。スマホだけで設定できる）。この workflow が呼ぶと、ルーティンのセッションが注文を処理する（API 課金なし）
+# どれも無ければ注文に error を書いて終わる（毎時のルーティンが拾う）。
 name: agent
 
 on:
@@ -33,6 +35,7 @@ jobs:
       REQUEST_ID: ${{ github.event.client_payload.request_id || github.event.inputs.request_id }}
       HAS_API_KEY: ${{ secrets.ANTHROPIC_API_KEY != '' }}
       HAS_OAUTH: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN != '' }}
+      HAS_ROUTINE: ${{ secrets.ROUTINE_FIRE_URL != '' && secrets.ROUTINE_FIRE_TOKEN != '' }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -60,15 +63,41 @@ jobs:
           prompt: "/recipi-orders ${{ env.REQUEST_ID }}"
           claude_args: "--max-turns 40"
 
+      - name: Fire routine (Claude Code routine via API trigger)
+        if: env.HAS_API_KEY != 'true' && env.HAS_OAUTH != 'true' && env.HAS_ROUTINE == 'true'
+        env:
+          ROUTINE_FIRE_URL: ${{ secrets.ROUTINE_FIRE_URL }}
+          ROUTINE_FIRE_TOKEN: ${{ secrets.ROUTINE_FIRE_TOKEN }}
+        run: |
+          code=$(curl -sS -o /tmp/fire.json -w "%{http_code}" -X POST "$ROUTINE_FIRE_URL" \
+            -H "Authorization: Bearer $ROUTINE_FIRE_TOKEN" \
+            -H "anthropic-beta: experimental-cc-routine-2026-04-01" \
+            -H "anthropic-version: 2023-06-01" \
+            -H "Content-Type: application/json" \
+            -d "{\"text\": \"$REQUEST_ID\"}")
+          echo "fire: HTTP $code"; cat /tmp/fire.json; echo
+          if [ "$code" -lt 200 ] || [ "$code" -ge 300 ]; then
+            python3 - "$code" <<'PY'
+          import os, sys
+          sys.path.insert(0, "scripts"); import common
+          rid = os.environ["REQUEST_ID"]
+          req = common.read_json(f"requests/{rid}.json") or {"id": rid}
+          req.update({"status": "error", "error": f"ルーティンを呼べなかった（HTTP {sys.argv[1]}）。claude.ai/code/routines の API トリガーと Secrets の ROUTINE_FIRE_URL / ROUTINE_FIRE_TOKEN を確認"})
+          common.write_json(f"requests/{rid}.json", req)
+          common.git_commit_push([f"requests/{rid}.json"], f"agent: {rid} error (routine fire failed) [skip ci]")
+          PY
+            exit 1
+          fi
+
       - name: No credentials
-        if: env.HAS_API_KEY != 'true' && env.HAS_OAUTH != 'true'
+        if: env.HAS_API_KEY != 'true' && env.HAS_OAUTH != 'true' && env.HAS_ROUTINE != 'true'
         run: |
           python3 - <<'PY'
           import json, os, sys
           sys.path.insert(0, "scripts"); import common
           rid = os.environ["REQUEST_ID"]
           req = common.read_json(f"requests/{rid}.json") or {"id": rid}
-          req.update({"status": "error", "error": "ANTHROPIC_API_KEY か CLAUDE_CODE_OAUTH_TOKEN を Secrets に置く（README の初回セットアップ）"})
+          req.update({"status": "pending", "error": None, "note_system": "Actions に生成の認証が無い。毎時のルーティンが拾う（README の初回セットアップ）"})
           common.write_json(f"requests/{rid}.json", req)
-          common.git_commit_push([f"requests/{rid}.json"], f"agent: {rid} error (no credentials) [skip ci]")
+          common.git_commit_push([f"requests/{rid}.json"], f"agent: {rid} left for routine [skip ci]")
           PY
