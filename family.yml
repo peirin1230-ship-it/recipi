@@ -1,0 +1,19 @@
+# family.yml — 食べる人（docs/SPEC.md §6.3）。名前は書かない。role は me / partner / kid（複数なら kid1, kid2）。
+# ★ 初期値はひな形。年齢帯（age_band）は 0-6m / 6-12m / 1-2y / 2-3y / 3-5y / 6y+。変わったら手で直す。
+
+members:
+  - { role: me,      portion: 1.0 }
+  - { role: partner, portion: 0.9, dislikes: [], notes: "" }
+  - { role: kid,     portion: 0.4, age_band: "1-2y", texture: soft, notes: "手づかみで食べたがる" }
+
+allergies: []                 # 絶対に使わない（hard）。例: [卵, 乳, 小麦, えび]
+avoid: [レバー]               # 使わない。注文の一言で「今日は OK」と言えば使える（soft）
+
+seasoning:
+  salt: light                 # light / normal。大人の分の塩分の目安
+  spicy: none                 # none / mild / normal。kid がいる限り none が既定
+  kid_rule: separate          # separate: 味付け前に取り分け / shared: 全体を薄味で
+
+meals:
+  dinner_default: { adults: 2, kids: 1, dishes: "main+side" }
+  partner_late_days: []       # パートナーが遅い曜日（mon..sun）。子どもだけ先に出す前提で組む

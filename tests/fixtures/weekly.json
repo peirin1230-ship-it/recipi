@@ -1,0 +1,16 @@
+{
+  "days": [
+    { "date": "2026-10-13", "title": "豚こまと玉ねぎの生姜焼き", "main_ingredients": ["豚こま切れ肉", "玉ねぎ"], "minutes": 20, "why": "豚こまの期限が近い", "kind": "standard" },
+    { "date": "2026-10-14", "title": "鶏もも肉の照り焼きと小松菜のおひたし", "main_ingredients": ["鶏もも肉", "小松菜"], "minutes": 22, "why": "定番", "kind": "standard" },
+    { "date": "2026-10-15", "title": "豆腐ハンバーグ", "main_ingredients": ["豆腐", "鶏ひき肉"], "minutes": 25, "why": "子どもが食べやすい", "kind": "new" },
+    { "date": "2026-10-16", "title": "鮭のムニエルとじゃがいものソテー", "main_ingredients": ["鮭", "じゃがいも"], "minutes": 25, "why": "魚の日", "kind": "new" },
+    { "date": "2026-10-17", "title": "親子丼", "main_ingredients": ["鶏もも肉", "卵"], "minutes": 15, "why": "金曜は早く", "kind": "standard" },
+    { "date": "2026-10-18", "title": "野菜たっぷり焼きうどん", "main_ingredients": ["冷凍うどん", "キャベツ"], "minutes": 20, "why": "冷凍うどんの消化", "kind": "new" },
+    { "date": "2026-10-19", "title": "カレーライス", "main_ingredients": ["豚こま切れ肉", "じゃがいも", "にんじん"], "minutes": 45, "why": "日曜はまとめて作って翌日も", "kind": "standard" }
+  ],
+  "shopping": [
+    { "name": "鶏ひき肉", "qty": "300g", "reason": "豆腐ハンバーグ" },
+    { "name": "鮭", "qty": "2 切れ", "reason": "ムニエル" },
+    { "name": "キャベツ", "qty": "1/2 個", "reason": "焼きうどん" }
+  ]
+}

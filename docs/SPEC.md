@@ -1,4 +1,6 @@
-# recipi 仕様書 v1.0
+# recipi 仕様書 v1.1
+
+> v1.1（2026-10-09）: 実装に合わせて §6.4 / §6.6 / §9.4 / §11 / §12 / §14 を更新。コードは `scripts/`・`site/`・`.github/workflows/`。
 
 家にある**食材**と**調理器具**を登録しておくと、**今日使える時間**で作れるレシピを細かく組み立ててくれる GitHub リポジトリの仕様。
 作るたびに写真・所要時間・再現できたか・家族の反応を記録し、その記録を次の提案に還流して、提案の質を上げ続ける。
@@ -269,20 +271,23 @@ meals:
   "note": "妻は 20 時。子どもだけ先に食べる",
   "mode": "auto",
   "status": "pending",
+  "error": null,
   "result": null
 }
 ```
 
 | 項目 | 内容 |
 |------|------|
-| `type` | `dinner` / `prep` / `breakfast` / `lunchbox` / `weekly` |
+| `type` | `dinner` / `prep` / `breakfast` / `lunchbox`（レシピ生成）/ `recipe_detail`（別案や週の献立の 1 日を詳細化。`parent` に元の注文 id、`alternative` に番号）/ `pantry_photo`（`image` に `inbox/<id>.jpg`、`hint` に fridge / freezer / pantry）/ `revise`（`recipe_id`）/ `weekly`（`start_date`、曜日ごとの `budgets`） |
 | `time_budget` | 分。**買い物を除き、キッチンに立ってから盛り付けまで** |
 | `dishes` | `main` / `main+side` / `main+side+soup` / `onepot`（丼・麺の 1 品） |
 | `mood` | 自由タグ。`さっぱり` `がっつり` `和` `洋` `中` `麺` `丼` `鍋` など。無くてもよい |
 | `use_up` | 使い切りたい物。ページが期限順に自動で入れる。外してもよい |
 | `mode` | `auto`: 最適な 1 本を詳細まで生成し、別案 2 つは一行で出す（既定、1 往復）。`pick`: 候補 3 つを一行で出し、選んでから詳細（2 往復） |
-| `status` | `pending` → `running` → `done` / `error` |
-| `result` | `{ recipe_id, alternatives: [{title, minutes, why}], tokens, cost_usd, seconds }` |
+| `status` | `pending` → `running` → `done` / `error`（`error` に理由） |
+| `result` | 共通: `model` / `prompt_version` / `tokens` / `cost_usd` / `seconds`。レシピ系: `recipe_id`、`recipe`（§6.5 の front matter と同じ物。ページはこれをそのまま描く）、`alternatives: [{title, minutes, why, kind}]`、`feasible` / `infeasible_reason` / `nearest_options`。`pantry_photo`: `items: [{name, qty, unit, loc, confidence, known}]`、`staples: [{name, state}]`。`weekly`: `days: [{date, title, main_ingredients, minutes, why, kind}]`、`shopping`、`plan_path` |
+
+ページは注文ファイルを PUT したあと `POST /repos/{owner}/{repo}/dispatches` に `{"event_type": "agent", "client_payload": {"request_id": "<id>"}}` を送る。Actions（§12.2）が `type` を見て処理を分ける。
 
 ### 6.5 Recipe（レシピ）— `recipes/<id>.md`
 
@@ -382,6 +387,7 @@ detail: full                           # full / compact（定番になると com
   "photo": "photos/r-20261008-torimomo-teriyaki/20261008-1.jpg",
   "learned": "皮目 3 分は長い。2 分半で十分だった",
   "pantry_used": ["p1a2b", "p3c4d"],
+  "step_minutes": { "prep": 7.5, "wait": 8, "heat": 3.5, "serve": 4 },
   "r_score": 75,
   "f_score": 4.7
 }
@@ -397,7 +403,9 @@ detail: full                           # full / compact（定番になると com
 | `ratings.kid` | `all`（完食）/ `half` / `little` / `none` / `absent`（いなかった） | 1 タップ |
 | `photo` | 完成写真のパス。無ければ `null` | 任意（推奨） |
 | `learned` | 気づき 1 行 | 任意 |
-| `r_score` / `f_score` | §9.2 / §9.3 の式で記録時に計算。再計算可能 | 自動 |
+| `step_minutes` | 調理モードで手順にチェックを入れた時刻から、工程の種類（kind）ごとに掛かった分を集計した物。速度係数の工程別の学習に使う（§9.4） | 自動 |
+| `photo_note` | 完成写真の一言（§8.5。夜間ジョブが足す） | 自動 |
+| `r_score` / `f_score` | §9.2 / §9.3 の式で記録時に計算。再計算可能（`scripts/learn.py` の `r_score` / `f_score` が正） | 自動 |
 
 ### 6.7 Learned（学習結果）— `profile/learned.yml`
 
@@ -684,7 +692,7 @@ F = その回に食べた人の評価の平均
 | 処理 | 規則 | 出力先 |
 |------|------|--------|
 | レシピ統計 | `cooked` / `r_avg` / `f_avg` / `last` を直近 5 回から | `recipes/<id>.md` の `stats` と `photo` |
-| 速度係数 | 工程 `kind` ごとに `actual ÷ raw_estimate` の中央値（直近 90 日、20 件以上で確定。それまでは 1.0 からの加重平均）。0.7〜2.0 に丸める | `learned.yml` の `speed_factor` |
+| 速度係数 | `overall` は `actual_minutes ÷ raw_estimate` の中央値。工程別（`prep` / `heat` / `serve`）は記録に `step_minutes` があるときだけ「その工程の実測 ÷ レシピの見込み」の中央値、無ければ `overall` と同じ。直近 90 日、20 件以上で確定（それまでは 1.0 からの加重平均）。0.7〜2.0 に丸める | `learned.yml` の `speed_factor` |
 | 好みの要素 | 各レシピの主材料・調理法・味のタグ（front matter の `tags` と `ingredients`）に F を配り、要素ごとに平均と件数。n ≥ 3 で採用。`score = (平均 − 3.5) ÷ 1.5` | `likes` / `dislikes` |
 | 子どもの食べ具合 | `ratings.kid` を要素に配る。`all`/`half` が 2 回以上 → `eats_well`。`none` が 2 回以上 → `refuses`。`learned` の文に「刻んだら食べた」等があれば Generator が `works_if` に要約 | `kid` |
 | 器具の癖・傾向 | `deviation` と `learned` の全文を Generator に渡し、器具・時間・味付けに関する**再現性のある一般則**だけを 10 行以内で抽出。1 件だけの話は入れない | `equipment_notes` / `recipe_notes` |
@@ -785,16 +793,22 @@ recipi/                          # 公開リポジトリ（Pages のため）。
 │   ├── pantry_photo.md          # 冷蔵庫写真の読み取り
 │   ├── photo_note.md            # 完成写真の一言
 │   ├── learn.md                 # 夜間の要約
-│   └── weekly.md                # 週の献立・ダイジェスト
+│   ├── weekly.md                # 週の献立
+│   └── digest.md                # 週次ダイジェストの提案
 ├── docs/
 │   ├── SPEC.md                  # 本ファイル
 │   └── digests/                 # 週次ダイジェスト（2026-W41.md）
 ├── scripts/
+│   ├── common.py                # 読み書き・front matter・食材の正規化・git
+│   ├── schema.py                # Generator の出力 JSON スキーマ、段取り表のレーン
+│   ├── llm.py                   # Claude API の呼び出し（structured output・キャッシュ・mock）
 │   ├── build_site.py            # site/ を組み立て、YAML を JSON 化（kaji-quest と同じ）
-│   ├── agent.py                 # Actions から呼ぶ。action ごとに分岐（recipe / revise / pantry_photo / photo_note）
+│   ├── agent.py                 # Actions から呼ぶ。注文の type ごとに分岐（recipe / recipe_detail / pantry_photo / revise / weekly / photo_note）
 │   ├── learn.py                 # 夜間の統計（決定的）＋要約（Generator）
+│   ├── digest.py                # 週次ダイジェスト
 │   ├── render_recipe.py         # JSON → recipes/<id>.md
 │   └── validate.py              # レシピの機械検査（§7.3 の規則、安全規則、器具）
+├── tests/                       # pytest（API は呼ばない。fixtures/ に Generator の応答例）
 ├── site/                        # index.html / app.js / style.css / manifest / icon
 └── .github/workflows/
     ├── build-pages.yml          # site/ と設定を gh-pages へ
@@ -822,17 +836,20 @@ kaji-quest と同じ。`site/**`, `config.yml`, `equipment.yml`, `family.yml`, `
 
 ### 12.2 `agent.yml` — 生成系（`repository_dispatch`）
 
-| `event_type` | 入力 | 処理 | 出力 |
+`event_type` は `agent` の 1 つだけ。`client_payload.request_id` の注文ファイルを読み、その `type` で処理を分ける（`scripts/agent.py auto --request <id>`）。
+
+| 注文の `type` | 入力 | 処理 | 出力 |
 |---|---|---|---|
-| `recipe` | `requests/<id>.json` | §7.1 のコンテキストを組み、生成 → 検査（`validate.py`）→ 不合格なら最大 2 回やり直し → 整形 | `recipes/<id>.md`、`requests/<id>.json` の `result` |
-| `recipe_detail` | `requests/<id>.json` ＋ 別案の番号 | 別案を詳細化 | 同上 |
-| `revise` | レシピ id | §7.5 | `recipes/<id>-vN.md` |
+| `dinner` / `prep` / `breakfast` / `lunchbox` | `requests/<id>.json` | §7.1 のコンテキストを組み、生成 → 検査（`validate.py`）→ 不合格なら最大 2 回やり直し → 整形 | `recipes/<id>.md`、`requests/<id>.json` の `result` |
+| `recipe_detail` | `parent`（元の注文）＋ `alternative`（別案の番号、または週の献立の日の番号） | その料理で詳細を生成。予算・人数は元の注文から引き継ぐ | 同上 |
+| `revise` | `recipe_id` | §7.5 | `recipes/<id>-vN.md` |
 | `pantry_photo` | `inbox/<id>.jpg` | 画像を渡し、品名・数量・保存場所の JSON を得る → マスタで正規化 | `requests/<id>.json` の `result`（差分）。ページが確認後に `pantry.json` へ反映。`inbox/` の写真は削除 |
-| `weekly` | 注文（`type: weekly`） | 1 週間分の献立＋買い物リスト | `recipes/` に 7 本（`status: draft`）＋ `docs/digests/` の買い物リスト |
+| `weekly` | `start_date`、曜日ごとの `budgets` | 1 週間分の献立（7 日分の料理名・主材料・分・理由）＋買い物リスト。**詳細レシピは当日に `recipe_detail` で作る**（7 本を先に作ると費用と改訂の手間が増えるため） | `requests/<id>.json` の `result`（`days` / `shopping`）＋ `docs/digests/<week>-plan.md` |
 
 - 所要: Actions の起動 10〜30 秒 ＋ 依存の導入 10〜20 秒 ＋ 生成 30〜60 秒 ＋ コミット → **おおむね 1〜2 分**。ページは「考え中（1〜2 分）」と出し、5 秒ごとに `requests/<id>.json` を読み直す。
 - 同時実行は 1（`concurrency: agent`）。連打しても最後の注文だけが残る。
-- 失敗（API エラー、検査 3 回不合格）は `status: error` と理由を書く。ページは理由を見せて「もう一度」。
+- 失敗（API エラー、検査 3 回不合格、月の費用上限）は `status: error` と理由を書く。ページは理由を見せて「もう一度」。
+- 開始時に `status: running` を 1 回コミットする（ページが「考え中」を出せるように）。ページの書き込みと競合したら `pull --rebase` してやり直す。
 - 書き込みは `[skip ci]`。`build-pages` は `recipes/` の変更で動くが、`agent.yml` のコミットは `paths` から外す（ページは `recipes/` を API でも読めるため、配信の再構築は夜間に 1 回で十分）。
 
 ### 12.3 `nightly-learn.yml`
@@ -843,7 +860,7 @@ kaji-quest と同じ。`site/**`, `config.yml`, `equipment.yml`, `family.yml`, `
 ### 12.4 `weekly-digest.yml`
 - **トリガー**: 日曜 20:00 JST（`0 11 * * 0` UTC）。kaji-quest の週報（21:00）の前に出す
 - **処理**: `quality` の今週分、作った料理と写真、定番・改訂・封印の変化、在庫と季節から**来週の提案 3 つ**（一行）、買い物候補（`staples` の `low`/`none` と提案に要る物）
-- **出力**: `docs/digests/2026-W41.md`。ページの「今週」に出す。通知はしない（kaji-quest の 17:00 帰宅前の通知からページへ飛ぶ運用で足りる）
+- **出力**: `docs/digests/2026-W41.md`（`scripts/digest.py`。front matter に数字と提案を持ち、ページの「今週」はそれを読む）。通知はしない（kaji-quest の 17:00 帰宅前の通知からページへ飛ぶ運用で足りる）
 
 ### 12.5 cron の注意
 kaji-quest §8.4 と同じ。UTC 表記、数十分の遅延あり、長期間動きが無いと scheduled workflow が止まりうる（毎日ログを書くので実質問題ない）。
@@ -892,10 +909,13 @@ generation:
   effort: high
   max_retries: 2                  # 検査不合格のやり直し回数
   time_margin: 0.9                # planned ≤ budget × この値
+  fallbacks: default              # 安全機構で断られたときに別モデルへ（server-side fallback）。off で無効
+  budget_usd_per_month: 15        # 月の API 費用の上限。超えたら生成を止める
 
 learn:
   window_days: 90
   min_logs_for_speed: 20
+  recent_n: 5                     # レシピの統計に使う直近の回数
   standard: { cooked: 3, r_avg: 70, f_avg: 4.0 }
   revision: { r_below: 50, times: 2, max_revisions: 3 }
   retire: { f_at_most: 2.0, times: 2 }
@@ -907,6 +927,7 @@ photos:
 
 kaji_quest:
   repo: peirin1230-ship-it/kaji-quest
+  branch: main
   import_shopping: true
   push_shopping: false
   write_cook_log: false

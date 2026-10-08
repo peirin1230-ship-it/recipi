@@ -1,0 +1,38 @@
+# 夜間の学習（docs/SPEC.md §9.4）。03:30 JST = 18:30 UTC（前日）。新しい記録が無ければ何もしない。
+# コミットに [skip ci] を付けないので build-pages が走り、ページの同梱データ（recipes / learned）が更新される。
+name: nightly-learn
+
+on:
+  schedule:
+    - cron: "30 18 * * *"
+  workflow_dispatch:
+    inputs:
+      force:
+        description: "新しい記録が無くても実行する"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: agent
+  cancel-in-progress: false
+
+jobs:
+  learn:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install pyyaml anthropic
+      - name: Learn
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: python3 scripts/learn.py ${{ inputs.force && '--force' || '' }}

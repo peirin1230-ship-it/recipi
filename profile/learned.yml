@@ -1,0 +1,15 @@
+# profile/learned.yml — nightly-learn（scripts/learn.py）が logs/ から生成する。手で直さない（直すなら profile/overrides.yml）。
+updated: null
+window_days: 90
+n_logs: 0
+speed_factor: { overall: 1.0, prep: 1.0, heat: 1.0, serve: 1.0 }
+likes: []
+dislikes: []
+partner: { likes: [], dislikes: [] }
+kid: { eats_well: [], refuses: [], works_if: [] }
+equipment_notes: []
+recipe_notes: []
+standards: []
+needs_revision: []
+retired: []
+quality: []

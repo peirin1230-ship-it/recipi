@@ -1,0 +1,43 @@
+# ページからの注文（requests/<id>.json）を受けて Generator を動かす（docs/SPEC.md §12.2）。
+# ページが POST /repos/{owner}/{repo}/dispatches に {"event_type":"agent","client_payload":{"request_id":"req-..."}} を送ると動く。
+# API キーは Secrets の ANTHROPIC_API_KEY にだけ置く（Settings → Secrets and variables → Actions）。
+name: agent
+
+on:
+  repository_dispatch:
+    types: [agent]
+  workflow_dispatch:
+    inputs:
+      request_id:
+        description: "requests/<id>.json の id"
+        required: true
+
+permissions:
+  contents: write
+
+concurrency:
+  group: agent
+  cancel-in-progress: false
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install pyyaml anthropic
+      - name: Pull latest (ページが直前に書いた注文を取り込む)
+        run: git pull --rebase -q origin ${{ github.ref_name || 'main' }} || true
+      - name: Run agent
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          REQUEST_ID: ${{ github.event.client_payload.request_id || github.event.inputs.request_id }}
+        run: |
+          if [ -z "$ANTHROPIC_API_KEY" ]; then echo "ANTHROPIC_API_KEY が Secrets に無い" >&2; fi
+          python3 scripts/agent.py auto --request "$REQUEST_ID"

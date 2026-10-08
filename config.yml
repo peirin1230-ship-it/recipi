@@ -1,0 +1,50 @@
+# config.yml — recipi の設定（docs/SPEC.md §14）
+# ★ 公開リポジトリ。名前・生年月日・住所・顔写真はここにも他にも書かない。
+
+repo:
+  owner: peirin1230-ship-it
+  name: recipi
+  branch: main                    # ページと Actions が書き込む先
+
+request:
+  default_type: dinner
+  default_budget: 25              # 分。「今夜」の初期値
+  budget_chips: [15, 20, 30, 45, 60]
+  default_mode: auto              # auto: 本命 1 本を詳細まで＋別案 2 つ / pick: 候補 3 つから選ぶ
+
+suggest:
+  explore_ratio: 0.3              # 本命を「新しい料理」にする割合
+  no_repeat_days: 14              # 同じ料理を出さない日数
+  same_main_ingredient_max_days: 2
+  use_up_days: 3                  # use_by まで N 日以内の物を「使い切り」に自動で入れる
+
+generation:
+  model: claude-opus-5-5
+  effort: high                    # low / medium / high / xhigh / max
+  max_retries: 2                  # 検査不合格のやり直し回数
+  time_margin: 0.9                # planned ≤ budget × この値
+  fallbacks: default              # 安全機構で断られたときに別モデルへ（server-side fallback）。off で無効
+  budget_usd_per_month: 15        # 月の API 費用の上限。超えたら生成を止める
+
+learn:
+  window_days: 90                 # この期間のログから学習する
+  min_logs_for_speed: 20          # 速度係数を確定するのに要る記録数（それまでは 1.0 からの加重平均）
+  recent_n: 5                     # レシピの統計に使う直近の回数
+  standard: { cooked: 3, r_avg: 70, f_avg: 4.0 }
+  revision: { r_below: 50, times: 2, max_revisions: 3 }
+  retire: { f_at_most: 2.0, times: 2 }
+  photo_note: false               # 完成写真の一言（SPEC §8.5）。Phase 4 で true
+
+photos:
+  max_edge_px: 1280
+  jpeg_quality: 0.8
+
+kaji_quest:
+  repo: peirin1230-ship-it/kaji-quest
+  branch: main
+  import_shopping: true           # kaji-quest の買い物記録（mode: shop）を在庫に取り込む
+  push_shopping: false            # 足りない物を kaji-quest の買い物メモに足す（PAT に両方のリポジトリが要る）
+  write_cook_log: false           # 調理の記録を kaji-quest の dinner-cook の完了としても書く
+
+privacy:
+  log_time: true                  # false で記録の ts を日付だけにする

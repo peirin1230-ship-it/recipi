@@ -1,0 +1,355 @@
+{
+  "recipe": {
+    "title": "鶏もも肉の照り焼きと小松菜のおひたし",
+    "title_roman": "torimomo-teriyaki",
+    "image_text": "照りのある濃い茶色の鶏肉に白ごまが散る。横に濃い緑の小松菜、上にかつお節。",
+    "dishes": [
+      {
+        "name": "鶏もも肉の照り焼き",
+        "role": "main"
+      },
+      {
+        "name": "小松菜のおひたし",
+        "role": "side"
+      }
+    ],
+    "equipment": [
+      "gas-r",
+      "fp26",
+      "microwave",
+      "bowl-l"
+    ],
+    "ingredients": [
+      {
+        "name": "鶏もも肉",
+        "qty": 300,
+        "unit": "g",
+        "grams": 300,
+        "pantry": "鶏もも肉",
+        "for": "鶏もも肉の照り焼き",
+        "substitute": null,
+        "use_up": false
+      },
+      {
+        "name": "片栗粉",
+        "qty": 1,
+        "unit": "小さじ",
+        "grams": 3,
+        "pantry": "片栗粉",
+        "for": "鶏もも肉の照り焼き",
+        "substitute": null,
+        "use_up": false
+      },
+      {
+        "name": "サラダ油",
+        "qty": 1,
+        "unit": "小さじ",
+        "grams": 4,
+        "pantry": "サラダ油",
+        "for": "鶏もも肉の照り焼き",
+        "substitute": null,
+        "use_up": false
+      },
+      {
+        "name": "醤油",
+        "qty": 1,
+        "unit": "大さじ",
+        "grams": 18,
+        "pantry": "醤油",
+        "for": "鶏もも肉の照り焼き",
+        "substitute": null,
+        "use_up": false
+      },
+      {
+        "name": "みりん",
+        "qty": 1.5,
+        "unit": "大さじ",
+        "grams": 27,
+        "pantry": "みりん",
+        "for": "鶏もも肉の照り焼き",
+        "substitute": null,
+        "use_up": false
+      },
+      {
+        "name": "酒",
+        "qty": 1,
+        "unit": "大さじ",
+        "grams": 15,
+        "pantry": "酒",
+        "for": "鶏もも肉の照り焼き",
+        "substitute": "水",
+        "use_up": false
+      },
+      {
+        "name": "砂糖",
+        "qty": 1,
+        "unit": "小さじ",
+        "grams": 3,
+        "pantry": "砂糖",
+        "for": "鶏もも肉の照り焼き",
+        "substitute": null,
+        "use_up": false
+      },
+      {
+        "name": "白ごま",
+        "qty": 1,
+        "unit": "小さじ",
+        "grams": 2,
+        "pantry": "白ごま",
+        "for": "鶏もも肉の照り焼き",
+        "substitute": null,
+        "use_up": false
+      },
+      {
+        "name": "小松菜",
+        "qty": 1,
+        "unit": "束",
+        "grams": 200,
+        "pantry": "小松菜",
+        "for": "小松菜のおひたし",
+        "substitute": null,
+        "use_up": true
+      },
+      {
+        "name": "めんつゆ",
+        "qty": 1,
+        "unit": "大さじ",
+        "grams": 18,
+        "pantry": "めんつゆ",
+        "for": "小松菜のおひたし",
+        "substitute": null,
+        "use_up": false
+      },
+      {
+        "name": "かつお節",
+        "qty": 2,
+        "unit": "g",
+        "grams": 2,
+        "pantry": "かつお節",
+        "for": "小松菜のおひたし",
+        "substitute": null,
+        "use_up": false
+      },
+      {
+        "name": "水",
+        "qty": 2,
+        "unit": "大さじ",
+        "grams": 30,
+        "pantry": null,
+        "for": "小松菜のおひたし",
+        "substitute": null,
+        "use_up": false
+      }
+    ],
+    "tags": [
+      "和",
+      "主菜",
+      "副菜",
+      "子ども向け",
+      "使い切り",
+      "鶏もも肉",
+      "照り焼き",
+      "おひたし",
+      "フライパン1つ"
+    ],
+    "salt": {
+      "total_g": 4.5,
+      "adult_per_serving_g": 1.6,
+      "kid_g": 0.3
+    },
+    "kid": {
+      "rule": "separate",
+      "cut": "1cm 角",
+      "note": "タレを絡める前に 60g を取り出す。皮は外す。小松菜は葉先だけを 5mm に刻み、めんつゆは小さじ 1/4 だけ"
+    },
+    "keep": {
+      "fridge_days": 2,
+      "freezer": true,
+      "reheat": "レンジ 600W 1 分 30 秒。水 小さじ 1 を足す"
+    },
+    "timeline": [
+      {
+        "minute": 0,
+        "lane": "hands",
+        "text": "鶏ももを一口大（3cm 角）に切り、片栗粉 小さじ 1 をまぶす"
+      },
+      {
+        "minute": 3,
+        "lane": "gas-r",
+        "text": "フライパンに油 小さじ 1、皮目を下に並べて中火"
+      },
+      {
+        "minute": 4,
+        "lane": "hands",
+        "text": "小松菜を 4cm に切って耐熱ボウルへ。タレを合わせる"
+      },
+      {
+        "minute": 6,
+        "lane": "microwave",
+        "text": "小松菜にふんわりラップ、600W 2 分"
+      },
+      {
+        "minute": 7,
+        "lane": "gas-r",
+        "text": "返して 3 分。子どもの分 60g を取り出す"
+      },
+      {
+        "minute": 8,
+        "lane": "hands",
+        "text": "小松菜を水で冷まして絞る。めんつゆと水を回しかける"
+      },
+      {
+        "minute": 10,
+        "lane": "gas-r",
+        "text": "弱火にしてタレを入れ、煮絡める"
+      },
+      {
+        "minute": 12,
+        "lane": "hands",
+        "text": "子どもの分を 1cm 角に。小松菜の葉先を刻む"
+      },
+      {
+        "minute": 14,
+        "lane": "gas-r",
+        "text": "火を止める"
+      },
+      {
+        "minute": 15,
+        "lane": "hands",
+        "text": "盛り付け。鶏に白ごま、小松菜にかつお節"
+      },
+      {
+        "minute": 18,
+        "lane": "hands",
+        "text": "配膳。子どもの分は冷ましておく"
+      }
+    ],
+    "steps": [
+      {
+        "dish": "鶏もも肉の照り焼き",
+        "n": 1,
+        "title": "切る",
+        "kind": "prep",
+        "tag": "cut",
+        "minutes": 3,
+        "heat": null,
+        "text": "一口大（3cm 角）に切る。厚い所は包丁を寝かせて開く。ボウルで片栗粉 小さじ 1 を全体に薄くまぶす。",
+        "cue": "全体がうっすら白くなる程度",
+        "caution": null,
+        "timer": null,
+        "kid": null
+      },
+      {
+        "dish": "鶏もも肉の照り焼き",
+        "n": 2,
+        "title": "焼く",
+        "kind": "wait",
+        "tag": "sear",
+        "minutes": 6,
+        "heat": {
+          "equipment": "gas-r",
+          "level": "中火"
+        },
+        "text": "フライパンに油 小さじ 1。皮目を下に、重ならないように並べて 2 分 30 秒触らない。返して 3 分。",
+        "cue": "縁が白くなり、皮がきつね色。油のはねる音が小さくなる",
+        "caution": "強火にしない。右のコンロは火が強いので中火で十分",
+        "timer": 150,
+        "kid": "返して 3 分たったら子どもの分 60g を取り出す"
+      },
+      {
+        "dish": "鶏もも肉の照り焼き",
+        "n": 3,
+        "title": "タレ",
+        "kind": "heat",
+        "tag": "season",
+        "minutes": 3,
+        "heat": {
+          "equipment": "gas-r",
+          "level": "弱火"
+        },
+        "text": "弱火に落としてから、合わせたタレ（醤油・みりん・酒・砂糖）を入れ、煮絡める。",
+        "cue": "泡が大きくなり、箸で底に線が引ける。黒ずんだら火を止める",
+        "caution": "タレは必ず火を落としてから。糖分が焦げる",
+        "timer": null,
+        "kid": null
+      },
+      {
+        "dish": "鶏もも肉の照り焼き",
+        "n": 4,
+        "title": "盛る",
+        "kind": "serve",
+        "tag": "serve",
+        "minutes": 2,
+        "heat": null,
+        "text": "器に盛り、白ごまを振る。",
+        "cue": "照りが全体に回っている",
+        "caution": null,
+        "timer": null,
+        "kid": "子どもの分は皮を外して 1cm 角。タレは付けない"
+      },
+      {
+        "dish": "小松菜のおひたし",
+        "n": 1,
+        "title": "切る",
+        "kind": "prep",
+        "tag": "cut",
+        "minutes": 2,
+        "heat": null,
+        "text": "根元を落として 4cm に切り、耐熱ボウルに入れる。",
+        "cue": "茎と葉が同じ長さにそろう",
+        "caution": null,
+        "timer": null,
+        "kid": null
+      },
+      {
+        "dish": "小松菜のおひたし",
+        "n": 2,
+        "title": "レンジ",
+        "kind": "wait",
+        "tag": "microwave",
+        "minutes": 2,
+        "heat": null,
+        "text": "ふんわりラップをして 600W 2 分。",
+        "cue": "色が濃くなり、茎が曲がる",
+        "caution": null,
+        "timer": 120,
+        "kid": null
+      },
+      {
+        "dish": "小松菜のおひたし",
+        "n": 3,
+        "title": "冷ます・和える",
+        "kind": "prep",
+        "tag": "season",
+        "minutes": 2,
+        "heat": null,
+        "text": "水で冷まして固く絞る。めんつゆ 大さじ 1 と水 大さじ 2 を回しかけ、かつお節をのせる。",
+        "cue": "水気が出ない程度に絞れている",
+        "caution": null,
+        "timer": null,
+        "kid": "葉先だけを 5mm に刻み、めんつゆは小さじ 1/4"
+      }
+    ],
+    "cleanup": {
+      "dishwasher": [
+        "bowl-l"
+      ],
+      "hand": [
+        "fp26"
+      ],
+      "note": "フライパンは火を止めたらすぐ湯を張る。タレが固まる前に"
+    },
+    "raw_estimate": 18,
+    "active_minutes": 14
+  },
+  "changes": [
+    {
+      "what": "皮目を焼く時間 3 分 → 2 分 30 秒",
+      "why": "2 回とも『長い』の記録"
+    },
+    {
+      "what": "醤油 大さじ 1.5 → 大さじ 1",
+      "why": "2 回とも減らしていた。減らした回の家族評価が高い"
+    }
+  ]
+}

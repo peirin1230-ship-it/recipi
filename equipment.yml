@@ -1,0 +1,38 @@
+# equipment.yml — 家の調理器具（docs/SPEC.md §6.2）。Generator はここに無い道具を使わない。
+# note: は Generator にそのまま渡る。「右は火力が強い」「強火は焦げる」など、うちの癖を書く。
+# ★ 初期値はひな形。家に合わせて直す（コンロの種類と口数、レンジの W 数、フライパンの大きさが特に効く）。
+#
+#   heat: コンロ。type は gas / ih。levels は火加減の表記（gas: 弱火/中火/強火、ih: 1-9 など）
+#   appliances: 家電。type は microwave / toaster_oven / rice_cooker / kettle / dishwasher / oven / pressure_cooker / multi_cooker / blender
+#   cookware: 鍋・フライパン・ボウル。dishwasher: false は食洗機に入れない物
+#   missing: 無い物を明示する。レシピから除外される
+#   preferences: 生成のときの好み
+
+heat:
+  - { id: gas-r, type: gas, label: ガスコンロ右（強火力）, levels: "弱火 / 中火 / 強火", note: "一番火が強い。炒め物・焼き物はこちら。強火は焦げやすいので中火が上限の目安" }
+  - { id: gas-l, type: gas, label: ガスコンロ左（標準）, levels: "弱火 / 中火 / 強火", note: "汁物・煮物・茹でる" }
+  - { id: gas-b, type: gas, label: ガスコンロ奥（小）, levels: "弱火 / 中火", note: "火が弱い。保温・ソース・少量の煮物" }
+
+appliances:
+  - { id: microwave, type: microwave, watts: 600, note: "" }
+  - { id: toaster, type: toaster_oven, watts: 1000, note: "トースト 2 枚サイズ。小さい耐熱皿なら入る" }
+  - { id: rice-cooker, type: rice_cooker, capacity_go: 5, normal_minutes: 50, fast_minutes: 28 }
+  - { id: kettle, type: kettle, liters: 1.0 }
+  - { id: dishwasher, type: dishwasher, note: "フライパンと大鍋は入らない" }
+
+cookware:
+  - { id: fp26, type: frying_pan, size_cm: 26, lid: true, material: fluoro, dishwasher: false }
+  - { id: fp20, type: frying_pan, size_cm: 20, lid: false, material: fluoro, dishwasher: false }
+  - { id: pot20, type: pot, size_cm: 20, liters: 3.0, lid: true, dishwasher: false }
+  - { id: pot16, type: pot, size_cm: 16, liters: 1.5, lid: true, dishwasher: true }
+  - { id: bowl-l, type: bowl, note: "耐熱。レンジ可", dishwasher: true }
+  - { id: bowl-m, type: bowl, note: "耐熱。レンジ可", dishwasher: true }
+
+tools: [包丁, まな板, ピーラー, おろし金, キッチンバサミ, 菜箸, トング, フライ返し, お玉, 計量スプーン, 計量カップ, キッチンスケール, ザル, ボウル, ラップ, アルミホイル, キッチンペーパー]
+storage: [保存容器 中×4, 保存容器 小×4, 冷凍用保存袋, ラップ]
+
+missing: [オーブン, 圧力鍋, ミキサー, ホットクック, 揚げ物鍋, 魚焼きグリル]   # 魚焼きグリルは掃除が面倒で使わない扱い。使うなら消す
+
+preferences:
+  avoid_deep_fry: true        # 揚げ物を提案しない（片付けの理由）
+  max_pans_at_once: 2         # 同時に火にかける鍋・フライパンの上限

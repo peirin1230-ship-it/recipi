@@ -1,0 +1,6 @@
+# profile/overrides.yml — 手で書く。learned.yml より優先される（docs/SPEC.md §6.7）。
+# 学習結果が間違っているときだけ、ここに 1 行足す。
+speed_factor: {}              # 例: { prep: 1.2 }
+force_likes: []               # 好みとして必ず扱う。例: [カレー]
+never: []                     # family.yml の avoid と同じ効き方（学習に関係なく使わない）
+notes: []                     # 規則として最上位に置く。例: ["平日は包丁を使う工程を 10 分以内に"]

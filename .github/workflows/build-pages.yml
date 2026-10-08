@@ -1,0 +1,53 @@
+# site/ と設定・レシピ・知識を組み立てて gh-pages ブランチへ push し、GitHub Pages で配信する（kaji-quest と同じ）。
+# gh-pages ブランチができると Pages は自動で有効になる。ならなければ
+# Settings → Pages → Source: Deploy from a branch → gh-pages / (root) を 1 回だけ選ぶ。
+# ページと agent.yml が書くコミットは [skip ci] 付きなので、この workflow は動かない（夜間ジョブのコミットで動く）。
+name: build-pages
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "site/**"
+      - "config.yml"
+      - "equipment.yml"
+      - "family.yml"
+      - "data/**"
+      - "knowledge/**"
+      - "recipes/**"
+      - "profile/**"
+      - "prompts/**"
+      - "docs/digests/**"
+      - "scripts/**"
+      - ".github/workflows/build-pages.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install pyyaml markdown
+      - run: python3 scripts/build_site.py _site
+      - name: Push _site to gh-pages as a single orphan commit
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          cd _site
+          git init -q -b gh-pages
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -qm "deploy ${GITHUB_SHA}"
+          git push -f "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" gh-pages

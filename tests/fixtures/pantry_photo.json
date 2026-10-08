@@ -1,0 +1,12 @@
+{
+  "items": [
+    { "name": "鶏もも肉", "qty": 1, "unit": "パック", "loc": "fridge", "confidence": 0.9 },
+    { "name": "キャベツ", "qty": 0.5, "unit": "個", "loc": "fridge", "confidence": 0.8 },
+    { "name": "ピーマン", "qty": 3, "unit": "個", "loc": "fridge", "confidence": 0.7 },
+    { "name": "何かの瓶", "qty": null, "unit": null, "loc": "fridge", "confidence": 0.3 }
+  ],
+  "staples": [
+    { "name": "マヨネーズ", "state": "low" },
+    { "name": "ケチャップ", "state": "ok" }
+  ]
+}
