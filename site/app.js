@@ -222,6 +222,7 @@ function renderOrder() {
   <div class="field"><label for="o-note">一言（任意）</label><input type="text" id="o-note" maxlength="200" placeholder="妻は 20 時。子どもだけ先に" value="${esc(o.note)}"></div>
   <div class="field"><label>出し方</label><div class="chips">${chip('o-mode', 'auto', '本命 1 本＋別案 2 つ', o.mode === 'auto')}${chip('o-mode', 'pick', '候補 3 つから選ぶ', o.mode === 'pick')}</div></div>
   <div class="actions"><button type="button" class="ghost" data-act="o-weekly-toggle" aria-expanded="${state.showWeekly ? 'true' : 'false'}">${ic('calendar')}週の献立…</button><button type="button" class="primary big" data-act="o-submit">${ic('sparkle')}考えてもらう</button></div>
+  <div class="actions"><button type="button" class="ghost wide" data-act="o-submit-unlimited" title="時間の予算を付けずに考えてもらう。手間のかかる料理も出る">${ic('infinity')}時間無制限で考えてもらう</button></div>
   <div id="o-status" class="status">${pendingHTML('order')}</div>
   <div id="o-weekly" ${state.showWeekly ? '' : 'hidden'}>
     <h3 class="group">週の献立（7 日分と買い物リスト）</h3>
@@ -280,7 +281,7 @@ async function startRequest(req, before) {
   });
   if (!ok) { renderPending(); return; }
   setPending({ id: req.id, type: req.type, since: Date.now(), status: 'pending' });
-  toast(req.type === 'pantry_photo' ? '写真を送った。読み取り中（2〜4 分）。閉じても大丈夫' : req.type === 'suggest_items' ? '買い足す物を考え中（2〜4 分）。閉じても大丈夫' : '注文した。考え中（2〜4 分）。閉じても大丈夫');
+  toast(req.type === 'pantry_photo' ? '写真を送った。読み取り中（2〜4 分）。閉じても大丈夫' : req.type === 'suggest_items' ? '買い足す物を考え中（2〜4 分）。閉じても大丈夫' : req.time_budget === 0 ? '時間無制限で注文した。考え中（2〜4 分）。閉じても大丈夫' : '注文した。考え中（2〜4 分）。閉じても大丈夫');
   clearTimeout(pollTimer); pollTimer = setTimeout(pollTick, POLL_MS);
 }
 function setPending(p) { state.pending = p; if (p) lsSet(LS.pending, p); else lsDel(LS.pending); renderPending(); }
@@ -351,7 +352,7 @@ function recipeBodyHTML(r, req, res) {
   const memo = ls.length ? ls.map(memoLine) : (r.memo || []);
   let h = `<h3 class="rc-title">${esc(r.title)} ${statusBadge(r.status)}${r.version > 1 ? ` <span class="badge ind">v${r.version}</span>` : ''}</h3>
   ${photo ? `<img class="rc-photo" src="${esc(gh.rawUrl(photo))}" alt="${esc(r.title)}" loading="lazy">` : `<div class="ph">${ic('bowl')}<div>${esc(r.image_text || '完成イメージはまだ無い')}<br><span class="sub">作ると写真がここに入る</span></div></div>`}
-  <div class="rc-meta"><span>${ic('clock')} <b>${t.planned ?? '—'}</b> 分 <span class="sub">／ 予算 ${t.budget ?? '—'} 分${isNum(t.active) ? `・手を動かす ${t.active} 分` : ''}</span></span><span>大人 ${sv.adults ?? '—'}・子 ${sv.kids ?? '—'}</span>${st.cooked ? `<span>作った ${st.cooked} 回${st.r_avg != null ? `・R ${st.r_avg}` : ''}${st.f_avg != null ? `・F ${st.f_avg}` : ''}</span>` : ''}</div>
+  <div class="rc-meta"><span>${ic('clock')} <b>${t.planned ?? '—'}</b> 分 <span class="sub">／ ${t.budget === 0 ? '時間無制限' : `予算 ${t.budget ?? '—'} 分`}${isNum(t.active) ? `・手を動かす ${t.active} 分` : ''}</span></span><span>大人 ${sv.adults ?? '—'}・子 ${sv.kids ?? '—'}</span>${st.cooked ? `<span>作った ${st.cooked} 回${st.r_avg != null ? `・R ${st.r_avg}` : ''}${st.f_avg != null ? `・F ${st.f_avg}` : ''}</span>` : ''}</div>
   <div class="tags">${(r.dishes || []).map(d => `<span>${esc(d.name)}<span class="sub">　${ROLE_JA[d.role] || esc(d.role || '')}</span></span>`).join('')}</div>
   <div class="tags">${(r.equipment || []).map(e => `<span class="eq">${esc(equipLabel(e))}</span>`).join('')}</div>
   <div class="tags">${(r.tags || []).map(tg => `<span>#${esc(tg)}</span>`).join('')}</div>
@@ -939,7 +940,8 @@ document.addEventListener('click', ev => {
     case 'o-useup': { const v = b.dataset.v; if (state.useUpOff.has(v)) state.useUpOff.delete(v); else state.useUpOff.add(v); b.classList.toggle('is-on', !state.useUpOff.has(v)); break; }
     case 'o-step': { const k = b.dataset.k; o.servings[k] = Math.max(0, Math.min(9, (+o.servings[k] || 0) + +b.dataset.d)); $(`#o-${k}`).textContent = o.servings[k]; break; }
     case 'o-submit': submitOrder(); break;
-    case 'o-again': { const r = currentRecipe(); submitOrder({ exclude: [...new Set([...(o.exclude || []), r ? r.title : ''].filter(Boolean))].slice(-5) }); break; }
+    case 'o-submit-unlimited': submitOrder({ time_budget: 0 }); break;   // 0 = 時間無制限（チップの選択は変えない）
+    case 'o-again': { const r = currentRecipe(); const cur = state.current && state.current.request; submitOrder({ exclude: [...new Set([...(o.exclude || []), r ? r.title : ''].filter(Boolean))].slice(-5), ...(cur && cur.time_budget === 0 ? { time_budget: 0 } : {}) }); break; }
     case 'o-nearest': readOrder(); o.time_budget = +b.dataset.min || o.time_budget; o.note = `「${b.dataset.v}」で。${o.note}`.trim().slice(0, 200); renderOrder(); decorateCards(); submitOrder(); break;
     case 'o-detail': submitDetail(b.dataset.parent, b.dataset.alt); break;
     case 'o-weekly-toggle': readOrder(); state.showWeekly = !state.showWeekly; renderOrder(); decorateCards(); break;

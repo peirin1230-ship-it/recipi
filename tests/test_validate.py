@@ -93,3 +93,9 @@ def test_salt_limit():
     r = load_fixture()
     r["salt"]["adult_per_serving_g"] = 3.5
     assert any("塩分" in e for e in validate.validate_recipe(r, ctx()))
+
+
+def test_budget_zero_means_unlimited():
+    r = load_fixture()
+    assert any("予算" in e for e in validate.validate_recipe(r, ctx(budget=10)))   # 10 分には収まらない
+    assert validate.validate_recipe(r, ctx(budget=0)) == []                         # 0 = 時間無制限: 時間の検査をしない

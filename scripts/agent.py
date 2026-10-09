@@ -142,20 +142,32 @@ def house_blocks(ctx: Context) -> list[dict]:
     ]
 
 
+def unlimited_budget(req: dict) -> bool:
+    """time_budget が 0 なら時間無制限（予算の検査をしない）。無い・None は既定の予算。"""
+    tb = req.get("time_budget")
+    return isinstance(tb, (int, float)) and not isinstance(tb, bool) and int(tb) == 0
+
+
 def request_block(ctx: Context, req: dict, extra: str = "") -> dict:
     cfg = ctx.cfg
+    unlimited = unlimited_budget(req)   # time_budget が 0 = 時間無制限
     budget = int(req.get("time_budget") or cfg["request"].get("default_budget", 25))
     margin = float(cfg["generation"].get("time_margin", 0.9))
     sf = ctx.speed_factor
     raw_limit = int(budget * margin / max(float(sf.get("overall", 1.0)), 0.5))
+    time_text = (
+        "\n\n# 時間の制約\n- **時間無制限**（time_budget が 0）。予算に収める必要は無く、feasible は true にする。手間をかける料理（煮込み・低温調理・仕込み・品数を増やす）でよい。"
+        f"\n- ただし見込みは正直に: 各 step の minutes と raw_estimate は実際にかかる時間を書く。うちの速度係数は {ydump(sf)}。"
+        if unlimited else
+        f"\n\n# 時間の制約\n- 時間予算 {budget} 分。うちの速度係数は {ydump(sf)} なので、段取り表の最後の分（raw_estimate）は **{raw_limit} 分以内**にする。"
+    )
     recent = ctx.recent(int(cfg["suggest"].get("no_repeat_days", 14)))
     pantry = ctx.pantry_for_prompt()
     order = {k: v for k, v in req.items() if k in ("type", "time_budget", "servings", "dishes", "mood", "use_up", "exclude", "note", "mode")}
     text = (
         "# 最近作った物（出さない）\n" + (ydump(recent) or "（無し）") +
         "\n\n# 在庫（pantry.json。期限順。staples は ok/low の物だけ。無い物は使えない）\n" + ydump(pantry) +
-        "\n\n# 注文\n" + ydump(order) +
-        f"\n\n# 時間の制約\n- 時間予算 {budget} 分。うちの速度係数は {ydump(sf)} なので、段取り表の最後の分（raw_estimate）は **{raw_limit} 分以内**にする。"
+        "\n\n# 注文\n" + ydump(order) + time_text +
         f"\n- 注文の種類: {TYPE_NOTES.get(req.get('type'), '')}"
         f"\n- 今日: {common.today()}（旬の判断に使う）"
     )
@@ -511,7 +523,7 @@ def new_request(args) -> str:
     req = {"id": rid, "ts": common.now().isoformat(timespec="seconds"), "type": args.type, "status": "pending", "error": None, "result": None}
     if args.type in TYPE_NOTES:
         req.update({
-            "time_budget": args.budget or int(cfg["request"].get("default_budget", 25)),
+            "time_budget": args.budget if args.budget is not None else int(cfg["request"].get("default_budget", 25)),   # 0 = 時間無制限
             "servings": {"adults": args.adults if args.adults is not None else int(default.get("adults", 2)),
                          "kids": args.kids if args.kids is not None else int(default.get("kids", 0))},
             "dishes": args.dishes or default.get("dishes") or "main+side",
@@ -621,7 +633,7 @@ def main(argv: list[str]) -> int:
     ap.add_argument("--no-git", action="store_true")
     # new の引数
     ap.add_argument("--type", default="dinner")
-    ap.add_argument("--budget", type=int)
+    ap.add_argument("--budget", type=int, help="分。0 で時間無制限")
     ap.add_argument("--adults", type=int)
     ap.add_argument("--kids", type=int)
     ap.add_argument("--dishes")

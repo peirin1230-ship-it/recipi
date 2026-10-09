@@ -197,6 +197,16 @@ async function setup(browser, viewport) {
     assert(addRecipePut && addRecipePut.body.sha === 'r1' && !addRecipePut.body.message.includes('[skip ci]') && /^---\nlisted: "\d{4}-\d{2}-\d{2}T/.test(addText) && addText.includes('title: テスト用の新しい一皿'), `一覧に追加 stamps listed: in front matter without [skip ci]: ${addText.slice(0, 60).replace(/\n/g, '|')}`);
     assert(await page.$$eval('#list .lrow', r => r.map(x => x.textContent).join('')).then(t => t.includes('テスト用の新しい一皿')) && await page.$('#recipe [data-act="list-del"]') !== null, 'added recipe appears in the list on this device and the card now offers 削除');
     await page.screenshot({ path: `${SHOTS}/list-375.png` });
+    // 時間無制限で考えてもらう: チップの選択はそのまま、注文は time_budget 0
+    await page.click('#o-budget .chip[data-v="30"]');
+    const b5 = puts.length; await page.click('[data-act="o-submit-unlimited"]');
+    await page.waitForFunction(n => document.querySelectorAll('#o-status .pending').length > 0, b5);
+    const unl = puts.slice(b5).find(p => p.url.includes('/contents/requests/'));
+    const unlBody = unl ? JSON.parse(Buffer.from(unl.body.content, 'base64').toString('utf8')) : {};
+    assert(unlBody.type === 'dinner' && unlBody.time_budget === 0 && unlBody.status === 'pending', `unlimited order writes time_budget 0: ${JSON.stringify({ type: unlBody.type, time_budget: unlBody.time_budget })}`);
+    assert(await page.evaluate(() => JSON.parse(localStorage.getItem('recipi.order')).time_budget === 30), 'unlimited order keeps the chosen chip (30) as the next default');
+    assert(await page.evaluate(() => document.querySelector('#toast').textContent.includes('時間無制限')), 'toast says 時間無制限');
+    await page.click('[data-act="pending-cancel"]');
     await ctx.close().catch(() => {}); await c2.close();
   }
   await browser.close();

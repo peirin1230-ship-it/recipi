@@ -61,3 +61,12 @@ def test_new_revise_and_weekly(root):
     assert "元のレシピ" in agent.context_text(rid)
     rid = run_cli("new", "--type", "weekly", "--start", "2026-10-13").stdout.strip()
     assert "注文（1 週間）" in agent.context_text(rid)
+
+
+def test_new_budget_zero_is_unlimited(root):
+    rid = run_cli("new", "--type", "dinner", "--budget", "0").stdout.strip()
+    req = common.read_json(f"requests/{rid}.json")
+    assert req["time_budget"] == 0
+    assert agent.unlimited_budget(req) and not agent.unlimited_budget({"time_budget": 25}) and not agent.unlimited_budget({})
+    text = agent.context_text(rid)
+    assert "時間無制限" in text and "分以内**にする" not in text   # 予算の制約の文が無い（安全の表の「30 分以内」は別）
