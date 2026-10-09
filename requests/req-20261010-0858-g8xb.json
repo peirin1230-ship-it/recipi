@@ -1,0 +1,19 @@
+{
+ "id": "req-20261010-0858-g8xb",
+ "ts": "2026-10-10T08:58:46+09:00",
+ "type": "prep",
+ "time_budget": 0,
+ "servings": {
+  "adults": 2,
+  "kids": 1
+ },
+ "dishes": "main+side",
+ "mood": [],
+ "use_up": [],
+ "exclude": [],
+ "note": "",
+ "mode": "auto",
+ "status": "pending",
+ "error": null,
+ "result": null
+}
