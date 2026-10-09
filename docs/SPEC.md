@@ -484,7 +484,7 @@ kaji-quest の `knowledge/` と同じ形式（front matter 付き Markdown）。
 | 3 | 器具、家族 | `equipment.yml`, `family.yml` | 月に数回 |
 | 4 | 学習結果（速度係数・好み・器具の癖・定番・封印）、上書き | `profile/learned.yml`, `profile/overrides.yml` | 毎晩 |
 | 5 | 直近 14 日に作った料理の一覧（同じ物を続けて出さないため） | `logs/` | 毎日 |
-| 5b | 一覧にあるレシピ全部（料理名・主菜/副菜・主材料。同じ料理、同じ主材料×調理法を出さないため）と、直近 14 日に提案して採られなかった料理名（`requests/` の本命・別案） | `recipes/`, `requests/` | 毎回 |
+| 5b | 一覧にあるレシピ全部（料理名・主菜/副菜・主材料。同じ料理、同じ主材料×調理法を出さないため）、直近 14 日に一覧から消された料理名（`requests/` の結果にあるが `recipes/` に無い本命）、採られなかった別案の料理名 | `recipes/`, `requests/` | 毎回 |
 | 6 | 在庫（期限順。`staples` は `ok`/`low` だけ渡し、`none` は渡さない） | `pantry.json` | 毎回 |
 | 7 | 注文 | `requests/<id>.json` | 毎回 |
 
@@ -519,7 +519,7 @@ Generator は JSON（structured output。`output_config.format` で JSON スキ�
 | 順序 | 段取り表（レーン×分）と手順（料理ごと）の両方。段取り表が正 |
 | 待ち時間 | 「触らない」「放っておく」と明記し、その間にやる他の工程を書く |
 | 失敗しやすい点 | 工程ごとに最大 1 つ。学習済みの器具の癖（`equipment_notes`）を優先して使う |
-| 重複 | 一覧にある料理名、注文の `exclude`（「ほかの案」で退けた物）と同じ `title` は不合格。別案の料理名も本命・互い・一覧と同じなら不合格。主菜の重複、最近提案した物、最近作った物は指示で避ける（`no_repeat_days` / `no_repeat_proposed_days`）。別案の詳細化（`recipe_detail`）と改訂では検査しない |
+| 重複 | 一覧にある料理名、一覧から消された料理名（直近 `no_repeat_proposed_days` 日）、注文の `exclude`（「ほかの案」で退けた物）と同じ `title` は不合格。別案の料理名も本命・互い・一覧と同じなら不合格。主菜の重複、最近提案した物、最近作った物は指示で避ける（`no_repeat_days` / `no_repeat_proposed_days`）。別案の詳細化（`recipe_detail`）と改訂では検査しない |
 | 代替 | 在庫に無い物は使わない。使う場合は `substitute` に在庫の物を書く |
 | 塩分 | 料理ごとの総塩分 g と大人 1 人分。幼児の分は `knowledge/safety.md` の上限以下 |
 | 子どもの分 | いつ取り分けるか、大きさ、固さ、味付けの差 |

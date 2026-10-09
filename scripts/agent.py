@@ -110,21 +110,26 @@ class Context:
             out.append(row)
         return out
 
-    def proposed(self, days: int) -> list[str]:
-        """直近 N 日に提案した料理名（requests/ の結果の本命と別案）。一覧に無い物だけ（消した物・採らなかった別案）。"""
+    def proposed(self, days: int) -> dict:
+        """直近 N 日の注文の結果にある料理名のうち一覧に無い物。
+        deleted: 本命として作られたが一覧から消された物（出さない。検査で不合格）。alternatives: 採られなかった別案（出さない。指示のみ）。"""
         since = (common.now() - dt.timedelta(days=days)).strftime("%Y-%m-%d")
         have = {norm_title(r.get("title") or "") for r in self.recipes.values()}
-        out: list[str] = []
+        deleted: list[str] = []
+        alts: list[str] = []
         for p in sorted(glob.glob(common.path("requests", "*.json"))):
             d = common.read_json(os.path.relpath(p, common.ROOT)) or {}
             if str(d.get("ts") or "")[:10] < since or d.get("status") != "done":
                 continue
             res = d.get("result") or {}
-            titles = [((res.get("recipe") or {}).get("title"))] + [a.get("title") for a in (res.get("alternatives") or []) if isinstance(a, dict)]
-            for t in titles:
-                if t and norm_title(t) not in have and t not in out:
-                    out.append(t)
-        return out
+            t = (res.get("recipe") or {}).get("title")
+            if t and norm_title(t) not in have and t not in deleted:
+                deleted.append(t)
+            for a in res.get("alternatives") or []:
+                t = a.get("title") if isinstance(a, dict) else None
+                if t and norm_title(t) not in have and t not in alts and t not in deleted:
+                    alts.append(t)
+        return {"deleted": deleted, "alternatives": [t for t in alts if t not in deleted]}
 
     def standards(self) -> list[dict]:
         out = []
@@ -201,8 +206,9 @@ def request_block(ctx: Context, req: dict, extra: str = "", *, dedupe: bool = Tr
         proposed = ctx.proposed(int(cfg["suggest"].get("no_repeat_proposed_days", 14)))
         dedupe_text = (
             "\n\n# 一覧にあるレシピ（同じ料理は出さない。主菜の名前も、主材料×調理法の組み合わせも被らないようにする）\n" + (ydump(existing) or "（無し）") +
-            "\n\n# 最近提案した物（直近の注文で出した本命・別案。採られなかったので出さない）\n" + (ydump(proposed) or "（無し）") +
-            "\n\n# 重複を避ける\n- 上の一覧・最近提案した物・最近作った物・注文の exclude と同じ料理は出さない（料理名が同じなら不合格）。"
+            "\n\n# 一覧から消された料理（作ったが要らないと消された。出さない。料理名が同じなら不合格）\n" + (ydump(proposed["deleted"]) or "（無し）") +
+            "\n\n# 最近提案して採られなかった別案（出さない）\n" + (ydump(proposed["alternatives"]) or "（無し）") +
+            "\n\n# 重複を避ける\n- 上の一覧・消された料理・採られなかった別案・最近作った物・注文の exclude と同じ料理は出さない（一覧・消された料理・exclude と料理名が同じなら不合格）。"
             "\n- 主材料と調理法（焼く・炒める・煮る・蒸す・和える・汁物・炊き込み・揚げ焼き・低温調理）の組み合わせを一覧と変える。副菜も同じ物を続けない。"
             "\n- 別案 2 つは本命とも互いとも、主材料か調理法を変える。"
             "\n- 在庫が少なくて被りそうなら、味付け（和・洋・中・エスニック）と調理法で差を出す。"
@@ -249,7 +255,8 @@ def generate_recipe(ctx: Context, L: llmmod.LLM, req: dict, *, name: str = "reci
     dedupe: 一覧にある料理名・注文の exclude と同じ料理名を不合格にする（別案の料理名も）。別案の詳細化では使わない。"""
     version, system = system_text(ctx, "recipe")
     blocks = house_blocks(ctx) + [request_block(ctx, req, extra, dedupe=dedupe)]
-    taken = ([r.get("title") or "" for r in ctx.recipes.values()] + [t for t in (req.get("exclude") or []) if t]) if dedupe else []
+    taken = ([r.get("title") or "" for r in ctx.recipes.values()] + [t for t in (req.get("exclude") or []) if t]
+             + ctx.proposed(int(ctx.cfg["suggest"].get("no_repeat_proposed_days", 14)))["deleted"]) if dedupe else []
     servings = req.get("servings") or ctx.family.get("meals", {}).get("dinner_default", {})
     vctx = {"equipment": ctx.equipment, "family": ctx.family, "pantry": ctx.pantry, "ingredients": ctx.ingredients,
             "overrides": ctx.overrides, "budget": req.get("time_budget"), "speed_factor": ctx.speed_factor,

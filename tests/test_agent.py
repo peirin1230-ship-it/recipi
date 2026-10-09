@@ -92,3 +92,15 @@ def test_suggest_items_mock(root):
     assert "鶏むね肉" in names and "さつまいも" in names and req["result"]["note"]
     assert all(i["priority"] in ("main", "stock", "kid", "season") for i in req["result"]["items"])
     assert "買い足す" in agent.context_text("req-t-suggest")
+
+
+def test_proposed_splits_deleted_and_alternatives(fresh_recipes):
+    # 本命が一覧から消されている注文と、採られなかった別案
+    write_request({"id": "req-t-gone", "ts": common.now().isoformat(timespec="seconds"), "type": "dinner", "status": "done",
+                   "result": {"recipe_id": "r-gone", "recipe": {"title": "消した一皿とサラダ"}, "alternatives": [{"title": "別案 A"}, {"title": "鶏もも肉の照り焼きと小松菜のおひたし"}]}})
+    ctx = agent.Context()
+    p = ctx.proposed(14)
+    assert p["deleted"] == ["消した一皿とサラダ"]
+    assert p["alternatives"] == ["別案 A"]   # 一覧にある物は入れない
+    block = agent.request_block(ctx, {"type": "dinner", "time_budget": 25})["text"]
+    assert "一覧から消された料理" in block and "消した一皿とサラダ" in block and "別案 A" in block

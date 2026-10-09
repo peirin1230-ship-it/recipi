@@ -34,4 +34,8 @@ def fresh_recipes(root):
     for name in os.listdir(os.path.join(root, "recipes")):
         if name.endswith(".md") and name not in keep:
             os.remove(os.path.join(root, "recipes", name))
+    # 前のテストの注文も消す（結果に残った料理名は「一覧から消された料理」として不合格になるため）
+    for name in os.listdir(os.path.join(root, "requests")):
+        if name.endswith(".json"):
+            os.remove(os.path.join(root, "requests", name))
     return root
