@@ -1,0 +1,21 @@
+{
+ "id": "req-20261009-2021-hw5p",
+ "ts": "2026-10-09T20:21:43+09:00",
+ "type": "recipe_detail",
+ "time_budget": 60,
+ "servings": {
+  "adults": 2,
+  "kids": 1
+ },
+ "dishes": "main+side",
+ "mood": [],
+ "use_up": [],
+ "exclude": [],
+ "note": "",
+ "mode": "auto",
+ "parent": "req-20261009-2018-55sv",
+ "alternative": 0,
+ "status": "pending",
+ "error": null,
+ "result": null
+}
