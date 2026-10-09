@@ -1,0 +1,21 @@
+{
+ "id": "req-20261009-1227-0k6s",
+ "ts": "2026-10-09T12:27:22+09:00",
+ "type": "dinner",
+ "time_budget": 25,
+ "servings": {
+  "adults": 2,
+  "kids": 1
+ },
+ "dishes": "main+side",
+ "mood": [],
+ "use_up": [],
+ "exclude": [
+  "豚こまと豆腐の肉豆腐と小松菜かまぼこのごま油炒め"
+ ],
+ "note": "",
+ "mode": "auto",
+ "status": "pending",
+ "error": null,
+ "result": null
+}
