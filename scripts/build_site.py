@@ -115,6 +115,20 @@ def build(out_dir: str) -> None:
     if os.path.isdir(out_dir):
         shutil.rmtree(out_dir)
     shutil.copytree(common.path("site"), out_dir)
+    # キャッシュ対策: 組み立てごとに app.js / style.css / 読み込むモジュールの URL に版を付ける
+    ver = (os.environ.get("GITHUB_SHA") or common.now().strftime("%Y%m%d%H%M%S"))[:12]
+    for name, pairs in {
+        "index.html": [('href="style.css"', f'href="style.css?v={ver}"'), ('src="app.js"', f'src="app.js?v={ver}"')],
+        "app.js": [("from './api.js'", f"from './api.js?v={ver}'"), ("from './ui.js'", f"from './ui.js?v={ver}'")],
+    }.items():
+        p = os.path.join(out_dir, name)
+        if os.path.exists(p):
+            with open(p, encoding="utf-8") as f:
+                text = f.read()
+            for a, b in pairs:
+                text = text.replace(a, b)
+            with open(p, "w", encoding="utf-8") as f:
+                f.write(text)
     data_dir = os.path.join(out_dir, "data")
     os.makedirs(data_dir, exist_ok=True)
 

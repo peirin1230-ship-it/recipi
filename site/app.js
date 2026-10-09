@@ -994,6 +994,7 @@ $('#settings-test').addEventListener('click', async () => {
 });
 $('#dlg-diff').addEventListener('close', () => { if (state.diff && !state.busy) { /* やめた → 次に取り込むとき、また出る */ } });
 document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'visible') checkUpdate(false);
   if (document.visibilityState !== 'visible') return;
   if (!$('#cook').hidden) requestWake();
   if (state.pending) pollTick();
@@ -1006,7 +1007,16 @@ async function loadLive() {
   if (results[0].status === 'fulfilled') { const { sha, data } = results[0].value; state.pantry = { sha, data: normalizePantry(data || {}) }; }
   const err = results.find(r => r.status === 'rejected'); if (err) { state.liveError = err.reason && err.reason.message || String(err.reason); throw new Error(state.liveError); }
 }
-async function reload() { await run(loadLive); render(); loadCost(); }
+// 新しい組み立て（build.json の sha）が出ていたらページごと読み直す（ホーム画面のアプリは古い app.js を抱えやすい）
+async function checkUpdate(force) {
+  try {
+    const res = await fetch('data/build.json?t=' + Date.now(), { cache: 'no-store' }); if (!res.ok) return false;
+    const b = await res.json(); const cur = (state.build || {}).sha || '';
+    if (b.sha && cur && b.sha !== cur && (force || $('#cook').hidden)) { toast('新しい版に更新する'); setTimeout(() => location.reload(), 400); return true; }
+  } catch { /* オフラインなど */ }
+  return false;
+}
+async function reload() { if (await checkUpdate(true)) return; await run(loadLive); render(); loadCost(); }
 async function init() {
   state.token = lsGetRaw(TOKEN_KEY);
   const get = (u, fb) => fetch(u, { cache: 'no-cache' }).then(r => { if (!r.ok) throw new Error(`${u} ${r.status}`); return r.json(); }).catch(e => { if (fb === undefined) throw e; console.warn(e); return fb; });
