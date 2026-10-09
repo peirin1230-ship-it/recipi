@@ -423,3 +423,9 @@ body.busy::after { content: ""; position: fixed; top: 0; left: 0; right: 0; z-in
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; } }
 
 #settings-status { white-space: pre-line; }
+
+/* 買い足すといい物 */
+.sg-row { display: grid; grid-template-columns: auto 1fr; gap: 4px 10px; align-items: start; padding: 8px 0; border-bottom: 1px solid var(--line, rgba(0,0,0,.08)); }
+.sg-row input { margin-top: 4px; }
+.sg-row .nm { font-weight: 700; }
+.sg-row .why { grid-column: 2; font-size: .92em; }

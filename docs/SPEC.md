@@ -278,7 +278,7 @@ meals:
 
 | 項目 | 内容 |
 |------|------|
-| `type` | `dinner` / `prep` / `breakfast` / `lunchbox`（レシピ生成）/ `recipe_detail`（別案や週の献立の 1 日を詳細化。`parent` に元の注文 id、`alternative` に番号）/ `pantry_photo`（`image` に `inbox/<id>.jpg`、`hint` に fridge / freezer / pantry）/ `revise`（`recipe_id`）/ `weekly`（`start_date`、曜日ごとの `budgets`） |
+| `type` | `dinner` / `prep` / `breakfast` / `lunchbox`（レシピ生成）/ `recipe_detail`（別案や週の献立の 1 日を詳細化。`parent` に元の注文 id、`alternative` に番号）/ `pantry_photo`（`image` に `inbox/<id>.jpg`、`hint` に fridge / freezer / pantry）/ `revise`（`recipe_id`）/ `weekly`（`start_date`、曜日ごとの `budgets`）/ `suggest_items`（買い足すといい食材。`note` に一言） |
 | `time_budget` | 分。**買い物を除き、キッチンに立ってから盛り付けまで** |
 | `dishes` | `main` / `main+side` / `main+side+soup` / `onepot`（丼・麺の 1 品） |
 | `mood` | 自由タグ。`さっぱり` `がっつり` `和` `洋` `中` `麺` `丼` `鍋` など。無くてもよい |
@@ -755,7 +755,7 @@ kaji-quest と同じ: 静的 1 ページ（`site/`）、PWA、スマホ優先、
 | **レシピ** | 生成結果。顔写真（無ければ絵と完成イメージ）、時間、材料、段取り表、別案 2 つ。「作る」で調理モード、「ほかの案」で再生成、「あとで」で保留（`status: draft` のまま一覧に残る） |
 | **調理モード** | 大きな字。段取り表を分刻みで上から。工程ごとにタイマー（`timer`）と「できた」チェック。画面を消さない（Wake Lock）。進み具合は端末に保存（途中で閉じても戻れる）。最後の「できた」で記録画面へ |
 | **記録** | §9.1 |
-| **在庫** | `items` を期限順。`staples` は 3 段階のトグル。入力欄（「、」区切り）、📷（冷蔵庫の写真 → 差分の確認 → 反映）、「kaji-quest の買い物を取り込む」。期限切れは帯で表示、「捨てた」ボタン |
+| **在庫** | `items` を期限順。`staples` は 3 段階のトグル。入力欄（「、」区切り）、📷（冷蔵庫の写真 → 差分の確認 → 反映）、「kaji-quest の買い物を取り込む」。期限切れは帯で表示、「捨てた」ボタン。「買い足すといい物を聞く」（`suggest_items`）: 在庫・器具・家族・学習結果・旬から 8〜12 品を「今週の主菜に／常備すると楽／子ども向け／旬」に分けて理由と作れる料理つきで出す。チェックして kaji-quest の買い物メモへ送るかコピーする |
 | **道具** | `equipment.yml` の表示のみ（編集はファイル）。`note` が見える |
 | **図鑑** | 作った料理の写真グリッド（新しい順／F 順／R 順）。タップでレシピ。定番には印。写真の無い物は絵 |
 | **レシピ一覧** | `standard` / `tried` / `draft` / `retired` のタブ。検索。改訂版は元と並べて差分 |

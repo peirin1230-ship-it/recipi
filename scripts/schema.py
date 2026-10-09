@@ -178,3 +178,15 @@ DIGEST_OUTPUT = _obj({
     "proposals": _arr(_obj({"title": _s(), "minutes": _i(), "why": _s()})),   # 来週の提案 3 つ
     "shopping": _arr(_obj({"name": _s(), "qty": _s(True), "reason": _s()})),
 })
+
+
+SUGGEST_ITEMS_OUTPUT = _obj({
+    "items": _arr(_obj({
+        "name": _s(),                                  # 食材名（data/ingredients.yml の正規化名に寄せる）
+        "qty": _s(True),                               # 「300g」「1 束」など。無ければ null
+        "reason": _s(),                                # なぜ（一行）
+        "enables": _arr(_s()),                         # これがあれば作れる物（料理名を 1〜3 つ）
+        "priority": {"type": "string", "enum": ["main", "stock", "kid", "season"]},   # main: 今週の主菜になる / stock: 常備すると楽 / kid: 子ども向け / season: 旬
+    })),
+    "note": _s(),                                      # 全体の一言（60 字以内）
+})

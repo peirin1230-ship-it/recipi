@@ -82,3 +82,13 @@ def test_validation_failure_retries_then_errors(root, monkeypatch):
     assert agent.run("auto", "req-t-fail", mock=True, use_git=False) == 1
     req = common.read_json("requests/req-t-fail.json")
     assert req["status"] == "error" and "oven-x" in req["error"]
+
+
+def test_suggest_items_mock(root):
+    write_request({"id": "req-t-suggest", "ts": "2026-10-09T10:00:00+09:00", "type": "suggest_items", "note": "来週は魚も"})
+    assert agent.run("auto", "req-t-suggest", mock=True, use_git=False) == 0
+    req = common.read_json("requests/req-t-suggest.json")
+    names = [i["name"] for i in req["result"]["items"]]
+    assert "鶏むね肉" in names and "さつまいも" in names and req["result"]["note"]
+    assert all(i["priority"] in ("main", "stock", "kid", "season") for i in req["result"]["items"])
+    assert "買い足す" in agent.context_text("req-t-suggest")

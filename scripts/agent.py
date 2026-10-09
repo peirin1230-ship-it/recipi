@@ -32,6 +32,7 @@ import validate  # noqa: E402
 TYPE_TO_ACTION = {
     "dinner": "recipe", "prep": "recipe", "breakfast": "recipe", "lunchbox": "recipe",
     "recipe_detail": "recipe_detail", "pantry_photo": "pantry_photo", "revise": "revise", "weekly": "weekly",
+    "suggest_items": "suggest_items",
 }
 TYPE_NOTES = {
     "dinner": "夕食。主菜＋副菜（注文の dishes に従う）。",
@@ -358,6 +359,29 @@ def action_weekly(ctx: Context, L: llmmod.LLM, req: dict) -> dict:
     return {"days": data.get("days") or [], "shopping": data.get("shopping") or [], "plan_path": rel, "feasible": True, "_paths": [rel]}
 
 
+def action_suggest_items(ctx: Context, L: llmmod.LLM, req: dict) -> dict:
+    """買い足すといい食材の提案（在庫・器具・家族・学習結果・旬から）。"""
+    version, body = common.read_prompt("suggest_items")
+    system = body + "\n\n# 規則（knowledge/safety.md）\n" + ctx.safety
+    pantry = ctx.pantry_for_prompt()
+    none_staples = [k for k, v in (ctx.pantry.get("staples") or {}).items() if v == "none"]
+    seasonal = [it["name"] for it in ctx.ingredients.items if common.now().month in (it.get("season") or [])]
+    text = ("# 在庫（期限順）\n" + ydump(pantry) + "\n\n# 切らしている調味料・乾物（staples: none）\n" + (ydump(none_staples) or "（無し）") +
+            "\n\n# 最近作った物\n" + (ydump(ctx.recent(14)) or "（無し）") + "\n\n# 旬の食材（マスタの season に今月がある物）\n" + (ydump(seasonal) or "（無し）") +
+            f"\n\n# 今日: {common.today()}\n# 注文の一言: {req.get('note') or '（無し）'}")
+    blocks = house_blocks(ctx) + [{"type": "text", "text": text}]
+    data, _ = L.structured(name="suggest_items", system=system, blocks=blocks, schema=schema.SUGGEST_ITEMS_OUTPUT, effort="medium", max_tokens=6000)
+    items, seen = [], set()
+    for it in data.get("items") or []:
+        name = ctx.ingredients.normalize(it.get("name", ""))
+        if not name or name in seen or any(b in name for b in ctx.allergens()):
+            continue
+        seen.add(name)
+        items.append({"name": name, "qty": it.get("qty"), "reason": it.get("reason", ""), "enables": (it.get("enables") or [])[:3],
+                      "priority": it.get("priority") or "main", "known": bool(ctx.ingredients.get(name))})
+    return {"items": items, "note": (data.get("note") or "").strip(), "feasible": True, "_paths": []}
+
+
 def action_photo_note(ctx: Context, L: llmmod.LLM, log_id: str) -> dict | None:
     """ログの写真に一言を付け、ログの行を書き換える。learn.py から呼ぶ。"""
     entry = next((e for e in ctx.logs if e.get("id") == log_id), None)
@@ -396,6 +420,11 @@ def rewrite_log(log_id: str, patch: dict) -> bool:
     return False
 
 
+ACTIONS = {"recipe": action_recipe, "recipe_detail": action_recipe_detail, "pantry_photo": action_pantry_photo,
+           "revise": action_revise, "weekly": action_weekly, "suggest_items": action_suggest_items}
+PROMPT_OF = {"revise": "revise", "weekly": "weekly", "pantry_photo": "pantry_photo", "suggest_items": "suggest_items"}   # それ以外は recipe
+
+
 # ---- 無料の経路（Claude Code が Generator を務める。docs/SPEC.md §7.7）----
 
 class Captured(Exception):
@@ -423,8 +452,7 @@ def context_text(rid: str) -> str:
     ctx = Context()
     req = load_request(rid)
     action = action_name_for(req)
-    fn = {"recipe": action_recipe, "recipe_detail": action_recipe_detail, "pantry_photo": action_pantry_photo,
-          "revise": action_revise, "weekly": action_weekly}[action]
+    fn = ACTIONS[action]
     L = CaptureLLM(ctx.cfg, mock=True)
     try:
         fn(ctx, L, req)
@@ -458,14 +486,12 @@ def finish(rid: str, json_path: str, *, use_git: bool) -> int:
     L.label = "claude-code"
     started = common.now()
     try:
-        fn = {"recipe": action_recipe, "recipe_detail": action_recipe_detail, "pantry_photo": action_pantry_photo,
-              "revise": action_revise, "weekly": action_weekly}[action]
-        result = fn(ctx, L, req)
+        result = ACTIONS[action](ctx, L, req)
     except (ValueError, KeyError) as e:
         print(f"不合格: {e}", file=sys.stderr)
         return 2
     extra_paths = result.pop("_paths", [])
-    result.update({"model": "claude-code", "prompt_version": common.read_prompt(action if action in ("revise", "weekly", "pantry_photo") else "recipe")[0],
+    result.update({"model": "claude-code", "prompt_version": common.read_prompt(PROMPT_OF.get(action, "recipe"))[0],
                    "tokens": {"input": 0, "output": 0, "cache_read": 0, "cache_write": 0}, "cost_usd": 0.0,
                    "seconds": round((common.now() - started).total_seconds())})
     req.update({"status": "done", "error": None, "result": result, "finished": common.now().isoformat(timespec="seconds")})
@@ -501,6 +527,8 @@ def new_request(args) -> str:
         req.update({"start_date": args.start, "servings": {"adults": args.adults or int(default.get("adults", 2)), "kids": args.kids if args.kids is not None else int(default.get("kids", 0))}, "note": args.note or ""})
     elif args.type == "recipe_detail":
         req.update({"parent": args.parent, "alternative": args.alternative or 0})
+    elif args.type == "suggest_items":
+        req["note"] = args.note or ""
     save_request(req)
     return rid
 
@@ -560,13 +588,11 @@ def run(action: str, rid: str | None, *, mock: bool, use_git: bool, recipe_id: s
             raise ValueError(f"注文の type が不正: {req.get('type')}")
         if limit and ctx.month_cost() >= limit and not mock:
             raise ValueError(f"今月の API 費用が上限 {limit} USD に達した（config.yml の generation.budget_usd_per_month）")
-        fn = {"recipe": action_recipe, "recipe_detail": action_recipe_detail, "pantry_photo": action_pantry_photo,
-              "revise": action_revise, "weekly": action_weekly}[action]
-        result = fn(ctx, L, req)
+        result = ACTIONS[action](ctx, L, req)
         extra_paths = result.pop("_paths", [])
         usage = L.total_usage()
         model = L.calls[-1]["usage"].get("model", L.label) if (L.calls and not L.mock) else L.label
-        result.update({"model": model, "prompt_version": common.read_prompt(action if action in ("revise", "weekly", "pantry_photo") else "recipe")[0],
+        result.update({"model": model, "prompt_version": common.read_prompt(PROMPT_OF.get(action, "recipe"))[0],
                        "tokens": usage, "cost_usd": llmmod.cost_usd(L.model, usage) if not L.mock else 0.0,
                        "seconds": round((common.now() - started).total_seconds())})
         req.update({"status": "done", "error": None, "result": result, "finished": common.now().isoformat(timespec="seconds")})

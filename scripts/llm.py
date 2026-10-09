@@ -159,6 +159,7 @@ class LLM:
             "photo_note": "tests/fixtures/photo_note.json",
             "learn": "tests/fixtures/learn.json",
             "weekly": "tests/fixtures/weekly.json",
+            "suggest_items": "tests/fixtures/suggest_items.json",
         }
         rel = fixtures.get(name)
         if not rel or not os.path.exists(common.path(rel)):

@@ -10,7 +10,7 @@ import { $, $$, esc, ic, head, md, toast, setBusy, lsGet, lsSet, lsDel, lsGetRaw
 
 const TZ = 'Asia/Tokyo';
 const TOKEN_KEY = 'recipi.token';
-const LS = { order: 'recipi.order', pending: 'recipi.pending', current: 'recipi.current', weekly: 'recipi.weekly', cook: 'recipi.cook.', photo: 'recipi.pendingPhoto', detail: 'recipi.detail', zukan: 'recipi.zukanSort', tab: 'recipi.listTab' };
+const LS = { order: 'recipi.order', pending: 'recipi.pending', current: 'recipi.current', weekly: 'recipi.weekly', suggest: 'recipi.suggest', cook: 'recipi.cook.', photo: 'recipi.pendingPhoto', detail: 'recipi.detail', zukan: 'recipi.zukanSort', tab: 'recipi.listTab' };
 const MEMO_HEADING = '## 作ったときのメモ';
 const MOODS = ['さっぱり', 'がっつり', '和', '洋', '中', '麺', '丼', '鍋', 'スープ', '時短'];
 const TYPES = [['dinner', '夕食'], ['prep', '仕込み'], ['breakfast', '朝食'], ['lunchbox', '弁当']];
@@ -280,7 +280,7 @@ async function startRequest(req, before) {
   });
   if (!ok) { renderPending(); return; }
   setPending({ id: req.id, type: req.type, since: Date.now(), status: 'pending' });
-  toast(req.type === 'pantry_photo' ? '写真を送った。読み取り中（1〜2 分）。閉じても大丈夫' : '注文した。考え中（1〜2 分）。閉じても大丈夫');
+  toast(req.type === 'pantry_photo' ? '写真を送った。読み取り中（2〜4 分）。閉じても大丈夫' : req.type === 'suggest_items' ? '買い足す物を考え中（2〜4 分）。閉じても大丈夫' : '注文した。考え中（2〜4 分）。閉じても大丈夫');
   clearTimeout(pollTimer); pollTimer = setTimeout(pollTick, POLL_MS);
 }
 function setPending(p) { state.pending = p; if (p) lsSet(LS.pending, p); else lsDel(LS.pending); renderPending(); }
@@ -300,8 +300,8 @@ function pendingHTML(scope) {
   const p = state.pending, err = state.lastError; const pantry = scope === 'pantry'; let html = '';
   if (p && ((p.type === 'pantry_photo') === pantry)) {
     const s = Math.max(0, Math.round((Date.now() - p.since) / 1000));
-    const slow = s * 1000 > POLL_SLOW_AFTER_MS;
-    html += `<div class="pending"><span>${pantry ? '写真を読み取り中' : '考え中'}${slow ? '。処理が始まれば数分で出る' : '（2〜4 分）'}。閉じても大丈夫<br><span class="sub">${p.status === 'running' ? '生成中' : '順番待ち'} ・ ${fmtSec(s)}</span></span><button type="button" class="ghost tiny" data-act="pending-cancel">やめる</button></div>`;
+    const slow = s * 1000 > POLL_SLOW_AFTER_MS; const what = p.type === 'pantry_photo' ? '写真を読み取り中' : p.type === 'suggest_items' ? '買い足す物を考え中' : '考え中';
+    html += `<div class="pending"><span>${what}${slow ? '。処理が始まれば数分で出る' : '（2〜4 分）'}。閉じても大丈夫<br><span class="sub">${p.status === 'running' ? '生成中' : '順番待ち'} ・ ${fmtSec(s)}</span></span><button type="button" class="ghost tiny" data-act="pending-cancel">やめる</button></div>`;
   }
   if (err && ((err.type === 'pantry_photo') === pantry)) html += `<div class="errbox">生成できなかった: ${esc(err.error || '理由不明')}<br><button type="button" class="ghost tiny" data-act="error-clear">${ic('x')}閉じる</button></div>`;
   return html;
@@ -312,6 +312,7 @@ function onRequestDone(req) {
   if (req.status === 'error') { state.lastError = { type: req.type, error: req.error || '理由不明' }; renderPending(); toast(`生成できなかった: ${state.lastError.error}`, true); return; }
   const res = req.result || {};
   if (req.type === 'pantry_photo') { openDiff(photoDiffRows(res), 'photo', []); return; }
+  if (req.type === 'suggest_items') { state.suggest = { req, checked: (res.items || []).map(() => true) }; lsSet(LS.suggest, state.suggest); render(); goTo('pantry'); toast('買い足すといい物を出した'); return; }
   if (req.type === 'weekly') { state.weekly = req; lsSet(LS.weekly, req); state.showWeekly = false; render(); goTo('order'); toast('週の献立ができた'); return; }
   if (res.recipe && !res.recipe.id && res.recipe_id) res.recipe.id = res.recipe_id;
   setCurrent(res.recipe || null, req); render(); goTo('recipe');
@@ -624,6 +625,22 @@ function useByText(i, t) {
   if (!validDate(i.use_by)) return i.loc === 'freezer' ? '冷凍' : '期限なし';
   const d = daysBetween(t, i.use_by); return d < 0 ? `期限ぎれ（${-d} 日前）` : d === 0 ? '今日まで' : `あと ${d} 日（${jaShort(i.use_by)}）`;
 }
+// 買い足すといい食材（Generator に在庫・器具・家族・旬から出してもらう）
+const PRIO_JA = { main: '今週の主菜に', stock: '常備すると楽', kid: '子ども向け', season: '旬' };
+function suggestItems() { if (!requireToken()) return; startRequest({ id: newRequestId(), ts: isoNow(), type: 'suggest_items', note: '', status: 'pending', error: null, result: null }); }
+function sgSelected(s) { return ((s.req.result || {}).items || []).filter((_, i) => s.checked[i]); }
+function suggestHTML() {
+  const s = state.suggest; const res = s && s.req && s.req.result; const items = res && Array.isArray(res.items) ? res.items : [];
+  const btn = `<div class="actions left"><button type="button" class="ghost small" data-act="p-suggest">${ic('bulb')}買い足すといい物を聞く</button></div>`;
+  if (!items.length) return btn;
+  const order = ['main', 'kid', 'stock', 'season']; const groups = order.map(p => [p, items.map((it, i) => ({ it, i })).filter(x => (x.it.priority || 'main') === p)]).filter(g => g[1].length);
+  return btn + `<h3 class="group">買い足すといい物 <span class="sub">${esc(jaShort((s.req.ts || '').slice(0, 10)))}</span><button type="button" class="ghost tiny" data-act="sg-clear" aria-label="消す">${ic('x')}</button></h3>
+  ${res.note ? `<p class="sub">${esc(res.note)}</p>` : ''}
+  ${groups.map(([p, rows]) => `<div class="band soon">${PRIO_JA[p] || p}</div>` + rows.map(({ it, i }) => `<label class="sg-row"><input type="checkbox" data-act="sg-chk" data-i="${i}"${s.checked[i] ? ' checked' : ''}><span class="nm">${esc(it.name)}${it.qty ? ` <span class="sub">${esc(it.qty)}</span>` : ''}</span><span class="why">${esc(it.reason || '')}${(it.enables || []).length ? `<br><span class="sub">→ ${it.enables.map(esc).join(' / ')}</span>` : ''}</span></label>`).join('')).join('')}
+  <div class="actions left">${kq().push_shopping ? `<button type="button" class="primary small" data-act="sg-push">${ic('cart')}買い物メモへ（kaji-quest）</button>` : ''}<button type="button" class="ghost small" data-act="sg-copy">コピー</button></div>`;
+}
+async function copyText(text) { try { await navigator.clipboard.writeText(text); toast('コピーした'); } catch { toast(text); } }
+
 function renderPantry() {
   const d = state.pantry.data; const t = today(); const n = useUpDays();
   const items = d.items.slice().sort((a, b) => String(a.use_by || '9999').localeCompare(String(b.use_by || '9999')) || String(a.name).localeCompare(String(b.name)));
@@ -641,6 +658,7 @@ function renderPantry() {
   if (soon.length) html += '<div class="band soon">期限が近い（「今夜」の使い切りに入る）</div>' + soon.map(row).join('');
   if (rest.length) html += (expired.length || soon.length ? '<h3 class="group">ほか</h3>' : '') + rest.map(row).join('');
   if (!items.length) html += `<p class="empty">${state.liveError ? `在庫を読めなかった: ${esc(state.liveError)}` : '在庫が空。上の欄に「、」区切りで入れる。'}</p>`;
+  html += suggestHTML();
   html += '<h3 class="group">調味料・乾物（ある / 少ない / ない）</h3>' + staplesHTML(d.staples);
   $('#pantry').innerHTML = html;
 }
@@ -912,6 +930,11 @@ document.addEventListener('click', ev => {
     // 在庫
     case 'p-add': pantryAdd(($('#p-add') || {}).value); break;
     case 'p-import': importKaji(); break;
+    case 'p-suggest': suggestItems(); break;
+    case 'sg-chk': { const s = state.suggest; if (s) { s.checked[+el.dataset.i] = el.checked; lsSet(LS.suggest, s); } break; }
+    case 'sg-push': { const s = state.suggest; if (s) pushShopping(sgSelected(s).map(i => i.qty ? `${i.name} ${i.qty}` : i.name)); break; }
+    case 'sg-copy': { const s = state.suggest; if (s) copyText(sgSelected(s).map(i => i.qty ? `${i.name} ${i.qty}` : i.name).join('、')); break; }
+    case 'sg-clear': state.suggest = null; lsDel(LS.suggest); render(); break;
     case 'p-useup': pantryItemOp(b.dataset.id, 'useup'); break;
     case 'p-discard': pantryItemOp(b.dataset.id, 'discard'); break;
     case 'p-staple': pantryStaple(b.dataset.name, b.dataset.v); break;
@@ -1004,6 +1027,7 @@ async function init() {
   // 端末に残ったレシピがリポジトリから消されていたら捨てる（recipes/<id>.md が 404）
   { const rid = state.current && state.current.recipe && state.current.recipe.id; if (rid && !recipeById(rid)) { try { if ((await gh.fetchRawText(`recipes/${rid}.md`)) === null) setCurrent(null, null); } catch { /* 読めないときは残す */ } } }
   const w = lsGet(LS.weekly); if (w && w.result) state.weekly = w;
+  const sg = lsGet(LS.suggest); if (sg && sg.req && sg.req.result) state.suggest = sg;
   const p = lsGet(LS.pending); if (p && p.id && Date.now() - (+p.since || 0) < POLL_MAX_MS) state.pending = p; else lsDel(LS.pending);
   initNav(['order', 'recipe', 'record', 'pantry', 'equipment', 'zukan', 'list', 'week'], { cook: () => openCook(), settings: openSettings, top: () => window.scrollTo({ top: 0 }) });
   state.loaded = true; render();
