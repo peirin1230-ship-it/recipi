@@ -99,6 +99,33 @@ class Context:
             out.append({"date": e.get("date"), "title": r.get("title") or rid, "main_ingredients": mains[:3]})
         return out
 
+    def existing(self) -> list[dict]:
+        """一覧にあるレシピ（封印も含む）。同じ料理を出さないために渡す: 料理名・主菜/副菜の名前・主材料。"""
+        out = []
+        for rid, r in sorted(self.recipes.items(), key=lambda kv: str(kv[1].get("created") or ""), reverse=True):
+            mains = [i.get("pantry") or i.get("name") for i in (r.get("ingredients") or []) if isinstance(i.get("grams"), (int, float)) and i["grams"] >= 100]
+            row = {"title": r.get("title") or rid, "dishes": [d.get("name") for d in (r.get("dishes") or []) if d.get("name")], "main_ingredients": mains[:3]}
+            if r.get("status") == "retired":
+                row["status"] = "retired"
+            out.append(row)
+        return out
+
+    def proposed(self, days: int) -> list[str]:
+        """直近 N 日に提案した料理名（requests/ の結果の本命と別案）。一覧に無い物だけ（消した物・採らなかった別案）。"""
+        since = (common.now() - dt.timedelta(days=days)).strftime("%Y-%m-%d")
+        have = {norm_title(r.get("title") or "") for r in self.recipes.values()}
+        out: list[str] = []
+        for p in sorted(glob.glob(common.path("requests", "*.json"))):
+            d = common.read_json(os.path.relpath(p, common.ROOT)) or {}
+            if str(d.get("ts") or "")[:10] < since or d.get("status") != "done":
+                continue
+            res = d.get("result") or {}
+            titles = [((res.get("recipe") or {}).get("title"))] + [a.get("title") for a in (res.get("alternatives") or []) if isinstance(a, dict)]
+            for t in titles:
+                if t and norm_title(t) not in have and t not in out:
+                    out.append(t)
+        return out
+
     def standards(self) -> list[dict]:
         out = []
         for rid in self.learned.get("standards") or []:
@@ -142,13 +169,17 @@ def house_blocks(ctx: Context) -> list[dict]:
     ]
 
 
+def norm_title(t: str) -> str:
+    return validate.norm_title(t)
+
+
 def unlimited_budget(req: dict) -> bool:
     """time_budget が 0 なら時間無制限（予算の検査をしない）。無い・None は既定の予算。"""
     tb = req.get("time_budget")
     return isinstance(tb, (int, float)) and not isinstance(tb, bool) and int(tb) == 0
 
 
-def request_block(ctx: Context, req: dict, extra: str = "") -> dict:
+def request_block(ctx: Context, req: dict, extra: str = "", *, dedupe: bool = True) -> dict:
     cfg = ctx.cfg
     unlimited = unlimited_budget(req)   # time_budget が 0 = 時間無制限
     budget = int(req.get("time_budget") or cfg["request"].get("default_budget", 25))
@@ -164,8 +195,21 @@ def request_block(ctx: Context, req: dict, extra: str = "") -> dict:
     recent = ctx.recent(int(cfg["suggest"].get("no_repeat_days", 14)))
     pantry = ctx.pantry_for_prompt()
     order = {k: v for k, v in req.items() if k in ("type", "time_budget", "servings", "dishes", "mood", "use_up", "exclude", "note", "mode")}
+    dedupe_text = ""
+    if dedupe:
+        existing = ctx.existing()
+        proposed = ctx.proposed(int(cfg["suggest"].get("no_repeat_proposed_days", 14)))
+        dedupe_text = (
+            "\n\n# 一覧にあるレシピ（同じ料理は出さない。主菜の名前も、主材料×調理法の組み合わせも被らないようにする）\n" + (ydump(existing) or "（無し）") +
+            "\n\n# 最近提案した物（直近の注文で出した本命・別案。採られなかったので出さない）\n" + (ydump(proposed) or "（無し）") +
+            "\n\n# 重複を避ける\n- 上の一覧・最近提案した物・最近作った物・注文の exclude と同じ料理は出さない（料理名が同じなら不合格）。"
+            "\n- 主材料と調理法（焼く・炒める・煮る・蒸す・和える・汁物・炊き込み・揚げ焼き・低温調理）の組み合わせを一覧と変える。副菜も同じ物を続けない。"
+            "\n- 別案 2 つは本命とも互いとも、主材料か調理法を変える。"
+            "\n- 在庫が少なくて被りそうなら、味付け（和・洋・中・エスニック）と調理法で差を出す。"
+        )
     text = (
         "# 最近作った物（出さない）\n" + (ydump(recent) or "（無し）") +
+        dedupe_text +
         "\n\n# 在庫（pantry.json。期限順。staples は ok/low の物だけ。無い物は使えない）\n" + ydump(pantry) +
         "\n\n# 注文\n" + ydump(order) + time_text +
         f"\n- 注文の種類: {TYPE_NOTES.get(req.get('type'), '')}"
@@ -200,14 +244,16 @@ def unique_recipe_id(title_roman: str) -> str:
 
 
 def generate_recipe(ctx: Context, L: llmmod.LLM, req: dict, *, name: str = "recipe", extra: str = "",
-                    validate_ctx_extra: dict | None = None) -> tuple[dict, dict, list[str]]:
-    """生成 → 検査 → やり直し。返り値は (出力 JSON, usage 合計, 最後の不合格理由)。"""
+                    validate_ctx_extra: dict | None = None, dedupe: bool = True) -> tuple[dict, dict, list[str]]:
+    """生成 → 検査 → やり直し。返り値は (出力 JSON, usage 合計, 最後の不合格理由)。
+    dedupe: 一覧にある料理名・注文の exclude と同じ料理名を不合格にする（別案の料理名も）。別案の詳細化では使わない。"""
     version, system = system_text(ctx, "recipe")
-    blocks = house_blocks(ctx) + [request_block(ctx, req, extra)]
+    blocks = house_blocks(ctx) + [request_block(ctx, req, extra, dedupe=dedupe)]
+    taken = ([r.get("title") or "" for r in ctx.recipes.values()] + [t for t in (req.get("exclude") or []) if t]) if dedupe else []
     servings = req.get("servings") or ctx.family.get("meals", {}).get("dinner_default", {})
     vctx = {"equipment": ctx.equipment, "family": ctx.family, "pantry": ctx.pantry, "ingredients": ctx.ingredients,
             "overrides": ctx.overrides, "budget": req.get("time_budget"), "speed_factor": ctx.speed_factor,
-            "servings": servings, "config": ctx.cfg}
+            "servings": servings, "config": ctx.cfg, "existing_titles": taken}
     vctx.update(validate_ctx_extra or {})
     retries = int(ctx.cfg["generation"].get("max_retries", 2))
     errors: list[str] = []
@@ -217,10 +263,12 @@ def generate_recipe(ctx: Context, L: llmmod.LLM, req: dict, *, name: str = "reci
         if not data.get("feasible") or not data.get("recipe"):
             return data, L.total_usage(), []
         errors = validate.validate_recipe(data["recipe"], vctx)
+        if dedupe:
+            errors += validate.alternatives_errors(data["recipe"].get("title") or "", data.get("alternatives") or [], taken)
         if not errors:
             break
         print(f"attempt {attempt + 1}: 不合格 {len(errors)} 件", file=sys.stderr)
-        blocks = house_blocks(ctx) + [request_block(ctx, req, extra + "\n\n# 前回の出力の不合格点（直して出し直す）\n- " + "\n- ".join(errors))]
+        blocks = house_blocks(ctx) + [request_block(ctx, req, extra + "\n\n# 前回の出力の不合格点（直して出し直す）\n- " + "\n- ".join(errors), dedupe=dedupe)]
     data["_prompt_version"] = version
     return data, L.total_usage(), errors
 
@@ -254,7 +302,7 @@ def action_recipe_detail(ctx: Context, L: llmmod.LLM, req: dict) -> dict:
     req.setdefault("type", parent.get("type") if parent.get("type") in TYPE_NOTES else "dinner")
     req["mode"] = "auto"
     extra = f"# この料理を作る\n- {title}（{minutes} 分の見込み。{why}）\n- 料理は変えない。この家の器具・在庫・家族・時間に合わせて詳細を組む。"
-    data, usage, errors = generate_recipe(ctx, L, req, name="recipe_detail", extra=extra)
+    data, usage, errors = generate_recipe(ctx, L, req, name="recipe_detail", extra=extra, dedupe=False)   # 料理は決まっているので重複の検査はしない
     return finish_recipe(ctx, L, req, data, usage, errors)
 
 

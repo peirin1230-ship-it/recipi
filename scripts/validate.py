@@ -10,6 +10,7 @@ ctx: equipment / family / pantry / budget / speed_factor / config を持つ dict
 from __future__ import annotations
 
 import re
+import unicodedata
 import sys
 
 import common
@@ -38,6 +39,32 @@ def _band_index(band: str | None) -> int:
     return BANDS.index(band) if band in BANDS else len(BANDS) - 1
 
 
+_TITLE_STRIP = str.maketrans("", "", " \u3000・、。，,.（）()「」『』【】!！?？")
+
+
+def norm_title(t: str) -> str:
+    """料理名の比較用: 全角半角をそろえ、小文字にし、空白と区切りの記号を外す。"""
+    return unicodedata.normalize("NFKC", str(t or "")).lower().translate(_TITLE_STRIP)
+
+
+def alternatives_errors(title: str, alternatives: list, taken: list[str]) -> list[str]:
+    """別案の料理名が、本命・互い・一覧（taken）と同じなら不合格。"""
+    errors: list[str] = []
+    have = {norm_title(t) for t in taken if t}
+    seen = {norm_title(title)} if title else set()
+    for a in alternatives:
+        t = (a or {}).get("title") if isinstance(a, dict) else None
+        if not t:
+            continue
+        n = norm_title(t)
+        if n in have:
+            errors.append(f"別案「{t}」は一覧にある料理（または退けた料理）と同じ。別の料理にする")
+        elif n in seen:
+            errors.append(f"別案「{t}」が本命か別の別案と同じ。別の料理にする")
+        seen.add(n)
+    return errors
+
+
 def validate_recipe(recipe: dict, ctx: dict | None = None) -> list[str]:
     """不合格の理由のリスト。空なら合格。"""
     ctx = ctx or {}
@@ -51,6 +78,11 @@ def validate_recipe(recipe: dict, ctx: dict | None = None) -> list[str]:
     if errors:
         return errors
     dish_names = {d.get("name") for d in r["dishes"]}
+
+    # ---- 重複（一覧にある料理名・退けた料理名と同じなら不合格。主菜の重複は指示で避ける） ----
+    taken = {norm_title(t) for t in (ctx.get("existing_titles") or []) if t}
+    if taken and norm_title(r["title"]) in taken:
+        errors.append(f"「{r['title']}」は一覧にある料理（または退けた料理）と同じ。主材料か調理法を変えて別の料理にする")
 
     # ---- 器具 ----
     equipment = ctx.get("equipment")

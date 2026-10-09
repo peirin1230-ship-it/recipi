@@ -9,7 +9,7 @@ def write_request(req):
     common.write_json(f"requests/{req['id']}.json", {"status": "pending", "error": None, "result": None, **req})
 
 
-def test_recipe_mock(root):
+def test_recipe_mock(fresh_recipes):
     write_request({"id": "req-t-dinner", "ts": "2026-10-08T17:12:30+09:00", "type": "dinner", "time_budget": 25, "servings": {"adults": 2, "kids": 1}, "dishes": "main+side", "mood": [], "use_up": ["小松菜"], "mode": "auto"})
     assert agent.run("auto", "req-t-dinner", mock=True, use_git=False) == 0
     req = common.read_json("requests/req-t-dinner.json")
@@ -22,7 +22,7 @@ def test_recipe_mock(root):
     assert res["cost_usd"] == 0.0
 
 
-def test_recipe_detail_mock(root):
+def test_recipe_detail_mock(fresh_recipes):
     write_request({"id": "req-t-dinner2", "ts": "2026-10-08T17:12:30+09:00", "type": "dinner", "time_budget": 30, "servings": {"adults": 2, "kids": 1}, "dishes": "main+side", "mode": "auto"})
     assert agent.run("auto", "req-t-dinner2", mock=True, use_git=False) == 0
     write_request({"id": "req-t-detail", "ts": "2026-10-08T17:20:00+09:00", "type": "recipe_detail", "parent": "req-t-dinner2", "alternative": 1})

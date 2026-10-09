@@ -3,12 +3,12 @@
   "infeasible_reason": null,
   "nearest_options": [],
   "recipe": {
-    "title": "鶏もも肉の照り焼きと小松菜のおひたし",
+    "title": "鶏もも肉の照り焼きと小松菜のごま和え",
     "title_roman": "torimomo-teriyaki",
     "image_text": "照りのある濃い茶色の鶏肉に白ごまが散る。横に濃い緑の小松菜、上にかつお節。",
     "dishes": [
       { "name": "鶏もも肉の照り焼き", "role": "main" },
-      { "name": "小松菜のおひたし", "role": "side" }
+      { "name": "小松菜のごま和え", "role": "side" }
     ],
     "equipment": ["gas-r", "fp26", "microwave", "bowl-l"],
     "ingredients": [
@@ -20,10 +20,10 @@
       { "name": "酒", "qty": 1, "unit": "大さじ", "grams": 15, "pantry": "酒", "for": "鶏もも肉の照り焼き", "substitute": "水", "use_up": false },
       { "name": "砂糖", "qty": 1, "unit": "小さじ", "grams": 3, "pantry": "砂糖", "for": "鶏もも肉の照り焼き", "substitute": null, "use_up": false },
       { "name": "白ごま", "qty": 1, "unit": "小さじ", "grams": 2, "pantry": "白ごま", "for": "鶏もも肉の照り焼き", "substitute": null, "use_up": false },
-      { "name": "小松菜", "qty": 1, "unit": "束", "grams": 200, "pantry": "小松菜", "for": "小松菜のおひたし", "substitute": null, "use_up": true },
-      { "name": "めんつゆ", "qty": 1, "unit": "大さじ", "grams": 18, "pantry": "めんつゆ", "for": "小松菜のおひたし", "substitute": null, "use_up": false },
-      { "name": "かつお節", "qty": 2, "unit": "g", "grams": 2, "pantry": "かつお節", "for": "小松菜のおひたし", "substitute": null, "use_up": false },
-      { "name": "水", "qty": 2, "unit": "大さじ", "grams": 30, "pantry": null, "for": "小松菜のおひたし", "substitute": null, "use_up": false }
+      { "name": "小松菜", "qty": 1, "unit": "束", "grams": 200, "pantry": "小松菜", "for": "小松菜のごま和え", "substitute": null, "use_up": true },
+      { "name": "めんつゆ", "qty": 1, "unit": "大さじ", "grams": 18, "pantry": "めんつゆ", "for": "小松菜のごま和え", "substitute": null, "use_up": false },
+      { "name": "かつお節", "qty": 2, "unit": "g", "grams": 2, "pantry": "かつお節", "for": "小松菜のごま和え", "substitute": null, "use_up": false },
+      { "name": "水", "qty": 2, "unit": "大さじ", "grams": 30, "pantry": null, "for": "小松菜のごま和え", "substitute": null, "use_up": false }
     ],
     "tags": ["和", "主菜", "副菜", "子ども向け", "使い切り", "鶏もも肉", "照り焼き", "おひたし", "フライパン1つ"],
     "salt": { "total_g": 5.4, "adult_per_serving_g": 2.0, "kid_g": 0.3 },
@@ -47,9 +47,9 @@
       { "dish": "鶏もも肉の照り焼き", "n": 2, "title": "焼く", "kind": "wait", "tag": "sear", "minutes": 6, "heat": { "equipment": "gas-r", "level": "中火" }, "text": "フライパンに油 小さじ 1。皮目を下に、重ならないように並べて 3 分触らない。返して 3 分。", "cue": "縁が白くなり、皮がきつね色。油のはねる音が小さくなる", "caution": "強火にしない。右のコンロは火が強いので中火で十分", "timer": 180, "kid": "返して 3 分たったら子どもの分 60g を取り出す" },
       { "dish": "鶏もも肉の照り焼き", "n": 3, "title": "タレ", "kind": "heat", "tag": "season", "minutes": 3, "heat": { "equipment": "gas-r", "level": "弱火" }, "text": "弱火に落としてから、合わせたタレ（醤油・みりん・酒・砂糖）を入れ、煮絡める。", "cue": "泡が大きくなり、箸で底に線が引ける。黒ずんだら火を止める", "caution": "タレは必ず火を落としてから。糖分が焦げる", "timer": null, "kid": null },
       { "dish": "鶏もも肉の照り焼き", "n": 4, "title": "盛る", "kind": "serve", "tag": "serve", "minutes": 2, "heat": null, "text": "器に盛り、白ごまを振る。", "cue": "照りが全体に回っている", "caution": null, "timer": null, "kid": "子どもの分は皮を外して 1cm 角。タレは付けない" },
-      { "dish": "小松菜のおひたし", "n": 1, "title": "切る", "kind": "prep", "tag": "cut", "minutes": 2, "heat": null, "text": "根元を落として 4cm に切り、耐熱ボウルに入れる。", "cue": "茎と葉が同じ長さにそろう", "caution": null, "timer": null, "kid": null },
-      { "dish": "小松菜のおひたし", "n": 2, "title": "レンジ", "kind": "wait", "tag": "microwave", "minutes": 2, "heat": null, "text": "ふんわりラップをして 600W 2 分。", "cue": "色が濃くなり、茎が曲がる", "caution": null, "timer": 120, "kid": null },
-      { "dish": "小松菜のおひたし", "n": 3, "title": "冷ます・和える", "kind": "prep", "tag": "season", "minutes": 2, "heat": null, "text": "水で冷まして固く絞る。めんつゆ 大さじ 1 と水 大さじ 2 を回しかけ、かつお節をのせる。", "cue": "水気が出ない程度に絞れている", "caution": null, "timer": null, "kid": "葉先だけを 5mm に刻み、めんつゆは小さじ 1/4" }
+      { "dish": "小松菜のごま和え", "n": 1, "title": "切る", "kind": "prep", "tag": "cut", "minutes": 2, "heat": null, "text": "根元を落として 4cm に切り、耐熱ボウルに入れる。", "cue": "茎と葉が同じ長さにそろう", "caution": null, "timer": null, "kid": null },
+      { "dish": "小松菜のごま和え", "n": 2, "title": "レンジ", "kind": "wait", "tag": "microwave", "minutes": 2, "heat": null, "text": "ふんわりラップをして 600W 2 分。", "cue": "色が濃くなり、茎が曲がる", "caution": null, "timer": 120, "kid": null },
+      { "dish": "小松菜のごま和え", "n": 3, "title": "冷ます・和える", "kind": "prep", "tag": "season", "minutes": 2, "heat": null, "text": "水で冷まして固く絞る。めんつゆ 大さじ 1 と水 大さじ 2 を回しかけ、かつお節をのせる。", "cue": "水気が出ない程度に絞れている", "caution": null, "timer": null, "kid": "葉先だけを 5mm に刻み、めんつゆは小さじ 1/4" }
     ],
     "cleanup": { "dishwasher": ["bowl-l"], "hand": ["fp26"], "note": "フライパンは火を止めたらすぐ湯を張る。タレが固まる前に" },
     "raw_estimate": 18,

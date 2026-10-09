@@ -25,3 +25,13 @@ import pytest  # noqa: E402
 @pytest.fixture
 def root():
     return TMP
+
+
+@pytest.fixture
+def fresh_recipes(root):
+    """モックの Generator は毎回同じ料理名を返すので、前のテストが作ったレシピを消してから生成する（同じ料理名は重複として不合格になる）。"""
+    keep = set(os.listdir(os.path.join(REPO, "tests", "fixtures", "recipes")))
+    for name in os.listdir(os.path.join(root, "recipes")):
+        if name.endswith(".md") and name not in keep:
+            os.remove(os.path.join(root, "recipes", name))
+    return root

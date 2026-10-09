@@ -99,3 +99,19 @@ def test_budget_zero_means_unlimited():
     r = load_fixture()
     assert any("予算" in e for e in validate.validate_recipe(r, ctx(budget=10)))   # 10 分には収まらない
     assert validate.validate_recipe(r, ctx(budget=0)) == []                         # 0 = 時間無制限: 時間の検査をしない
+
+
+def test_duplicate_title_rejected_only_against_existing():
+    r = load_fixture()
+    same = ["鶏もも肉の照り焼きと小松菜のごま和え"]
+    assert any("同じ" in e for e in validate.validate_recipe(r, ctx(existing_titles=same)))
+    assert any("同じ" in e for e in validate.validate_recipe(r, ctx(existing_titles=["鶏もも肉の照り焼き と 小松菜のごま和え（）"])))   # 表記ゆれも同じ
+    assert validate.validate_recipe(r, ctx(existing_titles=["鶏もも肉の照り焼きと小松菜のおひたし"])) == []                       # 副菜が違えば別の料理
+    assert validate.validate_recipe(r, ctx(existing_titles=[])) == []
+
+
+def test_alternatives_must_differ():
+    alts = [{"title": "豚こまの生姜焼きとキャベツの塩昆布和え"}, {"title": "鮭のムニエルとほうれん草のソテー"}]
+    assert validate.alternatives_errors("鶏もも肉の照り焼きと小松菜のごま和え", alts, ["かぼちゃの煮物とみそ汁"]) == []
+    errs = validate.alternatives_errors("鶏もも肉の照り焼きと小松菜のごま和え", alts + [{"title": "豚こまの生姜焼きとキャベツの塩昆布和え"}], ["鮭のムニエルとほうれん草のソテー"])
+    assert len(errs) == 2 and any("一覧" in e for e in errs) and any("互い" in e or "別の別案" in e for e in errs)

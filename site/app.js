@@ -939,7 +939,7 @@ document.addEventListener('click', ev => {
     case 'o-useup': { const v = b.dataset.v; if (state.useUpOff.has(v)) state.useUpOff.delete(v); else state.useUpOff.add(v); b.classList.toggle('is-on', !state.useUpOff.has(v)); break; }
     case 'o-step': { const k = b.dataset.k; o.servings[k] = Math.max(0, Math.min(9, (+o.servings[k] || 0) + +b.dataset.d)); $(`#o-${k}`).textContent = o.servings[k]; break; }
     case 'o-submit': submitOrder(); break;
-    case 'o-again': { const r = currentRecipe(); submitOrder({ exclude: [...new Set([...(o.exclude || []), r ? r.title : ''].filter(Boolean))].slice(-5) }); break; }
+    case 'o-again': { const r = currentRecipe(); const cur = state.current && state.current.request; const alts = ((cur && cur.result && cur.result.alternatives) || []).map(a => a && a.title); submitOrder({ exclude: [...new Set([...(o.exclude || []), r ? r.title : '', ...alts].filter(Boolean))].slice(-8) }); break; }   // 退けた本命と別案は次に出さない
     case 'o-nearest': readOrder(); o.time_budget = +b.dataset.min || o.time_budget; o.note = `「${b.dataset.v}」で。${o.note}`.trim().slice(0, 200); renderOrder(); decorateCards(); submitOrder(); break;
     case 'o-detail': submitDetail(b.dataset.parent, b.dataset.alt); break;
     case 'o-weekly-toggle': readOrder(); state.showWeekly = !state.showWeekly; renderOrder(); decorateCards(); break;

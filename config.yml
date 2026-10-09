@@ -14,7 +14,8 @@ request:
 
 suggest:
   explore_ratio: 0.3              # 本命を「新しい料理」にする割合
-  no_repeat_days: 14              # 同じ料理を出さない日数
+  no_repeat_days: 14              # 同じ料理を出さない日数（作った物）
+  no_repeat_proposed_days: 14     # 提案したが採られなかった料理（本命・別案）を出さない日数
   same_main_ingredient_max_days: 2
   use_up_days: 3                  # use_by まで N 日以内の物を「使い切り」に自動で入れる
 

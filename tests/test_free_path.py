@@ -14,7 +14,7 @@ def run_cli(*args):
                           capture_output=True, text=True, env=env, cwd=common.ROOT)
 
 
-def test_new_context_finish(root):
+def test_new_context_finish(fresh_recipes):
     r = run_cli("new", "--type", "dinner", "--budget", "25", "--adults", "2", "--kids", "1", "--mood", "和、時短", "--use-up", "小松菜", "--note", "妻は遅い")
     assert r.returncode == 0, r.stderr
     rid = r.stdout.strip()
@@ -70,3 +70,16 @@ def test_new_budget_zero_is_unlimited(root):
     assert agent.unlimited_budget(req) and not agent.unlimited_budget({"time_budget": 25}) and not agent.unlimited_budget({})
     text = agent.context_text(rid)
     assert "時間無制限" in text and "分以内**にする" not in text   # 予算の制約の文が無い（安全の表の「30 分以内」は別）
+
+
+def test_context_lists_existing_recipes_and_finish_rejects_duplicate(root, tmp_path):
+    rid = run_cli("new", "--type", "dinner", "--budget", "25").stdout.strip()
+    text = agent.context_text(rid)
+    assert "一覧にあるレシピ" in text and "鶏もも肉の照り焼きと小松菜のおひたし" in text and "重複を避ける" in text
+    with open(os.path.join(common.ROOT, "tests", "fixtures", "recipe_teriyaki.json"), encoding="utf-8") as f:
+        dup = json.load(f)
+    dup["recipe"]["title"] = "鶏もも肉の照り焼きと小松菜のおひたし"   # 一覧にある料理名そのまま
+    p = tmp_path / "dup.json"
+    p.write_text(json.dumps(dup, ensure_ascii=False), encoding="utf-8")
+    assert agent.finish(rid, str(p), use_git=False) == 2
+    assert common.read_json(f"requests/{rid}.json")["status"] == "pending"
