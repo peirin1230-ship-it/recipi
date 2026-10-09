@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-09T12:04:49+09:00",
+ "updated": "2026-10-09T12:04:54+09:00",
  "items": [
   {
    "id": "p9qc8h",
@@ -28,6 +28,16 @@
    "loc": "fridge",
    "added": "2026-10-09",
    "use_by": "2026-10-16",
+   "src": "manual"
+  },
+  {
+   "id": "p1qnvb",
+   "name": "牛乳",
+   "qty": null,
+   "unit": null,
+   "loc": "fridge",
+   "added": "2026-10-09",
+   "use_by": "2026-10-15",
    "src": "manual"
   }
  ],
