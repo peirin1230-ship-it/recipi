@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-09T12:09:17+09:00",
+ "updated": "2026-10-09T20:15:42+09:00",
  "items": [
   {
    "id": "p9qc8h",
@@ -57,6 +57,16 @@
    "loc": "fridge",
    "added": "2026-10-09",
    "use_by": "2026-10-16",
+   "src": "manual"
+  },
+  {
+   "id": "pyyhg2",
+   "name": "コーン缶",
+   "qty": null,
+   "unit": null,
+   "loc": "pantry",
+   "added": "2026-10-09",
+   "use_by": "2027-10-09",
    "src": "manual"
   }
  ],
