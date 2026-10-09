@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-09T12:04:54+09:00",
+ "updated": "2026-10-09T12:05:01+09:00",
  "items": [
   {
    "id": "p9qc8h",
@@ -38,6 +38,15 @@
    "loc": "fridge",
    "added": "2026-10-09",
    "use_by": "2026-10-15",
+   "src": "manual"
+  },
+  {
+   "id": "pw63nn",
+   "name": "無糖ヨーグルト",
+   "qty": null,
+   "unit": null,
+   "loc": "fridge",
+   "added": "2026-10-09",
    "src": "manual"
   }
  ],
