@@ -13,7 +13,386 @@
  "exclude": [],
  "note": "",
  "mode": "auto",
- "status": "pending",
+ "status": "done",
  "error": null,
- "result": null
+ "result": {
+  "feasible": true,
+  "infeasible_reason": null,
+  "nearest_options": [],
+  "alternatives": [
+   {
+    "title": "ツナとコーンの炊き込みご飯の仕込み",
+    "minutes": 50,
+    "why": "炊飯器を先に使い、翌日は温めるだけにできる新しい案。",
+    "kind": "new"
+   },
+   {
+    "title": "かまぼこと卵のミルクスープ",
+    "minutes": 20,
+    "why": "牛乳と卵を使う、鍋 1 つの新しい汁物。",
+    "kind": "new"
+   }
+  ],
+  "recipe_id": "r-20261009-tuna-corn-atsuyaki-tamago-to-okra-kamabo",
+  "recipe": {
+   "id": "r-20261009-tuna-corn-atsuyaki-tamago-to-okra-kamabo",
+   "title": "ツナとコーンの厚焼き卵とオクラのかまぼこ和え（翌日仕込み）",
+   "version": 1,
+   "supersedes": null,
+   "status": "draft",
+   "created": "2026-10-09",
+   "request": "req-20261009-2018-55sv",
+   "generated_by": {
+    "model": "claude-code",
+    "prompt_version": 1
+   },
+   "type": "prep",
+   "servings": {
+    "adults": 2,
+    "kids": 1
+   },
+   "time": {
+    "budget": 60,
+    "planned": 33,
+    "active": 22,
+    "raw_estimate": 33,
+    "speed_factor": 1.0
+   },
+   "image_text": "黄色い厚焼き卵の断面にコーンとツナの粒が散り、うっすら焼き色がついている。横に緑のオクラとピンクのかまぼこの和え物を添える。",
+   "dishes": [
+    {
+     "name": "ツナとコーンの厚焼き卵",
+     "role": "main"
+    },
+    {
+     "name": "オクラとかまぼこの塩昆布和え",
+     "role": "side"
+    }
+   ],
+   "equipment": [
+    "gas-r",
+    "fp26",
+    "microwave",
+    "bowl-m",
+    "bowl-l"
+   ],
+   "ingredients": [
+    {
+     "name": "卵",
+     "qty": 5,
+     "unit": "個",
+     "grams": 275,
+     "pantry": "卵",
+     "for": "ツナとコーンの厚焼き卵",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "ツナ缶",
+     "qty": 1,
+     "unit": "缶",
+     "grams": 70,
+     "pantry": "ツナ缶",
+     "for": "ツナとコーンの厚焼き卵",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "コーン缶",
+     "qty": 60,
+     "unit": "g",
+     "grams": 60,
+     "pantry": "コーン缶",
+     "for": "ツナとコーンの厚焼き卵",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "醤油",
+     "qty": 1,
+     "unit": "小さじ",
+     "grams": 6,
+     "pantry": "醤油",
+     "for": "ツナとコーンの厚焼き卵",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "砂糖",
+     "qty": 1,
+     "unit": "小さじ",
+     "grams": 3,
+     "pantry": "砂糖",
+     "for": "ツナとコーンの厚焼き卵",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "サラダ油",
+     "qty": 1,
+     "unit": "大さじ",
+     "grams": 12,
+     "pantry": "サラダ油",
+     "for": "ツナとコーンの厚焼き卵",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "オクラ",
+     "qty": 3,
+     "unit": "本",
+     "grams": 30,
+     "pantry": "オクラ",
+     "for": "オクラとかまぼこの塩昆布和え",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "かまぼこ",
+     "qty": 20,
+     "unit": "g",
+     "grams": 20,
+     "pantry": "かまぼこ",
+     "for": "オクラとかまぼこの塩昆布和え",
+     "substitute": null,
+     "use_up": true
+    },
+    {
+     "name": "塩昆布",
+     "qty": 3,
+     "unit": "g",
+     "grams": 3,
+     "pantry": "塩昆布",
+     "for": "オクラとかまぼこの塩昆布和え",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "ごま油",
+     "qty": 1,
+     "unit": "小さじ",
+     "grams": 4,
+     "pantry": "ごま油",
+     "for": "オクラとかまぼこの塩昆布和え",
+     "substitute": null,
+     "use_up": false
+    }
+   ],
+   "tags": [
+    "仕込み",
+    "卵",
+    "作り置き",
+    "時短"
+   ],
+   "salt": {
+    "total_g": 2.2,
+    "adult_per_serving_g": 1.1,
+    "kid_g": 0.2
+   },
+   "kid": {
+    "rule": "separate",
+    "cut": "卵焼きは 1cm 角、オクラは 5mm の小口切り",
+    "note": "味付け前に取り分ける。子どもの卵（1 個）は塩・醤油・ツナ無しでコーンだけ入れ、中まで完全に固める。卵は初めてなら少量から。熱い物は冷ましてから。"
+   },
+   "keep": {
+    "fridge_days": 2,
+    "freezer": false,
+    "reheat": "卵焼きは 600W で 40 秒（途中で向きを変える）、湯気が立つまで。子どもの分は 600W 30 秒＋30 秒追加で中まで温める。和え物は冷たいままでよい。"
+   },
+   "timeline": [
+    {
+     "minute": 0,
+     "lane": "hands",
+     "text": "ツナの缶汁を切り、コーンの水気を切る"
+    },
+    {
+     "minute": 3,
+     "lane": "microwave",
+     "text": "オクラを 900W 40 秒加熱"
+    },
+    {
+     "minute": 4,
+     "lane": "hands",
+     "text": "オクラを冷まし、小口切り。かまぼこを 5mm 角に切る"
+    },
+    {
+     "minute": 8,
+     "lane": "hands",
+     "text": "和え物を作り、子ども用オクラ 1 本分を先に取り分ける"
+    },
+    {
+     "minute": 11,
+     "lane": "hands",
+     "text": "卵 5 個を割り、子ども用 1 個を別のボウルへ。大人用の卵液を作る"
+    },
+    {
+     "minute": 15,
+     "lane": "gas-r",
+     "text": "大人用の卵焼きを焼く（中火→弱火、触らない待ちあり）"
+    },
+    {
+     "minute": 17,
+     "lane": "hands",
+     "text": "待ちの間にフライパンを置く台を空け、子ども用の卵液にコーンを混ぜる"
+    },
+    {
+     "minute": 24,
+     "lane": "gas-r",
+     "text": "大人用を取り出して粗熱を取る。子ども用の卵を弱火で完全に焼く"
+    },
+    {
+     "minute": 29,
+     "lane": "hands",
+     "text": "切り分けて容器に入れ、粗熱を取る"
+    },
+    {
+     "minute": 33,
+     "lane": "hands",
+     "text": "ラップをして冷蔵庫へ。片付け"
+    }
+   ],
+   "steps": [
+    {
+     "dish": "オクラとかまぼこの塩昆布和え",
+     "n": 1,
+     "title": "オクラをレンジにかける",
+     "kind": "heat",
+     "tag": "microwave",
+     "minutes": 3,
+     "heat": {
+      "equipment": "microwave",
+      "level": "900W"
+     },
+     "text": "オクラ 3 本を洗い、ヘタを切って耐熱のボウル（中）に入れ、ふんわりラップをして 900W で 40 秒加熱する。",
+     "cue": "色が鮮やかな緑になり、触るとやや柔らかい。",
+     "caution": "熱いのでラップを開けるときは蒸気に注意する。",
+     "timer": 40,
+     "kid": null
+    },
+    {
+     "dish": "オクラとかまぼこの塩昆布和え",
+     "n": 2,
+     "title": "切って和える",
+     "kind": "prep",
+     "tag": "cut",
+     "minutes": 5,
+     "heat": null,
+     "text": "オクラを冷水で冷まして水気を拭き、小口切りにする。かまぼこ 20g は 5mm 角に切る。オクラ 1 本分（子ども用）を先に別の皿へ取り分ける。残りのオクラとかまぼこ、塩昆布 3g、ごま油 小さじ 1 を混ぜる。",
+     "cue": "塩昆布がなじみ、オクラのとろみが全体に絡む。",
+     "caution": null,
+     "timer": null,
+     "kid": "子ども用のオクラは 5mm の小口切りにし、塩昆布・かまぼこは付けない。"
+    },
+    {
+     "dish": "ツナとコーンの厚焼き卵",
+     "n": 3,
+     "title": "卵液を作る",
+     "kind": "prep",
+     "tag": "season",
+     "minutes": 5,
+     "heat": null,
+     "text": "卵 5 個のうち 1 個を小さい器に割って子ども用にする。残り 4 個をボウル（大）に割り、ほぐす。缶汁を切ったツナ 70g、水気を切ったコーン 40g、醤油 小さじ 1、砂糖 小さじ 1 を加えて混ぜる。子ども用の器にはコーン 20g（刻む）だけを混ぜる。",
+     "cue": "卵液に白身の塊が残らず、ツナがほぐれて全体に散る。",
+     "caution": null,
+     "timer": null,
+     "kid": "子ども用の卵液には調味料とツナを入れない。コーンは粗く刻む。"
+    },
+    {
+     "dish": "ツナとコーンの厚焼き卵",
+     "n": 4,
+     "title": "大人用を焼く",
+     "kind": "wait",
+     "tag": "sear",
+     "minutes": 8,
+     "heat": {
+      "equipment": "gas-r",
+      "level": "中火"
+     },
+     "text": "フライパン（26cm）にサラダ油 大さじ 1 を引き、中火で 1 分予熱する。大人用の卵液を流し、周りが固まるまで 1 分、そのあと弱火にして蓋をして 4 分焼く。返して弱火で 2 分焼く。",
+     "cue": "表面が乾いて揺らしても液が流れない。切って中まで卵が固まっている。",
+     "caution": "フッ素加工なので強火にしない。",
+     "timer": 240,
+     "kid": null
+    },
+    {
+     "dish": "ツナとコーンの厚焼き卵",
+     "n": 5,
+     "title": "子ども用を焼く",
+     "kind": "heat",
+     "tag": "kid",
+     "minutes": 4,
+     "heat": {
+      "equipment": "gas-r",
+      "level": "弱火"
+     },
+     "text": "大人用を取り出したあと、フライパンを拭いて油を少量だけ引く。弱火で子ども用の卵液を焼き、表も裏も 2 分ずつ、完全に固める。",
+     "cue": "中心を割って透明な液や半熟部分が残っていない。",
+     "caution": null,
+     "timer": null,
+     "kid": "1cm 角に切り、冷ましてから出す。初めての食材があれば少量から。"
+    },
+    {
+     "dish": "ツナとコーンの厚焼き卵",
+     "n": 6,
+     "title": "切って保存",
+     "kind": "serve",
+     "tag": "cleanup",
+     "minutes": 5,
+     "heat": null,
+     "text": "粗熱を取って 30 分以内に冷蔵する。大人用は 2cm 幅に切って保存容器へ、子ども用は別の容器にする。和え物も別容器に入れ、冷蔵庫へ。フライパンは手洗い、ボウルは食洗機へ。",
+     "cue": "手で触れて人肌以下になってから冷蔵する。",
+     "caution": "子どもの取り分けは日持ちが短いので 1 日以内に食べる。",
+     "timer": null,
+     "kid": null
+    },
+    {
+     "dish": "ツナとコーンの厚焼き卵",
+     "n": 7,
+     "title": "翌日は温めるだけ",
+     "kind": "serve",
+     "tag": "serve",
+     "minutes": 3,
+     "heat": {
+      "equipment": "microwave",
+      "level": "600W"
+     },
+     "text": "翌日、大人用の卵焼きを皿に並べ、ふんわりラップをして 600W で 40 秒温める。子ども用は 600W で 30 秒温めて混ぜ、足りなければ 30 秒追加。和え物は冷たいまま盛る。",
+     "cue": "卵焼きの中心まで湯気が立つ。",
+     "caution": "子ども用は必ず中まで温め直し、冷ましてから出す。",
+     "timer": null,
+     "kid": "1 日以内に食べる。熱いときは冷ましてから出す。"
+    }
+   ],
+   "cleanup": {
+    "dishwasher": [
+     "bowl-l",
+     "bowl-m"
+    ],
+    "hand": [
+     "fp26"
+    ],
+    "note": "フライパンは冷めてから洗う。"
+   },
+   "photo": null,
+   "stats": {
+    "cooked": 0,
+    "r_avg": null,
+    "f_avg": null,
+    "last": null
+   },
+   "detail": "full",
+   "memo": []
+  },
+  "model": "claude-code",
+  "prompt_version": 1,
+  "tokens": {
+   "input": 0,
+   "output": 0,
+   "cache_read": 0,
+   "cache_write": 0
+  },
+  "cost_usd": 0.0,
+  "seconds": 0
+ },
+ "finished": "2026-10-09T20:19:17+09:00"
 }
