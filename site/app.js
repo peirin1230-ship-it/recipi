@@ -1001,6 +1001,8 @@ async function init() {
   // 前回のレシピ・週の献立・考え中の注文を端末から戻す
   const cur = lsGet(LS.current); if (cur && cur.request) setCurrent((cur.request.result || {}).recipe || null, cur.request); else if (cur && cur.recipe_id && recipeById(cur.recipe_id)) setCurrent(recipeById(cur.recipe_id), null);
   else { const latest = state.recipes.find(r => r.status !== 'retired'); if (latest) setCurrent(latest, null); }
+  // 端末に残ったレシピがリポジトリから消されていたら捨てる（recipes/<id>.md が 404）
+  { const rid = state.current && state.current.recipe && state.current.recipe.id; if (rid && !recipeById(rid)) { try { if ((await gh.fetchRawText(`recipes/${rid}.md`)) === null) setCurrent(null, null); } catch { /* 読めないときは残す */ } } }
   const w = lsGet(LS.weekly); if (w && w.result) state.weekly = w;
   const p = lsGet(LS.pending); if (p && p.id && Date.now() - (+p.since || 0) < POLL_MAX_MS) state.pending = p; else lsDel(LS.pending);
   initNav(['order', 'recipe', 'record', 'pantry', 'equipment', 'zukan', 'list', 'week'], { cook: () => openCook(), settings: openSettings, top: () => window.scrollTo({ top: 0 }) });

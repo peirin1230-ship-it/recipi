@@ -142,7 +142,7 @@ def lanes_for(equipment: dict) -> list[dict]:
         if a.get("type") == "microwave":
             lanes.append({"id": a["id"], "label": "レンジ", "kind": "microwave"})
     for a in equipment.get("appliances") or []:
-        if a.get("type") in ("sous_vide", "multi_cooker", "pressure_cooker", "toaster_oven", "oven"):   # 放っておく家電もレーンになる
+        if a.get("type") in ("sous_vide", "multi_cooker", "pressure_cooker", "toaster_oven", "oven", "fish_grill"):   # 放っておく家電もレーンになる
             lanes.append({"id": a["id"], "label": a.get("label") or a["type"], "kind": "appliance"})
     lanes.append({"id": "hands", "label": "手", "kind": "hands"})
     return lanes
@@ -166,7 +166,7 @@ def equipment_label(equipment: dict, eid: str) -> str:
                 t = it.get("type", "")
                 size = f" {it['size_cm']}cm" if it.get("size_cm") else ""
                 names = {"frying_pan": "フライパン", "pot": "鍋", "bowl": "ボウル", "microwave": "レンジ",
-                         "toaster_oven": "トースター", "rice_cooker": "炊飯器", "kettle": "ケトル", "dishwasher": "食洗機", "sous_vide": "低温調理器"}
+                         "toaster_oven": "トースター", "rice_cooker": "炊飯器", "kettle": "ケトル", "dishwasher": "食洗機", "sous_vide": "低温調理器", "fish_grill": "魚焼きグリル"}
                 return f"{names.get(t, t)}{size}"
     if eid == "hands":
         return "手"

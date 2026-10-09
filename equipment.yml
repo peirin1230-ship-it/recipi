@@ -5,7 +5,7 @@
 #   フライパンと鍋の大きさは推定（26cm / 20cm）。違えば size_cm を直す。
 #
 #   heat: コンロ。type は gas / ih。levels は火加減の表記（gas: 弱火/中火/強火、ih: 1-9 など）
-#   appliances: 家電。type は microwave / rice_cooker / dishwasher / sous_vide / toaster_oven / kettle / oven / pressure_cooker / multi_cooker / blender
+#   appliances: 家電。type は microwave / rice_cooker / dishwasher / sous_vide / toaster_oven / fish_grill / kettle / oven / pressure_cooker / multi_cooker / blender
 #   cookware: 鍋・フライパン・ボウル。dishwasher: false は食洗機に入れない物
 #   tools: 手で使う道具。tool_notes: その道具の使いどころ（Generator に渡る）
 #   missing: 無い物を明示する。レシピから除外される
@@ -16,13 +16,14 @@ heat:
   - { id: gas-l, type: gas, label: ガスコンロ左, levels: "弱火 / 中火 / 強火", note: "汁物・煮物・茹でる" }
 
 appliances:
-  - { id: microwave, type: microwave, watts: 600, note: "W 数は推定。違えば直す" }
-  - { id: rice-cooker, type: rice_cooker, capacity_go: 5, normal_minutes: 50, fast_minutes: 28, note: "時間は推定" }
+  - { id: microwave, type: microwave, watts: 900, note: "600W と 900W が選べる。時間は使う W 数を明記する（900W は 600W の 0.7 倍の時間）。葉物 1 束は 900W 1 分 30 秒" }
+  - { id: rice-cooker, type: rice_cooker, capacity_go: 5, normal_minutes: 60, fast_minutes: 45, note: "通常 1 時間、早炊き 45 分。夕食の予算に入らないので、先に仕掛けるか冷凍ご飯を使う" }
   - { id: sous-vide, type: sous_vide, label: 低温調理器, note: "鶏むね・ささみ・豚ロースをしっとり仕上げる。1 時間以上かかるので『仕込み』向き。夕食の 25 分には収まらない。温度と時間は knowledge/basics/07_sous_vide.md の表を守る" }
   - { id: dishwasher, type: dishwasher, note: "フライパンと鍋は入らない前提。入るなら cookware の dishwasher を true に" }
   - { id: kettle, type: kettle, label: 電気ケトル, liters: 1.0, note: "湯を沸かすのが一番早い。茹でる・汁物の湯はケトルで沸かして鍋へ（5 分短くなる）" }
   - { id: toaster, type: toaster_oven, label: トースター, watts: 1000, note: "トースト・油揚げ・ちくわの焼き目、小さい耐熱皿のグラタン。W 数は推定" }
   - { id: blender, type: blender, label: ミキサー, note: "ポタージュ・スムージー・バナナジュース・ソース。熱い物は粗熱を取ってから" }
+  - { id: grill, type: fish_grill, label: 魚焼きグリル, note: "焼き魚、鶏の皮目をパリッと、油揚げ・ししとう。両面焼きなら返さない。予熱 2 分。使った日は受け皿を洗う（kaji-quest のメニュー）" }
 
 cookware:
   - { id: fp26, type: frying_pan, label: フライパン, size_cm: 26, lid: true, material: fluoro, dishwasher: false, note: "大きさは推定" }
@@ -30,14 +31,14 @@ cookware:
   - { id: bowl-l, type: bowl, label: ボウル（大）, note: "耐熱ならレンジ可", dishwasher: true }
   - { id: bowl-m, type: bowl, label: ボウル（中）, note: "耐熱ならレンジ可", dishwasher: true }
 
-tools: [包丁, まな板, ぶんぶんチョッパー, スライサー 1.2mm, 菜箸, お玉, フライ返し, 計量スプーン, ザル, ラップ]
+tools: [包丁, まな板, ピーラー, ぶんぶんチョッパー, スライサー 1.2mm, 菜箸, お玉, フライ返し, 計量スプーン, ザル, ラップ]
 tool_notes:
   - "ぶんぶんチョッパー（ブラウン）: 玉ねぎ・にんじん・キャベツのみじん切りが 30 秒で終わる。ハンバーグ・そぼろ・ミートソース・ドレッシングの下ごしらえに使う。prep の見込みを短くできる"
   - "スライサー 1.2mm（ニトリ）: 玉ねぎ・きゅうり・にんじん・大根の薄切り。サラダ・マリネ・炒め物・汁物の具の時短。指を守るため最後の 2cm は包丁で"
   - "低温調理器: 鶏むね 300g を袋に入れて 63℃ で 1 時間 30 分、などの仕込みに。できた物は 2 日以内に食べる"
 storage: [保存容器, 冷凍用保存袋, ラップ]
 
-missing: [オーブン, 圧力鍋, ホットクック, 揚げ物鍋, 魚焼きグリル]
+missing: [オーブン, 圧力鍋, ホットクック, 揚げ物鍋]
 
 preferences:
   avoid_deep_fry: true        # 揚げ物を提案しない（片付けの理由）
