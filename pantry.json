@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-09T20:16:18+09:00",
+ "updated": "2026-10-10T08:10:51+09:00",
  "items": [
   {
    "id": "p9qc8h",
@@ -18,16 +18,6 @@
    "loc": "fridge",
    "added": "2026-10-09",
    "use_by": "2026-10-23",
-   "src": "manual"
-  },
-  {
-   "id": "p7tv8g",
-   "name": "納豆",
-   "qty": null,
-   "unit": null,
-   "loc": "fridge",
-   "added": "2026-10-09",
-   "use_by": "2026-10-16",
    "src": "manual"
   },
   {
