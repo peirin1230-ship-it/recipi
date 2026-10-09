@@ -3,7 +3,133 @@
  "ts": "2026-10-09T12:51:36+09:00",
  "type": "suggest_items",
  "note": "",
- "status": "pending",
+ "status": "done",
  "error": null,
- "result": null
+ "result": {
+  "items": [
+   {
+    "name": "鶏むね肉",
+    "qty": "300g",
+    "reason": "低温調理器で仕込めば平日の主菜に回せる",
+    "enables": [
+     "しっとり鶏むねのごま和え",
+     "鶏むねと卵の丼"
+    ],
+    "priority": "main",
+    "known": true
+   },
+   {
+    "name": "豆腐",
+    "qty": "2丁",
+    "reason": "卵・納豆と合わせて短時間で主菜になる",
+    "enables": [
+     "豆腐と卵の炒り煮",
+     "豆腐ハンバーグ"
+    ],
+    "priority": "stock",
+    "known": true
+   },
+   {
+    "name": "鮭",
+    "qty": "2切れ",
+    "reason": "魚焼きグリルで10分、骨を除けば子どもも食べやすい",
+    "enables": [
+     "鮭のグリル焼き",
+     "鮭とオクラのレンジ蒸し"
+    ],
+    "priority": "main",
+    "known": true
+   },
+   {
+    "name": "さつまいも",
+    "qty": "1本",
+    "reason": "旬で甘く、手づかみでも食べやすい",
+    "enables": [
+     "さつまいもと牛乳の煮物",
+     "さつまいものヨーグルト和え"
+    ],
+    "priority": "season",
+    "known": true
+   },
+   {
+    "name": "れんこん",
+    "qty": "1節",
+    "reason": "旬。やわらかく煮れば子どもの分にも使える",
+    "enables": [
+     "れんこんと鶏のつくね風",
+     "れんこんのきんぴら"
+    ],
+    "priority": "season",
+    "known": true
+   },
+   {
+    "name": "小松菜",
+    "qty": "1束",
+    "reason": "卵や納豆と合わせる定番の青菜で、レンジ1分半で下ごしらえできる",
+    "enables": [
+     "小松菜と卵の炒め物",
+     "小松菜の納豆和え"
+    ],
+    "priority": "stock",
+    "known": true
+   },
+   {
+    "name": "かぼちゃ",
+    "qty": "1/4個",
+    "reason": "甘みがあり子どもが食べやすく、ミキサーでポタージュにもなる",
+    "enables": [
+     "かぼちゃのポタージュ",
+     "かぼちゃと牛乳の煮物"
+    ],
+    "priority": "kid",
+    "known": true
+   },
+   {
+    "name": "冷凍うどん",
+    "qty": "3玉",
+    "reason": "常備すれば卵と合わせて10分で夕食になる",
+    "enables": [
+     "卵とじうどん",
+     "野菜たっぷり煮込みうどん"
+    ],
+    "priority": "stock",
+    "known": true
+   },
+   {
+    "name": "ブロッコリー",
+    "qty": "1株",
+    "reason": "レンジで下ゆででき、子どもの手づかみ野菜にも向く",
+    "enables": [
+     "ブロッコリーと卵のサラダ",
+     "鮭とブロッコリーの蒸し物"
+    ],
+    "priority": "kid",
+    "known": true
+   },
+   {
+    "name": "玉ねぎ",
+    "qty": "2個",
+    "reason": "チョッパーで30秒、どの主菜にも使える",
+    "enables": [
+     "玉ねぎ入り卵焼き",
+     "豆腐ハンバーグ"
+    ],
+    "priority": "stock",
+    "known": true
+   }
+  ],
+  "note": "鶏むねと豆腐と鮭があれば、平日の主菜が3日分は組める",
+  "feasible": true,
+  "model": "claude-code",
+  "prompt_version": 1,
+  "tokens": {
+   "input": 0,
+   "output": 0,
+   "cache_read": 0,
+   "cache_write": 0
+  },
+  "cost_usd": 0.0,
+  "seconds": 0
+ },
+ "finished": "2026-10-09T12:52:19+09:00"
 }
