@@ -57,7 +57,7 @@ async function setup(browser, viewport) {
     assert(await page.$eval('#recipe', e => e.textContent.includes('使い切り')), 'use_up mark shown');
     assert(await page.$eval('#recipe', e => /手洗い[^\n]*フライパン/.test(e.textContent)), 'cleanup uses equipment labels');
     const chips = await page.$$eval('#o-budget .chip[data-act="o-budget"]', c => c.map(x => x.dataset.v));
-    assert(chips.join(',') === '15,20,30,45,60', `budget chips: ${chips.join(',')}`);
+    assert(chips.join(',') === '15,20,30,45,60,0', `budget chips (0 = 無制限): ${chips.join(',')}`);
     assert(await page.$eval('#o-budget', e => !!e.querySelector('#o-free')), 'free budget input present');
     assert(await page.$eval('#o-free', e => e.value === '25'), 'default budget 25 in free input');
     assert(await page.$$eval('#order .chip[data-act="o-useup"]', c => c.length) >= 2, 'use-up chips auto-filled from pantry (use_by within 3 days)');
@@ -197,16 +197,18 @@ async function setup(browser, viewport) {
     assert(addRecipePut && addRecipePut.body.sha === 'r1' && !addRecipePut.body.message.includes('[skip ci]') && /^---\nlisted: "\d{4}-\d{2}-\d{2}T/.test(addText) && addText.includes('title: テスト用の新しい一皿'), `一覧に追加 stamps listed: in front matter without [skip ci]: ${addText.slice(0, 60).replace(/\n/g, '|')}`);
     assert(await page.$$eval('#list .lrow', r => r.map(x => x.textContent).join('')).then(t => t.includes('テスト用の新しい一皿')) && await page.$('#recipe [data-act="list-del"]') !== null, 'added recipe appears in the list on this device and the card now offers 削除');
     await page.screenshot({ path: `${SHOTS}/list-375.png` });
-    // 時間無制限で考えてもらう: チップの選択はそのまま、注文は time_budget 0
-    await page.click('#o-budget .chip[data-v="30"]');
-    const b5 = puts.length; await page.click('[data-act="o-submit-unlimited"]');
+    // 時間チップの「無制限」→ 考えてもらう: 注文は time_budget 0、自由入力は空のまま
+    await page.click('#o-budget .chip[data-v="0"]');
+    assert(await page.$eval('#o-budget .chip[data-v="0"]', c => c.classList.contains('is-on')) && await page.$eval('#o-free', i => i.value === ''), '無制限 chip selects and clears the free input');
+    const b5 = puts.length; await page.click('[data-act="o-submit"]');
     await page.waitForFunction(n => document.querySelectorAll('#o-status .pending').length > 0, b5);
     const unl = puts.slice(b5).find(p => p.url.includes('/contents/requests/'));
     const unlBody = unl ? JSON.parse(Buffer.from(unl.body.content, 'base64').toString('utf8')) : {};
     assert(unlBody.type === 'dinner' && unlBody.time_budget === 0 && unlBody.status === 'pending', `unlimited order writes time_budget 0: ${JSON.stringify({ type: unlBody.type, time_budget: unlBody.time_budget })}`);
-    assert(await page.evaluate(() => JSON.parse(localStorage.getItem('recipi.order')).time_budget === 30), 'unlimited order keeps the chosen chip (30) as the next default');
     assert(await page.evaluate(() => document.querySelector('#toast').textContent.includes('時間無制限')), 'toast says 時間無制限');
     await page.click('[data-act="pending-cancel"]');
+    await page.click('#o-budget .chip[data-v="30"]');
+    assert(await page.$eval('#o-budget .chip[data-v="0"]', c => !c.classList.contains('is-on')) && await page.evaluate(() => { const o = JSON.parse(localStorage.getItem('recipi.order')); return o.time_budget === 0; }), 'picking a minutes chip again turns 無制限 off (stored order still 0 until next submit)');
     await ctx.close().catch(() => {}); await c2.close();
   }
   await browser.close();
