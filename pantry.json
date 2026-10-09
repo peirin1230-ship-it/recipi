@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-09T12:06:02+09:00",
+ "updated": "2026-10-09T12:09:17+09:00",
  "items": [
   {
    "id": "p9qc8h",
@@ -47,6 +47,16 @@
    "unit": null,
    "loc": "fridge",
    "added": "2026-10-09",
+   "src": "manual"
+  },
+  {
+   "id": "pwnihm",
+   "name": "かまぼこ",
+   "qty": null,
+   "unit": null,
+   "loc": "fridge",
+   "added": "2026-10-09",
+   "use_by": "2026-10-16",
    "src": "manual"
   }
  ],
