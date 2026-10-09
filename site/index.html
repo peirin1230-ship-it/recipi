@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
-<meta name="theme-color" content="#f6f1e6" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#0e1120" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#cdeee7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#1e3a44" media="(prefers-color-scheme: dark)">
 <meta name="description" content="家にある食材と道具で、今日使える時間に収まる夕食のレシピを組み立てて、作った記録を図鑑にする。">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
@@ -54,7 +54,15 @@
 </svg>
 <a class="skip" href="#order">今夜の注文へ移動</a>
 
-<header class="hero" id="hero">
+<header class="hero" id="hero" data-slot="noon">
+  <div class="sky" aria-hidden="true">
+    <div class="sky-stars"></div>
+    <div class="orb"></div>
+    <div class="lamp"><span class="cord"></span><span class="shade"></span><span class="bulb"></span><span class="glow"></span></div>
+    <svg class="scene jars" viewBox="0 0 100 60" preserveAspectRatio="xMinYMax meet"><rect x="4" y="18" width="22" height="42" rx="5"/><rect x="8" y="12" width="14" height="8" rx="2"/><rect x="34" y="30" width="18" height="30" rx="4"/><rect x="37" y="25" width="12" height="7" rx="2"/><rect x="60" y="22" width="26" height="38" rx="6"/><rect x="66" y="15" width="14" height="9" rx="2"/></svg>
+    <svg class="scene pot" viewBox="0 0 140 70" preserveAspectRatio="xMaxYMax meet"><path class="steam s1" d="M56 30c-5-6 5-9 0-16"/><path class="steam s2" d="M70 29c-5-7 5-10 0-18"/><path class="steam s3" d="M84 30c-5-6 5-9 0-16"/><rect x="66" y="22" width="8" height="5" rx="2"/><path d="M40 33h60a5 5 0 0 0-5-6H45a5 5 0 0 0-5 6z"/><path d="M38 35h64v23a8 8 0 0 1-8 8H46a8 8 0 0 1-8-8z"/><rect x="26" y="39" width="12" height="6" rx="3"/><rect x="102" y="39" width="12" height="6" rx="3"/><rect x="34" y="66" width="72" height="4" rx="2" opacity=".7"/></svg>
+    <div class="counter"></div>
+  </div>
   <div class="hero-in">
     <div class="appbar">
       <a class="brand" href="#top" aria-label="recipi のいちばん上へ"><span class="logo"><svg class="ic"><use href="#i-logo"/></svg></span><span class="wordmark">recipi</span></a>

@@ -994,11 +994,32 @@ $('#settings-test').addEventListener('click', async () => {
 });
 $('#dlg-diff').addEventListener('close', () => { if (state.diff && !state.busy) { /* やめた → 次に取り込むとき、また出る */ } });
 document.addEventListener('visibilitychange', () => {
-  if (document.visibilityState === 'visible') checkUpdate(false);
+  if (document.visibilityState === 'visible') { renderSky(); checkUpdate(false); }
   if (document.visibilityState !== 'visible') return;
   if (!$('#cook').hidden) requestWake();
   if (state.pending) pollTick();
 });
+
+// ---- 上の見出し（台所の窓）: 時刻で空・日と月・灯り・鍋の湯気・あいさつが変わる ----
+// 朝 5〜10、昼 10〜16、夕焼け 16〜19（空だけ）、夜 19〜5。火は 6〜21 時、灯りは 16〜6 時。日付と時刻だけで描けるのでデータを待たない
+let skyTick = 0;
+function renderSky() {
+  const hero = $('#hero'); if (!hero) return;
+  const now = nowParts(); const h = now.hour + now.minute / 60;
+  const slot = h < 5 ? 'night' : h < 10 ? 'morning' : h < 16 ? 'noon' : h < 19 ? 'noon' : 'night';
+  const sky = h >= 16 && h < 19 ? 'dusk' : slot;
+  hero.dataset.slot = slot; hero.dataset.sky = sky;
+  hero.dataset.stove = h >= 6 && h < 21 ? 'on' : 'off'; hero.dataset.lamp = h >= 16 || h < 6 ? 'on' : 'off';
+  // 日は 5〜19 時、月は 19〜5 時に、出てから沈むまでを 0〜1 で進む。高さは弧（sin）
+  const day = h >= 5 && h < 19; const f = day ? (h - 5) / 14 : ((h - 19 + 24) % 24) / 10;
+  hero.style.setProperty('--fx', f.toFixed(3)); hero.style.setProperty('--fy', Math.sin(Math.PI * f).toFixed(3));
+  // ブラウザの上の帯も空の色に合わせる（明るい側・暗い側）
+  const TOP = { morning: ['#fde8b4', '#3e2a2e'], noon: ['#cdeee7', '#1e3a44'], dusk: ['#f3b2ab', '#4a2238'], night: ['#2a1a3e', '#0d0718'] };
+  document.querySelectorAll('meta[name="theme-color"]').forEach((el, i) => el.setAttribute('content', (TOP[sky] || TOP.noon)[i] || TOP.noon[0]));
+  const G = { morning: ['今日は何を作る？', '朝のうちに決めておくと、夕方が楽。'], noon: ['今夜、何を作る？', '時間を選べば、家にある物で組み立てる。'], dusk: ['今夜、何を作る？', '時間を選べば、家にある物で組み立てる。作ったら記録を。'], night: ['おつかれさま', '作ったら記録を。明日の仕込みも、ここから。'] };
+  const put = (sel, t) => { const el = $(sel); if (el && el.textContent !== t) el.textContent = t; };
+  put('#greet', G[sky][0]); put('#greet-sub', G[sky][1]);
+}
 
 // ---- 起動 ----
 async function loadLive() {
@@ -1030,7 +1051,7 @@ async function init() {
   const rp = cfg().repo || {}; gh.configure({ owner: rp.owner || '', name: rp.name || '', branch: rp.branch || 'main', token: state.token });
   $('#repo-link').href = `https://github.com/${rp.owner}/${rp.name}`; $('#spec-link').href = `https://github.com/${rp.owner}/${rp.name}/blob/${rp.branch || 'main'}/docs/SPEC.md`; $('#kq-link').href = `https://${(kq().repo || '').split('/')[0]}.github.io/${(kq().repo || '').split('/')[1] || ''}/`;
   loadOrder(); state.zukanSort = lsGetRaw(LS.zukan) || 'new'; state.listTab = lsGetRaw(LS.tab) || 'all';
-  const h = nowParts().hour; $('#greet').textContent = h < 10 ? '今日は何を作る？' : h < 15 ? '今夜、何を作る？' : '今夜、何を作る？'; $('#greet-sub').textContent = h >= 17 ? '時間を選べば、家にある物で組み立てる。作ったら記録を。' : '時間を選べば、家にある物で組み立てる。';
+  renderSky(); clearInterval(skyTick); skyTick = setInterval(renderSky, 5 * 60 * 1000);
   // 前回のレシピ・週の献立・考え中の注文を端末から戻す
   const cur = lsGet(LS.current); if (cur && cur.request) setCurrent((cur.request.result || {}).recipe || null, cur.request); else if (cur && cur.recipe_id && recipeById(cur.recipe_id)) setCurrent(recipeById(cur.recipe_id), null);
   else { const latest = state.recipes.find(r => r.status !== 'retired'); if (latest) setCurrent(latest, null); }
