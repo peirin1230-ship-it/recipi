@@ -1,0 +1,21 @@
+{
+ "id": "req-20261009-2021-lazp",
+ "ts": "2026-10-09T20:21:50+09:00",
+ "type": "recipe_detail",
+ "time_budget": 60,
+ "servings": {
+  "adults": 2,
+  "kids": 1
+ },
+ "dishes": "main+side",
+ "mood": [],
+ "use_up": [],
+ "exclude": [],
+ "note": "",
+ "mode": "auto",
+ "parent": "req-20261009-2018-55sv",
+ "alternative": 1,
+ "status": "pending",
+ "error": null,
+ "result": null
+}
