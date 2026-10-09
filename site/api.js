@@ -1,6 +1,7 @@
 /* recipi — GitHub の読み書き（Contents API / repository_dispatch / raw.githubusercontent.com）。
  * トークンはこの端末の localStorage にだけ置き、GitHub API 以外には送らない（docs/SPEC.md §12, §15.1）。
- * 書き込みのコミットは全部 [skip ci]（ページの書き込みで Pages を組み直さない）。
+ * 書き込みのコミットは [skip ci]（ページの書き込みで Pages を組み直さない）。
+ * 例外は「一覧に追加」「一覧から削除」: recipes/ を変えるので [skip ci] を付けず、build-pages を走らせて同梱の一覧を作り直す。
  */
 
 const API = 'https://api.github.com';
@@ -67,6 +68,14 @@ export async function putFile(path, content, message, sha, r = mainRepo()) {
   if (res.status === 409 || res.status === 422) { const e = new Error(`${path} が同時に書き換えられた`); e.conflict = true; throw e; }
   if (!res.ok) throw await writeError(res, path, r);
   const j = await res.json(); return (j.content && j.content.sha) || null;
+}
+// 消す（sha が要る）。無ければ何もしない
+export async function deleteFile(path, message, sha, r = mainRepo()) {
+  if (!sha) return;
+  const res = await fetch(fileUrl(path, r), { method: 'DELETE', headers: headers(true), body: JSON.stringify({ message, sha, branch: r.branch }) });
+  if (res.status === 404) return;
+  if (res.status === 409 || res.status === 422) { const e = new Error(`${path} が同時に書き換えられた`); e.conflict = true; throw e; }
+  if (!res.ok) throw await writeError(res, path, r, '削除');
 }
 // 読んで → 変換して → 書く。sha 競合なら読み直して最大 3 回。fn が null を返したら書かない
 export async function mutateFile(path, fn, message, r = mainRepo()) {

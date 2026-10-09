@@ -13,9 +13,12 @@ async function setup(browser, viewport) {
   const errors = [];
   page.on('console', m => { if (m.type() === 'error' && !/Failed to load resource: .* 404/.test(m.text())) errors.push(m.text()); });
   page.on('pageerror', e => errors.push('pageerror: ' + e.message));
-  const puts = []; const store = {};
+  const puts = []; const store = {}; const mock = { recipe: null };   // mock.recipe = { id, text }: 一覧に無いがリポジトリにはあるレシピ
+  await page.route('https://raw.githubusercontent.com/**', route => { const u = route.request().url(); if (mock.recipe && u.includes(`/recipes/${mock.recipe.id}.md`)) return route.fulfill({ status: 200, contentType: 'text/plain', body: mock.recipe.text }); if (u.includes('/recipes/')) return route.fulfill({ status: 404, body: '' }); return route.continue(); });
   await page.route('https://api.github.com/**', async route => {
     const req = route.request(); const url = req.url();
+    if (req.method() === 'DELETE') { puts.push({ url, method: 'DELETE', body: JSON.parse(req.postData()) }); return route.fulfill({ status: 200, contentType: 'application/json', body: '{}' }); }
+    if (req.method() === 'GET' && url.includes('/contents/recipes/') && (url.includes('torimomo') || (mock.recipe && url.includes(mock.recipe.id))) && mock.serve) { const text = mock.recipe && url.includes(mock.recipe.id) ? mock.recipe.text : fs.readFileSync(require('path').join(__dirname, '..', 'fixtures', 'recipes', 'r-20261008-torimomo-teriyaki.md'), 'utf8'); return route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ sha: 'r1', content: b64(text) }) }); }
     if (req.method() === 'PUT') { const body = JSON.parse(req.postData()); puts.push({ url, body }); store[url.split('/contents/')[1].split('?')[0]] = body.content; return route.fulfill({ status: 201, contentType: 'application/json', body: JSON.stringify({ content: { sha: 'newsha' } }) }); }
     if (req.method() === 'POST' && url.endsWith('/dispatches')) { puts.push({ url, body: JSON.parse(req.postData()) }); return route.fulfill({ status: 204, body: '' }); }
     if (url.includes('/contents/pantry.json')) return route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ sha: 'p1', content: store['pantry.json'] || b64(pantry) }) });
@@ -27,7 +30,7 @@ async function setup(browser, viewport) {
   });
   await page.goto('http://localhost:8765/', { waitUntil: 'networkidle' });
   await page.waitForFunction(() => document.querySelector('#order h2') && document.querySelector('#week .stat'));
-  return { ctx, page, errors, puts };
+  return { ctx, page, errors, puts, mock };
 }
 
 (async () => {
@@ -108,7 +111,7 @@ async function setup(browser, viewport) {
     const ctx = await browser.newContext({ viewport: { width: 375, height: 812 }, locale: 'ja-JP', timezoneId: 'Asia/Tokyo' });
     await ctx.addInitScript(() => { localStorage.setItem('recipi.token', 'github_pat_test'); });
     await ctx.close();
-    const { ctx: c2, page, errors, puts } = await (async () => { const b2 = browser; const r = await setup(b2, { width: 375, height: 812 }); return r; })();
+    const { ctx: c2, page, errors, puts, mock } = await (async () => { const b2 = browser; const r = await setup(b2, { width: 375, height: 812 }); return r; })();
     await page.evaluate(() => localStorage.setItem('recipi.token', 'github_pat_test'));
     await page.reload({ waitUntil: 'networkidle' });
     await page.waitForFunction(() => document.querySelector('#week .stat'));
@@ -168,6 +171,32 @@ async function setup(browser, viewport) {
     assert(tofu && tofu.qty === 2 && tofu.unit === '丁', `same-name item merged (豆腐 1丁 + 1丁 = ${tofu && tofu.qty})`);
     assert(neo && neo.loc === 'fridge' && !neo.use_by, 'unknown name added as-is (fridge, no use_by)');
     assert(addBody && addBody.staples['醤油'] === 'ok', 'staple name (しょうゆ→醤油) sets staples, not items');
+    // 一覧: 並び（レシピの次）、削除ボタン、追加ボタン
+    assert(await page.evaluate(() => { const t = id => document.getElementById(id).getBoundingClientRect().top; return t('recipe') < t('list') && t('list') < t('record') && t('record') < t('pantry'); }), 'list card sits right after recipe on 375px');
+    assert(await page.$$eval('#nav .nav-chip', c => c.map(x => x.textContent.trim()).slice(0, 5).join(',')) === '今夜,レシピ,調理,一覧,記録', 'nav chips follow the new order');
+    assert(await page.$$eval('#list .lrow [data-act="list-del"]', b => b.length) === 1, 'each list row has a 削除 button');
+    assert(await page.$('#recipe [data-act="list-del"]') !== null && await page.$('#recipe [data-act="list-add"]') === null, 'recipe card of a listed recipe offers 一覧から削除, not 追加');
+    // 削除: 確認 → GET sha → DELETE（[skip ci] 無し）→ 端末の一覧から消え、上書きに残る
+    mock.serve = true; page.once('dialog', d => d.accept());
+    const b3 = puts.length; await page.click('#list .lrow [data-act="list-del"]');
+    await page.waitForFunction(() => document.querySelector('#toast') && document.querySelector('#toast').textContent.includes('一覧から削除'));
+    const del = puts.slice(b3).find(p => p.method === 'DELETE');
+    assert(del && del.url.includes('/contents/recipes/r-20261008-torimomo-teriyaki.md') && del.body.sha === 'r1' && !del.body.message.includes('[skip ci]') && del.body.message.includes('一覧から削除'), `DELETE recipes/<id>.md without [skip ci]: ${del && del.body.message}`);
+    assert(await page.$$eval('#list .lrow', r => r.length) === 0 && await page.evaluate(() => JSON.parse(localStorage.getItem('recipi.list')).del.includes('r-20261008-torimomo-teriyaki')), 'deleted recipe leaves the list on this device (overlay del)');
+    assert(await page.$eval('#recipe', e => e.textContent.includes('まだレシピがない')), 'current recipe cleared when deleted');
+    // 追加: 注文の結果にあるが同梱の一覧に無いレシピ → 「一覧に追加」→ 端末の一覧に出て、front matter に listed: が付く（[skip ci] 無し）
+    const newRecipe = { id: 'r-20261009-test-new', title: 'テスト用の新しい一皿', status: 'draft', created: '2026-10-09', version: 1, type: 'dinner', time: { planned: 20, budget: 20, active: 12 }, servings: { adults: 2, kids: 1 }, dishes: [{ name: 'テスト', role: 'main' }], equipment: [], tags: ['テスト'], ingredients: [{ name: '卵', qty: 2, unit: '個', for: 'テスト' }], steps: [{ n: 1, dish: 'テスト', title: '焼く', minutes: 5, kind: 'heat', text: '焼く', cue: '色づく' }], timeline: [{ minute: 0, lane: 'hands', text: '焼く' }], memo: [] };
+    mock.recipe = { id: newRecipe.id, text: `---\nid: ${newRecipe.id}\ntitle: ${newRecipe.title}\nstatus: draft\ncreated: 2026-10-09\n---\n\n# ${newRecipe.title}\n` };
+    await page.evaluate(r => localStorage.setItem('recipi.current', JSON.stringify({ request: { id: 'req-20261009-0000-test', type: 'dinner', status: 'done', result: { feasible: true, recipe_id: r.id, recipe: r } } })), newRecipe);
+    await page.reload({ waitUntil: 'networkidle' }); await page.waitForFunction(() => document.querySelector('#week .stat'));
+    assert(await page.$('#recipe [data-act="list-add"]') !== null, 'recipe not in the bundled list offers 一覧に追加');
+    const b4 = puts.length; await page.click('#recipe [data-act="list-add"]');
+    await page.waitForFunction(() => document.querySelector('#toast') && document.querySelector('#toast').textContent.includes('一覧に追加'));
+    const addRecipePut = puts.slice(b4).find(p => p.url.includes('/contents/recipes/r-20261009-test-new.md'));
+    const addText = addRecipePut ? Buffer.from(addRecipePut.body.content, 'base64').toString('utf8') : '';
+    assert(addRecipePut && addRecipePut.body.sha === 'r1' && !addRecipePut.body.message.includes('[skip ci]') && /^---\nlisted: "\d{4}-\d{2}-\d{2}T/.test(addText) && addText.includes('title: テスト用の新しい一皿'), `一覧に追加 stamps listed: in front matter without [skip ci]: ${addText.slice(0, 60).replace(/\n/g, '|')}`);
+    assert(await page.$$eval('#list .lrow', r => r.map(x => x.textContent).join('')).then(t => t.includes('テスト用の新しい一皿')) && await page.$('#recipe [data-act="list-del"]') !== null, 'added recipe appears in the list on this device and the card now offers 削除');
+    await page.screenshot({ path: `${SHOTS}/list-375.png` });
     await ctx.close().catch(() => {}); await c2.close();
   }
   await browser.close();

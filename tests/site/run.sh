@@ -8,6 +8,8 @@ import os, shutil, sys
 root, tmp = sys.argv[1], sys.argv[2]
 shutil.copytree(root, tmp, dirs_exist_ok=True, ignore=shutil.ignore_patterns(".git", "_site", "_site_test", "node_modules", ".pytest_cache", "__pycache__"))
 shutil.copy(os.path.join(root, "tests", "fixtures", "pantry.json"), os.path.join(tmp, "pantry.json"))
+# 本物のレシピは使わない（tests/fixtures のレシピだけで組み立てる）
+shutil.rmtree(os.path.join(tmp, "recipes"), ignore_errors=True)
 os.makedirs(os.path.join(tmp, "recipes"), exist_ok=True)
 for n in os.listdir(os.path.join(root, "tests", "fixtures", "recipes")):
     shutil.copy(os.path.join(root, "tests", "fixtures", "recipes", n), os.path.join(tmp, "recipes", n))

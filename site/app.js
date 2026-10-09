@@ -10,7 +10,7 @@ import { $, $$, esc, ic, head, md, toast, setBusy, lsGet, lsSet, lsDel, lsGetRaw
 
 const TZ = 'Asia/Tokyo';
 const TOKEN_KEY = 'recipi.token';
-const LS = { order: 'recipi.order', pending: 'recipi.pending', current: 'recipi.current', weekly: 'recipi.weekly', suggest: 'recipi.suggest', cook: 'recipi.cook.', photo: 'recipi.pendingPhoto', detail: 'recipi.detail', zukan: 'recipi.zukanSort', tab: 'recipi.listTab' };
+const LS = { order: 'recipi.order', pending: 'recipi.pending', current: 'recipi.current', weekly: 'recipi.weekly', suggest: 'recipi.suggest', cook: 'recipi.cook.', photo: 'recipi.pendingPhoto', detail: 'recipi.detail', zukan: 'recipi.zukanSort', tab: 'recipi.listTab', listOv: 'recipi.list' };
 const MEMO_HEADING = '## 作ったときのメモ';
 const MOODS = ['さっぱり', 'がっつり', '和', '洋', '中', '麺', '丼', '鍋', 'スープ', '時短'];
 const TYPES = [['dinner', '夕食'], ['prep', '仕込み'], ['breakfast', '朝食'], ['lunchbox', '弁当']];
@@ -33,7 +33,7 @@ function normalizePantry(d) {
 }
 
 const state = {
-  config: {}, equipment: {}, family: {}, learned: {}, overrides: {}, ingredients: [], recipes: [], knowledge: { tips: [], basics: [], safety: null }, digests: [], build: {},
+  config: {}, equipment: {}, family: {}, learned: {}, overrides: {}, ingredients: [], recipes: [], recipesBase: [], knowledge: { tips: [], basics: [], safety: null }, digests: [], build: {},
   token: '', pantry: { sha: null, data: emptyPantry() }, months: new Map(), loaded: false, busy: false, liveError: '',
   current: null,     // { recipe, request } 今の「レシピ」カード
   pending: null,     // 考え中の注文 { id, type, since, status }
@@ -359,6 +359,7 @@ function recipeBodyHTML(r, req, res) {
     <button type="button" class="primary big" data-act="cook-open">${ic('timer')}作る</button>
     ${req && req.type !== 'weekly' ? `<button type="button" class="ghost" data-act="o-again">${ic('refresh')}ほかの案</button>` : ''}
     <button type="button" class="ghost" data-act="rc-later">あとで</button>
+    ${inList(r.id) ? `<button type="button" class="ghost small danger" data-act="list-del" data-id="${esc(r.id)}">${ic('trash')}一覧から削除</button>` : `<button type="button" class="ghost small" data-act="list-add">${ic('list')}一覧に追加</button>`}
     <button type="button" class="ghost small" data-act="rec-open" data-id="${esc(r.id)}">${ic('camera')}作ったので記録</button>
     ${kq().push_shopping ? `<button type="button" class="ghost small" data-act="rc-shop">${ic('cart')}足りない物を買い物メモへ</button>` : ''}
   </div>
@@ -791,11 +792,57 @@ function renderZukan() {
 
 // ======================================================================
 // レシピ一覧（状態のタブ・検索・統計・改訂の差分）
+// 一覧の元は Pages を組み立てたときの recipes.json（recipes/*.md）。Generator のコミットは [skip ci] なので、
+// 「一覧に追加」「一覧から削除」はこの端末では即座に反映し（localStorage の上書き）、リポジトリには [skip ci] 無しで
+// コミットして build-pages を走らせる。組み立てが終わって recipes.json に反映されたら上書きは消える
 // ======================================================================
+const inList = id => state.recipes.some(r => r.id === id);
+function listOv() { const o = lsGet(LS.listOv) || {}; return { add: o.add && typeof o.add === 'object' ? o.add : {}, del: Array.isArray(o.del) ? o.del : [] }; }
+function saveListOv(ov) { if (Object.keys(ov.add).length || ov.del.length) lsSet(LS.listOv, ov); else lsDel(LS.listOv); }
+function mergeListOverlay() {
+  const base = state.recipesBase; const ov = listOv();
+  Object.keys(ov.add).forEach(id => { if (base.some(r => r.id === id) || !ov.add[id] || !ov.add[id].id) delete ov.add[id]; });
+  ov.del = ov.del.filter(id => base.some(r => r.id === id)); saveListOv(ov);
+  state.recipes = [...Object.values(ov.add), ...base.filter(r => !ov.del.includes(r.id))]
+    .sort((a, b) => String(b.created || '').localeCompare(String(a.created || '')) || String(b.id).localeCompare(String(a.id)));
+  masterIdx = null;
+}
+// front matter（--- で囲まれた部分）だけを書き換える。無ければ null
+function withFrontMatter(text, fn) { const m = /^---\n([\s\S]*?)\n---\n?/.exec(text || ''); if (!m) return null; return `---\n${fn(m[1])}\n---\n` + text.slice(m[0].length); }
+// recipes/<id>.md が無いとき（別の端末で消した後など）に、端末にあるレシピから作り直す。front matter は JSON（YAML として読める）
+function recipeMarkdown(r) {
+  const meta = { ...r }; delete meta.memo;
+  const ing = (r.ingredients || []).map(i => `- ${i.name}${qtyText(i) ? ` ${qtyText(i)}` : ''}${i.for ? `（${i.for}）` : ''}`).join('\n');
+  const steps = (r.steps || []).map(s => `${s.n}. **${s.title}**（${s.minutes} 分）${s.text ? ` ${s.text}` : ''}${s.cue ? ` 目安: ${s.cue}` : ''}`).join('\n');
+  return `---\n${JSON.stringify(meta, null, 1)}\n---\n\n# ${r.title}\n\n${r.image_text ? `（絵）${r.image_text}\n\n` : ''}## 材料\n\n${ing}\n\n## 手順\n\n${steps}\n\n（ページの「一覧に追加」で作り直した版。段取り表などは front matter にある）\n`;
+}
+async function listAdd() {
+  const c = state.current; const r = c && c.recipe; if (!r || !r.id) { toast('追加するレシピが無い', true); return; }
+  if (inList(r.id)) { toast('もう一覧にある'); return; }
+  const ov = listOv(); ov.add[r.id] = r; ov.del = ov.del.filter(id => id !== r.id); saveListOv(ov); mergeListOverlay(); render();
+  if (!gh.hasToken()) { toast('この端末の一覧に入れた。⚙ でトークンを保存すると、リポジトリの一覧にも載る'); return; }
+  const path = `recipes/${r.id}.md`; const stamp = `listed: "${isoNow()}"`;
+  await run(() => gh.mutateFile(path, text => text === null ? recipeMarkdown(r)
+    : withFrontMatter(text, fm => `${stamp}\n${fm.split('\n').filter(l => !/^listed:/.test(l)).join('\n')}`), `一覧に追加: ${r.title}`),
+  '一覧に追加した。1〜2 分でほかの端末にも載る');
+}
+async function listDel(id) {
+  const r = recipeById(id); if (!r) { toast('そのレシピが見つからない', true); return; }
+  if (!requireToken()) return;
+  const n = logsOf(id).length;
+  if (!confirm(`「${r.title}」を一覧から削除する？\nrecipes/${id}.md を消す。${n ? `作った記録 ${n} 件と写真は残る。` : ''}`)) return;
+  const path = `recipes/${id}.md`;
+  const ok = await run(async () => { const f = await gh.getFile(path); await gh.deleteFile(path, `一覧から削除: ${r.title}`, f.sha); }, '一覧から削除した');
+  if (!ok) return;
+  const ov = listOv(); delete ov.add[id]; if (state.recipesBase.some(x => x.id === id) && !ov.del.includes(id)) ov.del.push(id); saveListOv(ov);
+  if (state.current && state.current.recipe && state.current.recipe.id === id) setCurrent(null, null);
+  if (state.current && state.current.request && (state.current.request.result || {}).recipe_id === id) setCurrent(null, null);
+  mergeListOverlay(); render();
+}
 function renderList() {
   const counts = {}; state.recipes.forEach(r => { counts[r.status] = (counts[r.status] || 0) + 1; });
   const tabs = [['all', '全部'], ['standard', '定番'], ['tried', '作った'], ['draft', '下書き'], ['retired', '封印']];
-  $('#list').innerHTML = head('list', 'レシピ一覧', `${state.recipes.length} 本`) + `<div class="chips">${tabs.map(([k, ja]) => chip('list-tab', k, `${ja}${k === 'all' ? '' : counts[k] ? ` <span class="sub">${counts[k]}</span>` : ''}`, state.listTab === k)).join('')}</div>
+  $('#list').innerHTML = head('list', 'レシピ一覧', `${state.recipes.length} 本${Object.keys(listOv().add).length || listOv().del.length ? ' ・ 組み立て待ちの変更あり' : ''}`) + `<div class="chips">${tabs.map(([k, ja]) => chip('list-tab', k, `${ja}${k === 'all' ? '' : counts[k] ? ` <span class="sub">${counts[k]}</span>` : ''}`, state.listTab === k)).join('')}</div>
   <div class="field"><input type="text" class="inp" id="list-q" placeholder="料理名・タグ・材料で絞る" value="${esc(state.listQ)}" autocomplete="off"></div><div id="list-rows">${listRowsHTML()}</div>`;
 }
 function listRowsHTML() {
@@ -805,7 +852,7 @@ function listRowsHTML() {
   return rows.map(r => { const st = statsOf(r); const sup = r.supersedes ? recipeById(r.supersedes) : null; const open = state.showDiffOf.has(r.id); const ch = Array.isArray(r.changes) ? r.changes : [];
     return `<div class="lrow"><div class="t">${esc(r.title)} ${statusBadge(r.status)}${r.version > 1 ? ` <span class="badge ind">v${r.version}</span>` : ''}</div>
     <div class="meta">${esc(String(r.created || ''))}${r.time ? ` ・ ${r.time.planned} 分` : ''}${st.cooked ? ` ・ 作った ${st.cooked} 回 ・ R ${st.r_avg ?? '—'} ・ F ${st.f_avg ?? '—'} ・ 最後 ${jaShort(st.last) || '—'}` : ' ・ まだ作っていない'}${sup ? ` ・ 改訂元: ${esc(sup.title)}` : r.supersedes ? ` ・ 改訂元: ${esc(r.supersedes)}` : ''}</div>
-    <div class="ops"><button type="button" class="ghost small" data-act="open-recipe" data-id="${esc(r.id)}">開く</button>${r.supersedes && ch.length ? `<button type="button" class="ghost small" data-act="list-diff" data-id="${esc(r.id)}" aria-expanded="${open}">差分</button>` : ''}</div>
+    <div class="ops"><button type="button" class="ghost small" data-act="open-recipe" data-id="${esc(r.id)}">開く</button>${r.supersedes && ch.length ? `<button type="button" class="ghost small" data-act="list-diff" data-id="${esc(r.id)}" aria-expanded="${open}">差分</button>` : ''}<button type="button" class="ghost small danger" data-act="list-del" data-id="${esc(r.id)}" aria-label="${esc(r.title)} を一覧から削除">${ic('trash')}削除</button></div>
     ${open ? `<div class="diffbox"><b>v${r.version} で変えた点${sup ? `（元: ${esc(sup.title)} v${sup.version || 1}）` : ''}</b><ul class="changes">${ch.map(c => `<li>${esc(c.what)}<br><small>${esc(c.why)}</small></li>`).join('')}</ul></div>` : ''}</div>`; }).join('');
 }
 
@@ -944,6 +991,8 @@ document.addEventListener('click', ev => {
     // 図鑑・一覧・今週
     case 'zk-sort': state.zukanSort = b.dataset.v; lsSetRaw(LS.zukan, state.zukanSort); renderZukan(); decorateCards(); break;
     case 'list-tab': state.listTab = b.dataset.v; lsSetRaw(LS.tab, state.listTab); renderList(); decorateCards(); break;
+    case 'list-add': listAdd(); break;
+    case 'list-del': listDel(b.dataset.id); break;
     case 'list-diff': if (state.showDiffOf.has(b.dataset.id)) state.showDiffOf.delete(b.dataset.id); else state.showDiffOf.add(b.dataset.id); $('#list-rows').innerHTML = listRowsHTML(); break;
     case 'later-edit': state.laterEdit = b.dataset.id; renderWeek(); decorateCards(); break;
     case 'later-star': setLaterRating(b.dataset.log, b.dataset.date, +b.dataset.v); break;
@@ -1044,7 +1093,7 @@ async function init() {
   try {
     const [config, equipment, family, learned, ingredients, recipes, knowledge, digests, build] = await Promise.all([get('data/config.json'), get('data/equipment.json', {}), get('data/family.json', {}), get('data/learned.json', {}), get('data/ingredients.json', []), get('data/recipes.json', []), get('data/knowledge.json', {}), get('data/digests.json', []), get('data/build.json', {})]);
     state.config = config || {}; state.equipment = equipment || {}; state.family = family || {}; state.learned = (learned && learned.learned) || {}; state.overrides = (learned && learned.overrides) || {};
-    state.ingredients = Array.isArray(ingredients) ? ingredients : []; state.recipes = Array.isArray(recipes) ? recipes.filter(r => r && r.id) : []; masterIdx = null;
+    state.ingredients = Array.isArray(ingredients) ? ingredients : []; state.recipesBase = Array.isArray(recipes) ? recipes.filter(r => r && r.id) : []; mergeListOverlay();
     state.knowledge = { tips: Array.isArray(knowledge && knowledge.tips) ? knowledge.tips : [], basics: Array.isArray(knowledge && knowledge.basics) ? knowledge.basics : [], safety: (knowledge && knowledge.safety) || null };
     state.digests = Array.isArray(digests) ? digests : []; state.build = build || {};
   } catch (e) { $('#order').innerHTML = `<p class="empty">設定の読み込みに失敗: ${esc(e.message)}</p>`; return; }
@@ -1056,11 +1105,11 @@ async function init() {
   const cur = lsGet(LS.current); if (cur && cur.request) setCurrent((cur.request.result || {}).recipe || null, cur.request); else if (cur && cur.recipe_id && recipeById(cur.recipe_id)) setCurrent(recipeById(cur.recipe_id), null);
   else { const latest = state.recipes.find(r => r.status !== 'retired'); if (latest) setCurrent(latest, null); }
   // 端末に残ったレシピがリポジトリから消されていたら捨てる（recipes/<id>.md が 404）
-  { const rid = state.current && state.current.recipe && state.current.recipe.id; if (rid && !recipeById(rid)) { try { if ((await gh.fetchRawText(`recipes/${rid}.md`)) === null) setCurrent(null, null); } catch { /* 読めないときは残す */ } } }
+  { const rid = state.current && state.current.recipe && state.current.recipe.id; if (rid && !inList(rid)) { try { if ((await gh.fetchRawText(`recipes/${rid}.md`)) === null) setCurrent(null, null); } catch { /* 読めないときは残す */ } } }
   const w = lsGet(LS.weekly); if (w && w.result) state.weekly = w;
   const sg = lsGet(LS.suggest); if (sg && sg.req && sg.req.result) state.suggest = sg;
   const p = lsGet(LS.pending); if (p && p.id && Date.now() - (+p.since || 0) < POLL_MAX_MS) state.pending = p; else lsDel(LS.pending);
-  initNav(['order', 'recipe', 'record', 'pantry', 'equipment', 'zukan', 'list', 'week'], { cook: () => openCook(), settings: openSettings, top: () => window.scrollTo({ top: 0 }) });
+  initNav(['order', 'recipe', 'list', 'record', 'pantry', 'week', 'zukan', 'equipment'], { cook: () => openCook(), settings: openSettings, top: () => window.scrollTo({ top: 0 }) });
   state.loaded = true; render();
   await run(loadLive); render();
   if (state.pending) pollTick();

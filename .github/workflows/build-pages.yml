@@ -2,6 +2,7 @@
 # gh-pages ブランチができると Pages は自動で有効になる。ならなければ
 # Settings → Pages → Source: Deploy from a branch → gh-pages / (root) を 1 回だけ選ぶ。
 # ページと agent.yml が書くコミットは [skip ci] 付きなので、この workflow は動かない（夜間ジョブのコミットで動く）。
+# 例外はページの「一覧に追加」「一覧から削除」（recipes/ を変えるので [skip ci] を付けず、ここで同梱の一覧を作り直す）。
 name: build-pages
 
 on:

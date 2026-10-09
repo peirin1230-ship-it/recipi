@@ -134,7 +134,7 @@ img { max-width: 100%; }
 /* ---- 並び（スマホは 1 列、広い画面は 2 列） ---- */
 main { max-width: 680px; min-height: 100vh; margin: 0 auto; padding: 14px 16px 28px; display: grid; gap: 14px; align-content: start; }
 .col { display: contents; }
-@media (max-width: 1099px) { #search { order: 1; } #order { order: 2; } #recipe { order: 3; } #record { order: 4; } #pantry { order: 5; } #week { order: 6; } #zukan { order: 7; } #list { order: 8; } #equipment { order: 9; } }
+@media (max-width: 1099px) { #search { order: 1; } #order { order: 2; } #recipe { order: 3; } #list { order: 4; } #record { order: 5; } #pantry { order: 6; } #week { order: 7; } #zukan { order: 8; } #equipment { order: 9; } }
 @media (min-width: 1100px) { main { max-width: 1180px; grid-template-columns: 1fr 1fr; align-items: start; } .col { display: grid; gap: 14px; align-content: start; } }
 
 /* ---- 検索 ---- */
