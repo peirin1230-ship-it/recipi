@@ -41,3 +41,10 @@ def test_build_site(root, tmp_path):
         eq = json.load(f)
     assert [l["id"] for l in eq["lanes"]][-1] == "hands"
     assert "fp26" in eq["labels"]
+
+
+def test_fmt_qty_fractions():
+    assert render_recipe.fmt_qty(1) == "1" and render_recipe.fmt_qty(0.5) == "1/2" and render_recipe.fmt_qty(0.25) == "1/4"
+    assert render_recipe.fmt_qty(1.5) == "1と1/2" and render_recipe.fmt_qty(0.33) == "1/3" and render_recipe.fmt_qty(2.4) == "2.4"
+    assert render_recipe.qty_text({"qty": 0.5, "unit": "本", "grams": 80}) == "1/2 本（80g）"
+    assert render_recipe.qty_text({"qty": 1.5, "unit": "大さじ", "grams": 27}) == "大さじ 1と1/2（27g）"

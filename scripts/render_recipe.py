@@ -21,8 +21,24 @@ def qty_text(i: dict) -> str:
         return "適量"
     u = i.get("unit") or ""
     g = f"（{i['grams']:g}g）" if isinstance(i.get("grams"), (int, float)) and u != "g" else ""
-    q = f"{i['qty']:g}" if isinstance(i["qty"], (int, float)) else str(i["qty"])
+    q = fmt_qty(i["qty"])
     return f"{u} {q}{g}" if u in ("大さじ", "小さじ", "カップ") else f"{q} {u}{g}".rstrip()
+
+
+FRACTIONS = {0.25: "1/4", 0.33: "1/3", 0.5: "1/2", 0.67: "2/3", 0.75: "3/4"}
+
+
+def fmt_qty(q) -> str:
+    """数の表記: 整数はそのまま、1/4・1/3・1/2・2/3・3/4 は分数（1.5 → 1と1/2）、それ以外は小数 1 桁。"""
+    if not isinstance(q, (int, float)):
+        return str(q)
+    whole, frac = int(q), round(q - int(q), 2)
+    if frac == 0:
+        return str(whole)
+    for k, v in FRACTIONS.items():
+        if abs(frac - k) < 0.02:
+            return f"{whole}と{v}" if whole else v
+    return f"{q:g}"
 
 
 def build_meta(recipe: dict, *, rid: str, request_id: str | None, budget: int | None, servings: dict,

@@ -131,3 +131,13 @@ def test_step_ingredients_checked_against_table():
     assert any("材料表に無い" in e for e in validate.validate_recipe(r, ctx()))
     r2 = load_fixture()                                                          # ingredients を持たない古い形は検査しない
     assert validate.validate_recipe(r2, ctx()) == []
+
+
+def test_countable_items_must_not_use_grams():
+    r = load_fixture()
+    assert validate.validate_recipe(r, ctx(ingredients=common.Ingredients())) == []          # 鶏もも肉 g、小松菜 束 は合格
+    bad = copy.deepcopy(r)
+    k = next(i for i in bad["ingredients"] if i["name"] == "小松菜")
+    k["unit"], k["qty"], k["grams"] = "g", 200, 200
+    errs = validate.validate_recipe(bad, ctx(ingredients=common.Ingredients()))
+    assert any("束" in e and "g ではなく" in e for e in errs)

@@ -39,6 +39,8 @@ def _band_index(band: str | None) -> int:
     return BANDS.index(band) if band in BANDS else len(BANDS) - 1
 
 
+COUNT_UNITS = {"本", "個", "枚", "束", "丁", "株", "袋", "切れ", "パック", "缶", "玉", "片", "節", "房", "尾", "杯", "かけ"}
+
 _TITLE_STRIP = str.maketrans("", "", " \u3000・、。，,.（）()「」『』【】!！?？")
 
 
@@ -217,6 +219,17 @@ def validate_recipe(recipe: dict, ctx: dict | None = None) -> list[str]:
     limit = SALT_LIMIT_ADULT.get(salt_mode, 2.5)
     if isinstance(ag, (int, float)) and ag > limit + SALT_TOLERANCE:
         errors.append(f"大人 1 人分の塩分 {ag}g が上限 {limit}g（salt: {salt_mode}）を超えている")
+
+    # ---- 単位: マスタが本・個・枚などで数える物を g で書いていたら不合格（g は grams に併記） ----
+    ing_master = ctx.get("ingredients")
+    if ing_master is not None and hasattr(ing_master, "get"):
+        for i in r["ingredients"]:
+            if (i.get("unit") or "") != "g":
+                continue
+            m = ing_master.get(ing_master.normalize(i.get("name", "")) if hasattr(ing_master, "normalize") else i.get("name", ""))
+            mu = (m or {}).get("unit")
+            if mu in COUNT_UNITS:
+                errors.append(f"「{i.get('name')}」は {mu} で数える物。g ではなく {mu}（1/2 {mu} なら qty 0.5）で書き、g は grams に併記する")
 
     # ---- 工程の材料（steps[].ingredients）: 材料表に無い名前は不合格。量のある材料はどこかの工程に出す ----
     if any("ingredients" in st for st in r["steps"]):

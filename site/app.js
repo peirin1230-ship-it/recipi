@@ -165,7 +165,10 @@ function tipFor(step, di) {
 }
 const statusBadge = s => `<span class="badge ${s === 'standard' ? 'std' : s === 'retired' ? 'bad' : s === 'tried' ? 'ok' : ''}">${esc(STATUS_JA[s] || s || '')}</span>`;
 // 量の表記。大さじ・小さじ・カップは単位を先に（「小さじ 1（3g）」）、それ以外は数が先（「300 g」「1 束（200g）」）
-const qtyText = i => { if (i.qty == null) return '適量'; const u = i.unit || ''; const g = isNum(i.grams) && u !== 'g' ? `（${i.grams}g）` : ''; return /^(大さじ|小さじ|カップ)$/.test(u) ? `${esc(u)} ${i.qty}${g}` : `${i.qty} ${esc(u)}${g}`; };
+// 数の表記: 整数はそのまま、1/4・1/3・1/2・2/3・3/4 は分数（1.5 → 1と1/2）、それ以外は小数 1 桁
+const FRACTIONS = [[0.25, '1/4'], [0.33, '1/3'], [0.5, '1/2'], [0.67, '2/3'], [0.75, '3/4']];
+function fmtQty(q) { if (!isNum(q)) return String(q ?? ''); const whole = Math.trunc(q); const frac = Math.round((q - whole) * 100) / 100; if (frac === 0) return String(whole); const f = FRACTIONS.find(([k]) => Math.abs(frac - k) < 0.02); if (f) return whole ? `${whole}と${f[1]}` : f[1]; return String(Math.round(q * 10) / 10); }
+const qtyText = i => { if (i.qty == null) return '適量'; const u = i.unit || ''; const g = isNum(i.grams) && u !== 'g' ? `（${i.grams}g）` : ''; return /^(大さじ|小さじ|カップ)$/.test(u) ? `${esc(u)} ${fmtQty(i.qty)}${g}` : `${fmtQty(i.qty)} ${esc(u)}${g}`; };
 function pantryMark(i) {
   if (!i.pantry) return '<span class="sub">—</span>';
   const d = state.pantry.data; const it = d.items.find(x => sameName(x.name, i.pantry));

@@ -67,14 +67,14 @@
 - { name: ミニトマト, aliases: [プチトマト], cat: 野菜, loc: fridge, days: 5, unit: パック }
 - { name: きゅうり, aliases: [キュウリ, 胡瓜], cat: 野菜, loc: fridge, days: 5, unit: 本 }
 - { name: 大根, aliases: [だいこん, ダイコン], cat: 野菜, loc: fridge, days: 10, unit: 本, season: [11, 12, 1, 2] }
-- { name: かぼちゃ, aliases: [カボチャ, 南瓜], cat: 野菜, loc: fridge, days: 7, unit: g }
+- { name: かぼちゃ, aliases: [カボチャ, 南瓜], cat: 野菜, loc: fridge, days: 7, unit: 個 }
 - { name: さつまいも, aliases: [サツマイモ, 薩摩芋], cat: 野菜, loc: pantry, days: 21, unit: 本, season: [9, 10, 11] }
 - { name: ブロッコリー, aliases: [ぶろっこりー], cat: 野菜, loc: fridge, days: 4, unit: 株 }
 - { name: 長ねぎ, aliases: [ねぎ, ネギ, 長ネギ, 白ねぎ], cat: 野菜, loc: fridge, days: 7, unit: 本 }
 - { name: 小ねぎ, aliases: [万能ねぎ, 青ねぎ, 細ねぎ], cat: 野菜, loc: fridge, days: 5, unit: 束 }
 - { name: レタス, aliases: [れたす], cat: 野菜, loc: fridge, days: 5, unit: 個 }
 - { name: アボカド, aliases: [], cat: 野菜, loc: fridge, days: 4, unit: 個 }
-- { name: れんこん, aliases: [レンコン, 蓮根], cat: 野菜, loc: fridge, days: 7, unit: g, season: [10, 11, 12, 1] }
+- { name: れんこん, aliases: [レンコン, 蓮根], cat: 野菜, loc: fridge, days: 7, unit: 節, season: [10, 11, 12, 1] }
 - { name: ごぼう, aliases: [ゴボウ, 牛蒡], cat: 野菜, loc: fridge, days: 7, unit: 本 }
 - { name: にんにく, aliases: [ニンニク, 大蒜], cat: 野菜, loc: pantry, days: 30, unit: 片 }
 - { name: しょうが, aliases: [ショウガ, 生姜], cat: 野菜, loc: fridge, days: 14, unit: 片 }
