@@ -82,14 +82,14 @@ async function setup(browser, viewport) {
     await page.click('[data-act="cook-open"]');
     assert(await page.$eval('#cook', e => !e.hidden), 'cook mode overlay opens');
     const timers = await page.$$eval('#cook .timer-btn', t => t.length);
-    assert(timers === 2, `timer buttons in cook mode (got ${timers})`);
+    assert(timers === 7 && await page.$eval('#cook .ck-step .timer-btn', b => b.dataset.sec === '180'), `every cook step has a timer button, minutes×60 when no timer (got ${timers})`);
     assert(await page.$$eval('#cook .ck-step', s => s.length) === 7 && await page.$$eval('#cook .ck-tl', s => s.length) === 11, 'cook mode shows 7 steps and 11 timeline rows');
     assert(await page.$eval('#cook .ck-step .ing', e => e.textContent.includes('片栗粉') && /小さじ 1/.test(e.textContent)) && await page.$eval('#recipe .step .ing', e => e.textContent.includes('片栗粉')), 'step shows its ingredients with amounts (matched from the step text for recipes without steps[].ingredients)');
     assert(await page.$$eval('#cook .ck-ing li', l => l.length) === 12 && await page.$eval('#cook .ck-ing', e => e.open && e.textContent.includes('鶏もも肉') && /300 g/.test(e.textContent)), 'cook mode lists all 12 ingredients with quantities (open by default)');
     await page.click('#cook .timer-btn');
     assert(await page.$eval('#cook .timer-btn', b => b.classList.contains('is-running')), 'timer starts on tap');
     await page.click('#cook .ck-step [data-act="ck-step"]');
-    assert(await page.evaluate(() => { const p = JSON.parse(localStorage.getItem('recipi.cook.r-20261008-torimomo-teriyaki')); return p && p.start > 0 && typeof p.done.s0 === 'number' && p.done.s0 > 0 && !!p.timers.s1; }), 'cook progress (start, step check timestamp, timer) saved in localStorage');
+    assert(await page.evaluate(() => { const p = JSON.parse(localStorage.getItem('recipi.cook.r-20261008-torimomo-teriyaki')); return p && p.start > 0 && typeof p.done.s0 === 'number' && p.done.s0 > 0 && !!p.timers.s0; }), 'cook progress (start, step check timestamp, timer) saved in localStorage');
     await page.screenshot({ path: `${SHOTS}/cook-desktop.png` });
     await page.click('[data-act="cook-finish"]');
     assert(await page.$eval('#cook', e => e.hidden), 'cook mode closes on finish');

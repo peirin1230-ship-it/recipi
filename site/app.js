@@ -461,7 +461,7 @@ function renderCook() {
   dishesOf(r).forEach(d => { h += `<h3>${esc(d)}</h3>` + steps.map((s, i) => ({ s, i })).filter(x => x.s.dish === d).map(({ s, i }) => { const k = 's' + i; const on = !!cook.done[k];
     return `<div class="ck-step${on ? ' is-done' : ''}" data-key="${k}"><div class="hd"><button type="button" class="tick-btn big${on ? ' is-on' : ''}" data-act="ck-step" data-key="${k}" aria-label="できた" aria-pressed="${on}">${ic('check')}</button><div class="t">${s.n}. ${esc(s.title)}<small>${s.minutes} 分${s.heat ? ` ・ ${esc(equipLabel(s.heat.equipment))}・${esc(s.heat.level)}` : ''}${s.kind === 'wait' ? ' ・ 触らない' : ''}</small></div></div>
     ${stepIngHTML(r, s)}<p class="tx">${esc(s.text)}</p>${s.cue ? `<div class="cue">${esc(s.cue)}</div>` : ''}${s.caution ? `<div class="caution">⚠ ${esc(s.caution)}</div>` : ''}${s.kid ? `<div class="kid">🍼 ${esc(s.kid)}</div>` : ''}
-    ${s.timer ? `<div class="row"><button type="button" class="timer-btn" data-act="ck-timer" data-key="${k}" data-sec="${+s.timer}">${ic('timer')}<span class="tv">${fmtSec(+s.timer)}</span></button></div>` : ''}</div>`; }).join(''); });
+    ${(() => { const sec = +s.timer || Math.round((+s.minutes || 0) * 60); return sec > 0 ? `<div class="row"><button type="button" class="timer-btn" data-act="ck-timer" data-key="${k}" data-sec="${sec}">${ic('timer')}<span class="tv">${fmtSec(sec)}</span></button>${s.timer ? '' : '<span class="sub">工程の目安</span>'}</div>` : ''; })()}</div>`; }).join(''); });   // タイマーは全部の工程に付ける（timer が無ければ工程の分数）
   $('#cook-body').innerHTML = h;
 }
 // 調理画面の材料（分量つき）。料理ごと（for が料理名なら）にまとめ、残りは用途ごと。閉じられる
