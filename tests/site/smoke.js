@@ -82,6 +82,7 @@ async function setup(browser, viewport) {
     const timers = await page.$$eval('#cook .timer-btn', t => t.length);
     assert(timers === 2, `timer buttons in cook mode (got ${timers})`);
     assert(await page.$$eval('#cook .ck-step', s => s.length) === 7 && await page.$$eval('#cook .ck-tl', s => s.length) === 11, 'cook mode shows 7 steps and 11 timeline rows');
+    assert(await page.$$eval('#cook .ck-ing li', l => l.length) === 12 && await page.$eval('#cook .ck-ing', e => e.open && e.textContent.includes('鶏もも肉') && /300 g/.test(e.textContent)), 'cook mode lists all 12 ingredients with quantities (open by default)');
     await page.click('#cook .timer-btn');
     assert(await page.$eval('#cook .timer-btn', b => b.classList.contains('is-running')), 'timer starts on tap');
     await page.click('#cook .ck-step [data-act="ck-step"]');

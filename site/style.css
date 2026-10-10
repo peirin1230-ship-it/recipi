@@ -306,6 +306,17 @@ details.tip .body { margin: 2px 0 4px; padding: 10px 12px; border-radius: 12px; 
 .cook-foot { padding: 10px 16px calc(12px + env(safe-area-inset-bottom)); border-top: 1px solid var(--line-2); background: var(--card); }
 .cook h3 { margin: 0 0 8px; font-size: 19px; font-weight: 800; }
 .cook h3.sec { margin-top: 20px; font-size: 13px; letter-spacing: .08em; color: var(--muted); }
+.ck-ing { margin: 6px 0 14px; padding: 4px 14px 10px; border-radius: 16px; background: var(--card); border: 1px solid var(--line); }
+.ck-ing summary { display: flex; align-items: center; gap: 8px; min-height: 44px; cursor: pointer; list-style: none; font-size: 17px; font-weight: 800; }
+.ck-ing summary::-webkit-details-marker { display: none; }
+.ck-ing summary::after { content: ""; margin-left: auto; width: 10px; height: 10px; border-right: 2px solid var(--muted); border-bottom: 2px solid var(--muted); transform: rotate(45deg); transition: transform .2s; }
+.ck-ing:not([open]) summary::after { transform: rotate(-45deg); }
+.ck-ing summary .ic { width: 20px; height: 20px; }
+.ck-ing .g { margin: 8px 0 2px; font-size: 13px; font-weight: 700; letter-spacing: .06em; color: var(--muted); }
+.ck-ing ul { margin: 0; padding: 0; list-style: none; }
+.ck-ing li { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; padding: 7px 0; border-top: 1px solid var(--line); font-size: 17px; line-height: 1.45; }
+.ck-ing li .n { font-weight: 700; } .ck-ing li .n small { display: block; font-size: 12.5px; font-weight: 500; color: var(--muted); }
+.ck-ing li .q { flex-shrink: 0; font-size: 18px; font-weight: 800; color: var(--primary-text); white-space: nowrap; }
 .ck-tl { display: grid; grid-template-columns: 46px 1fr 48px; gap: 0 10px; align-items: center; padding: 10px 0; border-top: 1px solid var(--line); font-size: 17px; line-height: 1.5; }
 .ck-tl .m { font-size: 20px; font-weight: 800; font-variant-numeric: tabular-nums; }
 .ck-tl .lane { display: inline-block; margin-bottom: 2px; padding: 0 8px; height: 22px; line-height: 22px; border-radius: 999px; background: var(--chip); color: var(--text-2); font-size: 12px; font-weight: 700; }

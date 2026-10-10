@@ -162,7 +162,8 @@ function tipFor(step, di) {
   return tips.length ? tips[((+step.n || 0) + (di || 0)) % tips.length] : null;
 }
 const statusBadge = s => `<span class="badge ${s === 'standard' ? 'std' : s === 'retired' ? 'bad' : s === 'tried' ? 'ok' : ''}">${esc(STATUS_JA[s] || s || '')}</span>`;
-const qtyText = i => { if (i.qty == null) return '適量'; const u = i.unit || ''; const g = isNum(i.grams) && u !== 'g' ? `（${i.grams}g）` : ''; return `${i.qty} ${esc(u)}${g}`; };
+// 量の表記。大さじ・小さじ・カップは単位を先に（「小さじ 1（3g）」）、それ以外は数が先（「300 g」「1 束（200g）」）
+const qtyText = i => { if (i.qty == null) return '適量'; const u = i.unit || ''; const g = isNum(i.grams) && u !== 'g' ? `（${i.grams}g）` : ''; return /^(大さじ|小さじ|カップ)$/.test(u) ? `${esc(u)} ${i.qty}${g}` : `${i.qty} ${esc(u)}${g}`; };
 function pantryMark(i) {
   if (!i.pantry) return '<span class="sub">—</span>';
   const d = state.pantry.data; const it = d.items.find(x => sameName(x.name, i.pantry));
@@ -438,6 +439,7 @@ function renderCook() {
   const r = cook.recipe; const used = lanesUsed(r); const steps = r.steps || [];
   const rows = (r.timeline || []).map((t, i) => ({ ...t, i })).sort((a, b) => a.minute - b.minute);
   let h = `<h3>${esc(r.title)} <span class="sub">${(r.time || {}).planned ?? '—'} 分の段取り</span></h3>`;
+  h += cookIngredientsHTML(r);
   if (rows.length) h += '<h3 class="sec">段取り（分）</h3>' + rows.map(t => { const lane = used.find(l => l.id === t.lane) || { label: equipLabel(t.lane), kind: 'other' }; const k = 't' + t.i; const on = !!cook.tl[k];
     return `<div class="ck-tl${on ? ' is-done' : ''}" data-key="${k}"><div class="m">${t.minute}</div><div><span class="lane ${esc(lane.kind)}">${esc(lane.label)}</span><div>${esc(t.text)}</div></div><button type="button" class="tick-btn${on ? ' is-on' : ''}" data-act="ck-tl" data-key="${k}" aria-label="できた" aria-pressed="${on}">${ic('check')}</button></div>`; }).join('');
   h += '<h3 class="sec">手順</h3>';
@@ -446,6 +448,16 @@ function renderCook() {
     <p class="tx">${esc(s.text)}</p>${s.cue ? `<div class="cue">${esc(s.cue)}</div>` : ''}${s.caution ? `<div class="caution">⚠ ${esc(s.caution)}</div>` : ''}${s.kid ? `<div class="kid">🍼 ${esc(s.kid)}</div>` : ''}
     ${s.timer ? `<div class="row"><button type="button" class="timer-btn" data-act="ck-timer" data-key="${k}" data-sec="${+s.timer}">${ic('timer')}<span class="tv">${fmtSec(+s.timer)}</span></button></div>` : ''}</div>`; }).join(''); });
   $('#cook-body').innerHTML = h;
+}
+// 調理画面の材料（分量つき）。料理ごと（for が料理名なら）にまとめ、残りは用途ごと。閉じられる
+function cookIngredientsHTML(r) {
+  const ings = r.ingredients || []; if (!ings.length) return '';
+  const dishes = dishesOf(r); const groups = new Map();
+  ings.forEach(i => { const f = String(i.for || ''); const d = dishes.find(x => f && (f === x || x.includes(f) || f.includes(x))); const key = d || f || 'ほか'; if (!groups.has(key)) groups.set(key, []); groups.get(key).push(i); });
+  const sv = r.servings || {};
+  const li = i => `<li><span class="n">${esc(i.name)}${i.substitute ? `<small>代替: ${esc(i.substitute)}</small>` : ''}</span><span class="q num">${qtyText(i)}</span></li>`;
+  return `<details class="ck-ing" open><summary>${ic('list')}材料<span class="sub">大人 ${sv.adults ?? '—'}・子 ${sv.kids ?? '—'} ・ ${ings.length} 品</span></summary>
+  ${[...groups.entries()].map(([k, rows]) => `${groups.size > 1 ? `<div class="g">${esc(k)}</div>` : ''}<ul>${rows.map(li).join('')}</ul>`).join('')}</details>`;
 }
 function startCookTick() { clearInterval(cook.tick); cook.tick = setInterval(cookTick, 1000); cookTick(); }
 function cookTick() {
