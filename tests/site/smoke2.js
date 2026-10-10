@@ -24,7 +24,7 @@ const PNG = Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAEklEQVR
       else r.result = { ...fixture, recipe_id: 'r-20261009-test', recipe: { ...fixture.recipe, id: 'r-20261009-test', version: 1, status: 'draft', created: '2026-10-09', time: { budget: 20, planned: 18, active: 14, raw_estimate: 18, speed_factor: 1.0 }, photo: null, stats: { cooked: 0 }, detail: 'full', memo: [] }, cost_usd: 0.1 };
       return route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ sha: 'r1', content: b64(JSON.stringify(r)) }) }); }
     if (path === 'pantry.json') return route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ sha: 'p1', content: store['pantry.json'] || b64(pantry) }) });
-    if (path === 'logs/2026/10.jsonl') { const line = JSON.stringify({ id: 'abcabcabcabc', date: '2026-10-06', ts: '2026-10-06T19:05:40+09:00', recipe_id: 'r-20261008-torimomo-teriyaki', version: 1, type: 'dinner', planned_minutes: 18, actual_minutes: 22, fidelity: 'minor', finish: 4, ratings: { me: 4, partner: null, kid: 'all' }, photo: null, r_score: 73, f_score: 4.5 }); return route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ sha: 'l1', content: store[path] || b64(line + '\n') }) }); }
+    if (path === 'logs/2026/10.jsonl') { const line = JSON.stringify({ id: 'abcabcabcabc', date: '2026-10-06', ts: '2026-10-06T19:05:40+09:00', recipe_id: 'r-20261008-torimomo-teriyaki', version: 1, type: 'dinner', planned_minutes: 18, actual_minutes: 22, fidelity: 'minor', finish: 4, ratings: { me: 4, partner: null, kid: 'all' }, photo: null, r_score: 73, f_score: 4.5 }) + '\n' + JSON.stringify({ id: 'kidkidkidkid', date: '2026-10-07', ts: '2026-10-07T19:10:00+09:00', recipe_id: 'r-20261008-torimomo-teriyaki', version: 1, type: 'dinner', planned_minutes: 18, actual_minutes: 20, fidelity: 'as_is', finish: 4, ratings: { me: 3, partner: 4, kid: null }, photo: null, r_score: 80, f_score: 3.5 }); return route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ sha: 'l1', content: store[path] || b64(line + '\n') }) }); }
     if (path === 'requests' && req.method() === 'GET') return route.fulfill({ status: 200, contentType: 'application/json', body: '[]' });
     return route.fulfill({ status: 404, contentType: 'application/json', body: '{"message":"Not Found"}' }); });
   await page.goto('http://localhost:8765/', { waitUntil: 'networkidle' }); await page.waitForFunction(() => document.querySelector('#week .stat'));
@@ -64,11 +64,18 @@ const PNG = Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAEklEQVR
   assert(kb && kb.imported_shop_ids.includes('shop0001aaaa') && kb.items.some(i => i.name === 'ほうれん草' && i.src === 'kaji-quest' && i.added === '2026-10-06') && kb.items.some(i => i.name === 'れんこん') && !kb.items.some(i => /1節/.test(i.name)) && !kb.items.some(i => i.name === 'キュレル'), 'kaji import applied: shop id recorded, added=line.date, use_by from master');
   assert(kb && kb.items.filter(i => i.name === '卵').length === 1, 'kaji item 卵 merged into the existing entry (no duplicate)');
   // 4) 聞いてない評価 → 行を書き換え
-  const b4 = puts.length; await page.click('[data-act="later-edit"]'); await page.click('.star[data-act="later-star"][data-v="5"]');
+  assert(await page.$eval('#week', e => e.textContent.includes('聞いてない評価 2 件')) && await page.$('#week [data-act="later-edit"][data-field="partner"]') !== null && await page.$('#week [data-act="later-edit"][data-field="kid"]') !== null, 'pending ratings list both a partner and a kid entry');
+  const b4 = puts.length; await page.click('[data-act="later-edit"][data-field="partner"]'); await page.click('.star[data-act="later-star"][data-v="5"]');
   await page.waitForFunction(() => document.querySelector('#toast') && document.querySelector('#toast').textContent.includes('評価')); await page.waitForTimeout(300);
   const lp = puts.slice(b4).find(p => p.path === 'logs/2026/10.jsonl'); const ll = lp && unb64(lp.body.content).trim().split('\n').map(l => JSON.parse(l));
-  assert(ll && ll.length === 1 && ll[0].id === 'abcabcabcabc' && ll[0].ratings.partner === 5 && ll[0].f_score === 4.7, `log line rewritten in place with new F: ${ll && JSON.stringify(ll[0].ratings)} F=${ll && ll[0].f_score}`);
-  assert(await page.$eval('#week', e => e.textContent.includes('聞いてない評価 0 件')), '聞いてない評価 count updates');
+  assert(ll && ll.length === 2 && ll[0].id === 'abcabcabcabc' && ll[0].ratings.partner === 5 && ll[0].f_score === 4.7, `log line rewritten in place with new F: ${ll && JSON.stringify(ll[0].ratings)} F=${ll && ll[0].f_score}`);
+  assert(await page.$eval('#week', e => e.textContent.includes('聞いてない評価 1 件')), '聞いてない評価 count updates (kid still pending)');
+  // 子どもの評価もあとから
+  const b4k = puts.length; await page.click('[data-act="later-edit"][data-field="kid"]'); await page.click('[data-act="later-kid"][data-v="half"]');
+  await page.waitForFunction(() => document.querySelector('#toast') && document.querySelector('#toast').textContent.includes('子ども')); await page.waitForTimeout(300);
+  const lpk = puts.slice(b4k).find(p => p.path === 'logs/2026/10.jsonl'); const llk = lpk && unb64(lpk.body.content).trim().split('\n').map(l => JSON.parse(l));
+  assert(llk && llk[1].id === 'kidkidkidkid' && llk[1].ratings.kid === 'half' && llk[1].f_score === 3.3, `kid rating added later with new F: ${llk && JSON.stringify(llk[1].ratings)} F=${llk && llk[1].f_score}`);
+  assert(await page.$eval('#week', e => e.textContent.includes('聞いてない評価 0 件')), '聞いてない評価 count reaches 0');
   // 5) なくなった（在庫はあるかないかだけ。数・期限・捨てたは無い）
   assert(await page.$('#pantry [data-act="p-discard"]') === null && await page.$('#pantry [data-act="p-qty"]') === null && !(await page.$eval('#pantry', e => /期限|捨てた|少ない/.test(e.textContent))), 'pantry has no discard/qty controls and no expiry or low text');
   const nItems = await page.$$eval('#pantry .pitem', p => p.length);

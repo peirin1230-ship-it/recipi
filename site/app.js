@@ -517,7 +517,7 @@ let rec = null;
 function openRecord(recipe, opts = {}) {
   const planned = recipe.time && isNum(recipe.time.planned) ? recipe.time.planned : null;
   if (rec && rec.photo && rec.photo.url) URL.revokeObjectURL(rec.photo.url);
-  rec = { recipe, request: opts.request || null, actual: opts.actual || planned || 20, planned, fidelity: null, deviation: '', finish: null, me: null, partner: null, partnerLater: false, kid: null, learned: '', photo: null, step_minutes: opts.step_minutes || null, fromCook: !!opts.fromCook, startedAt: Date.now(), pantry: pantryRowsFor(recipe) };
+  rec = { recipe, request: opts.request || null, actual: opts.actual || planned || 20, planned, fidelity: null, deviation: '', finish: null, me: null, partner: null, partnerLater: false, kid: null, kidLater: false, learned: '', photo: null, step_minutes: opts.step_minutes || null, fromCook: !!opts.fromCook, startedAt: Date.now(), pantry: pantryRowsFor(recipe) };
   renderRecord(); decorateCards();
 }
 // 材料のうち在庫（items）にある物。作ってなくなった物にチェックすると在庫から外す（在庫はあるかないかだけ）
@@ -546,7 +546,7 @@ function renderRecord() {
   <div class="rec-row"><div class="lb">${ic('sparkle')}仕上がり</div><div class="v">${stars('rec-star', rec.finish, 'data-f="finish"')}</div></div>
   <div class="rec-row"><div class="lb">👤 自分</div><div class="v">${stars('rec-star', rec.me, 'data-f="me"')}</div></div>
   <div class="rec-row"><div class="lb">👤 パートナー</div><div class="v">${stars('rec-star', rec.partner, 'data-f="partner"')}<button type="button" class="tiny-btn${rec.partnerLater ? ' is-on' : ''}" data-act="rec-partner-later">あとで</button></div></div>
-  <div class="rec-row"><div class="lb">🧒 子ども</div><div class="v">${['all', 'half', 'little', 'none', 'absent'].map(k => `<button type="button" class="tiny-btn${rec.kid === k ? ' is-on' : ''}" data-act="rec-kid" data-v="${k}">${KID_JA[k]}</button>`).join('')}</div></div>
+  <div class="rec-row"><div class="lb">🧒 子ども</div><div class="v">${['all', 'half', 'little', 'none', 'absent'].map(k => `<button type="button" class="tiny-btn${rec.kid === k ? ' is-on' : ''}" data-act="rec-kid" data-v="${k}">${KID_JA[k]}</button>`).join('')}<button type="button" class="tiny-btn${rec.kidLater ? ' is-on' : ''}" data-act="rec-kid-later">あとで</button></div></div>
   <div class="rec-row full"><div class="lb">${ic('bulb')}気づき（1 行、任意）</div><input type="text" id="rec-learned" maxlength="140" placeholder="皮目 3 分は長い。2 分半で十分" value="${esc(rec.learned)}"></div>
   ${rec.pantry.length ? `<div class="rec-row full"><div class="lb">${ic('fridge')}なくなった食材を在庫から外す</div><p class="sub">使い切った物にチェック。在庫はあるかないかだけ</p><ul class="pc-list">${rec.pantry.map((p, i) => pcRowHTML(p, i)).join('')}</ul></div>` : ''}
   <div class="actions"><button type="button" class="ghost" data-act="rec-cancel">やめる</button><button type="button" class="primary big" data-act="rec-save">${ic('check')}記録する</button></div>
@@ -908,13 +908,17 @@ function renderWeek() {
   const fAvg = avg(wk.map(e => e.f_score).filter(isNum)), rAvg = avg(wk.map(e => e.r_score).filter(isNum));
   const errMed = median(wk.filter(e => isNum(e.planned_minutes) && e.planned_minutes > 0 && isNum(e.actual_minutes)).map(e => Math.abs(e.actual_minutes - e.planned_minutes) / e.planned_minutes));
   const weeks = []; for (let i = 11; i >= 0; i--) { const a = addDays(mon, -7 * i), b = addDays(a, 6); const es = logs.filter(e => e.date >= a && e.date <= b); weeks.push({ a, n: es.length, f: avg(es.map(e => e.f_score).filter(isNum)), r: avg(es.map(e => e.r_score).filter(isNum)) }); }
-  const later = logs.filter(e => e.ratings && e.ratings.partner == null && validDate(e.date) && daysBetween(e.date, t) <= 30).sort((a, b) => logKey(b).localeCompare(logKey(a)));
+  const later = logs.filter(e => e.ratings && (e.ratings.partner == null || e.ratings.kid == null) && validDate(e.date) && daysBetween(e.date, t) <= 30).sort((a, b) => logKey(b).localeCompare(logKey(a)));
   const L = state.learned || {}; const budget = +((cfg().generation || {}).budget_usd_per_month) || 0; const digest = state.digests[0];
   const named = ids => (ids || []).map(id => { const r = recipeById(id); return r ? `<button type="button" class="ghost tiny" data-act="open-recipe" data-id="${esc(id)}">${esc(r.title)}</button>` : esc(id); }).join('、');
   let h = head('chart', '今週', `${jaShort(mon)}〜${jaShort(sun)}${state.liveError ? ' ・ 記録を読めていない' : ''}`) + `
   <div class="stats"><div class="stat"><b>${wk.length}</b><span>作った</span></div><div class="stat"><b>${fAvg != null ? fAvg.toFixed(1) : '—'}</b><span>F 平均</span></div><div class="stat"><b>${rAvg != null ? Math.round(rAvg) : '—'}</b><span>R 平均</span></div><div class="stat"><b>${errMed != null ? Math.round(errMed * 100) + '%' : '—'}</b><span>時間誤差</span></div></div>
   <h3 class="group">12 週の推移</h3><div class="bars-lb"><span>F（家族の評価 1〜5）</span><span>${weeks.reduce((s, w) => s + w.n, 0)} 回</span></div>${barsSVG(weeks, 'f', 5)}<div class="bars-lb"><span>R（再現性 0〜100）</span></div>${barsSVG(weeks, 'r', 100)}
-  <h3 class="group">聞いてない評価 ${later.length} 件</h3>${later.length ? later.map(e => { const r = recipeById(e.recipe_id); const editing = state.laterEdit === e.id; return `<div class="later"><div class="t">${esc(r ? r.title : e.recipe_id)}<small>${jaDate(e.date)}</small></div>${editing ? stars('later-star', 0, `data-log="${esc(e.id)}" data-date="${esc(e.date)}"`) : `<button type="button" class="ghost small" data-act="later-edit" data-id="${esc(e.id)}">パートナーの評価を入れる</button>`}</div>`; }).join('') : '<p class="empty">無し</p>'}
+  <h3 class="group">聞いてない評価 ${later.length} 件</h3>${later.length ? later.map(e => { const r = recipeById(e.recipe_id); const ed = state.laterEdit && state.laterEdit.id === e.id ? state.laterEdit.field : null; const need = [e.ratings.partner == null ? 'partner' : null, e.ratings.kid == null ? 'kid' : null].filter(Boolean);
+    const ctl = ed === 'partner' ? stars('later-star', 0, `data-log="${esc(e.id)}" data-date="${esc(e.date)}"`)
+      : ed === 'kid' ? `<span class="seg">${['all', 'half', 'little', 'none', 'absent'].map(k => `<button type="button" class="tiny-btn" data-act="later-kid" data-log="${esc(e.id)}" data-date="${esc(e.date)}" data-v="${k}">${KID_JA[k]}</button>`).join('')}</span>`
+      : need.map(f => `<button type="button" class="ghost small" data-act="later-edit" data-id="${esc(e.id)}" data-field="${f}">${f === 'partner' ? 'パートナー' : '子ども'}の評価を入れる</button>`).join('');
+    return `<div class="later"><div class="t">${esc(r ? r.title : e.recipe_id)}<small>${jaDate(e.date)}</small></div><div class="ops">${ctl}</div></div>`; }).join('') : '<p class="empty">無し</p>'}
   <h3 class="group">今月</h3><div class="kv"><b>API 費用</b><span>${state.cost == null ? '—' : `$${state.cost.toFixed(2)}`}${budget ? ` ／ 上限 $${budget}` : ''}</span></div>`;
   if ((L.standards || []).length || (L.needs_revision || []).length || (L.retired || []).length) h += `<h3 class="group">学習の結果${L.updated ? ` <span class="sub">${esc(String(L.updated))}</span>` : ''}</h3><div class="kv">${(L.standards || []).length ? `<b>定番</b><span>${named(L.standards)}</span>` : ''}${(L.needs_revision || []).length ? `<b>改訂待ち</b><span>${named(L.needs_revision)}</span>` : ''}${(L.retired || []).length ? `<b>封印</b><span>${named(L.retired)}</span>` : ''}</div>`;
   if (digest) { const props = digest.meta && (digest.meta.proposals || digest.meta.next_week || digest.meta.suggestions);
@@ -923,9 +927,10 @@ function renderWeek() {
   $('#week').innerHTML = h;
   const pill = $('#hero-pill'); if (pill) pill.innerHTML = `${ic('flame')}<b>${wk.length}</b><span>回<span class="vh">今週作った</span></span>`;
 }
-async function setLaterRating(id, date, v) {
+// あとから評価を足す（パートナーの ★、子どもの食べ具合）。ログの行を書き換えて F を出し直す
+async function setLaterRating(id, date, field, v) {
   if (!requireToken()) return;
-  const ok = await run(() => rewriteLog(id, date, e => { e.ratings = e.ratings || {}; e.ratings.partner = v; e.f_score = fScore(e.ratings); return e; }), 'パートナーの評価を足した');
+  const ok = await run(() => rewriteLog(id, date, e => { e.ratings = e.ratings || {}; e.ratings[field] = v; e.f_score = fScore(e.ratings); return e; }), field === 'kid' ? '子どもの評価を足した' : 'パートナーの評価を足した');
   if (ok) { state.laterEdit = null; render(); }
 }
 // 今月の API 費用: requests/ を一覧して result.cost_usd を足す（トークンがあるときだけ。無ければ「—」）
@@ -1005,7 +1010,8 @@ document.addEventListener('click', ev => {
     case 'rec-fid': rec.fidelity = rec.fidelity === b.dataset.v ? null : b.dataset.v; sib(b, c => c.dataset.v === rec.fidelity); $('#rec-dev-row').hidden = !(rec.fidelity === 'minor' || rec.fidelity === 'major'); break;
     case 'rec-star': { const f = b.dataset.f, v = +b.dataset.v; rec[f] = rec[f] === v ? null : v; $$('.star', b.parentElement).forEach(s => s.classList.toggle('is-on', +s.dataset.v <= (rec[f] || 0))); if (f === 'partner' && rec[f]) { rec.partnerLater = false; const l = $('[data-act="rec-partner-later"]'); if (l) l.classList.remove('is-on'); } break; }
     case 'rec-partner-later': rec.partnerLater = !rec.partnerLater; b.classList.toggle('is-on', rec.partnerLater); if (rec.partnerLater) { rec.partner = null; $$('.star[data-f="partner"]').forEach(s => s.classList.remove('is-on')); } break;
-    case 'rec-kid': rec.kid = rec.kid === b.dataset.v ? null : b.dataset.v; sib(b, c => c.dataset.v === rec.kid); break;
+    case 'rec-kid': rec.kid = rec.kid === b.dataset.v ? null : b.dataset.v; rec.kidLater = false; sib(b, c => c.dataset.v === rec.kid); { const l = $('[data-act="rec-kid-later"]'); if (l) l.classList.remove('is-on'); } break;
+    case 'rec-kid-later': rec.kidLater = !rec.kidLater; b.classList.toggle('is-on', rec.kidLater); if (rec.kidLater) { rec.kid = null; $$('[data-act="rec-kid"]').forEach(c => c.classList.remove('is-on')); } break;
     case 'rec-photo-clear': if (rec.photo && rec.photo.url) URL.revokeObjectURL(rec.photo.url); rec.photo = null; syncRecordInputs(); renderRecord(); break;
     case 'rec-save': saveRecord(); break;
     case 'photo-retry': retryPhoto(); break;
@@ -1028,8 +1034,9 @@ document.addEventListener('click', ev => {
     case 'list-add': listAdd(); break;
     case 'list-del': listDel(b.dataset.id); break;
     case 'list-diff': if (state.showDiffOf.has(b.dataset.id)) state.showDiffOf.delete(b.dataset.id); else state.showDiffOf.add(b.dataset.id); $('#list-rows').innerHTML = listRowsHTML(); break;
-    case 'later-edit': state.laterEdit = b.dataset.id; renderWeek(); decorateCards(); break;
-    case 'later-star': setLaterRating(b.dataset.log, b.dataset.date, +b.dataset.v); break;
+    case 'later-edit': state.laterEdit = { id: b.dataset.id, field: b.dataset.field || 'partner' }; renderWeek(); decorateCards(); break;
+    case 'later-star': setLaterRating(b.dataset.log, b.dataset.date, 'partner', +b.dataset.v); break;
+    case 'later-kid': setLaterRating(b.dataset.log, b.dataset.date, 'kid', b.dataset.v); break;
   }
 });
 document.addEventListener('change', ev => {

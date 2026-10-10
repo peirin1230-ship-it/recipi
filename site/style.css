@@ -444,6 +444,7 @@ details.tip .body { margin: 2px 0 4px; padding: 10px 12px; border-radius: 12px; 
 .later { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; padding: 8px 0; border-top: 1px solid var(--line); font-size: 14px; }
 .later .t { flex: 1; min-width: 160px; }
 .later .t small { display: block; color: var(--muted); font-size: 12.5px; }
+.later .ops { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
 .digest { font-size: 14px; line-height: 1.7; color: var(--text-2); }
 .digest h1, .digest h2, .digest h3 { font-size: 15px; margin: 12px 0 4px; color: var(--text); }
 .digest table { border-collapse: collapse; font-size: 13px; }
