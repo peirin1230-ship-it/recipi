@@ -1,15 +1,31 @@
 # profile/learned.yml — nightly-learn（scripts/learn.py）が logs/ から生成する。手で直さない（直すなら profile/overrides.yml）。
-updated: null
+updated: '2026-10-11'
 window_days: 90
-n_logs: 0
-speed_factor: { overall: 1.0, prep: 1.0, heat: 1.0, serve: 1.0 }
+n_logs: 1
+last_log_id: m7xxb59bwgc7
+speed_factor: {overall: 1.01, prep: 1.02, heat: 1.01, serve: 1.01}
 likes: []
 dislikes: []
-partner: { likes: [], dislikes: [] }
-kid: { eats_well: [], refuses: [], works_if: [] }
+partner:
+  likes: []
+  dislikes: []
+kid:
+  eats_well: []
+  refuses: []
+  works_if: []
 equipment_notes: []
 recipe_notes: []
 standards: []
 needs_revision: []
+revised: []
 retired: []
-quality: []
+quality:
+- week: 2026-W41
+  generated: 5
+  cooked: 1
+  f_avg: 3.0
+  r_avg: 73
+  time_err_median: 0.29
+  new_ratio: 1.0
+  adoption: 0.2
+  prompt_versions: {'3': 2, '1': 2, '2': 1}
