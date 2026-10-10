@@ -165,6 +165,7 @@ async function setup(browser, viewport) {
     assert(pantryBody && pantryBody.updated && Array.isArray(pantryBody.discarded), 'pantry.json keeps shape (updated, discarded)');
     assert(puts.slice(before).every(p => p.body.message.startsWith('[skip ci]')), 'all record commits are [skip ci]');
     assert(await page.$eval('#list .lrow', e => e.textContent.includes('作った')) && await page.evaluate(() => (JSON.parse(localStorage.getItem('recipi.list') || '{}').cooked || []).includes('r-20261008-torimomo-teriyaki')), 'recorded recipe shows as 作った in the list on this device (overlay cooked)');
+    assert(await page.$eval('#recipe', e => e.textContent.includes('まだレシピがない')), 'recipe card is cleared after recording (look in the list)');
     await page.screenshot({ path: `${SHOTS}/after-record-375.png` });
     // 在庫の追加（文字）と捨てた
     await page.fill('#p-add', 'とりもも 300g、しょうゆ、豆腐 1丁、新しい食材');
@@ -181,6 +182,7 @@ async function setup(browser, viewport) {
     assert(await page.evaluate(() => { const t = id => document.getElementById(id).getBoundingClientRect().top; return t('recipe') < t('list') && t('list') < t('record') && t('record') < t('pantry'); }), 'list card sits right after recipe on 375px');
     assert(await page.$$eval('#nav .nav-chip', c => c.map(x => x.textContent.trim()).slice(0, 5).join(',')) === '今夜,レシピ,調理,一覧,記録', 'nav chips follow the new order');
     assert(await page.$$eval('#list .lrow [data-act="list-del"]', b => b.length) === 1, 'each list row has a 削除 button');
+    await page.click('#list .lrow [data-act="open-recipe"]');
     assert(await page.$('#recipe [data-act="list-del"]') !== null && await page.$('#recipe [data-act="list-add"]') === null, 'recipe card of a listed recipe offers 一覧から削除, not 追加');
     // 削除: 確認 → GET sha → DELETE（[skip ci] 無し）→ 端末の一覧から消え、上書きに残る
     mock.serve = true; page.once('dialog', d => d.accept());

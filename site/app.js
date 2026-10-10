@@ -625,9 +625,11 @@ async function saveRecord() {
   if (!ok) return;
   lsDel(cookKey(r.id)); if (rec.photo && rec.photo.url) URL.revokeObjectURL(rec.photo.url);
   markCookedLocal(r);   // 一覧に「作った」として載せる
+  setCurrent(null, null);   // 作り終えたレシピはレシピカードから消す。見るときは一覧から
   const secs = Math.round((Date.now() - rec.startedAt) / 1000); rec = null; render();
   if (side.length) toast(`記録はした。残りは失敗: ${side.join(' / ')}`, true);
-  else toast(photoFailed ? '記録した。写真は送れなかった → 記録カードの「写真を再送」' : `記録した。図鑑に 1 枚増えた（${secs} 秒）`);
+  else toast(photoFailed ? '記録した。写真は送れなかった → 記録カードの「写真を再送」' : `記録した。一覧に「作った」として残した（${secs} 秒）`);
+  goTo('list');
 }
 async function retryPhoto() {
   const p = lsGet(LS.photo); if (!p || !p.path || !p.b64) { lsDel(LS.photo); render(); return; }
@@ -1139,6 +1141,8 @@ async function init() {
   initNav(['order', 'recipe', 'list', 'record', 'pantry', 'week', 'zukan', 'equipment'], { cook: () => openCook(), settings: openSettings, top: () => window.scrollTo({ top: 0 }) });
   state.loaded = true; render();
   await run(loadLive); render();
+  // 注文から作って記録まで済んだレシピがレシピカードに残っていたら消す（別の端末で記録した場合など）
+  { const cur = state.current && state.current.request; if (cur && cur.id && allLogs().some(e => e.request_id === cur.id)) { setCurrent(null, null); render(); } }
   if (state.pending) pollTick();
   loadCost();
 }
