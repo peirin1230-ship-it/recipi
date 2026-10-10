@@ -4,7 +4,7 @@ id: r-20261010-kabocha-to-nasu-no-miso-nikomi-udon
 title: かぼちゃとなすの味噌煮込みうどん
 version: 1
 supersedes: null
-status: draft
+status: tried
 created: '2026-10-10'
 request: req-20261010-1749-75v5
 generated_by: {model: claude-code, prompt_version: 3}
@@ -213,4 +213,4 @@ detail: full
 - 手洗い: 鍋
 
 ## 作ったときのメモ
-
+- 2026-10-10 ・ 31 分（見込み 24）・ R 73 ・ そのまま ・ 📷 20261010-1.jpg
