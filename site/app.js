@@ -595,7 +595,7 @@ function pantryAfter(p) {
 }
 function pcRowHTML(p, i) {
   const it = p.item; const u = esc(it.unit || ''); const after = pantryAfter(p);
-  const opts = [[0, '使わなかった'], ...(p.direct ? [['recipe', `レシピの分（${qtyText(p.ing)}）`]] : []), ...(isNum(it.qty) ? [[0.25, '25%'], [0.5, '50%'], [0.75, '75%']] : []), [1, isNum(it.qty) ? '全部' : '使い切った']];
+  const opts = [[0, '使わなかった'], ...(p.direct ? [['recipe', `レシピの分 ${qtyText(p.ing)}`]] : []), ...(isNum(it.qty) ? [[0.25, '25%'], [0.5, '50%'], [0.75, '75%']] : []), [1, isNum(it.qty) ? '全部' : '使い切った']];
   const now = isNum(it.qty) ? `${it.qty}${u}` : 'ある';
   const next = p.mode === 0 ? '' : ` → ${after === null || after <= 0 ? '外す' : `${after}${u}`}`;
   return `<li><div class="nm">${esc(it.name)} <span class="sub">${now}${next}</span></div><div class="pc-seg">${opts.map(([v, ja]) => `<button type="button" class="tiny-btn${String(p.mode) === String(v) ? ' is-on' : ''}" data-act="rec-pc-mode" data-i="${i}" data-v="${v}">${ja}</button>`).join('')}</div></li>`;
