@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-10T17:42:59+09:00",
+ "updated": "2026-10-10T17:43:20+09:00",
  "items": [
   {
    "id": "p9qc8h",
@@ -132,6 +132,15 @@
    "loc": "fridge",
    "added": "2026-10-10",
    "src": "kaji-quest"
+  },
+  {
+   "id": "phfn93",
+   "name": "豚肩ローススライス",
+   "qty": null,
+   "unit": null,
+   "loc": "fridge",
+   "added": "2026-10-10",
+   "src": "manual"
   }
  ],
  "staples": {
