@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-10T17:43:40+09:00",
+ "updated": "2026-10-10T17:43:53+09:00",
  "items": [
   {
    "id": "p9qc8h",
@@ -154,6 +154,15 @@
   {
    "id": "pcmurp",
    "name": "洗いごぼう",
+   "qty": null,
+   "unit": null,
+   "loc": "fridge",
+   "added": "2026-10-10",
+   "src": "manual"
+  },
+  {
+   "id": "pl6o61",
+   "name": "にんじん",
    "qty": null,
    "unit": null,
    "loc": "fridge",
