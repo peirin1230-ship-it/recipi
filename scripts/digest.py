@@ -41,7 +41,7 @@ def build_digest(week: str, *, use_llm: bool, mock: bool) -> tuple[str, dict]:
                        "minutes": e.get("actual_minutes"), "photo": e.get("photo"), "learned": e.get("learned")})
     learned = ctx.learned
     pantry = ctx.pantry_for_prompt()
-    low = [k for k, v in (ctx.pantry.get("staples") or {}).items() if v in ("low", "none")]
+    low = [k for k, v in (ctx.pantry.get("staples") or {}).items() if v == "none"]   # 切らしている調味料
     unrated = [e for e in logs if (e.get("ratings") or {}).get("partner") is None]
 
     proposals, shopping, comment = [], [], ""
@@ -96,7 +96,7 @@ def build_digest(week: str, *, use_llm: bool, mock: bool) -> tuple[str, dict]:
     lines += [f"- {p['title']}（{p.get('minutes')} 分）— {p.get('why', '')}" for p in proposals] or ["- （提案なし。Generator を使わずに作った）"]
     lines += ["", "## 買い物候補", ""]
     lines += [f"- {s['name']} {s.get('qty') or ''}（{s.get('reason', '')}）" for s in shopping]
-    lines += [f"- {k}（残り少ない）" for k in low]
+    lines += [f"- {k}（切らしている）" for k in low]
     lines.append("")
     return "\n".join(lines), meta
 

@@ -29,7 +29,9 @@ const POLL_MS = 5000, POLL_SLOW_AFTER_MS = 6 * 60 * 1000, POLL_SLOW_MS = 60 * 10
 const emptyPantry = () => ({ updated: null, items: [], staples: {}, discarded: [], imported_shop_ids: [] });
 function normalizePantry(d) {
   d = d && typeof d === 'object' ? d : {};
-  return { ...d, items: Array.isArray(d.items) ? d.items.filter(i => i && i.name) : [], staples: d.staples && typeof d.staples === 'object' ? d.staples : {}, discarded: Array.isArray(d.discarded) ? d.discarded : [], imported_shop_ids: Array.isArray(d.imported_shop_ids) ? d.imported_shop_ids : [] };
+  const items = (Array.isArray(d.items) ? d.items.filter(i => i && i.name) : []).map(({ qty, unit, use_by, ...rest }) => rest);   // 在庫は「あるかないか」だけ。数・単位・期限は持たない
+  const staples = {}; Object.entries(d.staples && typeof d.staples === 'object' ? d.staples : {}).forEach(([k, v]) => { staples[k] = v === 'none' ? 'none' : 'ok'; });
+  return { ...d, items, staples, discarded: Array.isArray(d.discarded) ? d.discarded : [], imported_shop_ids: Array.isArray(d.imported_shop_ids) ? d.imported_shop_ids : [] };
 }
 
 const state = {
@@ -167,8 +169,8 @@ const qtyText = i => { if (i.qty == null) return '適量'; const u = i.unit || '
 function pantryMark(i) {
   if (!i.pantry) return '<span class="sub">—</span>';
   const d = state.pantry.data; const it = d.items.find(x => sameName(x.name, i.pantry));
-  if (it) return `<span class="badge ok">${esc(it.name)}${it.qty != null ? ` ${it.qty}${esc(it.unit || '')}` : ''}</span>`;
-  if (i.pantry in d.staples) { const st = d.staples[i.pantry]; return `<span class="badge ${st === 'none' ? 'bad' : st === 'low' ? 'due' : 'ok'}">${st === 'none' ? 'ない' : st === 'low' ? '少ない' : 'ある'}</span>`; }
+  if (it) return '<span class="badge ok">ある</span>';
+  if (i.pantry in d.staples) { const st = d.staples[i.pantry]; return `<span class="badge ${st === 'none' ? 'bad' : 'ok'}">${st === 'none' ? 'ない' : 'ある'}</span>`; }
   return state.liveError ? '<span class="sub">?</span>' : '<span class="badge bad">無い</span>';
 }
 function matchRecipe(r, q) {
@@ -515,13 +517,12 @@ function openRecord(recipe, opts = {}) {
   rec = { recipe, request: opts.request || null, actual: opts.actual || planned || 20, planned, fidelity: null, deviation: '', finish: null, me: null, partner: null, partnerLater: false, kid: null, learned: '', photo: null, step_minutes: opts.step_minutes || null, fromCook: !!opts.fromCook, startedAt: Date.now(), pantry: pantryRowsFor(recipe) };
   renderRecord(); decorateCards();
 }
-// 材料のうち在庫（items）にある物。減らし方（mode）: 'recipe' = レシピの分を引く（単位が合うとき）、0.25〜1 = 在庫全体の何割を使ったか、0 = 使わなかった
+// 材料のうち在庫（items）にある物。作ってなくなった物にチェックすると在庫から外す（在庫はあるかないかだけ）
 function pantryRowsFor(r) {
   const items = state.pantry.data.items; const rows = []; const seen = new Set();
   (r.ingredients || []).forEach(ing => {
     if (!ing.pantry) return; const item = items.find(it => sameName(it.name, ing.pantry)); if (!item || seen.has(item.id)) return; seen.add(item.id);
-    const direct = isNum(ing.qty) && isNum(item.qty) && (item.unit || '') === (ing.unit || '');
-    rows.push({ ing, item, direct, mode: direct ? 'recipe' : isNum(item.qty) ? 0.5 : 0 });
+    rows.push({ ing, item, gone: false });
   });
   return rows;
 }
@@ -544,7 +545,7 @@ function renderRecord() {
   <div class="rec-row"><div class="lb">👤 パートナー</div><div class="v">${stars('rec-star', rec.partner, 'data-f="partner"')}<button type="button" class="tiny-btn${rec.partnerLater ? ' is-on' : ''}" data-act="rec-partner-later">あとで</button></div></div>
   <div class="rec-row"><div class="lb">🧒 子ども</div><div class="v">${['all', 'half', 'little', 'none', 'absent'].map(k => `<button type="button" class="tiny-btn${rec.kid === k ? ' is-on' : ''}" data-act="rec-kid" data-v="${k}">${KID_JA[k]}</button>`).join('')}</div></div>
   <div class="rec-row full"><div class="lb">${ic('bulb')}気づき（1 行、任意）</div><input type="text" id="rec-learned" maxlength="140" placeholder="皮目 3 分は長い。2 分半で十分" value="${esc(rec.learned)}"></div>
-  ${rec.pantry.length ? `<div class="rec-row full"><div class="lb">${ic('fridge')}使った食材を在庫から減らす</div><p class="sub">使った分を全体の何割か選ぶ。在庫がその分減る</p><ul class="pc-list">${rec.pantry.map((p, i) => pcRowHTML(p, i)).join('')}</ul></div>` : ''}
+  ${rec.pantry.length ? `<div class="rec-row full"><div class="lb">${ic('fridge')}なくなった食材を在庫から外す</div><p class="sub">使い切った物にチェック。在庫はあるかないかだけ</p><ul class="pc-list">${rec.pantry.map((p, i) => pcRowHTML(p, i)).join('')}</ul></div>` : ''}
   <div class="actions"><button type="button" class="ghost" data-act="rec-cancel">やめる</button><button type="button" class="primary big" data-act="rec-save">${ic('check')}記録する</button></div>
   ${pendingPhotoHTML()}`;
 }
@@ -586,26 +587,12 @@ async function appendMemo(r, line) {
   const listed = !state.recipesBase.some(x => x.id === r.id);
   await stampRecipe(r, { status: 'tried', listed, memo: line, message: listed ? `調理済みに追加: ${r.title}` : gh.msg(`memo ${r.id}`) });
 }
-// 減らしたあとの数（null = 外す）。mode 0 は変えない
-function pantryAfter(p) {
-  const it = p.item; if (p.mode === 0) return isNum(it.qty) ? it.qty : null;
-  if (p.mode === 'recipe') return isNum(it.qty) ? Math.max(0, round1(it.qty - p.ing.qty)) : null;
-  if (p.mode >= 1) return 0;
-  return isNum(it.qty) ? round1(it.qty * (1 - p.mode)) : null;
-}
 function pcRowHTML(p, i) {
-  const it = p.item; const u = esc(it.unit || ''); const after = pantryAfter(p);
-  const opts = [[0, '使わなかった'], ...(p.direct ? [['recipe', `レシピの分 ${qtyText(p.ing)}`]] : []), ...(isNum(it.qty) ? [[0.25, '25%'], [0.5, '50%'], [0.75, '75%']] : []), [1, isNum(it.qty) ? '全部' : '使い切った']];
-  const now = isNum(it.qty) ? `${it.qty}${u}` : 'ある';
-  const next = p.mode === 0 ? '' : ` → ${after === null || after <= 0 ? '外す' : `${after}${u}`}`;
-  return `<li><div class="nm">${esc(it.name)} <span class="sub">${now}${next}</span></div><div class="pc-seg">${opts.map(([v, ja]) => `<button type="button" class="tiny-btn${String(p.mode) === String(v) ? ' is-on' : ''}" data-act="rec-pc-mode" data-i="${i}" data-v="${v}">${ja}</button>`).join('')}</div></li>`;
+  return `<li><label class="chk"><input type="checkbox" data-act="rec-pc-gone" data-i="${i}"${p.gone ? ' checked' : ''}><span><b>${esc(p.item.name)}</b> なくなった<small>${esc(LOC_JA[p.item.loc] || '')}</small></span></label></li>`;
 }
 async function consumePantry(rows) {
   if (!rows.length) return;
-  await savePantry(d => { rows.forEach(p => { const it = d.items.find(i => i.id === p.item.id); if (!it) return;
-    const after = pantryAfter(p); if (p.mode === 0) return;
-    if (after === null || after <= 0) { if (p.mode === 'recipe' || p.mode >= 1 || (isNum(it.qty) && after !== null && after <= 0)) d.items = d.items.filter(i => i !== it); return; }
-    it.qty = after; }); }, '調理で使った分を減らす');
+  await savePantry(d => { rows.forEach(p => { d.items = d.items.filter(i => i.id !== p.item.id); }); }, 'なくなった物を外す');
 }
 // kaji-quest の「夜ご飯を作る」の完了としても書く（config.kaji_quest.write_cook_log）
 async function kqCookLog(e) {
@@ -620,7 +607,7 @@ async function saveRecord() {
   const ratings = { me: rec.me, partner: rec.partnerLater ? null : rec.partner, kid: rec.kid };
   const entry = { id: uid(12), date, ts: p.iso, recipe_id: r.id, version: +r.version || 1, request_id: rec.request ? rec.request.id : (r.request || null), type: r.type || (rec.request && rec.request.type) || 'dinner',
     planned_minutes: rec.planned, actual_minutes: rec.actual, fidelity: rec.fidelity, deviation: (rec.fidelity === 'minor' || rec.fidelity === 'major') && rec.deviation ? rec.deviation : null, finish: rec.finish, ratings, photo: null, learned: rec.learned || null,
-    pantry_used: rec.pantry.filter(x => x.mode !== 0).map(x => x.item.id), r_score: rScore(rec.planned, rec.actual, rec.fidelity, rec.finish), f_score: fScore(ratings) };
+    pantry_used: rec.pantry.map(x => x.item.id), r_score: rScore(rec.planned, rec.actual, rec.fidelity, rec.finish), f_score: fScore(ratings) };
   if (rec.step_minutes) entry.step_minutes = rec.step_minutes;
   if ((cfg().privacy || {}).log_time === false) delete entry.ts;
   let photoFailed = false; const side = [];
@@ -632,7 +619,7 @@ async function saveRecord() {
     }
     await appendLog(entry);
     try { await appendMemo(r, memoLine(entry)); } catch (e) { side.push('レシピのメモ: ' + e.message); }
-    try { await consumePantry(rec.pantry.filter(x => x.mode !== 0)); } catch (e) { side.push('在庫: ' + e.message); }
+    try { await consumePantry(rec.pantry.filter(x => x.gone)); } catch (e) { side.push('在庫: ' + e.message); }
     if (kq().write_cook_log) { try { await kqCookLog(entry); } catch (e) { side.push('kaji-quest: ' + e.message); } }
   });
   if (!ok) return;
@@ -681,58 +668,51 @@ function renderPantry() {
   const items = d.items.slice().sort((a, b) => String(b.added || '').localeCompare(String(a.added || '')) || String(a.name).localeCompare(String(b.name)));
   const row = i => { return `<div class="pitem" data-id="${esc(i.id)}">
     <div class="nm">${esc(i.name)} <span class="badge">${LOC_JA[i.loc] || esc(i.loc || '')}</span>${i.src === 'kaji-quest' ? '<span class="badge ind">kaji</span>' : i.src === 'photo' ? '<span class="badge ind">📷</span>' : ''}</div>
-    <button type="button" class="qty" data-act="p-qty" data-id="${esc(i.id)}" title="数を直す">${isNum(i.qty) ? `${i.qty} ${esc(i.unit || '')}` : 'ある'} ${ic('pen')}</button>
     <div class="meta">${validDate(i.added) ? `${jaShort(i.added)} に追加` : ''}</div>
-    <div class="ops"><button type="button" class="ghost tiny" data-act="p-useup" data-id="${esc(i.id)}">使い切った</button></div></div>`; };
+    <div class="ops"><button type="button" class="ghost tiny" data-act="p-gone" data-id="${esc(i.id)}">なくなった</button></div></div>`; };
   let html = head('fridge', '在庫', `${items.length} 品${d.updated ? ` ・ ${jaDateTime(d.updated)} 更新` : ''}${state.liveError ? ' ・ 読めていない' : ''}`) + `
-  <div class="add-row"><input type="text" class="inp" id="p-add" placeholder="鶏もも 300g、小松菜、卵 6個" autocomplete="off" value="${esc(state.pAddDraft)}" aria-label="在庫を追加（「、」区切り）"><button type="button" class="primary" data-act="p-add">${ic('plus')}追加</button></div>
+  <div class="add-row"><input type="text" class="inp" id="p-add" placeholder="鶏もも肉、小松菜、卵" autocomplete="off" value="${esc(state.pAddDraft)}" aria-label="在庫を追加（「、」区切り）"><button type="button" class="primary" data-act="p-add">${ic('plus')}追加</button></div>
   <div class="actions left"><label class="ghost small photo-btn">${ic('camera')}冷蔵庫の写真<input type="file" accept="image/*" capture="environment" id="p-photo"></label><select id="p-hint" class="select" style="width:auto;min-height:44px" aria-label="どこの写真"><option value="fridge">冷蔵</option><option value="freezer">冷凍</option><option value="pantry">常温</option></select>${kq().import_shopping ? `<button type="button" class="ghost small" data-act="p-import">${ic('import')}kaji-quest の買い物を取り込む</button>` : ''}</div>
   <div id="p-status" class="status">${pendingHTML('pantry')}</div>`;
   html += items.map(row).join('');
   if (!items.length) html += `<p class="empty">${state.liveError ? `在庫を読めなかった: ${esc(state.liveError)}` : '在庫が空。上の欄に「、」区切りで入れる。'}</p>`;
   html += suggestHTML();
-  html += '<h3 class="group">調味料・乾物（ある / 少ない / ない）</h3>' + staplesHTML(d.staples);
+  html += '<h3 class="group">調味料・乾物（ある / ない）</h3>' + staplesHTML(d.staples);
   $('#pantry').innerHTML = html;
 }
 function staplesHTML(staples) {
   const names = Object.keys(staples || {}); if (!names.length) return '<p class="empty">まだ無い。「醤油、みりん」のように入れるとここに入る。</p>';
   const groups = new Map(); names.forEach(nm => { const m = master(nm); const cat = (m && m.cat) || 'その他'; if (!groups.has(cat)) groups.set(cat, []); groups.get(cat).push(nm); });
   const order = ['調味料', '乾物', '主食', '麺粉', '缶詰', '加工品']; const cats = [...groups.keys()].sort((a, b) => (order.indexOf(a) + 1 || 99) - (order.indexOf(b) + 1 || 99));
-  return cats.map(cat => `${cats.length > 1 ? `<h3 class="group">${esc(cat)}</h3>` : ''}<div class="staples">${groups.get(cat).map(nm => { const st = staples[nm]; return `<div class="staple is-${esc(st)}"><span class="nm">${esc(nm)}</span><span class="seg state">${[['ok', 'ある'], ['low', '少ない'], ['none', 'ない']].map(([v, ja]) => `<button type="button" data-act="p-staple" data-name="${esc(nm)}" data-v="${v}" class="${st === v ? 'is-on' : ''}" aria-pressed="${st === v}">${ja}</button>`).join('')}</span></div>`; }).join('')}</div>`).join('');
+  return cats.map(cat => `${cats.length > 1 ? `<h3 class="group">${esc(cat)}</h3>` : ''}<div class="staples">${groups.get(cat).map(nm => { const st = staples[nm]; return `<div class="staple is-${esc(st)}"><span class="nm">${esc(nm)}</span><span class="seg state">${[['ok', 'ある'], ['none', 'ない']].map(([v, ja]) => `<button type="button" data-act="p-staple" data-name="${esc(nm)}" data-v="${v}" class="${st === v ? 'is-on' : ''}" aria-pressed="${st === v}">${ja}</button>`).join('')}</span></div>`; }).join('')}</div>`).join('');
 }
-// 「鶏もも 300g」「卵 6個」「小松菜」→ { name, qty, unit }
+// 「鶏もも 300g」「卵 6個」「小松菜」→ name（数は読み飛ばす。在庫はあるかないかだけ）
 function parsePantryToken(tok) {
   const s = String(tok || '').normalize('NFKC').trim(); if (!s) return null;
   const m = s.match(/^(.*?)\s*(\d+(?:\.\d+)?)\s*([^\d\s]{0,8})$/);
   if (m && m[1].trim()) return { name: m[1].trim(), qty: +m[2], unit: m[3] || null };
   return { name: s, qty: null, unit: null };
 }
-function newItem(name, qty, unit, added, src, loc) {
+function newItem(name, added, src, loc) {
   const m = master(name); const nm = m ? m.name : name;
-  return { id: 'p' + uid(5), name: nm, qty: isNum(qty) ? qty : null, unit: isNum(qty) ? (unit || (m && m.unit) || null) : null, loc: loc || (m && m.loc) || 'fridge', added, src };
+  return { id: 'p' + uid(5), name: nm, loc: loc || (m && m.loc) || 'fridge', added, src };
 }
-// 同じ名前が既にあれば寄せる（数は単位が同じなら足す）
+// 同じ名前が既にあれば 1 つにまとめる（追加日と場所だけ更新）
 function mergeItem(d, a) {
   const ex = d.items.find(i => sameName(i.name, a.name));
   if (!ex) { d.items.push(a); return; }
-  if (isNum(ex.qty) && isNum(a.qty) && (ex.unit || '') === (a.unit || '')) ex.qty = round1(ex.qty + a.qty); else if (isNum(a.qty)) { ex.qty = a.qty; ex.unit = a.unit; }
   ex.added = a.added; if (a.loc) ex.loc = a.loc;
 }
 async function pantryAdd(text) {
   const toks = String(text || '').split(/[、,，\n]+/).map(s => s.trim()).filter(Boolean); if (!toks.length) return; if (!requireToken()) return;
   const t = today(); const added = [], staples = [];
-  toks.forEach(tok => { const p = parsePantryToken(tok); if (!p) return; const m = master(p.name); if (m && m.staple) staples.push(m.name); else added.push(newItem(p.name, p.qty, p.unit, t, 'manual')); });
+  toks.forEach(tok => { const p = parsePantryToken(tok); if (!p) return; const m = master(p.name); if (m && m.staple) staples.push(m.name); else added.push(newItem(p.name, t, 'manual')); });
   const ok = await run(() => savePantry(d => { added.forEach(a => mergeItem(d, a)); staples.forEach(nm => { d.staples[nm] = 'ok'; }); }, '追加'), `${added.length + staples.length} 品を入れた`);
   if (ok) { state.pAddDraft = ''; render(); }
 }
 async function pantryItemOp(id) {
   if (!requireToken()) return; const it = state.pantry.data.items.find(i => i.id === id); if (!it) return;
-  const ok = await run(() => savePantry(d => { d.items = d.items.filter(i => i.id !== id); }, `${it.name} を使い切った`), `${it.name} を在庫から外した`);
-  if (ok) render();
-}
-async function pantrySetQty(id, qty) {
-  if (!requireToken()) return;
-  const ok = await run(() => savePantry(d => { const it = d.items.find(i => i.id === id); if (it) it.qty = isNum(qty) ? qty : null; }, '数を直す'));
+  const ok = await run(() => savePantry(d => { d.items = d.items.filter(i => i.id !== id); }, `${it.name} がなくなった`), `${it.name} を在庫から外した`);
   if (ok) render();
 }
 async function pantryStaple(name, v) {
@@ -752,8 +732,8 @@ function photoDiffRows(res) {
   const rows = [];
   (Array.isArray(res.items) ? res.items : []).forEach(it => { if (!it || !it.name) return; const m = master(it.name); const c = isNum(it.confidence) ? it.confidence : 0.5;
     if (m && m.staple) { rows.push({ kind: 'staple', name: m.name, state: 'ok', checked: c >= 0.6, sub: `調味料として「ある」に ・ 確度 ${Math.round(c * 100)}%` }); return; }
-    rows.push({ kind: 'item', name: m ? m.name : String(it.name), qty: isNum(it.qty) ? it.qty : null, unit: it.unit || null, loc: it.loc || (m && m.loc) || 'fridge', checked: c >= 0.6, src: 'photo', sub: `確度 ${Math.round(c * 100)}%${m ? '' : ' ・ マスタに無い名前'}` }); });
-  (Array.isArray(res.staples) ? res.staples : []).forEach(s => { if (s && s.name) rows.push({ kind: 'staple', name: canonical(s.name), state: ['ok', 'low', 'none'].includes(s.state) ? s.state : 'ok', checked: true, sub: `調味料: ${s.state === 'none' ? 'ない' : s.state === 'low' ? '少ない' : 'ある'}` }); });
+    rows.push({ kind: 'item', name: m ? m.name : String(it.name), loc: it.loc || (m && m.loc) || 'fridge', checked: c >= 0.6, src: 'photo', sub: `確度 ${Math.round(c * 100)}%${m ? '' : ' ・ マスタに無い名前'}` }); });
+  (Array.isArray(res.staples) ? res.staples : []).forEach(s => { if (s && s.name) rows.push({ kind: 'staple', name: canonical(s.name), state: s.state === 'none' ? 'none' : 'ok', checked: true, sub: `調味料: ${s.state === 'none' ? 'ない' : 'ある'}` }); });
   return rows;
 }
 async function importKaji() {
@@ -767,21 +747,21 @@ async function importKaji() {
   const rows = [];
   shops.forEach(l => l.items.forEach(it => { if (typeof it !== 'string' || !it.trim()) return; const m = master(it); const sub = `${jaShort(l.date)} の買い物${m ? '' : ' ・ マスタに無い（食材でなければ外す）'}`;
     if (m && m.staple) rows.push({ kind: 'staple', name: m.name, state: 'ok', checked: true, sub });
-    else rows.push({ kind: 'item', name: m ? m.name : it.trim().normalize('NFKC'), qty: null, unit: null, loc: (m && m.loc) || 'fridge', checked: !!m, src: 'kaji-quest', added: validDate(l.date) ? l.date : t, sub }); }));
+    else rows.push({ kind: 'item', name: m ? m.name : it.trim().normalize('NFKC'), loc: (m && m.loc) || 'fridge', checked: !!m, src: 'kaji-quest', added: validDate(l.date) ? l.date : t, sub }); }));
   openDiff(rows, 'kaji', shops.map(l => l.id));
 }
 function openDiff(rows, kind, shopIds) {
   state.diff = { rows, kind, shopIds: shopIds || [] };
   $('#diff-title').textContent = kind === 'photo' ? '写真から読み取った物' : 'kaji-quest の買い物';
   $('#diff-help').textContent = kind === 'photo' ? '確度が低い物はチェックを外してある。合っている物だけ反映する。' : 'まだ取り込んでいない買い物。食材でない物は外す。';
-  $('#diff-list').innerHTML = rows.length ? rows.map((r, i) => `<li><input type="checkbox" data-act="diff-chk" data-i="${i}"${r.checked ? ' checked' : ''} id="df${i}"><label for="df${i}" class="nm">${esc(r.name)}${isNum(r.qty) ? ` ${r.qty}${esc(r.unit || '')}` : ''}<small>${esc(r.sub || '')}</small></label>${r.kind === 'staple' ? '<span class="badge">調味料</span>' : `<span class="badge">${LOC_JA[r.loc] || ''}</span>`}</li>`).join('') : '<li class="empty">何も読み取れなかった</li>';
+  $('#diff-list').innerHTML = rows.length ? rows.map((r, i) => `<li><input type="checkbox" data-act="diff-chk" data-i="${i}"${r.checked ? ' checked' : ''} id="df${i}"><label for="df${i}" class="nm">${esc(r.name)}<small>${esc(r.sub || '')}</small></label>${r.kind === 'staple' ? '<span class="badge">調味料</span>' : `<span class="badge">${LOC_JA[r.loc] || ''}</span>`}</li>`).join('') : '<li class="empty">何も読み取れなかった</li>';
   const dlg = $('#dlg-diff'); if (!dlg.open) dlg.showModal();
 }
 async function applyDiff() {
   const d = state.diff; if (!d) return; $('#dlg-diff').close(); if (!requireToken()) return;
   const sel = d.rows.filter(r => r.checked); const t = today();
   const ok = await run(() => savePantry(data => {
-    sel.forEach(r => { if (r.kind === 'staple') { data.staples[r.name] = r.state || 'ok'; return; } mergeItem(data, newItem(r.name, r.qty, r.unit, r.added || t, r.src, r.loc)); });
+    sel.forEach(r => { if (r.kind === 'staple') { data.staples[r.name] = r.state || 'ok'; return; } mergeItem(data, newItem(r.name, r.added || t, r.src, r.loc)); });
     if (d.shopIds.length) data.imported_shop_ids = [...new Set([...data.imported_shop_ids, ...d.shopIds])];
   }, d.kind === 'photo' ? '写真から反映' : 'kaji-quest から取り込み'), `${sel.length} 品を反映した`);
   if (ok) { state.diff = null; render(); }
@@ -1021,7 +1001,6 @@ document.addEventListener('click', ev => {
     case 'rec-star': { const f = b.dataset.f, v = +b.dataset.v; rec[f] = rec[f] === v ? null : v; $$('.star', b.parentElement).forEach(s => s.classList.toggle('is-on', +s.dataset.v <= (rec[f] || 0))); if (f === 'partner' && rec[f]) { rec.partnerLater = false; const l = $('[data-act="rec-partner-later"]'); if (l) l.classList.remove('is-on'); } break; }
     case 'rec-partner-later': rec.partnerLater = !rec.partnerLater; b.classList.toggle('is-on', rec.partnerLater); if (rec.partnerLater) { rec.partner = null; $$('.star[data-f="partner"]').forEach(s => s.classList.remove('is-on')); } break;
     case 'rec-kid': rec.kid = rec.kid === b.dataset.v ? null : b.dataset.v; sib(b, c => c.dataset.v === rec.kid); break;
-    case 'rec-pc-mode': { const i = +b.dataset.i; const p = rec && rec.pantry[i]; if (p) { const v = b.dataset.v; p.mode = v === 'recipe' ? 'recipe' : +v; b.closest('li').outerHTML = pcRowHTML(p, i); } break; }
     case 'rec-photo-clear': if (rec.photo && rec.photo.url) URL.revokeObjectURL(rec.photo.url); rec.photo = null; syncRecordInputs(); renderRecord(); break;
     case 'rec-save': saveRecord(); break;
     case 'photo-retry': retryPhoto(); break;
@@ -1034,9 +1013,8 @@ document.addEventListener('click', ev => {
     case 'sg-push': { const s = state.suggest; if (s) pushShopping(sgSelected(s).map(i => i.qty ? `${i.name} ${i.qty}` : i.name)); break; }
     case 'sg-copy': { const s = state.suggest; if (s) copyText(sgSelected(s).map(i => i.qty ? `${i.name} ${i.qty}` : i.name).join('、')); break; }
     case 'sg-clear': state.suggest = null; lsDel(LS.suggest); render(); break;
-    case 'p-useup': pantryItemOp(b.dataset.id); break;
+    case 'p-gone': pantryItemOp(b.dataset.id); break;
     case 'p-staple': pantryStaple(b.dataset.name, b.dataset.v); break;
-    case 'p-qty': { const it = state.pantry.data.items.find(i => i.id === b.dataset.id); if (!it) break; b.outerHTML = `<span><input type="number" class="qty-edit" inputmode="decimal" step="any" min="0" data-id="${esc(it.id)}" value="${isNum(it.qty) ? it.qty : ''}" aria-label="数"> ${esc(it.unit || '')}</span>`; const inp = $(`.qty-edit[data-id="${it.id}"]`); if (inp) inp.focus(); break; }
     case 'diff-cancel': $('#dlg-diff').close(); state.diff = null; break;
     case 'diff-apply': applyDiff(); break;
     // 図鑑・一覧・今週
@@ -1053,8 +1031,8 @@ document.addEventListener('change', ev => {
   const t = ev.target;
   if (t.id === 'rec-photo-cam' || t.id === 'rec-photo-lib') { setRecordPhoto(t.files && t.files[0]); t.value = ''; }
   else if (t.id === 'p-photo') { pantryPhoto(t.files && t.files[0]); t.value = ''; }
-  else if (t.classList.contains('qty-edit')) { const v = parseFloat(t.value); pantrySetQty(t.dataset.id, Number.isFinite(v) ? v : null); }
   else if (t.dataset.act === 'diff-chk' && state.diff) { const r = state.diff.rows[+t.dataset.i]; if (r) r.checked = t.checked; }
+  else if (t.dataset.act === 'rec-pc-gone' && rec) { const p = rec.pantry[+t.dataset.i]; if (p) p.gone = t.checked; }
   else if (t.id === 'detail-default') { lsSetRaw(LS.detail, t.value === 'auto' ? '' : t.value); state.detailView = ''; renderRecipe(); decorateCards(); }
   else if (t.id === 'o-dishes') state.order.dishes = t.value;
 });
@@ -1070,7 +1048,6 @@ document.addEventListener('input', ev => {
 document.addEventListener('keydown', ev => {
   if (ev.key !== 'Enter') return; const t = ev.target;
   if (t.id === 'p-add') { ev.preventDefault(); pantryAdd(t.value); }
-  else if (t.classList && t.classList.contains('qty-edit')) { ev.preventDefault(); t.blur(); }
   else if (ev.key === 'Enter' && t.id === 'o-free') { ev.preventDefault(); t.blur(); }
 });
 document.addEventListener('keydown', ev => { if (ev.key === 'Escape' && !$('#cook').hidden) closeCook(); });

@@ -79,7 +79,7 @@ class Context:
             name = self.ingredients.normalize(it["name"])
             if any(b in name for b in bad):
                 continue
-            items.append({k: v for k, v in it.items() if k in ("name", "qty", "unit", "loc")})
+            items.append({k: v for k, v in it.items() if k in ("name", "loc")})   # あるかないかだけ
         staples = {k: v for k, v in (self.pantry.get("staples") or {}).items() if v in ("ok", "low") and not any(b in k for b in bad)}
         return {"items": items, "staples": staples}
 
@@ -349,8 +349,7 @@ def action_pantry_photo(ctx: Context, L: llmmod.LLM, req: dict) -> dict:
         if master and master.get("staple"):
             data.setdefault("staples", []).append({"name": name, "state": "ok"})
             continue
-        items.append({"name": name, "qty": it.get("qty"), "unit": it.get("unit") or (master or {}).get("unit"),
-                      "loc": it.get("loc") or (master or {}).get("loc", "fridge"), "confidence": it.get("confidence", 0.5),
+        items.append({"name": name, "loc": it.get("loc") or (master or {}).get("loc", "fridge"), "confidence": it.get("confidence", 0.5),
                       "known": bool(master)})
     staples = []
     seen = set()
@@ -358,7 +357,7 @@ def action_pantry_photo(ctx: Context, L: llmmod.LLM, req: dict) -> dict:
         name = ctx.ingredients.normalize(s.get("name", ""))
         if name and name not in seen:
             seen.add(name)
-            staples.append({"name": name, "state": s.get("state", "ok")})
+            staples.append({"name": name, "state": "none" if s.get("state") == "none" else "ok"})   # ある / ない だけ
     # 処理済みの写真は消す（履歴には残る。SPEC §15.1）
     try:
         os.remove(common.path(image))

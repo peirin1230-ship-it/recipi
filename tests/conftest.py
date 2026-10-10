@@ -15,6 +15,9 @@ for name in os.listdir(os.path.join(REPO, "tests", "fixtures", "recipes")):
 for name in os.listdir(os.path.join(TMP, "requests")):
     if name.endswith(".json"):
         os.remove(os.path.join(TMP, "requests", name))
+# 本物の記録（logs/）も使わない（テストは自分で書く）
+shutil.rmtree(os.path.join(TMP, "logs"), ignore_errors=True)
+os.makedirs(os.path.join(TMP, "logs"), exist_ok=True)
 os.environ["RECIPI_ROOT"] = TMP
 os.environ["RECIPI_MOCK"] = "1"
 sys.path.insert(0, os.path.join(REPO, "scripts"))

@@ -18,7 +18,7 @@ Actions が動いていないとき（Phase 0、または障害時）は、あ�
 「作った。26 分、少し変えた（醤油を減らした）、仕上がり 4、自分 4、妻 5、子ども完食」と言われたら:
 1. `logs/YYYY/MM.jsonl` に SPEC §6.6 の 1 行を足す（R と F は `scripts/learn.py` の `r_score` / `f_score` と同じ式）
 2. レシピの「作ったときのメモ」に 1 行足す
-3. 使った食材を `pantry.json` から減らす（聞かれたら）
+3. なくなった食材を `pantry.json` から外す（聞かれたら。在庫はあるかないかだけ）
 4. `python3 scripts/learn.py --no-llm` を実行して統計を更新する
 
 ## 開発

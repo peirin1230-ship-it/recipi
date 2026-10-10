@@ -144,10 +144,9 @@ async function setup(browser, viewport) {
     await page.click('.star[data-f="finish"][data-v="4"]'); await page.click('.star[data-f="me"][data-v="4"]'); await page.click('.star[data-f="partner"][data-v="5"]'); await page.click('[data-act="rec-kid"][data-v="all"]');
     await page.click('[data-act="rec-time"][data-d="5"]'); await page.click('[data-act="rec-time"][data-d="-1"]');
     await page.fill('#rec-learned', '皮目は 2 分半');
-    // 在庫の減らし方: 鶏もも肉はレシピの分（既定）、小松菜は全体の 50%
-    assert(await page.$eval('#record .pc-list li:nth-child(1) .tiny-btn.is-on', b => b.textContent.includes('レシピの分')), 'matching unit defaults to レシピの分');
-    await page.click('#record [data-act="rec-pc-mode"][data-i="1"][data-v="0.5"]');
-    assert(await page.$eval('#record .pc-list li:nth-child(2)', e => e.textContent.includes('1束 → 0.5束')), 'choosing 50% previews the remaining stock');
+    // 在庫はあるかないかだけ: なくなった物にチェック（小松菜）。鶏もも肉は残す
+    assert(await page.$$eval('#record [data-act="rec-pc-gone"]', c => c.length === 2 && c.every(x => !x.checked)), 'gone checkboxes for the 2 stocked ingredients, none checked by default');
+    await page.check('#record [data-act="rec-pc-gone"][data-i="1"]');
     const before = puts.length;
     await page.click('[data-act="rec-save"]');
     await page.waitForFunction(() => document.querySelector('#toast') && document.querySelector('#toast').textContent.includes('記録'));
@@ -162,7 +161,7 @@ async function setup(browser, viewport) {
     assert(!memoPut, 'recipe memo skipped when recipes/<id>.md is 404 (no write to a missing file)');
     const pantryPut = puts.slice(before).find(p => p.url.includes('/contents/pantry.json'));
     const pantryBody = pantryPut ? JSON.parse(Buffer.from(pantryPut.body.content, 'base64').toString('utf8')) : null;
-    assert(pantryBody && !pantryBody.items.some(i => i.name === '鶏もも肉') && pantryBody.items.some(i => i.name === '小松菜' && i.qty === 0.5) && pantryBody.items.length === 14, `pantry decremented: 鶏もも肉 300g-300g removed, 小松菜 50% → 0.5束 (items=${pantryBody && pantryBody.items.length})`);
+    assert(pantryBody && pantryBody.items.some(i => i.name === '鶏もも肉') && !pantryBody.items.some(i => i.name === '小松菜') && pantryBody.items.length === 14 && pantryBody.items.every(i => !('qty' in i) && !('unit' in i)), `pantry: 小松菜 removed (gone), 鶏もも肉 kept, no qty/unit fields (items=${pantryBody && pantryBody.items.length})`);
     assert(pantryBody && pantryBody.updated && Array.isArray(pantryBody.discarded), 'pantry.json keeps shape (updated, discarded)');
     assert(puts.slice(before).every(p => p.body.message.startsWith('[skip ci]')), 'all record commits are [skip ci]');
     assert(await page.$eval('#list .lrow', e => e.textContent.includes('作った')) && await page.evaluate(() => (JSON.parse(localStorage.getItem('recipi.list') || '{}').cooked || []).includes('r-20261008-torimomo-teriyaki')), 'recorded recipe shows as 作った in the list on this device (overlay cooked)');
@@ -174,8 +173,8 @@ async function setup(browser, viewport) {
     const addPut = puts.slice(b2).find(p => p.url.includes('/contents/pantry.json'));
     const addBody = addPut ? JSON.parse(Buffer.from(addPut.body.content, 'base64').toString('utf8')) : null;
     const tori = addBody && addBody.items.find(i => i.name === '鶏もも肉'); const tofu = addBody && addBody.items.find(i => i.name === '豆腐'); const neo = addBody && addBody.items.find(i => i.name === '新しい食材');
-    assert(tori && tori.qty === 300 && tori.unit === 'g' && tori.loc === 'fridge' && !tori.use_by && tori.src === 'manual', `alias normalized (とりもも→鶏もも肉) with qty/unit, no use_by: ${JSON.stringify(tori)}`);
-    assert(tofu && tofu.qty === 2 && tofu.unit === '丁', `same-name item merged (豆腐 1丁 + 1丁 = ${tofu && tofu.qty})`);
+    assert(tori && tori.loc === 'fridge' && !('qty' in tori) && addBody.items.filter(i => i.name === '鶏もも肉').length === 1, `alias normalized (とりもも→鶏もも肉), number ignored, merged into the existing item: ${JSON.stringify(tori)}`);
+    assert(tofu && !('qty' in tofu) && addBody.items.filter(i => i.name === '豆腐').length === 1, 'same-name item merged into one (豆腐 1丁 + 1丁 → 1 entry, no number)');
     assert(neo && neo.loc === 'fridge' && !neo.use_by, 'unknown name added as-is (fridge, no use_by)');
     assert(addBody && addBody.staples['醤油'] === 'ok', 'staple name (しょうゆ→醤油) sets staples, not items');
     // 一覧: 並び（レシピの次）、削除ボタン、追加ボタン

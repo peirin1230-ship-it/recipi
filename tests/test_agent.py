@@ -41,7 +41,7 @@ def test_pantry_photo_mock(root):
     names = [i["name"] for i in req["result"]["items"]]
     assert "鶏もも肉" in names and "キャベツ" in names
     assert any(not i["known"] for i in req["result"]["items"])        # 不明な物は known: false
-    assert {"name": "マヨネーズ", "state": "low"} in req["result"]["staples"]
+    assert {"name": "マヨネーズ", "state": "ok"} in req["result"]["staples"]   # low は ok に寄せる（ある / ない だけ）
     assert not os.path.exists(common.path("inbox", "t.png"))          # 処理後に消す
 
 

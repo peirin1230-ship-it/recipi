@@ -103,12 +103,10 @@ REVISE_OUTPUT = _obj({
 PANTRY_PHOTO_OUTPUT = _obj({
     "items": _arr(_obj({
         "name": _s(),
-        "qty": _n(True),
-        "unit": _s(True),
         "loc": {"type": "string", "enum": ["fridge", "freezer", "pantry"]},
         "confidence": _n(),
     })),
-    "staples": _arr(_obj({"name": _s(), "state": {"type": "string", "enum": ["ok", "low", "none"]}})),
+    "staples": _arr(_obj({"name": _s(), "state": {"type": "string", "enum": ["ok", "none"]}})),
 })
 
 PHOTO_NOTE_OUTPUT = _obj({"note": _s()})
