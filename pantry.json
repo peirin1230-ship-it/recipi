@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-10T16:58:22+09:00",
+ "updated": "2026-10-10T17:42:45+09:00",
  "items": [
   {
    "id": "p9qc8h",
@@ -78,16 +78,6 @@
    "added": "2026-10-08",
    "use_by": "2027-04-06",
    "src": "manual"
-  },
-  {
-   "id": "p060dr",
-   "name": "ヨーグルト",
-   "qty": null,
-   "unit": null,
-   "loc": "fridge",
-   "added": "2026-10-08",
-   "use_by": "2026-10-18",
-   "src": "kaji-quest"
   },
   {
    "id": "prqqra",
