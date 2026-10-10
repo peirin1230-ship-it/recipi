@@ -18,7 +18,7 @@ ingredients:
 - {name: 牛乳, qty: 400, unit: ml, grams: 410, pantry: 牛乳, for: かまぼこと卵のミルクスープ, substitute: null, use_up: false}
 - {name: 水, qty: 200, unit: ml, grams: 200, pantry: null, for: かまぼこと卵のミルクスープ, substitute: null, use_up: false}
 - {name: 卵, qty: 3, unit: 個, grams: 150, pantry: 卵, for: かまぼこと卵のミルクスープ, substitute: null, use_up: false}
-- {name: かまぼこ, qty: 60, unit: g, grams: 60, pantry: かまぼこ, for: かまぼこと卵のミルクスープ, substitute: null, use_up: true}
+- {name: かまぼこ, qty: 0.333, unit: 本, grams: 60, pantry: かまぼこ, for: かまぼこと卵のミルクスープ, substitute: null, use_up: true}
 - {name: コーン缶, qty: 3, unit: 大さじ, grams: 45, pantry: コーン缶, for: かまぼこと卵のミルクスープ, substitute: null, use_up: false}
 - {name: バター, qty: 10, unit: g, grams: 10, pantry: バター, for: かまぼこと卵のミルクスープ, substitute: null, use_up: false}
 - {name: 片栗粉, qty: 1, unit: 小さじ, grams: 3, pantry: 片栗粉, for: かまぼこと卵のミルクスープ, substitute: null, use_up: false}
@@ -31,7 +31,7 @@ kid: {rule: 味付けの前に取り分ける, cut: かまぼこは 5mm 角に�
     2 杯分取り分ける。かまぼこ 10g 由来の塩分のみ（約 0.3g）。冷ましてから出す}
 keep: {fridge_days: 1, freezer: false, reheat: 鍋で弱火にかけ、湯気が立つまで温める。沸騰させると牛乳が分離するので注意。子どもの分は 1 日以内}
 timeline:
-- {minute: 0, lane: hands, text: かまぼこ 60g を 5mm 角に切り、10g は子ども用に別皿へ。卵 3 個をボウル（中）で溶く}
+- {minute: 0, lane: hands, text: かまぼこ 1/3 本（60g）を 5mm 角に切り、10g は子ども用に別皿へ。卵 3 個をボウル（中）で溶く}
 - {minute: 3, lane: hands, text: コーンの水気を切る。片栗粉小さじ 1 を水小さじ 2 で溶く}
 - {minute: 5, lane: gas-l, text: 鍋に水 200ml・牛乳 400ml・バター・コーンを入れ、弱火〜中火で温める}
 - {minute: 6, lane: hands, text: （温める間）子ども用のかまぼこをさらに細かくする}
@@ -42,8 +42,9 @@ timeline:
 - {minute: 18, lane: hands, text: 子ども用を浅い器に移して冷ます。大人用を器に盛る}
 - {minute: 20, lane: hands, text: 配膳}
 steps:
-- {dish: かまぼこと卵のミルクスープ, n: 1, title: 具を切る, kind: prep, tag: cut, minutes: 3, heat: null, text: かまぼこ 60g を 5mm 角に切る。10g は子ども用に別皿へ分け、さらに細かく刻む。卵
-    3 個をボウル（中）に割り、白身を切るように溶く。, cue: かまぼこが同じ大きさにそろい、卵液に白い筋が残らない, caution: null, timer: null, kid: 子ども用のかまぼこは 5mm 角以下に。丸いまま・輪切りにしない}
+- {dish: かまぼこと卵のミルクスープ, n: 1, title: 具を切る, kind: prep, tag: cut, minutes: 3, heat: null, text: かまぼこ 1/3 本（60g）を 5mm 角に切る。10g
+    は子ども用に別皿へ分け、さらに細かく刻む。卵 3 個をボウル（中）に割り、白身を切るように溶く。, cue: かまぼこが同じ大きさにそろい、卵液に白い筋が残らない, caution: null, timer: null, kid: 子ども用のかまぼこは
+    5mm 角以下に。丸いまま・輪切りにしない}
 - {dish: かまぼこと卵のミルクスープ, n: 2, title: 片栗粉とコーンを用意, kind: prep, tag: cut, minutes: 2, heat: null, text: コーン缶 3 大さじ（45g）をザルで水気を切る。片栗粉小さじ
     1 を水小さじ 2 で溶く。, cue: 片栗粉がダマなく白く濁った液になる, caution: null, timer: null, kid: null}
 - dish: かまぼこと卵のミルクスープ
@@ -109,7 +110,7 @@ detail: full
 
 | 分 | ガスコンロ左 | 手 |
 |---|---|---|
-| 0 |  | かまぼこ 60g を 5mm 角に切り、10g は子ども用に別皿へ。卵 3 個をボウル（中）で溶く |
+| 0 |  | かまぼこ 1/3 本（60g）を 5mm 角に切り、10g は子ども用に別皿へ。卵 3 個をボウル（中）で溶く |
 | 3 |  | コーンの水気を切る。片栗粉小さじ 1 を水小さじ 2 で溶く |
 | 5 | 鍋に水 200ml・牛乳 400ml・バター・コーンを入れ、弱火〜中火で温める |  |
 | 6 |  | （温める間）子ども用のかまぼこをさらに細かくする |
@@ -127,7 +128,7 @@ detail: full
 | 牛乳 | 400 ml（410g） | かまぼこと卵のミルクスープ | 牛乳 |
 | 水 | 200 ml（200g） | かまぼこと卵のミルクスープ | — |
 | 卵 | 3 個（150g） | かまぼこと卵のミルクスープ | 卵 |
-| かまぼこ | 60 g | かまぼこと卵のミルクスープ 使い切り | かまぼこ |
+| かまぼこ | 0.333 本（60g） | かまぼこと卵のミルクスープ 使い切り | かまぼこ |
 | コーン缶 | 3 大さじ（45g） | かまぼこと卵のミルクスープ | コーン缶 |
 | バター | 10 g | かまぼこと卵のミルクスープ | バター |
 | 片栗粉 | 1 小さじ（3g） | かまぼこと卵のミルクスープ | 片栗粉 |
@@ -140,7 +141,7 @@ detail: full
 ## 手順
 
 ### かまぼこと卵のミルクスープ
-1. **具を切る（3 分 / prep）** かまぼこ 60g を 5mm 角に切る。10g は子ども用に別皿へ分け、さらに細かく刻む。卵 3 個をボウル（中）に割り、白身を切るように溶く。
+1. **具を切る（3 分 / prep）** かまぼこ 1/3 本（60g）を 5mm 角に切る。10g は子ども用に別皿へ分け、さらに細かく刻む。卵 3 個をボウル（中）に割り、白身を切るように溶く。
    - 目安: かまぼこが同じ大きさにそろい、卵液に白い筋が残らない
    - 🍼 子ども用のかまぼこは 5mm 角以下に。丸いまま・輪切りにしない
 2. **片栗粉とコーンを用意（2 分 / prep）** コーン缶 3 大さじ（45g）をザルで水気を切る。片栗粉小さじ 1 を水小さじ 2 で溶く。

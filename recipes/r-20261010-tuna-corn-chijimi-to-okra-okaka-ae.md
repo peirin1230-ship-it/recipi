@@ -1,5 +1,5 @@
 ---
-listed: "2026-10-10T09:13:21+09:00"
+listed: '2026-10-10T09:13:21+09:00'
 id: r-20261010-tuna-corn-chijimi-to-okra-okaka-ae
 title: ツナとコーンの片栗粉チヂミ風とオクラのおかか和え
 version: 1
@@ -18,7 +18,7 @@ dishes:
 equipment: [fp26, microwave, bowl-m]
 ingredients:
 - {name: ツナ缶, qty: 1, unit: 缶, grams: 70, pantry: ツナ缶, for: ツナとコーンの片栗粉チヂミ風, substitute: null, use_up: false}
-- {name: コーン缶, qty: 60, unit: g, grams: 60, pantry: コーン缶, for: ツナとコーンの片栗粉チヂミ風, substitute: null, use_up: false}
+- {name: コーン缶, qty: 0.5, unit: 缶, grams: 60, pantry: コーン缶, for: ツナとコーンの片栗粉チヂミ風, substitute: null, use_up: false}
 - {name: 卵, qty: 1, unit: 個, grams: 50, pantry: 卵, for: ツナとコーンの片栗粉チヂミ風, substitute: null, use_up: false}
 - {name: 片栗粉, qty: 3, unit: 大さじ, grams: 27, pantry: 片栗粉, for: ツナとコーンの片栗粉チヂミ風, substitute: null, use_up: false}
 - {name: 水, qty: 3, unit: 大さじ, grams: 45, pantry: null, for: ツナとコーンの片栗粉チヂミ風, substitute: null, use_up: false}
@@ -114,7 +114,7 @@ detail: full
 | 材料 | 量 | 用途 | 在庫名 |
 |---|---|---|---|
 | ツナ缶 | 1 缶（70g） | ツナとコーンの片栗粉チヂミ風 | ツナ缶 |
-| コーン缶 | 60 g | ツナとコーンの片栗粉チヂミ風 | コーン缶 |
+| コーン缶 | 0.5 缶（60g） | ツナとコーンの片栗粉チヂミ風 | コーン缶 |
 | 卵 | 1 個（50g） | ツナとコーンの片栗粉チヂミ風 | 卵 |
 | 片栗粉 | 3 大さじ（27g） | ツナとコーンの片栗粉チヂミ風 | 片栗粉 |
 | 水 | 3 大さじ（45g） | ツナとコーンの片栗粉チヂミ風 | — |

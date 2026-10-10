@@ -17,7 +17,7 @@ dishes:
 equipment: [fp26, microwave, bowl-l, bowl-m]
 ingredients:
 - {name: 豚肩ローススライス, qty: 240, unit: g, grams: 240, pantry: 豚肩ローススライス, for: 豚肩ロースとれんこんの甘酢炒め, substitute: null, use_up: false}
-- {name: れんこん, qty: 150, unit: g, grams: 150, pantry: れんこん 1節, for: 豚肩ロースとれんこんの甘酢炒め, substitute: null, use_up: false}
+- {name: れんこん, qty: 0.75, unit: 節, grams: 150, pantry: れんこん 1節, for: 豚肩ロースとれんこんの甘酢炒め, substitute: null, use_up: false}
 - {name: 酒, qty: 1, unit: 大さじ, grams: 15, pantry: null, for: 豚肩ロースとれんこんの甘酢炒め, substitute: null, use_up: false}
 - {name: 片栗粉, qty: 1, unit: 小さじ, grams: 3, pantry: null, for: 豚肩ロースとれんこんの甘酢炒め, substitute: null, use_up: false}
 - {name: サラダ油, qty: 0.5, unit: 大さじ, grams: 6, pantry: null, for: 豚肩ロースとれんこんの甘酢炒め, substitute: null, use_up: false}
@@ -25,9 +25,9 @@ ingredients:
 - {name: 砂糖, qty: 1, unit: 大さじ, grams: 9, pantry: null, for: 豚肩ロースとれんこんの甘酢炒め, substitute: null, use_up: false}
 - {name: 醤油, qty: 1.5, unit: 小さじ, grams: 9, pantry: null, for: 豚肩ロースとれんこんの甘酢炒め, substitute: null, use_up: false}
 - {name: ごま油, qty: 1, unit: 小さじ, grams: 4, pantry: null, for: 豚肩ロースとれんこんの甘酢炒め, substitute: null, use_up: false}
-- {name: 豆腐, qty: 150, unit: g, grams: 150, pantry: 豆腐 2丁, for: ブロッコリーとにんじんの白和え, substitute: null, use_up: false}
-- {name: ブロッコリー, qty: 120, unit: g, grams: 120, pantry: ブロッコリー 1株, for: ブロッコリーとにんじんの白和え, substitute: null, use_up: false}
-- {name: にんじん, qty: 40, unit: g, grams: 40, pantry: にんじん, for: ブロッコリーとにんじんの白和え, substitute: null, use_up: false}
+- {name: 豆腐, qty: 0.5, unit: 丁, grams: 150, pantry: 豆腐 2丁, for: ブロッコリーとにんじんの白和え, substitute: null, use_up: false}
+- {name: ブロッコリー, qty: 0.333, unit: 株, grams: 120, pantry: ブロッコリー 1株, for: ブロッコリーとにんじんの白和え, substitute: null, use_up: false}
+- {name: にんじん, qty: 0.25, unit: 本, grams: 40, pantry: にんじん, for: ブロッコリーとにんじんの白和え, substitute: null, use_up: false}
 - {name: 白ごま, qty: 1, unit: 大さじ, grams: 9, pantry: null, for: ブロッコリーとにんじんの白和え, substitute: null, use_up: false}
 - {name: 砂糖, qty: 1, unit: 小さじ, grams: 3, pantry: null, for: ブロッコリーとにんじんの白和え, substitute: null, use_up: false}
 - {name: 味噌, qty: 1, unit: 小さじ, grams: 6, pantry: null, for: ブロッコリーとにんじんの白和え, substitute: null, use_up: false}
@@ -38,7 +38,7 @@ keep: {fridge_days: 2, freezer: false, reheat: 炒め物は600Wで1人分1分30�
 timeline:
 - {minute: 0, lane: hands, text: れんこんを皮むきして3mm厚の半月切り。酢水（水200ml＋酢小さじ1）にさらす}
 - {minute: 4, lane: hands, text: 豚肉を4cm幅に切り、酒と片栗粉をもみ込む。甘酢だれ（酢・砂糖・醤油）を混ぜる}
-- {minute: 8, lane: microwave, text: 豆腐150gを耐熱ボウル（中）に入れ、ラップなしで900W 1分20秒}
+- {minute: 8, lane: microwave, text: 豆腐 1/2 丁（150g）を耐熱ボウル（中）に入れ、ラップなしで900W 1分20秒}
 - {minute: 8, lane: hands, text: ブロッコリーを小房に分け、にんじんを細切り}
 - {minute: 11, lane: microwave, text: ブロッコリー・にんじん・水大さじ1をボウル（大）に入れラップして900W 1分30秒}
 - {minute: 11, lane: hands, text: 豆腐をザルにあけて水気を切る}
@@ -51,7 +51,7 @@ timeline:
 - {minute: 34, lane: hands, text: 盛り付け・配膳（子どもの分は冷ましてから）}
 - {minute: 38, lane: hands, text: 食卓へ}
 steps:
-- {dish: 豚肩ロースとれんこんの甘酢炒め, n: 1, title: れんこんを切る, kind: prep, tag: cut, minutes: 4, heat: null, text: れんこん150gを皮むきして3mm厚の半月切りにし、酢水（水200ml＋酢小さじ1）にさらす。,
+- {dish: 豚肩ロースとれんこんの甘酢炒め, n: 1, title: れんこんを切る, kind: prep, tag: cut, minutes: 4, heat: null, text: れんこん 3/4 節（150g）を皮むきして3mm厚の半月切りにし、酢水（水200ml＋酢小さじ1）にさらす。,
   cue: 切り口が白く、水に放すと少し濁る。, caution: null, timer: null, kid: null}
 - {dish: 豚肩ロースとれんこんの甘酢炒め, n: 2, title: 豚肉に下味, kind: prep, tag: marinate, minutes: 3, heat: null, text: 豚肩ロース240gを4cm幅に切り、酒大さじ1と片栗粉小さじ1をもみ込む。小さいボウルで酢大さじ1.5・砂糖大さじ1・醤油小さじ1.5を混ぜる。,
   cue: 肉の表面に粉が行き渡り、ベタつきが無い。, caution: null, timer: null, kid: null}
@@ -62,7 +62,7 @@ steps:
   tag: microwave
   minutes: 4
   heat: {equipment: microwave, level: 900W 1分20秒}
-  text: 豆腐150gを耐熱ボウル（中）に入れ、ラップなしで900W 1分20秒加熱し、ザルにあけて水気を切る。
+  text: 豆腐 1/2 丁（150g）を耐熱ボウル（中）に入れ、ラップなしで900W 1分20秒加熱し、ザルにあけて水気を切る。
   cue: 豆腐から水が出て、ザルの下に溜まる。
   caution: 豆腐は熱いのでやけどに注意。
   timer: null
@@ -74,7 +74,7 @@ steps:
   tag: microwave
   minutes: 3
   heat: {equipment: microwave, level: 900W 1分30秒}
-  text: ブロッコリー120gを小房に分け、にんじん40gを細切りにしてボウル（大）に入れる。水大さじ1を振りラップして900W 1分30秒。取り出して粗熱を取る。
+  text: ブロッコリー 1/3 株（120g）を小房に分け、にんじん 1/4 本（40g）を細切りにしてボウル（大）に入れる。水大さじ1を振りラップして900W 1分30秒。取り出して粗熱を取る。
   cue: ブロッコリーが鮮やかな緑で、茎に竹串がすっと通る。
   caution: ムラが出るので、固ければ20秒ずつ追加。
   timer: null
@@ -126,7 +126,7 @@ detail: full
 |---|---|---|---|
 | 0 |  |  | れんこんを皮むきして3mm厚の半月切り。酢水（水200ml＋酢小さじ1）にさらす |
 | 4 |  |  | 豚肉を4cm幅に切り、酒と片栗粉をもみ込む。甘酢だれ（酢・砂糖・醤油）を混ぜる |
-| 8 |  | 豆腐150gを耐熱ボウル（中）に入れ、ラップなしで900W 1分20秒 | ブロッコリーを小房に分け、にんじんを細切り |
+| 8 |  | 豆腐 1/2 丁（150g）を耐熱ボウル（中）に入れ、ラップなしで900W 1分20秒 | ブロッコリーを小房に分け、にんじんを細切り |
 | 11 |  | ブロッコリー・にんじん・水大さじ1をボウル（大）に入れラップして900W 1分30秒 | 豆腐をザルにあけて水気を切る |
 | 14 |  |  | 子どもの分（豆腐40g・ブロッコリー30g・にんじん10g）を取り分けて刻み、つぶして和える |
 | 17 |  |  | 大人の白和え：豆腐をつぶし、ごま・砂糖・味噌を混ぜて野菜を和える |
@@ -142,7 +142,7 @@ detail: full
 | 材料 | 量 | 用途 | 在庫名 |
 |---|---|---|---|
 | 豚肩ローススライス | 240 g | 豚肩ロースとれんこんの甘酢炒め | 豚肩ローススライス |
-| れんこん | 150 g | 豚肩ロースとれんこんの甘酢炒め | れんこん 1節 |
+| れんこん | 0.75 節（150g） | 豚肩ロースとれんこんの甘酢炒め | れんこん 1節 |
 | 酒 | 1 大さじ（15g） | 豚肩ロースとれんこんの甘酢炒め | — |
 | 片栗粉 | 1 小さじ（3g） | 豚肩ロースとれんこんの甘酢炒め | — |
 | サラダ油 | 0.5 大さじ（6g） | 豚肩ロースとれんこんの甘酢炒め | — |
@@ -150,9 +150,9 @@ detail: full
 | 砂糖 | 1 大さじ（9g） | 豚肩ロースとれんこんの甘酢炒め | — |
 | 醤油 | 1.5 小さじ（9g） | 豚肩ロースとれんこんの甘酢炒め | — |
 | ごま油 | 1 小さじ（4g） | 豚肩ロースとれんこんの甘酢炒め | — |
-| 豆腐 | 150 g | ブロッコリーとにんじんの白和え | 豆腐 2丁 |
-| ブロッコリー | 120 g | ブロッコリーとにんじんの白和え | ブロッコリー 1株 |
-| にんじん | 40 g | ブロッコリーとにんじんの白和え | にんじん |
+| 豆腐 | 0.5 丁（150g） | ブロッコリーとにんじんの白和え | 豆腐 2丁 |
+| ブロッコリー | 0.333 株（120g） | ブロッコリーとにんじんの白和え | ブロッコリー 1株 |
+| にんじん | 0.25 本（40g） | ブロッコリーとにんじんの白和え | にんじん |
 | 白ごま | 1 大さじ（9g） | ブロッコリーとにんじんの白和え | — |
 | 砂糖 | 1 小さじ（3g） | ブロッコリーとにんじんの白和え | — |
 | 味噌 | 1 小さじ（6g） | ブロッコリーとにんじんの白和え | — |
@@ -162,7 +162,7 @@ detail: full
 ## 手順
 
 ### 豚肩ロースとれんこんの甘酢炒め
-1. **れんこんを切る（4 分 / prep）** れんこん150gを皮むきして3mm厚の半月切りにし、酢水（水200ml＋酢小さじ1）にさらす。
+1. **れんこんを切る（4 分 / prep）** れんこん 3/4 節（150g）を皮むきして3mm厚の半月切りにし、酢水（水200ml＋酢小さじ1）にさらす。
    - 目安: 切り口が白く、水に放すと少し濁る。
 2. **豚肉に下味（3 分 / prep）** 豚肩ロース240gを4cm幅に切り、酒大さじ1と片栗粉小さじ1をもみ込む。小さいボウルで酢大さじ1.5・砂糖大さじ1・醤油小さじ1.5を混ぜる。
    - 目安: 肉の表面に粉が行き渡り、ベタつきが無い。
@@ -179,10 +179,10 @@ detail: full
    - 目安: 皿が熱すぎず、子どもの皿は触ってぬるい。
 
 ### ブロッコリーとにんじんの白和え
-1. **豆腐をレンジで水切り（4 分 / heat）** レンジ・900W 1分20秒 豆腐150gを耐熱ボウル（中）に入れ、ラップなしで900W 1分20秒加熱し、ザルにあけて水気を切る。
+1. **豆腐をレンジで水切り（4 分 / heat）** レンジ・900W 1分20秒 豆腐 1/2 丁（150g）を耐熱ボウル（中）に入れ、ラップなしで900W 1分20秒加熱し、ザルにあけて水気を切る。
    - 目安: 豆腐から水が出て、ザルの下に溜まる。
    - ⚠ 豆腐は熱いのでやけどに注意。
-2. **野菜をレンジで加熱（3 分 / heat）** レンジ・900W 1分30秒 ブロッコリー120gを小房に分け、にんじん40gを細切りにしてボウル（大）に入れる。水大さじ1を振りラップして900W 1分30秒。取り出して粗熱を取る。
+2. **野菜をレンジで加熱（3 分 / heat）** レンジ・900W 1分30秒 ブロッコリー 1/3 株（120g）を小房に分け、にんじん 1/4 本（40g）を細切りにしてボウル（大）に入れる。水大さじ1を振りラップして900W 1分30秒。取り出して粗熱を取る。
    - 目安: ブロッコリーが鮮やかな緑で、茎に竹串がすっと通る。
    - ⚠ ムラが出るので、固ければ20秒ずつ追加。
 3. **子どもの分を取り分け（3 分 / prep）** 味付け前に豆腐40g・ブロッコリー30g・にんじん10gを子ども用の皿に取り分ける。野菜を5mmに刻み、豆腐でつぶして和える。

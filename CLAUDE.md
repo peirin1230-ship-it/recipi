@@ -27,6 +27,7 @@ Actions が動いていないとき（Phase 0、または障害時）は、あ�
 - テスト: `python3 -m pytest -q`
 - Generator の動作確認（API を呼ばない）: `python3 scripts/agent.py recipe --request <id> --mock`
 - 夜間ジョブの動作確認: `python3 scripts/learn.py --no-llm --dry-run`
+- 古いレシピの g を本・個に直す: `python3 scripts/convert_units.py`（`--dry-run` で確認）
 
 ## 守ること
 - 名前・生年月日・住所を書かない。家族は me / partner / kid

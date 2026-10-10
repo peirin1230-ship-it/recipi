@@ -44,6 +44,26 @@ COUNT_UNITS = {"本", "個", "枚", "束", "丁", "株", "袋", "切れ", "パ�
 _TITLE_STRIP = str.maketrans("", "", " \u3000・、。，,.（）()「」『』【】!！?？")
 
 
+FRACTION_STEPS = (0.125, 0.25, 1 / 3, 0.5, 2 / 3, 0.75, 1.0)
+
+
+def nearest_count(x: float) -> float:
+    """g から直した個数を、家で量れる刻みに丸める: 1 未満は 1/8・1/4・1/3・1/2・2/3・3/4、1 以上は 1/2 刻み。"""
+    if x <= 0:
+        return 0.0
+    if x < 1:
+        return round(min(FRACTION_STEPS, key=lambda f: abs(f - x)), 3)
+    return round(round(x * 2) / 2, 3)
+
+
+def fmt_fraction(x: float) -> str:
+    q = nearest_count(x)
+    whole, frac = int(q), round(q - int(q), 3)
+    names = {0.125: "1/8", 0.25: "1/4", 0.333: "1/3", 0.5: "1/2", 0.667: "2/3", 0.75: "3/4"}
+    f = names.get(frac, "")
+    return (f"{whole}と{f}" if whole and f else f or str(whole))
+
+
 def norm_title(t: str) -> str:
     """料理名の比較用: 全角半角をそろえ、小文字にし、空白と区切りの記号を外す。"""
     return unicodedata.normalize("NFKC", str(t or "")).lower().translate(_TITLE_STRIP)
@@ -229,7 +249,9 @@ def validate_recipe(recipe: dict, ctx: dict | None = None) -> list[str]:
             m = ing_master.get(ing_master.normalize(i.get("name", "")) if hasattr(ing_master, "normalize") else i.get("name", ""))
             mu = (m or {}).get("unit")
             if mu in COUNT_UNITS:
-                errors.append(f"「{i.get('name')}」は {mu} で数える物。g ではなく {mu}（1/2 {mu} なら qty 0.5）で書き、g は grams に併記する")
+                per = (m or {}).get("per_unit_g")
+                hint = f"（1 {mu} ≈ {per}g なので {i.get('qty')}g は {fmt_fraction(float(i.get('qty')) / per)} {mu} くらい）" if per and isinstance(i.get("qty"), (int, float)) else f"（1/2 {mu} なら qty 0.5）"
+                errors.append(f"「{i.get('name')}」は {mu} で数える物。g ではなく {mu} で書き{hint}、g は grams に併記する")
 
     # ---- 工程の材料（steps[].ingredients）: 材料表に無い名前は不合格。量のある材料はどこかの工程に出す ----
     if any("ingredients" in st for st in r["steps"]):

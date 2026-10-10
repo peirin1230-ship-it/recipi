@@ -141,3 +141,20 @@ def test_countable_items_must_not_use_grams():
     k["unit"], k["qty"], k["grams"] = "g", 200, 200
     errs = validate.validate_recipe(bad, ctx(ingredients=common.Ingredients()))
     assert any("束" in e and "g ではなく" in e for e in errs)
+
+
+def test_nearest_count_and_fraction():
+    assert validate.nearest_count(0.4) == 0.333 and validate.nearest_count(0.45) == 0.5 and validate.nearest_count(0.27) == 0.25 and validate.nearest_count(0.125) == 0.125
+    assert validate.nearest_count(0.34) == 0.333 and validate.nearest_count(1.3) == 1.5 and validate.nearest_count(2.1) == 2.0
+    assert validate.fmt_fraction(0.5) == "1/2" and validate.fmt_fraction(1.5) == "1と1/2" and validate.fmt_fraction(2.0) == "2" and validate.fmt_fraction(0.125) == "1/8"
+
+
+def test_convert_units_turns_grams_into_counts():
+    import convert_units
+    r = load_fixture()
+    k = next(i for i in r["ingredients"] if i["name"] == "小松菜")
+    k["unit"], k["qty"], k["grams"] = "g", 100, 100
+    r["steps"][0]["text"] = "小松菜100gを切る。" + r["steps"][0]["text"]
+    changes = convert_units.convert_ingredients(r, common.Ingredients())
+    assert [c[0] for c in changes] == ["小松菜"] and k["unit"] == "束" and k["qty"] == 0.5 and k["grams"] == 100
+    assert convert_units.rewrite_texts(r, changes) == 1 and r["steps"][0]["text"].startswith("小松菜 1/2 束（100g）を切る。")
