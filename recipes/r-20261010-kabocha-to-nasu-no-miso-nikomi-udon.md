@@ -1,4 +1,5 @@
 ---
+listed: "2026-10-10T17:53:43+09:00"
 id: r-20261010-kabocha-to-nasu-no-miso-nikomi-udon
 title: かぼちゃとなすの味噌煮込みうどん
 version: 1
