@@ -515,13 +515,13 @@ function openRecord(recipe, opts = {}) {
   rec = { recipe, request: opts.request || null, actual: opts.actual || planned || 20, planned, fidelity: null, deviation: '', finish: null, me: null, partner: null, partnerLater: false, kid: null, learned: '', photo: null, step_minutes: opts.step_minutes || null, fromCook: !!opts.fromCook, startedAt: Date.now(), pantry: pantryRowsFor(recipe) };
   renderRecord(); decorateCards();
 }
-// 材料のうち在庫（items）にある物。単位が合えば引き算、合わなければ「使い切った？」
+// 材料のうち在庫（items）にある物。減らし方（mode）: 'recipe' = レシピの分を引く（単位が合うとき）、0.25〜1 = 在庫全体の何割を使ったか、0 = 使わなかった
 function pantryRowsFor(r) {
   const items = state.pantry.data.items; const rows = []; const seen = new Set();
   (r.ingredients || []).forEach(ing => {
     if (!ing.pantry) return; const item = items.find(it => sameName(it.name, ing.pantry)); if (!item || seen.has(item.id)) return; seen.add(item.id);
     const direct = isNum(ing.qty) && isNum(item.qty) && (item.unit || '') === (ing.unit || '');
-    rows.push({ ing, item, checked: true, direct, useUp: false });
+    rows.push({ ing, item, direct, mode: direct ? 'recipe' : isNum(item.qty) ? 0.5 : 0 });
   });
   return rows;
 }
@@ -544,7 +544,7 @@ function renderRecord() {
   <div class="rec-row"><div class="lb">👤 パートナー</div><div class="v">${stars('rec-star', rec.partner, 'data-f="partner"')}<button type="button" class="tiny-btn${rec.partnerLater ? ' is-on' : ''}" data-act="rec-partner-later">あとで</button></div></div>
   <div class="rec-row"><div class="lb">🧒 子ども</div><div class="v">${['all', 'half', 'little', 'none', 'absent'].map(k => `<button type="button" class="tiny-btn${rec.kid === k ? ' is-on' : ''}" data-act="rec-kid" data-v="${k}">${KID_JA[k]}</button>`).join('')}</div></div>
   <div class="rec-row full"><div class="lb">${ic('bulb')}気づき（1 行、任意）</div><input type="text" id="rec-learned" maxlength="140" placeholder="皮目 3 分は長い。2 分半で十分" value="${esc(rec.learned)}"></div>
-  ${rec.pantry.length ? `<div class="rec-row full"><div class="lb">${ic('fridge')}使った食材を在庫から減らす</div><ul class="pc-list">${rec.pantry.map((p, i) => `<li><input type="checkbox" data-act="rec-pc" data-i="${i}"${p.checked ? ' checked' : ''} id="pc${i}"><label for="pc${i}" class="nm">${esc(p.item.name)}${isNum(p.item.qty) ? ` <span class="sub">${p.item.qty}${esc(p.item.unit || '')} → ${p.direct ? Math.max(0, round1(p.item.qty - p.ing.qty)) + esc(p.item.unit || '') : '?'}</span>` : ''}</label>${p.direct ? '' : `<button type="button" class="tiny-btn${p.useUp ? ' is-on' : ''}" data-act="rec-pc-useup" data-i="${i}">使い切った</button>`}</li>`).join('')}</ul></div>` : ''}
+  ${rec.pantry.length ? `<div class="rec-row full"><div class="lb">${ic('fridge')}使った食材を在庫から減らす</div><p class="sub">使った分を全体の何割か選ぶ。在庫がその分減る</p><ul class="pc-list">${rec.pantry.map((p, i) => pcRowHTML(p, i)).join('')}</ul></div>` : ''}
   <div class="actions"><button type="button" class="ghost" data-act="rec-cancel">やめる</button><button type="button" class="primary big" data-act="rec-save">${ic('check')}記録する</button></div>
   ${pendingPhotoHTML()}`;
 }
@@ -586,11 +586,26 @@ async function appendMemo(r, line) {
   const listed = !state.recipesBase.some(x => x.id === r.id);
   await stampRecipe(r, { status: 'tried', listed, memo: line, message: listed ? `調理済みに追加: ${r.title}` : gh.msg(`memo ${r.id}`) });
 }
+// 減らしたあとの数（null = 外す）。mode 0 は変えない
+function pantryAfter(p) {
+  const it = p.item; if (p.mode === 0) return isNum(it.qty) ? it.qty : null;
+  if (p.mode === 'recipe') return isNum(it.qty) ? Math.max(0, round1(it.qty - p.ing.qty)) : null;
+  if (p.mode >= 1) return 0;
+  return isNum(it.qty) ? round1(it.qty * (1 - p.mode)) : null;
+}
+function pcRowHTML(p, i) {
+  const it = p.item; const u = esc(it.unit || ''); const after = pantryAfter(p);
+  const opts = [[0, '使わなかった'], ...(p.direct ? [['recipe', `レシピの分（${qtyText(p.ing)}）`]] : []), ...(isNum(it.qty) ? [[0.25, '25%'], [0.5, '50%'], [0.75, '75%']] : []), [1, isNum(it.qty) ? '全部' : '使い切った']];
+  const now = isNum(it.qty) ? `${it.qty}${u}` : 'ある';
+  const next = p.mode === 0 ? '' : ` → ${after === null || after <= 0 ? '外す' : `${after}${u}`}`;
+  return `<li><div class="nm">${esc(it.name)} <span class="sub">${now}${next}</span></div><div class="pc-seg">${opts.map(([v, ja]) => `<button type="button" class="tiny-btn${String(p.mode) === String(v) ? ' is-on' : ''}" data-act="rec-pc-mode" data-i="${i}" data-v="${v}">${ja}</button>`).join('')}</div></li>`;
+}
 async function consumePantry(rows) {
   if (!rows.length) return;
   await savePantry(d => { rows.forEach(p => { const it = d.items.find(i => i.id === p.item.id); if (!it) return;
-    if (p.direct) { it.qty = round1(it.qty - p.ing.qty); if (it.qty <= 0) d.items = d.items.filter(i => i !== it); }
-    else if (p.useUp) d.items = d.items.filter(i => i !== it); }); }, '調理で使った分を減らす');
+    const after = pantryAfter(p); if (p.mode === 0) return;
+    if (after === null || after <= 0) { if (p.mode === 'recipe' || p.mode >= 1 || (isNum(it.qty) && after !== null && after <= 0)) d.items = d.items.filter(i => i !== it); return; }
+    it.qty = after; }); }, '調理で使った分を減らす');
 }
 // kaji-quest の「夜ご飯を作る」の完了としても書く（config.kaji_quest.write_cook_log）
 async function kqCookLog(e) {
@@ -605,7 +620,7 @@ async function saveRecord() {
   const ratings = { me: rec.me, partner: rec.partnerLater ? null : rec.partner, kid: rec.kid };
   const entry = { id: uid(12), date, ts: p.iso, recipe_id: r.id, version: +r.version || 1, request_id: rec.request ? rec.request.id : (r.request || null), type: r.type || (rec.request && rec.request.type) || 'dinner',
     planned_minutes: rec.planned, actual_minutes: rec.actual, fidelity: rec.fidelity, deviation: (rec.fidelity === 'minor' || rec.fidelity === 'major') && rec.deviation ? rec.deviation : null, finish: rec.finish, ratings, photo: null, learned: rec.learned || null,
-    pantry_used: rec.pantry.filter(x => x.checked).map(x => x.item.id), r_score: rScore(rec.planned, rec.actual, rec.fidelity, rec.finish), f_score: fScore(ratings) };
+    pantry_used: rec.pantry.filter(x => x.mode !== 0).map(x => x.item.id), r_score: rScore(rec.planned, rec.actual, rec.fidelity, rec.finish), f_score: fScore(ratings) };
   if (rec.step_minutes) entry.step_minutes = rec.step_minutes;
   if ((cfg().privacy || {}).log_time === false) delete entry.ts;
   let photoFailed = false; const side = [];
@@ -617,7 +632,7 @@ async function saveRecord() {
     }
     await appendLog(entry);
     try { await appendMemo(r, memoLine(entry)); } catch (e) { side.push('レシピのメモ: ' + e.message); }
-    try { await consumePantry(rec.pantry.filter(x => x.checked)); } catch (e) { side.push('在庫: ' + e.message); }
+    try { await consumePantry(rec.pantry.filter(x => x.mode !== 0)); } catch (e) { side.push('在庫: ' + e.message); }
     if (kq().write_cook_log) { try { await kqCookLog(entry); } catch (e) { side.push('kaji-quest: ' + e.message); } }
   });
   if (!ok) return;
@@ -1006,7 +1021,7 @@ document.addEventListener('click', ev => {
     case 'rec-star': { const f = b.dataset.f, v = +b.dataset.v; rec[f] = rec[f] === v ? null : v; $$('.star', b.parentElement).forEach(s => s.classList.toggle('is-on', +s.dataset.v <= (rec[f] || 0))); if (f === 'partner' && rec[f]) { rec.partnerLater = false; const l = $('[data-act="rec-partner-later"]'); if (l) l.classList.remove('is-on'); } break; }
     case 'rec-partner-later': rec.partnerLater = !rec.partnerLater; b.classList.toggle('is-on', rec.partnerLater); if (rec.partnerLater) { rec.partner = null; $$('.star[data-f="partner"]').forEach(s => s.classList.remove('is-on')); } break;
     case 'rec-kid': rec.kid = rec.kid === b.dataset.v ? null : b.dataset.v; sib(b, c => c.dataset.v === rec.kid); break;
-    case 'rec-pc-useup': { const p = rec.pantry[+b.dataset.i]; if (p) { p.useUp = !p.useUp; b.classList.toggle('is-on', p.useUp); } break; }
+    case 'rec-pc-mode': { const i = +b.dataset.i; const p = rec && rec.pantry[i]; if (p) { const v = b.dataset.v; p.mode = v === 'recipe' ? 'recipe' : +v; b.closest('li').outerHTML = pcRowHTML(p, i); } break; }
     case 'rec-photo-clear': if (rec.photo && rec.photo.url) URL.revokeObjectURL(rec.photo.url); rec.photo = null; syncRecordInputs(); renderRecord(); break;
     case 'rec-save': saveRecord(); break;
     case 'photo-retry': retryPhoto(); break;
@@ -1040,7 +1055,6 @@ document.addEventListener('change', ev => {
   else if (t.id === 'p-photo') { pantryPhoto(t.files && t.files[0]); t.value = ''; }
   else if (t.classList.contains('qty-edit')) { const v = parseFloat(t.value); pantrySetQty(t.dataset.id, Number.isFinite(v) ? v : null); }
   else if (t.dataset.act === 'diff-chk' && state.diff) { const r = state.diff.rows[+t.dataset.i]; if (r) r.checked = t.checked; }
-  else if (t.dataset.act === 'rec-pc' && rec) { const p = rec.pantry[+t.dataset.i]; if (p) p.checked = t.checked; }
   else if (t.id === 'detail-default') { lsSetRaw(LS.detail, t.value === 'auto' ? '' : t.value); state.detailView = ''; renderRecipe(); decorateCards(); }
   else if (t.id === 'o-dishes') state.order.dishes = t.value;
 });

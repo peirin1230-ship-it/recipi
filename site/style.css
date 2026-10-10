@@ -372,9 +372,11 @@ details.tip .body { margin: 2px 0 4px; padding: 10px 12px; border-radius: 12px; 
 .photo-btn input { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
 .rec-preview { display: block; width: 100%; max-height: 240px; object-fit: cover; border-radius: 16px; margin-top: 8px; }
 .pc-list { list-style: none; margin: 0; padding: 0; }
-.pc-list li { display: flex; align-items: center; gap: 10px; min-height: 44px; font-size: 14.5px; }
-.pc-list li .nm { flex: 1; min-width: 0; }
-.pc-list li .sub { white-space: nowrap; }
+.pc-list li { display: flex; flex-direction: column; gap: 4px; padding: 8px 0; border-top: 1px solid var(--line); font-size: 14.5px; }
+.pc-list li .nm { font-weight: 700; }
+.pc-list li .sub { white-space: nowrap; font-weight: 500; }
+.pc-seg { display: flex; flex-wrap: wrap; gap: 6px; }
+.pc-seg .tiny-btn { min-height: 36px; }
 
 /* ---- 在庫 ---- */
 .add-row { display: flex; gap: 8px; }

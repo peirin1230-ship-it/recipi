@@ -144,6 +144,10 @@ async function setup(browser, viewport) {
     await page.click('.star[data-f="finish"][data-v="4"]'); await page.click('.star[data-f="me"][data-v="4"]'); await page.click('.star[data-f="partner"][data-v="5"]'); await page.click('[data-act="rec-kid"][data-v="all"]');
     await page.click('[data-act="rec-time"][data-d="5"]'); await page.click('[data-act="rec-time"][data-d="-1"]');
     await page.fill('#rec-learned', '皮目は 2 分半');
+    // 在庫の減らし方: 鶏もも肉はレシピの分（既定）、小松菜は全体の 50%
+    assert(await page.$eval('#record .pc-list li:nth-child(1) .tiny-btn.is-on', b => b.textContent.includes('レシピの分')), 'matching unit defaults to レシピの分');
+    await page.click('#record [data-act="rec-pc-mode"][data-i="1"][data-v="0.5"]');
+    assert(await page.$eval('#record .pc-list li:nth-child(2)', e => e.textContent.includes('1束 → 0.5束')), 'choosing 50% previews the remaining stock');
     const before = puts.length;
     await page.click('[data-act="rec-save"]');
     await page.waitForFunction(() => document.querySelector('#toast') && document.querySelector('#toast').textContent.includes('記録'));
@@ -158,7 +162,7 @@ async function setup(browser, viewport) {
     assert(!memoPut, 'recipe memo skipped when recipes/<id>.md is 404 (no write to a missing file)');
     const pantryPut = puts.slice(before).find(p => p.url.includes('/contents/pantry.json'));
     const pantryBody = pantryPut ? JSON.parse(Buffer.from(pantryPut.body.content, 'base64').toString('utf8')) : null;
-    assert(pantryBody && !pantryBody.items.some(i => i.name === '鶏もも肉') && !pantryBody.items.some(i => i.name === '小松菜') && pantryBody.items.length === 13, `pantry decremented: 鶏もも肉 300g-300g removed, 小松菜 1束-1束 removed (items=${pantryBody && pantryBody.items.length})`);
+    assert(pantryBody && !pantryBody.items.some(i => i.name === '鶏もも肉') && pantryBody.items.some(i => i.name === '小松菜' && i.qty === 0.5) && pantryBody.items.length === 14, `pantry decremented: 鶏もも肉 300g-300g removed, 小松菜 50% → 0.5束 (items=${pantryBody && pantryBody.items.length})`);
     assert(pantryBody && pantryBody.updated && Array.isArray(pantryBody.discarded), 'pantry.json keeps shape (updated, discarded)');
     assert(puts.slice(before).every(p => p.body.message.startsWith('[skip ci]')), 'all record commits are [skip ci]');
     assert(await page.$eval('#list .lrow', e => e.textContent.includes('作った')) && await page.evaluate(() => (JSON.parse(localStorage.getItem('recipi.list') || '{}').cooked || []).includes('r-20261008-torimomo-teriyaki')), 'recorded recipe shows as 作った in the list on this device (overlay cooked)');
