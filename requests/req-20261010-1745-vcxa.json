@@ -1,0 +1,19 @@
+{
+ "id": "req-20261010-1745-vcxa",
+ "ts": "2026-10-10T17:45:00+09:00",
+ "type": "dinner",
+ "time_budget": 60,
+ "servings": {
+  "adults": 2,
+  "kids": 1
+ },
+ "dishes": "main+side",
+ "mood": [],
+ "use_up": [],
+ "exclude": [],
+ "note": "",
+ "mode": "auto",
+ "status": "pending",
+ "error": null,
+ "result": null
+}
