@@ -39,6 +39,8 @@ async function setup(browser, viewport) {
   {
     const { ctx, page, errors, puts } = await setup(browser, { width: 1280, height: 900 });
     assert(errors.length === 0, `no console errors (desktop)${errors.length ? ': ' + errors.join(' | ') : ''}`);
+    assert(await page.$eval('#recipe', e => e.textContent.includes('まだレシピがない')), 'fresh load leaves the recipe card empty (no auto-pick of the latest recipe)');
+    await page.click('#list .lrow [data-act="open-recipe"]'); await page.waitForFunction(() => document.querySelector('#recipe .rc-title'));
     const heads = await page.$$eval('#app .card > h2 .h-t', els => els.map(e => e.textContent.trim()));
     for (const h of ['今夜', 'レシピ', '記録', '在庫', '道具', '図鑑', 'レシピ一覧', '今週']) assert(heads.includes(h), `card heading present: ${h}`);
     assert(await page.$eval('#recipe .rc-title', e => e.textContent.includes('鶏もも肉の照り焼き')), 'sample recipe title rendered');
@@ -118,6 +120,8 @@ async function setup(browser, viewport) {
     await page.reload({ waitUntil: 'networkidle' });
     await page.waitForFunction(() => document.querySelector('#week .stat'));
     assert(errors.length === 0, `no console errors (375px)${errors.length ? ': ' + errors.join(' | ') : ''}`);
+    assert(await page.$eval('#recipe', e => e.textContent.includes('まだレシピがない')), 'reload with nothing open keeps the recipe card empty');
+    await page.click('#list .lrow [data-act="open-recipe"]'); await page.waitForFunction(() => document.querySelector('#recipe .rc-title'));
     const sw = await page.evaluate(() => document.documentElement.scrollWidth);
     assert(sw <= 375, `no horizontal page scroll at 375px (scrollWidth=${sw})`);
     assert(await page.$eval('#recipe table.tl', e => e.closest('.tbl-wrap').scrollWidth >= e.closest('.tbl-wrap').clientWidth), '段取り表 scrolls inside its wrapper');

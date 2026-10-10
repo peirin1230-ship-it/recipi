@@ -1135,7 +1135,7 @@ async function init() {
   renderSky(); clearInterval(skyTick); skyTick = setInterval(renderSky, 5 * 60 * 1000);
   // 前回のレシピ・週の献立・考え中の注文を端末から戻す
   const cur = lsGet(LS.current); if (cur && cur.request) setCurrent((cur.request.result || {}).recipe || null, cur.request); else if (cur && cur.recipe_id && recipeById(cur.recipe_id)) setCurrent(recipeById(cur.recipe_id), null);
-  else { const latest = state.recipes.find(r => r.status !== 'retired'); if (latest) setCurrent(latest, null); }
+  // 何も開いていなければレシピカードは空のまま（一覧から開く。前は最新のレシピを勝手に出していたので、一覧に入れた物が復活して見えた）
   // 端末に残ったレシピがリポジトリから消されていたら捨てる（recipes/<id>.md が 404）
   { const rid = state.current && state.current.recipe && state.current.recipe.id; if (rid && !inList(rid)) { try { if ((await gh.fetchRawText(`recipes/${rid}.md`)) === null) setCurrent(null, null); } catch { /* 読めないときは残す */ } } }
   const w = lsGet(LS.weekly); if (w && w.result) state.weekly = w;
