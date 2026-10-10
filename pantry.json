@@ -1,11 +1,9 @@
 {
- "updated": "2026-10-10T18:29:10+09:00",
+ "updated": "2026-10-10T18:52:09+09:00",
  "items": [
   {
    "id": "p9qc8h",
    "name": "オクラ",
-   "qty": 3,
-   "unit": null,
    "loc": "fridge",
    "added": "2026-10-09",
    "src": "manual"
@@ -13,28 +11,20 @@
   {
    "id": "pxqdj5",
    "name": "卵",
-   "qty": null,
-   "unit": null,
    "loc": "fridge",
    "added": "2026-09-24",
-   "use_by": "2026-10-08",
    "src": "manual"
   },
   {
    "id": "p1qnvb",
    "name": "牛乳",
-   "qty": null,
-   "unit": null,
    "loc": "fridge",
    "added": "2026-09-24",
-   "use_by": "2026-09-30",
    "src": "manual"
   },
   {
    "id": "pw63nn",
-   "name": "無糖ヨーグルト",
-   "qty": null,
-   "unit": null,
+   "name": "ヨーグルト",
    "loc": "fridge",
    "added": "2026-10-09",
    "src": "manual"
@@ -42,93 +32,69 @@
   {
    "id": "pwnihm",
    "name": "かまぼこ",
-   "qty": null,
-   "unit": null,
    "loc": "fridge",
    "added": "2026-10-08",
-   "use_by": "2026-10-15",
    "src": "manual"
   },
   {
    "id": "p5vngo",
    "name": "コーン缶",
-   "qty": null,
-   "unit": null,
    "loc": "pantry",
    "added": "2026-10-09",
-   "use_by": "2027-10-09",
    "src": "manual"
   },
   {
    "id": "p19gqx",
    "name": "ツナ缶",
-   "qty": null,
-   "unit": null,
    "loc": "pantry",
    "added": "2026-10-09",
-   "use_by": "2027-10-09",
    "src": "manual"
   },
   {
    "id": "pnt7dl",
    "name": "塩昆布",
-   "qty": null,
-   "unit": null,
    "loc": "pantry",
    "added": "2026-10-08",
-   "use_by": "2027-04-06",
    "src": "manual"
   },
   {
    "id": "prqqra",
-   "name": "鶏むね肉 300g",
-   "qty": null,
-   "unit": null,
+   "name": "鶏むね肉",
    "loc": "fridge",
    "added": "2026-10-10",
    "src": "kaji-quest"
   },
   {
    "id": "piipps",
-   "name": "豆腐 2丁",
-   "qty": null,
-   "unit": null,
+   "name": "豆腐",
    "loc": "fridge",
    "added": "2026-10-10",
    "src": "kaji-quest"
   },
   {
    "id": "pu7k66",
-   "name": "れんこん 1節",
-   "qty": null,
-   "unit": null,
+   "name": "れんこん",
    "loc": "fridge",
    "added": "2026-10-10",
    "src": "kaji-quest"
   },
   {
    "id": "pvnlbb",
-   "name": "かぼちゃ 1/4個",
-   "qty": null,
-   "unit": null,
+   "name": "かぼちゃ",
    "loc": "fridge",
    "added": "2026-10-10",
    "src": "kaji-quest"
   },
   {
    "id": "peh1bd",
-   "name": "ブロッコリー 1株",
-   "qty": null,
-   "unit": null,
+   "name": "ブロッコリー",
    "loc": "fridge",
    "added": "2026-10-10",
    "src": "kaji-quest"
   },
   {
    "id": "phfn93",
-   "name": "豚肩ローススライス",
-   "qty": null,
-   "unit": null,
+   "name": "豚ロース肉",
    "loc": "fridge",
    "added": "2026-10-10",
    "src": "manual"
@@ -136,17 +102,13 @@
   {
    "id": "pp45wz",
    "name": "なす",
-   "qty": null,
-   "unit": null,
    "loc": "fridge",
    "added": "2026-10-10",
    "src": "manual"
   },
   {
    "id": "pcmurp",
-   "name": "洗いごぼう",
-   "qty": null,
-   "unit": null,
+   "name": "ごぼう",
    "loc": "fridge",
    "added": "2026-10-10",
    "src": "manual"
@@ -154,8 +116,6 @@
   {
    "id": "pl6o61",
    "name": "にんじん",
-   "qty": null,
-   "unit": null,
    "loc": "fridge",
    "added": "2026-10-10",
    "src": "manual"

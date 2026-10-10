@@ -745,9 +745,9 @@ async function importKaji() {
   const shops = lines.filter(l => l.mode === 'shop' && l.id && !done.has(l.id) && Array.isArray(l.items));
   if (!shops.length) { toast('新しい買い物の記録は無い'); return; }
   const rows = [];
-  shops.forEach(l => l.items.forEach(it => { if (typeof it !== 'string' || !it.trim()) return; const m = master(it); const sub = `${jaShort(l.date)} の買い物${m ? '' : ' ・ マスタに無い（食材でなければ外す）'}`;
+  shops.forEach(l => l.items.forEach(it => { if (typeof it !== 'string' || !it.trim()) return; const nm = (parsePantryToken(it) || {}).name || it.trim().normalize('NFKC'); const m = master(nm); const sub = `${jaShort(l.date)} の買い物${m ? '' : ' ・ マスタに無い（食材でなければ外す）'}`;   // 「鶏むね肉 300g」の数は読み飛ばす
     if (m && m.staple) rows.push({ kind: 'staple', name: m.name, state: 'ok', checked: true, sub });
-    else rows.push({ kind: 'item', name: m ? m.name : it.trim().normalize('NFKC'), loc: (m && m.loc) || 'fridge', checked: !!m, src: 'kaji-quest', added: validDate(l.date) ? l.date : t, sub }); }));
+    else rows.push({ kind: 'item', name: m ? m.name : nm, loc: (m && m.loc) || 'fridge', checked: !!m, src: 'kaji-quest', added: validDate(l.date) ? l.date : t, sub }); }));
   openDiff(rows, 'kaji', shops.map(l => l.id));
 }
 function openDiff(rows, kind, shopIds) {

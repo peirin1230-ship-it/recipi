@@ -14,7 +14,7 @@ const PNG = Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAEklEQVR
   page.on('console', m => { if (m.type() === 'error' && !/Failed to load resource: .* 404/.test(m.text())) errors.push(m.text()); });
   page.on('pageerror', e => errors.push('pageerror: ' + e.message));
   await page.route('https://raw.githubusercontent.com/**', route => { const url = route.request().url();
-    if (url.includes('kaji-quest/main/logs/2026/10.jsonl')) return route.fulfill({ status: 200, contentType: 'text/plain', body: JSON.stringify({ date: '2026-10-06', mode: 'shop', status: 'done', items: ['卵', 'キュレル', 'しょうゆ', 'ほうれん草'], id: 'shop0001aaaa' }) + '\n' + JSON.stringify({ date: '2026-10-05', mode: 'full', task_id: 'dishes', id: 'x' }) + '\n' });
+    if (url.includes('kaji-quest/main/logs/2026/10.jsonl')) return route.fulfill({ status: 200, contentType: 'text/plain', body: JSON.stringify({ date: '2026-10-06', mode: 'shop', status: 'done', items: ['卵', 'キュレル', 'しょうゆ', 'ほうれん草', 'れんこん 1節'], id: 'shop0001aaaa' }) + '\n' + JSON.stringify({ date: '2026-10-05', mode: 'full', task_id: 'dishes', id: 'x' }) + '\n' });
     return route.fulfill({ status: 404, body: '' }); });
   await page.route('https://api.github.com/**', route => { const req = route.request(); const url = req.url(); const path = (url.split('/contents/')[1] || '').split('?')[0];
     if (req.method() === 'PUT') { const body = JSON.parse(req.postData()); puts.push({ path, body }); store[path] = body.content; return route.fulfill({ status: 201, contentType: 'application/json', body: JSON.stringify({ content: { sha: 's' + puts.length } }) }); }
@@ -58,10 +58,10 @@ const PNG = Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAEklEQVR
   const b3 = puts.length; await page.click('[data-act="p-import"]');
   await page.waitForFunction(() => document.querySelector('#dlg-diff').open, null, { timeout: 10000 });
   const rows2 = await page.$$eval('#diff-list li', l => l.map(x => ({ t: x.textContent, c: x.querySelector('input').checked })));
-  assert(rows2.length === 4 && rows2[0].t.includes('卵') && rows2[0].c && rows2[1].t.includes('キュレル') && !rows2[1].c && rows2[2].t.includes('醤油') && rows2[3].t.includes('ほうれん草') && rows2[3].c, `kaji rows: known checked, unknown unchecked: ${JSON.stringify(rows2)}`);
+  assert(rows2.length === 5 && rows2[0].t.includes('卵') && rows2[0].c && rows2[1].t.includes('キュレル') && !rows2[1].c && rows2[2].t.includes('醤油') && rows2[3].t.includes('ほうれん草') && rows2[3].c && rows2[4].t.includes('れんこん') && !rows2[4].t.includes('1節'), `kaji rows: known checked, unknown unchecked: ${JSON.stringify(rows2)}`);
   await page.click('[data-act="diff-apply"]'); await page.waitForFunction(() => !document.querySelector('#dlg-diff').open); await page.waitForTimeout(400);
   const kp = puts.slice(b3).find(p => p.path === 'pantry.json'); const kb = kp && JSON.parse(unb64(kp.body.content));
-  assert(kb && kb.imported_shop_ids.includes('shop0001aaaa') && kb.items.some(i => i.name === 'ほうれん草' && i.src === 'kaji-quest' && i.added === '2026-10-06') && !kb.items.some(i => i.name === 'キュレル'), 'kaji import applied: shop id recorded, added=line.date, use_by from master');
+  assert(kb && kb.imported_shop_ids.includes('shop0001aaaa') && kb.items.some(i => i.name === 'ほうれん草' && i.src === 'kaji-quest' && i.added === '2026-10-06') && kb.items.some(i => i.name === 'れんこん') && !kb.items.some(i => /1節/.test(i.name)) && !kb.items.some(i => i.name === 'キュレル'), 'kaji import applied: shop id recorded, added=line.date, use_by from master');
   assert(kb && kb.items.filter(i => i.name === '卵').length === 1, 'kaji item 卵 merged into the existing entry (no duplicate)');
   // 4) 聞いてない評価 → 行を書き換え
   const b4 = puts.length; await page.click('[data-act="later-edit"]'); await page.click('.star[data-act="later-star"][data-v="5"]');
