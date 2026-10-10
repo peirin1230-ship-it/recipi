@@ -159,6 +159,7 @@ async function setup(browser, viewport) {
     assert(pantryBody && !pantryBody.items.some(i => i.name === '鶏もも肉') && !pantryBody.items.some(i => i.name === '小松菜') && pantryBody.items.length === 13, `pantry decremented: 鶏もも肉 300g-300g removed, 小松菜 1束-1束 removed (items=${pantryBody && pantryBody.items.length})`);
     assert(pantryBody && pantryBody.updated && Array.isArray(pantryBody.discarded), 'pantry.json keeps shape (updated, discarded)');
     assert(puts.slice(before).every(p => p.body.message.startsWith('[skip ci]')), 'all record commits are [skip ci]');
+    assert(await page.$eval('#list .lrow', e => e.textContent.includes('作った')) && await page.evaluate(() => (JSON.parse(localStorage.getItem('recipi.list') || '{}').cooked || []).includes('r-20261008-torimomo-teriyaki')), 'recorded recipe shows as 作った in the list on this device (overlay cooked)');
     await page.screenshot({ path: `${SHOTS}/after-record-375.png` });
     // 在庫の追加（文字）と捨てた
     await page.fill('#p-add', 'とりもも 300g、しょうゆ、豆腐 1丁、新しい食材');
@@ -191,11 +192,13 @@ async function setup(browser, viewport) {
     await page.reload({ waitUntil: 'networkidle' }); await page.waitForFunction(() => document.querySelector('#week .stat'));
     assert(await page.$('#recipe [data-act="list-add"]') !== null, 'recipe not in the bundled list offers 一覧に追加');
     const b4 = puts.length; await page.click('#recipe [data-act="list-add"]');
-    await page.waitForFunction(() => document.querySelector('#toast') && document.querySelector('#toast').textContent.includes('一覧に追加'));
+    await page.waitForFunction(() => document.querySelector('#toast') && document.querySelector('#toast').textContent.includes('一覧に入れた'));
     const addRecipePut = puts.slice(b4).find(p => p.url.includes('/contents/recipes/r-20261009-test-new.md'));
     const addText = addRecipePut ? Buffer.from(addRecipePut.body.content, 'base64').toString('utf8') : '';
     assert(addRecipePut && addRecipePut.body.sha === 'r1' && !addRecipePut.body.message.includes('[skip ci]') && /^---\nlisted: "\d{4}-\d{2}-\d{2}T/.test(addText) && addText.includes('title: テスト用の新しい一皿'), `一覧に追加 stamps listed: in front matter without [skip ci]: ${addText.slice(0, 60).replace(/\n/g, '|')}`);
-    assert(await page.$$eval('#list .lrow', r => r.map(x => x.textContent).join('')).then(t => t.includes('テスト用の新しい一皿')) && await page.$('#recipe [data-act="list-del"]') !== null, 'added recipe appears in the list on this device and the card now offers 削除');
+    assert(await page.$$eval('#list .lrow', r => r.map(x => x.textContent).join('')).then(t => t.includes('テスト用の新しい一皿')) && await page.$eval('#recipe', e => e.textContent.includes('まだレシピがない')), 'added recipe appears in the list and leaves the recipe card (open it from the list)');
+    await page.click('#list .lrow [data-act="open-recipe"]');
+    assert(await page.$eval('#recipe', e => e.textContent.includes('テスト用の新しい一皿')) && await page.$('#recipe [data-act="list-del"]') !== null, 'opening from the list shows it in the recipe card with 削除');
     await page.screenshot({ path: `${SHOTS}/list-375.png` });
     // 時間チップの「無制限」→ 考えてもらう: 注文は time_budget 0、自由入力は空のまま
     await page.click('#o-budget .chip[data-v="0"]');

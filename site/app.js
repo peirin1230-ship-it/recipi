@@ -482,7 +482,7 @@ function computeStepMinutes(r, start, done) {
 function finishCook() {
   const r = cook.recipe; const actual = Math.max(1, Math.round((Date.now() - cook.start) / 60000));
   const step_minutes = computeStepMinutes(r, cook.start, cook.done);
-  closeCook(); openRecord(r, { actual, request: cook.request, step_minutes, fromCook: true }); goTo('record');
+  closeCook(); markCookedLocal(r); openRecord(r, { actual, request: cook.request, step_minutes, fromCook: true }); goTo('record');
 }
 
 // ======================================================================
@@ -554,15 +554,17 @@ async function nextPhotoPath(rid, date) {
   catch { logsOf(rid).forEach(e => { const m = String(e.photo || '').split('/').pop().match(re); if (m) n = Math.max(n, +m[1]); }); }
   return `photos/${rid}/${ymd}-${n + 1}.jpg`;
 }
-async function appendMemo(rid, line) {
-  await gh.mutateFile(`recipes/${rid}.md`, text => {
-    if (text === null) return null;   // ファイルが無ければ書かない（data/recipes.json だけにある古い物など）
-    const base = text.replace(/\s+$/, ''); const idx = base.indexOf(MEMO_HEADING);
-    if (idx < 0) return `${base}\n\n${MEMO_HEADING}\n\n- ${line}\n`;
-    const after = base.indexOf('\n## ', idx + MEMO_HEADING.length);
-    if (after < 0) return `${base}\n- ${line}\n`;
-    return `${base.slice(0, after).replace(/\s+$/, '')}\n- ${line}\n${base.slice(after)}`;
-  }, gh.msg(`memo ${rid}`));
+function withMemo(text, line) {
+  const base = text.replace(/\s+$/, ''); const idx = base.indexOf(MEMO_HEADING);
+  if (idx < 0) return `${base}\n\n${MEMO_HEADING}\n\n- ${line}\n`;
+  const after = base.indexOf('\n## ', idx + MEMO_HEADING.length);
+  if (after < 0) return `${base}\n- ${line}\n`;
+  return `${base.slice(0, after).replace(/\s+$/, '')}\n- ${line}\n${base.slice(after)}`;
+}
+// 作ったときのメモを足す。あわせて status を「作った」に。一覧（同梱）に無いレシピなら listed: も刻み、[skip ci] 無しでコミットして一覧を組み直す
+async function appendMemo(r, line) {
+  const listed = !state.recipesBase.some(x => x.id === r.id);
+  await stampRecipe(r, { status: 'tried', listed, memo: line, message: listed ? `調理済みに追加: ${r.title}` : gh.msg(`memo ${r.id}`) });
 }
 async function consumePantry(rows) {
   if (!rows.length) return;
@@ -594,12 +596,13 @@ async function saveRecord() {
       catch (e) { photoFailed = true; lsSet(LS.photo, { path, b64: gh.b64bytes(rec.photo.bytes), recipe_id: r.id }); console.warn(e); }
     }
     await appendLog(entry);
-    try { await appendMemo(r.id, memoLine(entry)); } catch (e) { side.push('レシピのメモ: ' + e.message); }
+    try { await appendMemo(r, memoLine(entry)); } catch (e) { side.push('レシピのメモ: ' + e.message); }
     try { await consumePantry(rec.pantry.filter(x => x.checked)); } catch (e) { side.push('在庫: ' + e.message); }
     if (kq().write_cook_log) { try { await kqCookLog(entry); } catch (e) { side.push('kaji-quest: ' + e.message); } }
   });
   if (!ok) return;
   lsDel(cookKey(r.id)); if (rec.photo && rec.photo.url) URL.revokeObjectURL(rec.photo.url);
+  markCookedLocal(r);   // 一覧に「作った」として載せる
   const secs = Math.round((Date.now() - rec.startedAt) / 1000); rec = null; render();
   if (side.length) toast(`記録はした。残りは失敗: ${side.join(' / ')}`, true);
   else toast(photoFailed ? '記録した。写真は送れなかった → 記録カードの「写真を再送」' : `記録した。図鑑に 1 枚増えた（${secs} 秒）`);
@@ -797,13 +800,15 @@ function renderZukan() {
 // コミットして build-pages を走らせる。組み立てが終わって recipes.json に反映されたら上書きは消える
 // ======================================================================
 const inList = id => state.recipes.some(r => r.id === id);
-function listOv() { const o = lsGet(LS.listOv) || {}; return { add: o.add && typeof o.add === 'object' ? o.add : {}, del: Array.isArray(o.del) ? o.del : [] }; }
-function saveListOv(ov) { if (Object.keys(ov.add).length || ov.del.length) lsSet(LS.listOv, ov); else lsDel(LS.listOv); }
+function listOv() { const o = lsGet(LS.listOv) || {}; return { add: o.add && typeof o.add === 'object' ? o.add : {}, del: Array.isArray(o.del) ? o.del : [], cooked: Array.isArray(o.cooked) ? o.cooked : [] }; }
+function saveListOv(ov) { if (Object.keys(ov.add).length || ov.del.length || ov.cooked.length) lsSet(LS.listOv, ov); else lsDel(LS.listOv); }
 function mergeListOverlay() {
   const base = state.recipesBase; const ov = listOv();
   Object.keys(ov.add).forEach(id => { if (base.some(r => r.id === id) || !ov.add[id] || !ov.add[id].id) delete ov.add[id]; });
-  ov.del = ov.del.filter(id => base.some(r => r.id === id)); saveListOv(ov);
-  state.recipes = [...Object.values(ov.add), ...base.filter(r => !ov.del.includes(r.id))]
+  ov.del = ov.del.filter(id => base.some(r => r.id === id));
+  ov.cooked = ov.cooked.filter(id => base.some(r => r.id === id && r.status === 'draft'));   // 夜の学習が status を変えたら要らない
+  saveListOv(ov);
+  state.recipes = [...Object.values(ov.add), ...base.filter(r => !ov.del.includes(r.id)).map(r => ov.cooked.includes(r.id) ? { ...r, status: 'tried' } : r)]
     .sort((a, b) => String(b.created || '').localeCompare(String(a.created || '')) || String(b.id).localeCompare(String(a.id)));
   masterIdx = null;
 }
@@ -816,15 +821,35 @@ function recipeMarkdown(r) {
   const steps = (r.steps || []).map(s => `${s.n}. **${s.title}**（${s.minutes} 分）${s.text ? ` ${s.text}` : ''}${s.cue ? ` 目安: ${s.cue}` : ''}`).join('\n');
   return `---\n${JSON.stringify(meta, null, 1)}\n---\n\n# ${r.title}\n\n${r.image_text ? `（絵）${r.image_text}\n\n` : ''}## 材料\n\n${ing}\n\n## 手順\n\n${steps}\n\n（ページの「一覧に追加」で作り直した版。段取り表などは front matter にある）\n`;
 }
+// 一覧に入れる: 端末の上書きに足し（status を渡せばその状態で）、リポジトリの recipes/<id>.md に listed: を刻む（[skip ci] 無し → 組み立てが走る）
+async function listAddRecipe(r, { status, message, okMsg } = {}) {
+  if (!r || !r.id) return false;
+  const rr = status ? { ...r, status } : r;
+  const ov = listOv(); ov.add[r.id] = rr; ov.del = ov.del.filter(id => id !== r.id); saveListOv(ov); mergeListOverlay(); render();
+  if (!gh.hasToken()) { toast('この端末の一覧に入れた。⚙ でトークンを保存すると、リポジトリの一覧にも載る'); return true; }
+  return run(() => stampRecipe(rr, { status, listed: true, message: message || `一覧に追加: ${r.title}` }), okMsg === undefined ? '一覧に追加した。1〜2 分でほかの端末にも載る' : okMsg);
+}
+// recipes/<id>.md の front matter を書き換える: listed:（一覧に載せた印）と status。ファイルが無ければ端末のレシピから作り直す
+async function stampRecipe(r, { status, listed, message, memo } = {}) {
+  const stamp = `listed: "${isoNow()}"`;
+  const fix = fm => { let lines = fm.split('\n'); if (listed) lines = [stamp, ...lines.filter(l => !/^listed:/.test(l))]; if (status) lines = lines.map(l => /^status:/.test(l) ? `status: ${status}` : l); return lines.join('\n'); };
+  return gh.mutateFile(`recipes/${r.id}.md`, text => { const t = text === null ? (listed ? recipeMarkdown(r) : null) : withFrontMatter(text, fix); return t === null ? null : memo ? withMemo(t, memo) : t; }, message);
+}
 async function listAdd() {
   const c = state.current; const r = c && c.recipe; if (!r || !r.id) { toast('追加するレシピが無い', true); return; }
   if (inList(r.id)) { toast('もう一覧にある'); return; }
-  const ov = listOv(); ov.add[r.id] = r; ov.del = ov.del.filter(id => id !== r.id); saveListOv(ov); mergeListOverlay(); render();
-  if (!gh.hasToken()) { toast('この端末の一覧に入れた。⚙ でトークンを保存すると、リポジトリの一覧にも載る'); return; }
-  const path = `recipes/${r.id}.md`; const stamp = `listed: "${isoNow()}"`;
-  await run(() => gh.mutateFile(path, text => text === null ? recipeMarkdown(r)
-    : withFrontMatter(text, fm => `${stamp}\n${fm.split('\n').filter(l => !/^listed:/.test(l)).join('\n')}`), `一覧に追加: ${r.title}`),
-  '一覧に追加した。1〜2 分でほかの端末にも載る');
+  const ok = await listAddRecipe(r, { okMsg: '' });
+  if (ok === false) return;
+  // レシピカードからは消す。見るときは一覧から開く
+  setCurrent(null, null); render(); goTo('list'); toast(gh.hasToken() ? '一覧に入れた。見るときは一覧から開く（1〜2 分でほかの端末にも載る）' : '一覧に入れた。見るときは一覧から開く');
+}
+// 作った（調理モードの「できた！」か記録）: 一覧に無ければ「作った」として入れ、あれば「作った」に
+function markCookedLocal(r) {
+  if (!r || !r.id) return;
+  const ov = listOv();
+  if (!state.recipesBase.some(x => x.id === r.id)) { ov.add[r.id] = { ...(ov.add[r.id] || r), status: 'tried' }; ov.del = ov.del.filter(id => id !== r.id); }
+  else if (!ov.cooked.includes(r.id)) ov.cooked.push(r.id);
+  saveListOv(ov); mergeListOverlay();
 }
 async function listDel(id) {
   const r = recipeById(id); if (!r) { toast('そのレシピが見つからない', true); return; }
