@@ -1,0 +1,21 @@
+{
+ "id": "req-20261010-1749-75v5",
+ "ts": "2026-10-10T17:49:13+09:00",
+ "type": "recipe_detail",
+ "time_budget": 60,
+ "servings": {
+  "adults": 2,
+  "kids": 1
+ },
+ "dishes": "main+side",
+ "mood": [],
+ "use_up": [],
+ "exclude": [],
+ "note": "",
+ "mode": "auto",
+ "parent": "req-20261010-1745-vcxa",
+ "alternative": 1,
+ "status": "pending",
+ "error": null,
+ "result": null
+}
