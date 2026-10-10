@@ -1,4 +1,5 @@
 ---
+listed: "2026-10-10T09:06:44+09:00"
 id: r-20261010-corn-milk-potage-okra-tuna-yogurt
 title: コーンのミルクポタージュとオクラとツナのヨーグルト和え（翌日分の仕込み）
 version: 1
