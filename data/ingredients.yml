@@ -3,7 +3,7 @@
 #   aliases: 入力や写真でよくある表記。正規化のときに name に寄せる
 #   cat: 肉 / 魚 / 卵乳 / 豆 / 野菜 / きのこ / 果物 / 主食 / 麺粉 / 加工品 / 缶詰 / 冷凍 / 調味料 / 乾物
 #   loc: 既定の保存場所 fridge / freezer / pantry
-#   days: 日持ちの目安（日）。use_by の自動計算に使う。目安であって期限ではない
+#   days: 日持ちの目安（日）。今は使っていない（期限は管理しない）
 #   unit: 既定の単位
 #   staple: true は pantry.json の staples（ok/low/none）で管理する物
 #   season: 旬の月（任意）

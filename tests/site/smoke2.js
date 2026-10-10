@@ -53,7 +53,7 @@ const PNG = Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAEklEQVR
   const before = puts.length; await page.click('[data-act="diff-apply"]');
   await page.waitForFunction(() => !document.querySelector('#dlg-diff').open); await page.waitForTimeout(400);
   const pp = puts.slice(before).find(p => p.path === 'pantry.json'); const pb = pp && JSON.parse(unb64(pp.body.content));
-  assert(pb && pb.items.some(i => i.name === '鶏むね肉' && i.qty === 250 && i.src === 'photo' && i.use_by) && !pb.items.some(i => i.name === '謎の物') && pb.staples['ごま油'] === 'low', 'photo diff applied (checked only, src photo, staple state)');
+  assert(pb && pb.items.some(i => i.name === '鶏むね肉' && i.qty === 250 && i.src === 'photo') && !pb.items.some(i => i.name === '謎の物') && pb.staples['ごま油'] === 'low', 'photo diff applied (checked only, src photo, staple state)');
   // 3) kaji-quest の買い物取り込み
   const b3 = puts.length; await page.click('[data-act="p-import"]');
   await page.waitForFunction(() => document.querySelector('#dlg-diff').open, null, { timeout: 10000 });
@@ -61,7 +61,7 @@ const PNG = Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAEklEQVR
   assert(rows2.length === 4 && rows2[0].t.includes('卵') && rows2[0].c && rows2[1].t.includes('キュレル') && !rows2[1].c && rows2[2].t.includes('醤油') && rows2[3].t.includes('ほうれん草') && rows2[3].c, `kaji rows: known checked, unknown unchecked: ${JSON.stringify(rows2)}`);
   await page.click('[data-act="diff-apply"]'); await page.waitForFunction(() => !document.querySelector('#dlg-diff').open); await page.waitForTimeout(400);
   const kp = puts.slice(b3).find(p => p.path === 'pantry.json'); const kb = kp && JSON.parse(unb64(kp.body.content));
-  assert(kb && kb.imported_shop_ids.includes('shop0001aaaa') && kb.items.some(i => i.name === 'ほうれん草' && i.src === 'kaji-quest' && i.added === '2026-10-06' && i.use_by === '2026-10-09') && !kb.items.some(i => i.name === 'キュレル'), 'kaji import applied: shop id recorded, added=line.date, use_by from master');
+  assert(kb && kb.imported_shop_ids.includes('shop0001aaaa') && kb.items.some(i => i.name === 'ほうれん草' && i.src === 'kaji-quest' && i.added === '2026-10-06') && !kb.items.some(i => i.name === 'キュレル'), 'kaji import applied: shop id recorded, added=line.date, use_by from master');
   assert(kb && kb.items.find(i => i.name === '卵').qty === 6, 'qty-less kaji item merged into existing 卵 without changing qty');
   // 4) 聞いてない評価 → 行を書き換え
   const b4 = puts.length; await page.click('[data-act="later-edit"]'); await page.click('.star[data-act="later-star"][data-v="5"]');
@@ -69,11 +69,13 @@ const PNG = Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAEklEQVR
   const lp = puts.slice(b4).find(p => p.path === 'logs/2026/10.jsonl'); const ll = lp && unb64(lp.body.content).trim().split('\n').map(l => JSON.parse(l));
   assert(ll && ll.length === 1 && ll[0].id === 'abcabcabcabc' && ll[0].ratings.partner === 5 && ll[0].f_score === 4.7, `log line rewritten in place with new F: ${ll && JSON.stringify(ll[0].ratings)} F=${ll && ll[0].f_score}`);
   assert(await page.$eval('#week', e => e.textContent.includes('聞いてない評価 0 件')), '聞いてない評価 count updates');
-  // 5) 捨てた
-  const b5 = puts.length; await page.click('#pantry [data-act="p-discard"]'); await page.waitForTimeout(400);
+  // 5) 使い切った（期限は管理しないので「捨てた」は無い）
+  assert(await page.$('#pantry [data-act="p-discard"]') === null && !(await page.$eval('#pantry', e => /期限|捨てた/.test(e.textContent))), 'pantry has no discard button and no expiry text');
+  const nItems = await page.$$eval('#pantry .pitem', p => p.length);
+  const b5 = puts.length; await page.click('#pantry [data-act="p-useup"]'); await page.waitForTimeout(400);
   const dp = puts.slice(b5).find(p => p.path === 'pantry.json'); const db = dp && JSON.parse(unb64(dp.body.content));
-  assert(db && db.discarded.length === 1 && db.discarded[0].name && db.discarded[0].date === new Date().toISOString().slice(0, 10).replace(/./, c => c) || (db && db.discarded.length === 1), `discard appends {name,date} to discarded: ${db && JSON.stringify(db.discarded)}`);
-  assert(await page.$eval('#week', e => /捨てた\s*1 件/.test(e.textContent)), '今週 shows discarded count 1');
+  assert(db && db.items.length === nItems - 1 && Array.isArray(db.discarded) && db.discarded.length === 0, `使い切った removes the item (${nItems} → ${db && db.items.length}) without a discarded entry`);
+  assert(!(await page.$eval('#week', e => /捨てた/.test(e.textContent))), '今週 no longer shows 捨てた');
   // 6) 調理モードのチェック時刻 → step_minutes（start=10 分前、s0 を 6 分前、s1 を 2 分前にチェック済み → prep 4.0 / wait 4.0）
   await page.evaluate(() => { const now = Date.now(); localStorage.setItem('recipi.cook.r-20261009-test', JSON.stringify({ start: now - 600000, done: { s0: now - 360000, s1: now - 120000 }, tl: {}, timers: {} })); });
   await page.click('[data-act="cook-open"]'); await page.waitForFunction(() => !document.querySelector('#cook').hidden);

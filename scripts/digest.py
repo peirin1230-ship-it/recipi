@@ -41,16 +41,14 @@ def build_digest(week: str, *, use_llm: bool, mock: bool) -> tuple[str, dict]:
                        "minutes": e.get("actual_minutes"), "photo": e.get("photo"), "learned": e.get("learned")})
     learned = ctx.learned
     pantry = ctx.pantry_for_prompt()
-    soon = [it for it in pantry["items"] if it.get("use_by") and it["use_by"] <= (dt.date.fromisoformat(end) + dt.timedelta(days=4)).isoformat()]
     low = [k for k, v in (ctx.pantry.get("staples") or {}).items() if v in ("low", "none")]
     unrated = [e for e in logs if (e.get("ratings") or {}).get("partner") is None]
-    discarded = [d for d in ctx.pantry.get("discarded") or [] if start <= (d.get("date") or "") <= end]
 
     proposals, shopping, comment = [], [], ""
     if use_llm:
         version, body = common.read_prompt("digest")
         summary = {"week": week, "quality": q, "previous_week": prev, "cooked": cooked, "standards": ctx.standards(),
-                   "recent_30d": ctx.recent(30), "use_by_soon": soon, "staples_low": low, "today": common.today()}
+                   "recent_30d": ctx.recent(30), "staples_low": low, "today": common.today()}
         blocks = agent.house_blocks(ctx) + [{"type": "text", "text": "# 今週のまとめ\n" + agent.ydump(summary) + "\n\n# 在庫\n" + agent.ydump(pantry)}]
         L = llmmod.LLM(cfg, mock=mock, mock_responses={"digest": {"comment": "来週は魚を 1 回入れてみる。", "proposals": [{"title": "鮭のムニエル", "minutes": 25, "why": "魚が 2 週間出ていない"}, {"title": "豚こまと野菜の味噌炒め", "minutes": 20, "why": "にんじんの使い切り"}, {"title": "カレーライス", "minutes": 45, "why": "日曜にまとめて作って月曜も"}], "shopping": [{"name": "鮭", "qty": "2 切れ", "reason": "ムニエル"}]}})
         try:
@@ -93,14 +91,12 @@ def build_digest(week: str, *, use_llm: bool, mock: bool) -> tuple[str, dict]:
     lines.append(f"- 定番: {len(learned.get('standards') or [])} 本（{', '.join(ctx.recipes[r]['title'] for r in learned.get('standards') or [] if r in ctx.recipes) or '—'}）")
     lines.append(f"- 改訂版: {', '.join(learned.get('revised') or []) or '—'}")
     lines.append(f"- 封印: {len(learned.get('retired') or [])} 本")
-    lines.append(f"- 聞いてない評価: {len(unrated)} 件 ・ 捨てた: {len(discarded)} 件")
+    lines.append(f"- 聞いてない評価: {len(unrated)} 件")
     lines += ["", "## 来週の提案", ""]
     lines += [f"- {p['title']}（{p.get('minutes')} 分）— {p.get('why', '')}" for p in proposals] or ["- （提案なし。Generator を使わずに作った）"]
     lines += ["", "## 買い物候補", ""]
     lines += [f"- {s['name']} {s.get('qty') or ''}（{s.get('reason', '')}）" for s in shopping]
     lines += [f"- {k}（残り少ない）" for k in low]
-    if soon:
-        lines += ["", "## 期限が近い在庫", ""] + [f"- {it['name']}（{it.get('use_by')}）" for it in soon]
     lines.append("")
     return "\n".join(lines), meta
 

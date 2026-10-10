@@ -60,7 +60,7 @@ async function setup(browser, viewport) {
     assert(chips.join(',') === '15,20,30,45,60,0', `budget chips (0 = 無制限): ${chips.join(',')}`);
     assert(await page.$eval('#o-budget', e => !!e.querySelector('#o-free')), 'free budget input present');
     assert(await page.$eval('#o-free', e => e.value === '25'), 'default budget 25 in free input');
-    assert(await page.$$eval('#order .chip[data-act="o-useup"]', c => c.length) >= 2, 'use-up chips auto-filled from pantry (use_by within 3 days)');
+    assert(await page.$$eval('#order .chip[data-act="o-useup"]', c => c.length >= 2 && c.every(x => !x.classList.contains('is-on'))), 'use-up chips list pantry items, none preselected (no expiry)');
     assert(await page.$eval('#o-adults', e => e.textContent === '2') && await page.$eval('#o-kids', e => e.textContent === '1'), 'servings default 2/1 from family.json');
     // 在庫
     assert(await page.$$eval('#pantry .pitem', p => p.length) === 15, 'pantry items rendered (15)');
@@ -123,13 +123,13 @@ async function setup(browser, viewport) {
     assert(nav === 'sticky', 'nav bar is sticky');
     await page.screenshot({ path: `${SHOTS}/top-375.png` });
     // 注文 → requests PUT → dispatch
-    await page.click('#o-budget .chip[data-v="20"]'); await page.click('.chip[data-act="o-mood"][data-v="さっぱり"]');
+    await page.click('#o-budget .chip[data-v="20"]'); await page.click('.chip[data-act="o-mood"][data-v="さっぱり"]'); await page.click('#order .chip[data-act="o-useup"]');
     await page.click('[data-act="o-submit"]');
     await page.waitForFunction(() => !!document.querySelector('#o-status .pending'));
     const reqPut = puts.find(p => p.url.includes('/contents/requests/'));
     assert(!!reqPut, 'order writes requests/<id>.json');
     const reqBody = reqPut ? JSON.parse(Buffer.from(reqPut.body.content, 'base64').toString('utf8')) : {};
-    assert(reqBody.type === 'dinner' && reqBody.time_budget === 20 && reqBody.mood.includes('さっぱり') && reqBody.status === 'pending' && reqBody.use_up.length >= 2 && /^req-\d{8}-\d{4}-[a-z0-9]{4}$/.test(reqBody.id) && reqBody.servings.adults === 2, `request body matches contract: ${JSON.stringify(reqBody).slice(0, 200)}`);
+    assert(reqBody.type === 'dinner' && reqBody.time_budget === 20 && reqBody.mood.includes('さっぱり') && reqBody.status === 'pending' && reqBody.use_up.length === 1 && /^req-\d{8}-\d{4}-[a-z0-9]{4}$/.test(reqBody.id) && reqBody.servings.adults === 2, `request body matches contract: ${JSON.stringify(reqBody).slice(0, 200)}`);
     assert(reqPut && reqPut.body.message.startsWith('[skip ci]'), 'request commit message has [skip ci]');
     const disp = puts.find(p => p.url.endsWith('/dispatches'));
     assert(disp && disp.body.event_type === 'agent' && disp.body.client_payload.request_id === reqBody.id, 'dispatch event_type=agent with request_id');
@@ -168,7 +168,7 @@ async function setup(browser, viewport) {
     const addPut = puts.slice(b2).find(p => p.url.includes('/contents/pantry.json'));
     const addBody = addPut ? JSON.parse(Buffer.from(addPut.body.content, 'base64').toString('utf8')) : null;
     const tori = addBody && addBody.items.find(i => i.name === '鶏もも肉'); const tofu = addBody && addBody.items.find(i => i.name === '豆腐'); const neo = addBody && addBody.items.find(i => i.name === '新しい食材');
-    assert(tori && tori.qty === 300 && tori.unit === 'g' && tori.loc === 'fridge' && tori.use_by && tori.src === 'manual', `alias normalized (とりもも→鶏もも肉) with qty/unit/use_by: ${JSON.stringify(tori)}`);
+    assert(tori && tori.qty === 300 && tori.unit === 'g' && tori.loc === 'fridge' && !tori.use_by && tori.src === 'manual', `alias normalized (とりもも→鶏もも肉) with qty/unit, no use_by: ${JSON.stringify(tori)}`);
     assert(tofu && tofu.qty === 2 && tofu.unit === '丁', `same-name item merged (豆腐 1丁 + 1丁 = ${tofu && tofu.qty})`);
     assert(neo && neo.loc === 'fridge' && !neo.use_by, 'unknown name added as-is (fridge, no use_by)');
     assert(addBody && addBody.staples['醤油'] === 'ok', 'staple name (しょうゆ→醤油) sets staples, not items');

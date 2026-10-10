@@ -72,15 +72,14 @@ class Context:
         return [a for a in (self.family.get("allergies") or []) if a] + [a for a in (self.overrides.get("never") or []) if a]
 
     def pantry_for_prompt(self) -> dict:
-        """アレルギー・never を除き、期限順に並べ、staples は ok/low だけ渡す。"""
+        """アレルギー・never を除き、staples は ok/low だけ渡す（期限は管理しない）。"""
         bad = self.allergens() + [a for a in (self.family.get("avoid") or []) if a]
         items = []
         for it in self.pantry.get("items", []):
             name = self.ingredients.normalize(it["name"])
             if any(b in name for b in bad):
                 continue
-            items.append({k: v for k, v in it.items() if k in ("name", "qty", "unit", "loc", "use_by")})
-        items.sort(key=lambda x: x.get("use_by") or "9999")
+            items.append({k: v for k, v in it.items() if k in ("name", "qty", "unit", "loc")})
         staples = {k: v for k, v in (self.pantry.get("staples") or {}).items() if v in ("ok", "low") and not any(b in k for b in bad)}
         return {"items": items, "staples": staples}
 
@@ -216,7 +215,7 @@ def request_block(ctx: Context, req: dict, extra: str = "", *, dedupe: bool = Tr
     text = (
         "# 最近作った物（出さない）\n" + (ydump(recent) or "（無し）") +
         dedupe_text +
-        "\n\n# 在庫（pantry.json。期限順。staples は ok/low の物だけ。無い物は使えない）\n" + ydump(pantry) +
+        "\n\n# 在庫（pantry.json。staples は ok/low の物だけ。無い物は使えない）\n" + ydump(pantry) +
         "\n\n# 注文\n" + ydump(order) + time_text +
         f"\n- 注文の種類: {TYPE_NOTES.get(req.get('type'), '')}"
         f"\n- 今日: {common.today()}（旬の判断に使う）"
@@ -433,7 +432,7 @@ def action_suggest_items(ctx: Context, L: llmmod.LLM, req: dict) -> dict:
     pantry = ctx.pantry_for_prompt()
     none_staples = [k for k, v in (ctx.pantry.get("staples") or {}).items() if v == "none"]
     seasonal = [it["name"] for it in ctx.ingredients.items if common.now().month in (it.get("season") or [])]
-    text = ("# 在庫（期限順）\n" + ydump(pantry) + "\n\n# 切らしている調味料・乾物（staples: none）\n" + (ydump(none_staples) or "（無し）") +
+    text = ("# 在庫\n" + ydump(pantry) + "\n\n# 切らしている調味料・乾物（staples: none）\n" + (ydump(none_staples) or "（無し）") +
             "\n\n# 最近作った物\n" + (ydump(ctx.recent(14)) or "（無し）") + "\n\n# 旬の食材（マスタの season に今月がある物）\n" + (ydump(seasonal) or "（無し）") +
             f"\n\n# 今日: {common.today()}\n# 注文の一言: {req.get('note') or '（無し）'}")
     blocks = house_blocks(ctx) + [{"type": "text", "text": text}]

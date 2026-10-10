@@ -40,7 +40,7 @@ const state = {
   lastError: null,   // 直近の生成エラー { type, error }
   weekly: null,      // 週の献立の注文（result 入り）
   cost: null,        // 今月の API 費用（requests から集計）
-  order: null, useUpOff: new Set(), detailView: '', zukanSort: 'new', listTab: 'all', listQ: '', q: '', diff: null, showDiffOf: new Set(), laterEdit: null, pAddDraft: '',
+  order: null, useUpOn: new Set(), detailView: '', zukanSort: 'new', listTab: 'all', listQ: '', q: '', diff: null, showDiffOf: new Set(), laterEdit: null, pAddDraft: '',
 };
 
 // ---- 日付（JST） ----
@@ -75,7 +75,6 @@ const kq = () => cfg().kaji_quest || {};
 const kqRepo = () => gh.parseRepo(kq().repo, kq().branch);
 const lanes = () => Array.isArray(state.equipment.lanes) ? state.equipment.lanes : [];
 const equipLabel = id => (state.equipment.labels || {})[id] || (id === 'hands' ? '手' : String(id || ''));
-const useUpDays = () => +((cfg().suggest || {}).use_up_days) || 3;
 // 食材マスタ（data/ingredients.json）で名前を正規化する: NFKC・空白除去で name / aliases と突き合わせる
 let masterIdx = null;
 const normName = s => String(s || '').normalize('NFKC').replace(/[\s　]+/g, '').toLowerCase();
@@ -198,18 +197,17 @@ function loadOrder() {
   const d = defaultOrder(); const s = lsGet(LS.order) || {};
   state.order = { ...d, ...s, servings: { ...d.servings, ...(s.servings || {}) }, mood: Array.isArray(s.mood) ? s.mood : [] };
 }
-// 期限が use_up_days 以内（期限切れも）の在庫 → 「使い切り」に自動で入れる
-function useUpCandidates() {
-  const n = useUpDays(); const t = today(); const seen = new Set();
-  return state.pantry.data.items.filter(i => validDate(i.use_by)).map(i => ({ name: i.name, days: daysBetween(t, i.use_by) })).filter(u => u.days <= n)
-    .sort((a, b) => a.days - b.days).filter(u => !seen.has(u.name) && seen.add(u.name));
+// 「使いたい物」の候補 = 在庫の品（新しく入れた順）。期限は管理しない。選んだ物だけ注文の use_up に入る
+function useUpChoices() {
+  const seen = new Set();
+  return state.pantry.data.items.slice().sort((x, y) => String(y.added || '').localeCompare(String(x.added || ''))).map(i => i.name).filter(n => n && !seen.has(n) && seen.add(n));
 }
 const chip = (act, v, label, on, extra = '') => `<button type="button" class="chip${on ? ' is-on' : ''}" data-act="${act}" data-v="${esc(v)}"${extra}>${label}</button>`;
 const stepper = (key, label, v) => `<span class="stepper"><span>${label}</span><button type="button" data-act="o-step" data-k="${key}" data-d="-1" aria-label="${label}を減らす">${ic('minus')}</button><b id="o-${key}">${v}</b><button type="button" data-act="o-step" data-k="${key}" data-d="1" aria-label="${label}を増やす">${ic('plus')}</button></span>`;
 
 function renderOrder() {
   const o = state.order; const chips = ((cfg().request || {}).budget_chips || [15, 20, 30, 45, 60]).map(Number);
-  const useUp = useUpCandidates(); const w = state.weeklyForm || weeklyFormDefault();
+  const useUp = useUpChoices(); const w = state.weeklyForm || weeklyFormDefault();
   const html = head('flame', '今夜', '時間を選んで「考えてもらう」だけ。1〜2 分でレシピが出る') + `
   <div class="field"><label>時間（キッチンに立ってから盛り付けまで）</label><div class="chips" id="o-budget">${chips.map(m => chip('o-budget', m, `${m}<span class="sub">分</span>`, o.time_budget === m)).join('')}${chip('o-budget', 0, `${ic('infinity')}無制限`, o.time_budget === 0)}<label class="chip free"><input type="number" id="o-free" inputmode="numeric" min="5" max="180" placeholder="自由" value="${chips.includes(o.time_budget) || o.time_budget === 0 ? '' : o.time_budget}" aria-label="自由入力（分）"><span>分</span></label></div></div>
   <div class="field"><label>種類</label><div class="chips">${TYPES.map(([k, ja]) => chip('o-type', k, ja, o.type === k)).join('')}</div></div>
@@ -218,7 +216,7 @@ function renderOrder() {
     <div class="field"><label for="o-dishes">品数</label><select id="o-dishes" class="select">${DISHES.map(([k, ja]) => `<option value="${k}"${o.dishes === k ? ' selected' : ''}>${ja}</option>`).join('')}</select></div>
   </div>
   <div class="field"><label>気分（任意）</label><div class="chips">${MOODS.map(m => chip('o-mood', m, esc(m), o.mood.includes(m))).join('')}</div></div>
-  ${useUp.length ? `<div class="field"><label>使い切り（期限が近い物。外せる）</label><div class="chips">${useUp.map(u => chip('o-useup', u.name, `${esc(u.name)}<span class="sub">${u.days < 0 ? '期限ぎれ' : u.days === 0 ? '今日' : `あと ${u.days} 日`}</span>`, !state.useUpOff.has(u.name))).join('')}</div></div>` : ''}
+  ${useUp.length ? `<div class="field"><label>使いたい物（任意。在庫から選ぶ）</label><div class="chips">${useUp.map(n => chip('o-useup', n, esc(n), state.useUpOn.has(n))).join('')}</div></div>` : ''}
   <div class="field"><label for="o-note">一言（任意）</label><input type="text" id="o-note" maxlength="200" placeholder="妻は 20 時。子どもだけ先に" value="${esc(o.note)}"></div>
   <div class="field"><label>出し方</label><div class="chips">${chip('o-mode', 'auto', '本命 1 本＋別案 2 つ', o.mode === 'auto')}${chip('o-mode', 'pick', '候補 3 つから選ぶ', o.mode === 'pick')}</div></div>
   <div class="actions"><button type="button" class="ghost" data-act="o-weekly-toggle" aria-expanded="${state.showWeekly ? 'true' : 'false'}">${ic('calendar')}週の献立…</button><button type="button" class="primary big" data-act="o-submit">${ic('sparkle')}考えてもらう</button></div>
@@ -251,7 +249,7 @@ function orderBase(o) {
 }
 async function submitOrder(extra = {}) {
   if (!requireToken()) return;
-  const o = readOrder(); o.use_up = useUpCandidates().filter(u => !state.useUpOff.has(u.name)).map(u => u.name); lsSet(LS.order, o);
+  const o = readOrder(); o.use_up = useUpChoices().filter(n => state.useUpOn.has(n)); lsSet(LS.order, o);
   const req = { id: newRequestId(), ts: isoNow(), type: o.type, ...orderBase(o), ...extra, status: 'pending', error: null, result: null };
   await startRequest(req);
 }
@@ -625,10 +623,6 @@ async function savePantry(mutator, label) {
   }, gh.msg(`pantry: ${label}`));
   state.pantry = { sha: res.sha, data: normalizePantry(JSON.parse(res.text)) };
 }
-function useByText(i, t) {
-  if (!validDate(i.use_by)) return i.loc === 'freezer' ? '冷凍' : '期限なし';
-  const d = daysBetween(t, i.use_by); return d < 0 ? `期限ぎれ（${-d} 日前）` : d === 0 ? '今日まで' : `あと ${d} 日（${jaShort(i.use_by)}）`;
-}
 // 買い足すといい食材（Generator に在庫・器具・家族・旬から出してもらう）
 const PRIO_JA = { main: '今週の主菜に', stock: '常備すると楽', kid: '子ども向け', season: '旬' };
 function suggestItems() { if (!requireToken()) return; startRequest({ id: newRequestId(), ts: isoNow(), type: 'suggest_items', note: '', status: 'pending', error: null, result: null }); }
@@ -646,21 +640,18 @@ function suggestHTML() {
 async function copyText(text) { try { await navigator.clipboard.writeText(text); toast('コピーした'); } catch { toast(text); } }
 
 function renderPantry() {
-  const d = state.pantry.data; const t = today(); const n = useUpDays();
-  const items = d.items.slice().sort((a, b) => String(a.use_by || '9999').localeCompare(String(b.use_by || '9999')) || String(a.name).localeCompare(String(b.name)));
-  const expired = items.filter(i => validDate(i.use_by) && i.use_by < t), soon = items.filter(i => validDate(i.use_by) && i.use_by >= t && daysBetween(t, i.use_by) <= n), rest = items.filter(i => !expired.includes(i) && !soon.includes(i));
-  const row = i => { const bad = validDate(i.use_by) && i.use_by < t; return `<div class="pitem${bad ? ' is-expired' : ''}" data-id="${esc(i.id)}">
+  const d = state.pantry.data;
+  const items = d.items.slice().sort((a, b) => String(b.added || '').localeCompare(String(a.added || '')) || String(a.name).localeCompare(String(b.name)));
+  const row = i => { return `<div class="pitem" data-id="${esc(i.id)}">
     <div class="nm">${esc(i.name)} <span class="badge">${LOC_JA[i.loc] || esc(i.loc || '')}</span>${i.src === 'kaji-quest' ? '<span class="badge ind">kaji</span>' : i.src === 'photo' ? '<span class="badge ind">📷</span>' : ''}</div>
     <button type="button" class="qty" data-act="p-qty" data-id="${esc(i.id)}" title="数を直す">${isNum(i.qty) ? `${i.qty} ${esc(i.unit || '')}` : 'ある'} ${ic('pen')}</button>
-    <div class="meta${bad ? ' bad' : ''}">${useByText(i, t)}${validDate(i.added) ? ` ・ ${jaShort(i.added)} に追加` : ''}</div>
-    <div class="ops"><button type="button" class="ghost tiny" data-act="p-useup" data-id="${esc(i.id)}">使い切った</button><button type="button" class="ghost tiny danger" data-act="p-discard" data-id="${esc(i.id)}">${ic('trash')}捨てた</button></div></div>`; };
+    <div class="meta">${validDate(i.added) ? `${jaShort(i.added)} に追加` : ''}</div>
+    <div class="ops"><button type="button" class="ghost tiny" data-act="p-useup" data-id="${esc(i.id)}">使い切った</button></div></div>`; };
   let html = head('fridge', '在庫', `${items.length} 品${d.updated ? ` ・ ${jaDateTime(d.updated)} 更新` : ''}${state.liveError ? ' ・ 読めていない' : ''}`) + `
   <div class="add-row"><input type="text" class="inp" id="p-add" placeholder="鶏もも 300g、小松菜、卵 6個" autocomplete="off" value="${esc(state.pAddDraft)}" aria-label="在庫を追加（「、」区切り）"><button type="button" class="primary" data-act="p-add">${ic('plus')}追加</button></div>
   <div class="actions left"><label class="ghost small photo-btn">${ic('camera')}冷蔵庫の写真<input type="file" accept="image/*" capture="environment" id="p-photo"></label><select id="p-hint" class="select" style="width:auto;min-height:44px" aria-label="どこの写真"><option value="fridge">冷蔵</option><option value="freezer">冷凍</option><option value="pantry">常温</option></select>${kq().import_shopping ? `<button type="button" class="ghost small" data-act="p-import">${ic('import')}kaji-quest の買い物を取り込む</button>` : ''}</div>
   <div id="p-status" class="status">${pendingHTML('pantry')}</div>`;
-  if (expired.length) html += '<div class="band">期限ぎれ（捨てたら「捨てた」。責めない）</div>' + expired.map(row).join('');
-  if (soon.length) html += '<div class="band soon">期限が近い（「今夜」の使い切りに入る）</div>' + soon.map(row).join('');
-  if (rest.length) html += (expired.length || soon.length ? '<h3 class="group">ほか</h3>' : '') + rest.map(row).join('');
+  html += items.map(row).join('');
   if (!items.length) html += `<p class="empty">${state.liveError ? `在庫を読めなかった: ${esc(state.liveError)}` : '在庫が空。上の欄に「、」区切りで入れる。'}</p>`;
   html += suggestHTML();
   html += '<h3 class="group">調味料・乾物（ある / 少ない / ない）</h3>' + staplesHTML(d.staples);
@@ -681,14 +672,14 @@ function parsePantryToken(tok) {
 }
 function newItem(name, qty, unit, added, src, loc) {
   const m = master(name); const nm = m ? m.name : name;
-  return { id: 'p' + uid(5), name: nm, qty: isNum(qty) ? qty : null, unit: isNum(qty) ? (unit || (m && m.unit) || null) : null, loc: loc || (m && m.loc) || 'fridge', added, ...(m && m.days ? { use_by: addDays(added, +m.days) } : {}), src };
+  return { id: 'p' + uid(5), name: nm, qty: isNum(qty) ? qty : null, unit: isNum(qty) ? (unit || (m && m.unit) || null) : null, loc: loc || (m && m.loc) || 'fridge', added, src };
 }
 // 同じ名前が既にあれば寄せる（数は単位が同じなら足す）
 function mergeItem(d, a) {
   const ex = d.items.find(i => sameName(i.name, a.name));
   if (!ex) { d.items.push(a); return; }
   if (isNum(ex.qty) && isNum(a.qty) && (ex.unit || '') === (a.unit || '')) ex.qty = round1(ex.qty + a.qty); else if (isNum(a.qty)) { ex.qty = a.qty; ex.unit = a.unit; }
-  ex.added = a.added; if (a.use_by) ex.use_by = a.use_by; if (a.loc) ex.loc = a.loc;
+  ex.added = a.added; if (a.loc) ex.loc = a.loc;
 }
 async function pantryAdd(text) {
   const toks = String(text || '').split(/[、,，\n]+/).map(s => s.trim()).filter(Boolean); if (!toks.length) return; if (!requireToken()) return;
@@ -697,9 +688,9 @@ async function pantryAdd(text) {
   const ok = await run(() => savePantry(d => { added.forEach(a => mergeItem(d, a)); staples.forEach(nm => { d.staples[nm] = 'ok'; }); }, '追加'), `${added.length + staples.length} 品を入れた`);
   if (ok) { state.pAddDraft = ''; render(); }
 }
-async function pantryItemOp(id, op) {
+async function pantryItemOp(id) {
   if (!requireToken()) return; const it = state.pantry.data.items.find(i => i.id === id); if (!it) return;
-  const ok = await run(() => savePantry(d => { d.items = d.items.filter(i => i.id !== id); if (op === 'discard') d.discarded.push({ name: it.name, date: today() }); }, op === 'discard' ? `${it.name} を捨てた` : `${it.name} を使い切った`), op === 'discard' ? `${it.name} を捨てた、と記録した` : `${it.name} を使い切った`);
+  const ok = await run(() => savePantry(d => { d.items = d.items.filter(i => i.id !== id); }, `${it.name} を使い切った`), `${it.name} を在庫から外した`);
   if (ok) render();
 }
 async function pantrySetQty(id, qty) {
@@ -896,14 +887,13 @@ function renderWeek() {
   const errMed = median(wk.filter(e => isNum(e.planned_minutes) && e.planned_minutes > 0 && isNum(e.actual_minutes)).map(e => Math.abs(e.actual_minutes - e.planned_minutes) / e.planned_minutes));
   const weeks = []; for (let i = 11; i >= 0; i--) { const a = addDays(mon, -7 * i), b = addDays(a, 6); const es = logs.filter(e => e.date >= a && e.date <= b); weeks.push({ a, n: es.length, f: avg(es.map(e => e.f_score).filter(isNum)), r: avg(es.map(e => e.r_score).filter(isNum)) }); }
   const later = logs.filter(e => e.ratings && e.ratings.partner == null && validDate(e.date) && daysBetween(e.date, t) <= 30).sort((a, b) => logKey(b).localeCompare(logKey(a)));
-  const discarded = state.pantry.data.discarded.filter(d => String(d.date || '').slice(0, 7) === t.slice(0, 7)).length;
   const L = state.learned || {}; const budget = +((cfg().generation || {}).budget_usd_per_month) || 0; const digest = state.digests[0];
   const named = ids => (ids || []).map(id => { const r = recipeById(id); return r ? `<button type="button" class="ghost tiny" data-act="open-recipe" data-id="${esc(id)}">${esc(r.title)}</button>` : esc(id); }).join('、');
   let h = head('chart', '今週', `${jaShort(mon)}〜${jaShort(sun)}${state.liveError ? ' ・ 記録を読めていない' : ''}`) + `
   <div class="stats"><div class="stat"><b>${wk.length}</b><span>作った</span></div><div class="stat"><b>${fAvg != null ? fAvg.toFixed(1) : '—'}</b><span>F 平均</span></div><div class="stat"><b>${rAvg != null ? Math.round(rAvg) : '—'}</b><span>R 平均</span></div><div class="stat"><b>${errMed != null ? Math.round(errMed * 100) + '%' : '—'}</b><span>時間誤差</span></div></div>
   <h3 class="group">12 週の推移</h3><div class="bars-lb"><span>F（家族の評価 1〜5）</span><span>${weeks.reduce((s, w) => s + w.n, 0)} 回</span></div>${barsSVG(weeks, 'f', 5)}<div class="bars-lb"><span>R（再現性 0〜100）</span></div>${barsSVG(weeks, 'r', 100)}
   <h3 class="group">聞いてない評価 ${later.length} 件</h3>${later.length ? later.map(e => { const r = recipeById(e.recipe_id); const editing = state.laterEdit === e.id; return `<div class="later"><div class="t">${esc(r ? r.title : e.recipe_id)}<small>${jaDate(e.date)}</small></div>${editing ? stars('later-star', 0, `data-log="${esc(e.id)}" data-date="${esc(e.date)}"`) : `<button type="button" class="ghost small" data-act="later-edit" data-id="${esc(e.id)}">パートナーの評価を入れる</button>`}</div>`; }).join('') : '<p class="empty">無し</p>'}
-  <h3 class="group">今月</h3><div class="kv"><b>捨てた</b><span>${discarded} 件${discarded > 2 ? '（目標は月 2 件以下。責めない）' : ''}</span><b>API 費用</b><span>${state.cost == null ? '—' : `$${state.cost.toFixed(2)}`}${budget ? ` ／ 上限 $${budget}` : ''}</span></div>`;
+  <h3 class="group">今月</h3><div class="kv"><b>API 費用</b><span>${state.cost == null ? '—' : `$${state.cost.toFixed(2)}`}${budget ? ` ／ 上限 $${budget}` : ''}</span></div>`;
   if ((L.standards || []).length || (L.needs_revision || []).length || (L.retired || []).length) h += `<h3 class="group">学習の結果${L.updated ? ` <span class="sub">${esc(String(L.updated))}</span>` : ''}</h3><div class="kv">${(L.standards || []).length ? `<b>定番</b><span>${named(L.standards)}</span>` : ''}${(L.needs_revision || []).length ? `<b>改訂待ち</b><span>${named(L.needs_revision)}</span>` : ''}${(L.retired || []).length ? `<b>封印</b><span>${named(L.retired)}</span>` : ''}</div>`;
   if (digest) { const props = digest.meta && (digest.meta.proposals || digest.meta.next_week || digest.meta.suggestions);
     h += `<h3 class="group">週次ダイジェスト ${esc(String(digest.week || ''))}</h3>${Array.isArray(props) && props.length ? `<p class="note">来週の提案</p><ul class="memo">${props.map(p => `<li>${esc(typeof p === 'string' ? p : (p.title || JSON.stringify(p)))}${p && p.why ? `<span class="sub"> ・ ${esc(p.why)}</span>` : ''}</li>`).join('')}</ul>` : ''}<div class="digest">${digest.html || ''}</div>`; }
@@ -961,7 +951,7 @@ document.addEventListener('click', ev => {
     case 'o-type': o.type = b.dataset.v; sib(b, c => c === b); break;
     case 'o-mode': o.mode = b.dataset.v; sib(b, c => c === b); break;
     case 'o-mood': { const v = b.dataset.v; o.mood = o.mood.includes(v) ? o.mood.filter(m => m !== v) : [...o.mood, v]; b.classList.toggle('is-on', o.mood.includes(v)); break; }
-    case 'o-useup': { const v = b.dataset.v; if (state.useUpOff.has(v)) state.useUpOff.delete(v); else state.useUpOff.add(v); b.classList.toggle('is-on', !state.useUpOff.has(v)); break; }
+    case 'o-useup': { const v = b.dataset.v; if (state.useUpOn.has(v)) state.useUpOn.delete(v); else state.useUpOn.add(v); b.classList.toggle('is-on', state.useUpOn.has(v)); break; }
     case 'o-step': { const k = b.dataset.k; o.servings[k] = Math.max(0, Math.min(9, (+o.servings[k] || 0) + +b.dataset.d)); $(`#o-${k}`).textContent = o.servings[k]; break; }
     case 'o-submit': submitOrder(); break;
     case 'o-again': { const r = currentRecipe(); const cur = state.current && state.current.request; const alts = ((cur && cur.result && cur.result.alternatives) || []).map(a => a && a.title); submitOrder({ exclude: [...new Set([...(o.exclude || []), r ? r.title : '', ...alts].filter(Boolean))].slice(-8) }); break; }   // 退けた本命と別案は次に出さない
@@ -1007,8 +997,7 @@ document.addEventListener('click', ev => {
     case 'sg-push': { const s = state.suggest; if (s) pushShopping(sgSelected(s).map(i => i.qty ? `${i.name} ${i.qty}` : i.name)); break; }
     case 'sg-copy': { const s = state.suggest; if (s) copyText(sgSelected(s).map(i => i.qty ? `${i.name} ${i.qty}` : i.name).join('、')); break; }
     case 'sg-clear': state.suggest = null; lsDel(LS.suggest); render(); break;
-    case 'p-useup': pantryItemOp(b.dataset.id, 'useup'); break;
-    case 'p-discard': pantryItemOp(b.dataset.id, 'discard'); break;
+    case 'p-useup': pantryItemOp(b.dataset.id); break;
     case 'p-staple': pantryStaple(b.dataset.name, b.dataset.v); break;
     case 'p-qty': { const it = state.pantry.data.items.find(i => i.id === b.dataset.id); if (!it) break; b.outerHTML = `<span><input type="number" class="qty-edit" inputmode="decimal" step="any" min="0" data-id="${esc(it.id)}" value="${isNum(it.qty) ? it.qty : ''}" aria-label="数"> ${esc(it.unit || '')}</span>`; const inp = $(`.qty-edit[data-id="${it.id}"]`); if (inp) inp.focus(); break; }
     case 'diff-cancel': $('#dlg-diff').close(); state.diff = null; break;

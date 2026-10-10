@@ -176,9 +176,6 @@ class Ingredients:
         it = self.get(name)
         return (it or {}).get("loc", "fridge")
 
-    def shelf_days(self, name: str) -> int | None:
-        it = self.get(name)
-        return (it or {}).get("days")
 
     def unit(self, name: str) -> str | None:
         it = self.get(name)
