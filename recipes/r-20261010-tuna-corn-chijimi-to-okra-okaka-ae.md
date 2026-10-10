@@ -1,4 +1,5 @@
 ---
+listed: "2026-10-10T09:13:21+09:00"
 id: r-20261010-tuna-corn-chijimi-to-okra-okaka-ae
 title: ツナとコーンの片栗粉チヂミ風とオクラのおかか和え
 version: 1
