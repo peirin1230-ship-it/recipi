@@ -4,7 +4,7 @@ id: r-20261011-tofu-ninjin-kakitamajiru-to-kabocha-yogu
 title: 豆腐とにんじんのかき玉汁とかぼちゃのヨーグルト和え
 version: 1
 supersedes: null
-status: draft
+status: tried
 created: '2026-10-11'
 request: req-20261011-0708-yvm0
 generated_by: {model: claude-code, prompt_version: 4}
@@ -214,4 +214,4 @@ detail: full
 - 手洗い: 鍋
 
 ## 作ったときのメモ
-
+- 2026-10-11 ・ 24 分（見込み 11）・ R 53 ・ F 4 ・ そのまま ・ 気づき: カボチャはペーストにしてみてもいいかも ・ 📷 20261011-1.jpg
