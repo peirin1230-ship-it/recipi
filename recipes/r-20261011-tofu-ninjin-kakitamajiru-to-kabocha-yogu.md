@@ -1,4 +1,5 @@
 ---
+listed: "2026-10-11T07:14:53+09:00"
 id: r-20261011-tofu-ninjin-kakitamajiru-to-kabocha-yogu
 title: 豆腐とにんじんのかき玉汁とかぼちゃのヨーグルト和え
 version: 1
