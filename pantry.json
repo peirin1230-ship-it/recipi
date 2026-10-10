@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-10T17:43:20+09:00",
+ "updated": "2026-10-10T17:43:31+09:00",
  "items": [
   {
    "id": "p9qc8h",
@@ -136,6 +136,15 @@
   {
    "id": "phfn93",
    "name": "豚肩ローススライス",
+   "qty": null,
+   "unit": null,
+   "loc": "fridge",
+   "added": "2026-10-10",
+   "src": "manual"
+  },
+  {
+   "id": "pp45wz",
+   "name": "なす",
    "qty": null,
    "unit": null,
    "loc": "fridge",
