@@ -218,6 +218,20 @@ def validate_recipe(recipe: dict, ctx: dict | None = None) -> list[str]:
     if isinstance(ag, (int, float)) and ag > limit + SALT_TOLERANCE:
         errors.append(f"大人 1 人分の塩分 {ag}g が上限 {limit}g（salt: {salt_mode}）を超えている")
 
+    # ---- 工程の材料（steps[].ingredients）: 材料表に無い名前は不合格。量のある材料はどこかの工程に出す ----
+    if any("ingredients" in st for st in r["steps"]):
+        names = {norm_title(i.get("name", "")): i for i in r["ingredients"]}
+        used: set[str] = set()
+        for st in r["steps"]:
+            for nm in st.get("ingredients") or []:
+                k = norm_title(nm)
+                if k not in names:
+                    errors.append(f"手順「{st.get('title')}」の ingredients「{nm}」が材料表に無い（材料表の name と同じ表記にする）")
+                used.add(k)
+        missing = [i.get("name") for k, i in names.items() if k not in used and i.get("qty") is not None and i.get("name") not in schema.FREE_INGREDIENTS]
+        if missing:
+            errors.append("材料がどの工程の ingredients にも出てこない: " + "、".join(missing) + "（使う工程の ingredients に name を入れる）")
+
     # ---- 時間 ----
     budget = ctx.get("budget")
     if budget and isinstance(raw, int):

@@ -388,12 +388,22 @@ function timelineHTML(r) {
 function dishesOf(r) { const d = []; (r.steps || []).forEach(s => { if (!d.includes(s.dish)) d.push(s.dish); }); return d; }
 function stepsHTML(r, view) {
   const steps = r.steps || []; if (!steps.length) return '<p class="empty">手順が無い</p>';
-  return dishesOf(r).map((d, di) => `<h4 class="dish">${esc(d)}</h4><ol class="steps">${steps.filter(s => s.dish === d).map(s => stepHTML(s, di, view)).join('')}</ol>`).join('');
+  return dishesOf(r).map((d, di) => `<h4 class="dish">${esc(d)}</h4><ol class="steps">${steps.filter(s => s.dish === d).map(s => stepHTML(s, di, view, r)).join('')}</ol>`).join('');
 }
-function stepHTML(s, di, view) {
+// 工程で使う材料（分量つき）。Generator が steps[].ingredients を出していればそれを材料表から引く。無ければ手順の文に出てくる材料名を拾う（長い名前から。重なりは数えない）
+function stepIngredients(r, s) {
+  const ings = r.ingredients || []; if (!ings.length) return [];
+  if (Array.isArray(s.ingredients)) return s.ingredients.map(nm => ings.find(i => i.name === nm) || ings.find(i => normName(i.name) === normName(nm)) || { name: nm }).filter(Boolean);
+  const text = String(s.text || ''); const taken = []; const out = [];
+  const cands = ings.map(i => ({ i, keys: [i.name, i.pantry].filter(Boolean) })).sort((a, b) => Math.max(...b.keys.map(k => k.length)) - Math.max(...a.keys.map(k => k.length)));
+  cands.forEach(({ i, keys }) => { for (const k of keys) { let at = text.indexOf(k); while (at >= 0) { const end = at + k.length; if (!taken.some(([a, b]) => at < b && end > a)) { taken.push([at, end]); if (!out.includes(i)) out.push(i); break; } at = text.indexOf(k, at + 1); } if (out.includes(i)) break; } });
+  return out.sort((a, b) => ings.indexOf(a) - ings.indexOf(b));
+}
+const stepIngHTML = (r, s) => { const rows = stepIngredients(r, s); return rows.length ? `<div class="ing">${rows.map(i => `<span><b>${esc(i.name)}</b> ${i.qty !== undefined ? qtyText(i) : ''}</span>`).join('')}</div>` : ''; };
+function stepHTML(s, di, view, r) {
   const tip = view === 'full' ? tipFor(s, di) : null;
   return `<li class="step"><span class="n">${s.n}</span><div class="t">${esc(s.title)}<span class="sub">${s.minutes} 分・${KIND_JA[s.kind] || esc(s.kind || '')}</span>${s.heat ? `<span class="heat">${ic('flame')}${esc(equipLabel(s.heat.equipment))}・${esc(s.heat.level)}</span>` : ''}${s.timer ? `<span class="tm">${ic('timer')}${fmtSec(+s.timer)}</span>` : ''}</div>
-  ${view === 'full' && s.text ? `<div class="tx">${esc(s.text)}</div>` : ''}${s.cue ? `<div class="cue">${esc(s.cue)}</div>` : ''}${s.caution ? `<div class="caution">⚠ ${esc(s.caution)}</div>` : ''}${view === 'full' && s.kid ? `<div class="kid">🍼 ${esc(s.kid)}</div>` : ''}
+  ${r ? stepIngHTML(r, s) : ''}${view === 'full' && s.text ? `<div class="tx">${esc(s.text)}</div>` : ''}${s.cue ? `<div class="cue">${esc(s.cue)}</div>` : ''}${s.caution ? `<div class="caution">⚠ ${esc(s.caution)}</div>` : ''}${view === 'full' && s.kid ? `<div class="kid">🍼 ${esc(s.kid)}</div>` : ''}
   ${tip ? `<details class="tip"><summary>${ic('bulb')}コツ: ${esc(tip.title)}</summary><div class="body">${md(tip.body)}</div></details>` : ''}</li>`;
 }
 function memoLine(e) {
@@ -445,7 +455,7 @@ function renderCook() {
   h += '<h3 class="sec">手順</h3>';
   dishesOf(r).forEach(d => { h += `<h3>${esc(d)}</h3>` + steps.map((s, i) => ({ s, i })).filter(x => x.s.dish === d).map(({ s, i }) => { const k = 's' + i; const on = !!cook.done[k];
     return `<div class="ck-step${on ? ' is-done' : ''}" data-key="${k}"><div class="hd"><button type="button" class="tick-btn big${on ? ' is-on' : ''}" data-act="ck-step" data-key="${k}" aria-label="できた" aria-pressed="${on}">${ic('check')}</button><div class="t">${s.n}. ${esc(s.title)}<small>${s.minutes} 分${s.heat ? ` ・ ${esc(equipLabel(s.heat.equipment))}・${esc(s.heat.level)}` : ''}${s.kind === 'wait' ? ' ・ 触らない' : ''}</small></div></div>
-    <p class="tx">${esc(s.text)}</p>${s.cue ? `<div class="cue">${esc(s.cue)}</div>` : ''}${s.caution ? `<div class="caution">⚠ ${esc(s.caution)}</div>` : ''}${s.kid ? `<div class="kid">🍼 ${esc(s.kid)}</div>` : ''}
+    ${stepIngHTML(r, s)}<p class="tx">${esc(s.text)}</p>${s.cue ? `<div class="cue">${esc(s.cue)}</div>` : ''}${s.caution ? `<div class="caution">⚠ ${esc(s.caution)}</div>` : ''}${s.kid ? `<div class="kid">🍼 ${esc(s.kid)}</div>` : ''}
     ${s.timer ? `<div class="row"><button type="button" class="timer-btn" data-act="ck-timer" data-key="${k}" data-sec="${+s.timer}">${ic('timer')}<span class="tv">${fmtSec(+s.timer)}</span></button></div>` : ''}</div>`; }).join(''); });
   $('#cook-body').innerHTML = h;
 }

@@ -62,6 +62,7 @@ STEP = _obj({
     "caution": _s(True),
     "timer": _i(True),             # 秒。放っておく時間
     "kid": _s(True),               # 子どもの分の一言
+    "ingredients": _arr(_s()),     # この工程で使う材料（ingredients の name と同じ表記）。量はページが材料表から引く
 })
 
 TIMELINE_ROW = _obj({"minute": _i(), "lane": _s(), "text": _s()})

@@ -15,6 +15,16 @@ import schema
 import validate
 
 
+def qty_text(i: dict) -> str:
+    """量の表記（ページと同じ）: 大さじ・小さじ・カップは単位が先、それ以外は数が先。g 併記があれば添える。"""
+    if i.get("qty") is None:
+        return "適量"
+    u = i.get("unit") or ""
+    g = f"（{i['grams']:g}g）" if isinstance(i.get("grams"), (int, float)) and u != "g" else ""
+    q = f"{i['qty']:g}" if isinstance(i["qty"], (int, float)) else str(i["qty"])
+    return f"{u} {q}{g}" if u in ("大さじ", "小さじ", "カップ") else f"{q} {u}{g}".rstrip()
+
+
 def build_meta(recipe: dict, *, rid: str, request_id: str | None, budget: int | None, servings: dict,
                rtype: str, speed_factor: dict, generated_by: dict, version: int = 1, supersedes: str | None = None,
                changes: list | None = None, status: str = "draft") -> dict:
@@ -108,6 +118,10 @@ def render_body(meta: dict, equipment: dict | None = None) -> str:
             if st.get("heat"):
                 heat = f" {schema.equipment_label(equipment, st['heat']['equipment'])}・{st['heat']['level']}"
             out.append(f"{st['n']}. **{st['title']}（{st['minutes']:g} 分 / {st['kind']}）**{heat} {st['text']}")
+            if st.get("ingredients"):
+                by_name = {i.get("name"): i for i in meta.get("ingredients") or []}
+                parts = [f"{nm} {qty_text(by_name[nm])}" if nm in by_name else nm for nm in st["ingredients"]]
+                out.append("   - 材料: " + "・".join(parts))
             out.append(f"   - 目安: {st['cue']}")
             if st.get("timer"):
                 out.append(f"   - ⏱ {st['timer'] // 60} 分{(' ' + str(st['timer'] % 60) + ' 秒') if st['timer'] % 60 else ''}")

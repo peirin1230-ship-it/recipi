@@ -327,6 +327,10 @@ details.tip .body { margin: 2px 0 4px; padding: 10px 12px; border-radius: 12px; 
 .ck-step .hd .t { flex: 1; font-size: 19px; font-weight: 800; line-height: 1.4; }
 .ck-step .hd .t small { display: block; font-size: 13px; color: var(--muted); font-weight: 600; }
 .ck-step .tx { margin: 6px 0 0; font-size: 17px; line-height: 1.6; }
+.step .ing, .ck-step .ing { display: flex; flex-wrap: wrap; gap: 4px 10px; margin: 6px 0 2px; font-size: 14px; color: var(--text-2); }
+.ck-step .ing { font-size: 15.5px; }
+.step .ing span, .ck-step .ing span { display: inline-flex; align-items: baseline; gap: 4px; padding: 2px 9px; border-radius: 999px; background: var(--primary-soft); color: var(--primary-text); }
+.step .ing b, .ck-step .ing b { font-weight: 700; }
 .ck-step .cue { margin-top: 4px; font-size: 15px; color: var(--primary-text); }
 .ck-step .cue::before { content: "目安: "; font-weight: 700; }
 .ck-step .caution { margin-top: 4px; font-size: 14.5px; color: var(--danger); font-weight: 700; }

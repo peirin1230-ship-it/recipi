@@ -115,3 +115,19 @@ def test_alternatives_must_differ():
     assert validate.alternatives_errors("鶏もも肉の照り焼きと小松菜のごま和え", alts, ["かぼちゃの煮物とみそ汁"]) == []
     errs = validate.alternatives_errors("鶏もも肉の照り焼きと小松菜のごま和え", alts + [{"title": "豚こまの生姜焼きとキャベツの塩昆布和え"}], ["鮭のムニエルとほうれん草のソテー"])
     assert len(errs) == 2 and any("一覧" in e for e in errs) and any("互い" in e or "別の別案" in e for e in errs)
+
+
+def test_step_ingredients_checked_against_table():
+    r = load_fixture()
+    for st in r["steps"]:
+        st["ingredients"] = []
+    r["steps"][0]["ingredients"] = ["鶏もも肉", "片栗粉"]
+    errs = validate.validate_recipe(r, ctx())
+    assert any("どの工程の ingredients にも出てこない" in e for e in errs)          # 量のある材料は全部どこかに出す
+    for st in r["steps"]:
+        st["ingredients"] = [i["name"] for i in r["ingredients"]]
+    assert validate.validate_recipe(r, ctx()) == []
+    r["steps"][1]["ingredients"] = ["存在しない材料"]
+    assert any("材料表に無い" in e for e in validate.validate_recipe(r, ctx()))
+    r2 = load_fixture()                                                          # ingredients を持たない古い形は検査しない
+    assert validate.validate_recipe(r2, ctx()) == []
