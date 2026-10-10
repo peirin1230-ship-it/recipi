@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-10T08:10:51+09:00",
+ "updated": "2026-10-10T16:58:22+09:00",
  "items": [
   {
    "id": "p9qc8h",
@@ -16,8 +16,8 @@
    "qty": null,
    "unit": null,
    "loc": "fridge",
-   "added": "2026-10-09",
-   "use_by": "2026-10-23",
+   "added": "2026-09-24",
+   "use_by": "2026-10-08",
    "src": "manual"
   },
   {
@@ -26,8 +26,8 @@
    "qty": null,
    "unit": null,
    "loc": "fridge",
-   "added": "2026-10-09",
-   "use_by": "2026-10-15",
+   "added": "2026-09-24",
+   "use_by": "2026-09-30",
    "src": "manual"
   },
   {
@@ -45,8 +45,8 @@
    "qty": null,
    "unit": null,
    "loc": "fridge",
-   "added": "2026-10-09",
-   "use_by": "2026-10-16",
+   "added": "2026-10-08",
+   "use_by": "2026-10-15",
    "src": "manual"
   },
   {
@@ -75,9 +75,73 @@
    "qty": null,
    "unit": null,
    "loc": "pantry",
-   "added": "2026-10-09",
-   "use_by": "2027-04-07",
+   "added": "2026-10-08",
+   "use_by": "2027-04-06",
    "src": "manual"
+  },
+  {
+   "id": "p060dr",
+   "name": "ヨーグルト",
+   "qty": null,
+   "unit": null,
+   "loc": "fridge",
+   "added": "2026-10-08",
+   "use_by": "2026-10-18",
+   "src": "kaji-quest"
+  },
+  {
+   "id": "prqqra",
+   "name": "鶏むね肉 300g",
+   "qty": null,
+   "unit": null,
+   "loc": "fridge",
+   "added": "2026-10-10",
+   "src": "kaji-quest"
+  },
+  {
+   "id": "piipps",
+   "name": "豆腐 2丁",
+   "qty": null,
+   "unit": null,
+   "loc": "fridge",
+   "added": "2026-10-10",
+   "src": "kaji-quest"
+  },
+  {
+   "id": "pu7k66",
+   "name": "れんこん 1節",
+   "qty": null,
+   "unit": null,
+   "loc": "fridge",
+   "added": "2026-10-10",
+   "src": "kaji-quest"
+  },
+  {
+   "id": "pvnlbb",
+   "name": "かぼちゃ 1/4個",
+   "qty": null,
+   "unit": null,
+   "loc": "fridge",
+   "added": "2026-10-10",
+   "src": "kaji-quest"
+  },
+  {
+   "id": "pcp63w",
+   "name": "冷凍うどん 3玉",
+   "qty": null,
+   "unit": null,
+   "loc": "fridge",
+   "added": "2026-10-10",
+   "src": "kaji-quest"
+  },
+  {
+   "id": "peh1bd",
+   "name": "ブロッコリー 1株",
+   "qty": null,
+   "unit": null,
+   "loc": "fridge",
+   "added": "2026-10-10",
+   "src": "kaji-quest"
   }
  ],
  "staples": {
@@ -118,5 +182,15 @@
    "date": "2026-10-09"
   }
  ],
- "imported_shop_ids": []
+ "imported_shop_ids": [
+  "mus0scqoq6za",
+  "muveykxn0nnw",
+  "muwhnzh9mm5b",
+  "muwjm87m9hri",
+  "muzgct7h1q61",
+  "mv23psep1094",
+  "mudlzf54c4jd",
+  "mufew9oo1wfj",
+  "mumh51oou4ve"
+ ]
 }
