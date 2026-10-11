@@ -1,0 +1,19 @@
+{
+ "id": "req-20261011-1335-8829",
+ "ts": "2026-10-11T13:35:56+09:00",
+ "type": "dinner",
+ "time_budget": 0,
+ "servings": {
+  "adults": 2,
+  "kids": 1
+ },
+ "dishes": "main+side",
+ "mood": [],
+ "use_up": [],
+ "exclude": [],
+ "note": "",
+ "mode": "pick",
+ "status": "pending",
+ "error": null,
+ "result": null
+}
