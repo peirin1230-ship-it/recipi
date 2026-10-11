@@ -158,3 +158,25 @@ def test_convert_units_turns_grams_into_counts():
     changes = convert_units.convert_ingredients(r, common.Ingredients())
     assert [c[0] for c in changes] == ["小松菜"] and k["unit"] == "束" and k["qty"] == 0.5 and k["grams"] == 100
     assert convert_units.rewrite_texts(r, changes) == 1 and r["steps"][0]["text"].startswith("小松菜 1/2 束（100g）を切る。")
+
+
+def test_lean_meat_needs_tender_treatment():
+    r = load_fixture()
+    k = next(i for i in r["ingredients"] if i["name"] == "鶏もも肉")
+    k["name"] = "鶏むね肉"; k["pantry"] = "鶏むね肉"
+    for st in r["steps"]:
+        for key in ("title", "text", "cue", "caution"):
+            if st.get(key):
+                st[key] = st[key].replace("片栗粉", "小麦粉").replace("弱火", "中火").replace("火を止め", "火を消し")
+    errs = validate.validate_recipe(r, ctx())
+    assert any("ぱさつきやすい" in e for e in errs), errs
+    r["steps"][0]["text"] += " 塩と砂糖を揉み込んで 15 分おく（ブライン）。"
+    assert not any("ぱさつきやすい" in e for e in validate.validate_recipe(r, ctx()))
+    # 低温調理器を使っていれば手当ての言葉が無くても合格
+    r2 = load_fixture(); k2 = next(i for i in r2["ingredients"] if i["name"] == "鶏もも肉"); k2["name"] = "ささみ"
+    for st in r2["steps"]:
+        for key in ("title", "text", "cue", "caution"):
+            if st.get(key):
+                st[key] = st[key].replace("片栗粉", "小麦粉").replace("弱火", "中火").replace("火を止め", "火を消し")
+    r2["equipment"].append("sous-vide")
+    assert not any("ぱさつきやすい" in e for e in validate.validate_recipe(r2, ctx()))

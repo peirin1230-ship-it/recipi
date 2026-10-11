@@ -39,6 +39,11 @@ def _band_index(band: str | None) -> int:
     return BANDS.index(band) if band in BANDS else len(BANDS) - 1
 
 
+# ぱさつきやすい食材（脂の少ない肉・魚）と、柔らかくする手当ての言葉。手当てが無ければ不合格
+LEAN_INGREDIENTS = ("鶏むね", "ささみ", "鶏ささみ", "豚ヒレ", "たら", "鶏胸")
+TENDER_WORDS = ("低温調理", "ブライン", "塩水", "片栗粉", "そぎ切り", "叩", "余熱", "蒸し焼き", "蒸し", "休ませ", "火を止め", "ヨーグルト", "塩麹", "マヨネーズ", "下味", "揉み込")   # 砂糖・弱火・漬け は他の理由でも出るので外す
+SOUS_VIDE_TYPES = ("sous_vide",)
+
 COUNT_UNITS = {"本", "個", "枚", "束", "丁", "株", "袋", "切れ", "パック", "缶", "玉", "片", "節", "房", "尾", "杯", "かけ"}
 
 _TITLE_STRIP = str.maketrans("", "", " \u3000・、。，,.（）()「」『』【】!！?？")
@@ -252,6 +257,18 @@ def validate_recipe(recipe: dict, ctx: dict | None = None) -> list[str]:
                 per = (m or {}).get("per_unit_g")
                 hint = f"（1 {mu} ≈ {per}g なので {i.get('qty')}g は {fmt_fraction(float(i.get('qty')) / per)} {mu} くらい）" if per and isinstance(i.get("qty"), (int, float)) else f"（1/2 {mu} なら qty 0.5）"
                 errors.append(f"「{i.get('name')}」は {mu} で数える物。g ではなく {mu} で書き{hint}、g は grams に併記する")
+
+    # ---- ぱさつきやすい食材: 低温調理器を使うか、柔らかくする手当て（08_tender）が手順に書いてあること ----
+    lean = [i.get("name") for i in r["ingredients"] if any(k in str(i.get("name", "")) for k in LEAN_INGREDIENTS)]
+    if lean:
+        texts = " ".join(str(st.get(k) or "") for st in r["steps"] for k in ("title", "text", "cue", "caution"))
+        sv_ids = set()
+        eq = ctx.get("equipment")
+        if eq:
+            sv_ids = {a.get("id") for a in (eq.get("appliances") or []) if a.get("type") in SOUS_VIDE_TYPES}
+        uses_sv = any((st.get("heat") or {}).get("equipment") in sv_ids for st in r["steps"]) or any(e in sv_ids for e in r["equipment"])
+        if not uses_sv and not any(w in texts for w in TENDER_WORDS):
+            errors.append("「" + "、".join(lean) + "」はぱさつきやすい。低温調理器を使うか、柔らかくする手当て（ブライン・片栗粉・そぎ切り・余熱・蒸し焼きなど。knowledge の 08_tender）を手順に書く")
 
     # ---- 工程の材料（steps[].ingredients）: 材料表に無い名前は不合格。量のある材料はどこかの工程に出す ----
     if any("ingredients" in st for st in r["steps"]):
