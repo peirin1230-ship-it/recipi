@@ -180,3 +180,10 @@ def test_lean_meat_needs_tender_treatment():
                 st[key] = st[key].replace("片栗粉", "小麦粉").replace("弱火", "中火").replace("火を止め", "火を消し")
     r2["equipment"].append("sous-vide")
     assert not any("ぱさつきやすい" in e for e in validate.validate_recipe(r2, ctx()))
+
+
+def test_one_dish_rule_only_when_generating():
+    r = load_fixture()                                   # fixture は 2 品（古い形）
+    assert validate.validate_recipe(r, ctx()) == []       # 普段の検査では通る
+    errs = validate.validate_recipe(r, ctx(one_dish=True))
+    assert any("1 レシピ 1 品" in e for e in errs)

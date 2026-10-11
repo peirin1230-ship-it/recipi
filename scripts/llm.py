@@ -152,8 +152,8 @@ class LLM:
             r = self.mock_responses[name]
             return r.pop(0) if isinstance(r, list) else r
         fixtures = {
-            "recipe": "tests/fixtures/recipe_teriyaki.json",
-            "recipe_detail": "tests/fixtures/recipe_teriyaki.json",
+            "recipe": "tests/fixtures/recipe_teriyaki_split.json",         # 1 レシピ 1 品（主菜 + side_recipes）
+            "recipe_detail": "tests/fixtures/recipe_teriyaki_split.json",
             "revise": "tests/fixtures/revise_teriyaki.json",
             "pantry_photo": "tests/fixtures/pantry_photo.json",
             "photo_note": "tests/fixtures/photo_note.json",

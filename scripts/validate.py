@@ -105,6 +105,8 @@ def validate_recipe(recipe: dict, ctx: dict | None = None) -> list[str]:
     if errors:
         return errors
     dish_names = {d.get("name") for d in r["dishes"]}
+    if ctx.get("one_dish") and len(r["dishes"]) != 1:
+        errors.append(f"1 レシピ 1 品。dishes が {len(r['dishes'])} 品ある。副菜・汁物は side_recipes に別のレシピとして出す")
 
     # ---- 重複（一覧にある料理名・退けた料理名と同じなら不合格。主菜の重複は指示で避ける） ----
     taken = {norm_title(t) for t in (ctx.get("existing_titles") or []) if t}

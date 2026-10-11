@@ -247,6 +247,8 @@ h4.dish { margin: 14px 0 4px; font-size: 15.5px; font-weight: 800; }
 .rc-photo { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 18px; background: var(--chip); margin: 8px 0 10px; }
 .ph { display: flex; align-items: center; gap: 14px; margin: 8px 0 10px; padding: 14px 16px; border-radius: 18px; background: linear-gradient(135deg, var(--chip), var(--card-2)); color: var(--text-2); font-size: 13.5px; line-height: 1.6; }
 .ph .ic { width: 44px; height: 44px; stroke-width: 1.4; color: var(--accent); flex-shrink: 0; }
+.together { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 8px; margin: 10px 0 0; }
+.together > .sub { margin-right: 2px; }
 .rc-meta { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 14px; color: var(--text-2); margin: 4px 0 8px; }
 .rc-meta b { color: var(--text); font-size: 16px; }
 .tags { display: flex; flex-wrap: wrap; gap: 5px; margin: 6px 0; }

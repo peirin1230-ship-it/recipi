@@ -92,6 +92,7 @@ RECIPE_OUTPUT = _obj({
     "infeasible_reason": _s(True),
     "nearest_options": _arr(_obj({"title": _s(), "minutes": _i(), "why": _s()})),
     "recipe": {"anyOf": [RECIPE, {"type": "null"}]},
+    "side_recipes": _arr(RECIPE),      # 副菜・汁物。1 レシピ 1 品なので、主菜（recipe）とは別のレシピにする
     "alternatives": _arr(ALTERNATIVE),
 })
 

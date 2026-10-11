@@ -35,7 +35,7 @@ TYPE_TO_ACTION = {
     "suggest_items": "suggest_items",
 }
 TYPE_NOTES = {
-    "dinner": "夕食。主菜＋副菜（注文の dishes に従う）。",
+    "dinner": "夕食。1 レシピ 1 品: recipe は主菜 1 本。注文の dishes が main+side なら副菜を side_recipes に 1 本、main+side+soup なら副菜と汁物を 1 本ずつ、main / onepot なら side_recipes は空。",
     "prep": "翌日分の仕込み。翌日に「温めるだけ・焼くだけ」で出せる所まで作る。日持ち（keep）を必ず書き、当日の仕上げ工程を最後の手順に分けて書く。",
     "breakfast": "朝食。5〜15 分。主食＋1 品。火を使う工程は 1 つまで。",
     "lunchbox": "弁当。冷めてもおいしい物。汁気を出さない。前夜の残りがあれば使う。詰め方を最後の手順に書く。",
@@ -218,6 +218,7 @@ def request_block(ctx: Context, req: dict, extra: str = "", *, dedupe: bool = Tr
         "\n\n# 在庫（pantry.json。staples は ok/low の物だけ。無い物は使えない）\n" + ydump(pantry) +
         "\n\n# 注文\n" + ydump(order) + time_text +
         f"\n- 注文の種類: {TYPE_NOTES.get(req.get('type'), '')}"
+        "\n- 1 レシピ 1 品。注文の dishes: main = 主菜 1 本だけ / main+side = 主菜 + 副菜 1 本（side_recipes）/ main+side+soup = 主菜 + 副菜 + 汁物 / onepot = 一品だけ。副菜・汁物は主菜の待ち時間に作れる 10 分前後にし、それぞれ材料・手順・段取り表・保存・片付けを完結させる。"
         f"\n- 今日: {common.today()}（旬の判断に使う）"
     )
     if req.get("mode") == "pick":
@@ -230,8 +231,8 @@ def request_block(ctx: Context, req: dict, extra: str = "", *, dedupe: bool = Tr
     return {"type": "text", "text": text}
 
 
-def make_meta(ctx: Context, recipe: dict, req: dict, version_info: dict, *, rid: str | None = None, **kw) -> dict:
-    rid = rid or unique_recipe_id(recipe.get("title_roman") or recipe["title"])
+def make_meta(ctx: Context, recipe: dict, req: dict, version_info: dict, *, rid: str | None = None, taken_ids: set | None = None, **kw) -> dict:
+    rid = rid or unique_recipe_id(recipe.get("title_roman") or recipe["title"], taken_ids)
     servings = req.get("servings") or ctx.family.get("meals", {}).get("dinner_default", {"adults": 2, "kids": 1})
     servings = {"adults": int(servings.get("adults", 2)), "kids": int(servings.get("kids", 0))}
     return render_recipe.build_meta(
@@ -239,10 +240,10 @@ def make_meta(ctx: Context, recipe: dict, req: dict, version_info: dict, *, rid:
         rtype=req.get("type", "dinner"), speed_factor=ctx.speed_factor, generated_by=version_info, **kw)
 
 
-def unique_recipe_id(title_roman: str) -> str:
+def unique_recipe_id(title_roman: str, taken_ids: set | None = None) -> str:
     base = common.recipe_id_for(title_roman)
     rid, n = base, 2
-    while os.path.exists(common.path("recipes", f"{rid}.md")):
+    while os.path.exists(common.path("recipes", f"{rid}.md")) or rid in (taken_ids or set()):
         rid = f"{base}-{n}"
         n += 1
     return rid
@@ -259,7 +260,7 @@ def generate_recipe(ctx: Context, L: llmmod.LLM, req: dict, *, name: str = "reci
     servings = req.get("servings") or ctx.family.get("meals", {}).get("dinner_default", {})
     vctx = {"equipment": ctx.equipment, "family": ctx.family, "pantry": ctx.pantry, "ingredients": ctx.ingredients,
             "overrides": ctx.overrides, "budget": req.get("time_budget"), "speed_factor": ctx.speed_factor,
-            "servings": servings, "config": ctx.cfg, "existing_titles": taken}
+            "servings": servings, "config": ctx.cfg, "existing_titles": taken, "one_dish": True}
     vctx.update(validate_ctx_extra or {})
     retries = int(ctx.cfg["generation"].get("max_retries", 2))
     errors: list[str] = []
@@ -269,6 +270,17 @@ def generate_recipe(ctx: Context, L: llmmod.LLM, req: dict, *, name: str = "reci
         if not data.get("feasible") or not data.get("recipe"):
             return data, L.total_usage(), []
         errors = validate.validate_recipe(data["recipe"], vctx)
+        # 副菜・汁物（side_recipes）も同じ検査。料理名は主菜・互い・一覧と被らない
+        seen_titles = {validate.norm_title(data["recipe"].get("title") or "")}
+        for side in data.get("side_recipes") or []:
+            st = (side or {}).get("title") or "（無題）"
+            errors += [f"副菜「{st}」: {e}" for e in validate.validate_recipe(side or {}, vctx)]
+            n = validate.norm_title(st)
+            if dedupe and n in {validate.norm_title(t) for t in taken if t}:
+                errors.append(f"副菜「{st}」は一覧にある料理（または退けた料理）と同じ。別の料理にする")
+            if n in seen_titles:
+                errors.append(f"副菜「{st}」が主菜か別の副菜と同じ料理名")
+            seen_titles.add(n)
         if dedupe:
             errors += validate.alternatives_errors(data["recipe"].get("title") or "", data.get("alternatives") or [], taken)
         if not errors:
@@ -324,12 +336,22 @@ def finish_recipe(ctx: Context, L: llmmod.LLM, req: dict, data: dict, usage: dic
         raise ValueError("検査に通らなかった: " + "; ".join(errors[:6]))
     if data.get("feasible") and data.get("recipe"):
         version_info = {"model": L.label, "prompt_version": data.get("_prompt_version", 0)}
-        meta = make_meta(ctx, data["recipe"], req, version_info)
-        rel = render_recipe.write_recipe(meta, ctx.equipment)
-        meta["memo"] = []
-        result["recipe_id"] = meta["id"]
-        result["recipe"] = meta
-        result["_paths"] = [rel]
+        # 1 レシピ 1 品: 主菜と副菜・汁物は別のファイル。together で互いをつなぐ
+        metas = [make_meta(ctx, data["recipe"], req, version_info)]
+        for side in data.get("side_recipes") or []:
+            metas.append(make_meta(ctx, side, req, version_info, taken_ids={m["id"] for m in metas}))
+        ids = [m["id"] for m in metas]
+        rels = []
+        for m in metas:
+            if len(ids) > 1:
+                m["together"] = [i for i in ids if i != m["id"]]
+            rels.append(render_recipe.write_recipe(m, ctx.equipment))
+            m["memo"] = []
+        result["recipe_id"] = metas[0]["id"]
+        result["recipe"] = metas[0]
+        result["side_recipe_ids"] = ids[1:]
+        result["side_recipes"] = metas[1:]
+        result["_paths"] = rels
     return result
 
 

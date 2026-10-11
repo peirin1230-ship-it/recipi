@@ -138,7 +138,9 @@ function fScore(r) {
 }
 
 // ---- レシピの読み方 ----
-const recipeById = id => state.recipes.find(r => r.id === id) || (state.current && state.current.recipe && state.current.recipe.id === id ? state.current.recipe : null);
+// 注文の結果に入っているレシピ（主菜と、1 レシピ 1 品で分けた副菜・汁物）
+function requestRecipes(req) { const res = req && req.result; if (!res) return []; return [res.recipe, ...(Array.isArray(res.side_recipes) ? res.side_recipes : [])].filter(r => r && r.id); }
+const recipeById = id => state.recipes.find(r => r.id === id) || (state.current && state.current.recipe && state.current.recipe.id === id ? state.current.recipe : null) || requestRecipes(state.current && state.current.request).find(r => r.id === id) || null;
 function currentRecipe() { const c = state.current; if (!c || !c.recipe) return null; return state.recipes.find(x => x.id === c.recipe.id) || c.recipe; }
 const avg = arr => arr.length ? arr.reduce((a, b) => a + b, 0) / arr.length : null;
 // 統計: 読み込んだ記録があればそこから（直近 5 回）、無ければ夜間ジョブが書いた stats
@@ -190,7 +192,7 @@ function setCurrent(recipe, request) {
   state.current = (recipe || request) ? { recipe: recipe || null, request: request || null } : null; state.detailView = '';
   if (request) lsSet(LS.current, { request }); else if (recipe) lsSet(LS.current, { recipe_id: recipe.id }); else lsDel(LS.current);
 }
-function openRecipe(id) { const r = recipeById(id); if (!r) { toast('そのレシピが見つからない', true); return; } setCurrent(r, null); renderRecipe(); decorateCards(); goTo('recipe'); }
+function openRecipe(id) { const r = recipeById(id); if (!r) { toast('そのレシピが見つからない', true); return; } const req = state.current && state.current.request; const keep = req && requestRecipes(req).some(x => x.id === id) ? req : null; setCurrent(r, keep); if (keep) lsSet(LS.current, { request: keep, open: id }); renderRecipe(); decorateCards(); goTo('recipe'); }
 
 // ======================================================================
 // 今夜（注文フォーム → requests/<id>.json → repository_dispatch → 5 秒ごとに読み直す）
@@ -359,6 +361,7 @@ function recipeBodyHTML(r, req, res) {
   <div class="tags">${(r.dishes || []).map(d => `<span>${esc(d.name)}<span class="sub">　${ROLE_JA[d.role] || esc(d.role || '')}</span></span>`).join('')}</div>
   <div class="tags">${(r.equipment || []).map(e => `<span class="eq">${esc(equipLabel(e))}</span>`).join('')}</div>
   <div class="tags">${(r.tags || []).map(tg => `<span>#${esc(tg)}</span>`).join('')}</div>
+  ${togetherHTML(r, req)}
   <div class="actions left">
     <button type="button" class="primary big" data-act="cook-open">${ic('timer')}作る</button>
     ${req && req.type !== 'weekly' ? `<button type="button" class="ghost" data-act="o-again">${ic('refresh')}ほかの案</button>` : ''}
@@ -382,6 +385,13 @@ function recipeBodyHTML(r, req, res) {
   const alts = res && Array.isArray(res.alternatives) ? res.alternatives : [];
   if (alts.length && req) h += `<h3 class="group">別案（タップで詳細を作る）</h3>${altsHTML(alts, req.id)}`;
   return h;
+}
+// 一緒に作るレシピ（主菜と、分けた副菜・汁物）。together の id を一覧か注文の結果から引く
+function togetherHTML(r, req) {
+  const ids = Array.isArray(r.together) ? r.together : requestRecipes(req).filter(x => x.id !== r.id).map(x => x.id);
+  if (!ids.length) return '';
+  const roleOf = x => { const d = (x.dishes || [])[0]; return d && ROLE_JA[d.role] ? ROLE_JA[d.role] : ''; };
+  return `<div class="together"><span class="sub">一緒に作る</span>${ids.map(id => { const x = recipeById(id); return x ? `<button type="button" class="chip" data-act="open-recipe" data-id="${esc(id)}">${esc(x.title)}${roleOf(x) ? `<span class="sub">${roleOf(x)}</span>` : ''}</button>` : `<span class="chip">${esc(id)}</span>`; }).join('')}</div>`;
 }
 const altsHTML = (alts, parentId) => `<ul class="alts">${alts.map((a, i) => `<li class="alt"><div class="t">${esc(a.title)} <span class="sub">${a.minutes != null ? `${a.minutes} 分` : ''}${a.kind === 'standard' ? '・定番' : a.kind === 'new' ? '・新しい' : ''}</span><small>${esc(a.why || '')}</small></div><button type="button" class="ghost small" data-act="o-detail" data-parent="${esc(parentId)}" data-alt="${i}">${ic('arrow-r')}詳細に</button></li>`).join('')}</ul>`;
 function timelineHTML(r) {
@@ -1141,7 +1151,7 @@ async function init() {
   loadOrder(); state.zukanSort = lsGetRaw(LS.zukan) || 'new'; state.listTab = lsGetRaw(LS.tab) || 'all';
   renderSky(); clearInterval(skyTick); skyTick = setInterval(renderSky, 5 * 60 * 1000);
   // 前回のレシピ・週の献立・考え中の注文を端末から戻す
-  const cur = lsGet(LS.current); if (cur && cur.request) setCurrent((cur.request.result || {}).recipe || null, cur.request); else if (cur && cur.recipe_id && recipeById(cur.recipe_id)) setCurrent(recipeById(cur.recipe_id), null);
+  const cur = lsGet(LS.current); if (cur && cur.request) { const rs = requestRecipes(cur.request); setCurrent(rs.find(r => r.id === cur.open) || rs[0] || null, cur.request); if (cur.open) lsSet(LS.current, { request: cur.request, open: cur.open }); } else if (cur && cur.recipe_id && recipeById(cur.recipe_id)) setCurrent(recipeById(cur.recipe_id), null);
   // 何も開いていなければレシピカードは空のまま（一覧から開く。前は最新のレシピを勝手に出していたので、一覧に入れた物が復活して見えた）
   // 端末に残ったレシピがリポジトリから消されていたら捨てる（recipes/<id>.md が 404）
   { const rid = state.current && state.current.recipe && state.current.recipe.id; if (rid && !inList(rid)) { try { if ((await gh.fetchRawText(`recipes/${rid}.md`)) === null) setCurrent(null, null); } catch { /* 読めないときは残す */ } } }

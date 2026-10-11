@@ -94,6 +94,8 @@ def render_body(meta: dict, equipment: dict | None = None) -> str:
     used.sort(key=lambda l: [x["id"] for x in lanes].index(l) if l in lane_label else 99)
 
     out = []
+    if meta.get("together"):
+        out.append("一緒に作る: " + "・".join(f"`{t}`" for t in meta["together"]) + "（1 レシピ 1 品。副菜・汁物は別のレシピ）\n")
     t = meta.get("time") or {}
     out.append(f"## 段取り表（{t.get('planned') or t.get('raw_estimate')} 分）\n")
     out.append("| 分 | " + " | ".join(lane_label.get(l, l) for l in used) + " |")

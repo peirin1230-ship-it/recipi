@@ -283,7 +283,7 @@ meals:
 | `use_up` | 使いたい物。ページの「使いたい物」チップで在庫から選ぶ（既定は空）。Generator は必ず使う |
 | `mode` | `auto`: 最適な 1 本を詳細まで生成し、別案 2 つは一行で出す（既定、1 往復）。`pick`: 候補 3 つを一行で出し、選んでから詳細（2 往復） |
 | `status` | `pending` → `running` → `done` / `error`（`error` に理由） |
-| `result` | 共通: `model` / `prompt_version` / `tokens` / `cost_usd` / `seconds`。レシピ系: `recipe_id`、`recipe`（§6.5 の front matter と同じ物。ページはこれをそのまま描く）、`alternatives: [{title, minutes, why, kind}]`、`feasible` / `infeasible_reason` / `nearest_options`。`pantry_photo`: `items: [{name, qty, unit, loc, confidence, known}]`、`staples: [{name, state}]`。`weekly`: `days: [{date, title, main_ingredients, minutes, why, kind}]`、`shopping`、`plan_path` |
+| `result` | 共通: `model` / `prompt_version` / `tokens` / `cost_usd` / `seconds`。レシピ系: `recipe_id`、`recipe`（主菜。§6.5 の front matter と同じ物。ページはこれをそのまま描く）、`side_recipe_ids` / `side_recipes`（副菜・汁物。1 レシピ 1 品なので別のレシピ）、`alternatives: [{title, minutes, why, kind}]`、`feasible` / `infeasible_reason` / `nearest_options`。`pantry_photo`: `items: [{name, qty, unit, loc, confidence, known}]`、`staples: [{name, state}]`。`weekly`: `days: [{date, title, main_ingredients, minutes, why, kind}]`、`shopping`、`plan_path` |
 
 ページは注文ファイルを PUT したあと `POST /repos/{owner}/{repo}/dispatches` に `{"event_type": "agent", "client_payload": {"request_id": "<id>"}}` を送る。Actions（§12.2）が `type` を見て処理を分ける。
 
@@ -519,6 +519,7 @@ Generator は JSON（structured output。`output_config.format` で JSON スキ�
 | 失敗しやすい点 | 工程ごとに最大 1 つ。学習済みの器具の癖（`equipment_notes`）を優先して使う |
 | ぱさつきやすい食材 | 鶏むね・ささみ・豚ヒレ・たらを使うなら、低温調理器を使うか、柔らかくする手当て（ブライン・片栗粉・そぎ切り・余熱・蒸し焼きなど。`knowledge/basics/08_tender.md`）が手順に無いと不合格。低温調理器は仕込み（`prep`）や時間無制限のとき本命にする |
 | 道具を活かす | ぶんぶんチョッパー・スライサー・魚焼きグリル・トースター・ミキサー・炊飯器・電気ケトル・レンジ・低温調理器を、速く・楽に・うまくなる工程で使う（指示。無理には使わない） |
+| 1 品 | 1 レシピ 1 品。`dishes` は 1 つ、`title` は料理名 1 つ。副菜・汁物は `side_recipes` に別のレシピとして返し、スクリプトが別ファイルに書いて `together`（一緒に作るレシピの id）でつなぐ。注文の `dishes`（main / main+side / main+side+soup / onepot）はレシピの本数を決める。生成時の検査で 2 品以上は不合格（古いレシピは対象外） |
 | 工程の材料 | 各工程に `ingredients`（その工程で使う材料の `name`）。ページと Markdown は材料表から量を引いて「材料: 醤油 大さじ 1・…」と添える。材料表に無い名前、どの工程にも出てこない量のある材料は不合格。古いレシピ（`ingredients` 無し）はページが手順の文から材料名を拾う |
 | 重複 | 一覧にある料理名、一覧から消された料理名（直近 `no_repeat_proposed_days` 日）、注文の `exclude`（「ほかの案」で退けた物）と同じ `title` は不合格。別案の料理名も本命・互い・一覧と同じなら不合格。主菜の重複、最近提案した物、最近作った物は指示で避ける（`no_repeat_days` / `no_repeat_proposed_days`）。別案の詳細化（`recipe_detail`）と改訂では検査しない |
 | 代替 | 在庫に無い物は使わない。使う場合は `substitute` に在庫の物を書く |
