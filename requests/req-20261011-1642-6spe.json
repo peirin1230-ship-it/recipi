@@ -1,0 +1,19 @@
+{
+ "id": "req-20261011-1642-6spe",
+ "ts": "2026-10-11T16:42:07+09:00",
+ "type": "prep",
+ "time_budget": 0,
+ "servings": {
+  "adults": 2,
+  "kids": 1
+ },
+ "dishes": "main+side",
+ "mood": [],
+ "use_up": [],
+ "exclude": [],
+ "note": "",
+ "mode": "auto",
+ "status": "pending",
+ "error": null,
+ "result": null
+}
