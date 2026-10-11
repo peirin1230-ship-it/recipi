@@ -13,7 +13,44 @@
  "exclude": [],
  "note": "",
  "mode": "pick",
- "status": "pending",
+ "status": "done",
  "error": null,
- "result": null
+ "result": {
+  "feasible": true,
+  "infeasible_reason": null,
+  "nearest_options": [],
+  "alternatives": [
+   {
+    "title": "豚ロース肉の照り焼きとなすのしらすおろし風和え",
+    "minutes": 30,
+    "why": "豚ロース×フライパンで焼く照り焼き。なすはレンジで蒸してしらすと和え、鍋を増やさない。",
+    "kind": "new"
+   },
+   {
+    "title": "鶏むね肉の片栗粉焼きとごぼうのごまマヨサラダ",
+    "minutes": 40,
+    "why": "鶏むね肉に片栗粉をまぶして焼くとしっとり。ごぼうは茹でてごまマヨで和え、食感の違う副菜にする。",
+    "kind": "new"
+   },
+   {
+    "title": "鶏むね肉とブロッコリーのミルクグラタン（トースター）",
+    "minutes": 45,
+    "why": "牛乳と片栗粉でとろみを付けた洋風。子どもの分は取り分けて薄味にしやすく、トースターで焼き目を付ける。",
+    "kind": "new"
+   }
+  ],
+  "recipe_id": null,
+  "recipe": null,
+  "model": "claude-code",
+  "prompt_version": 5,
+  "tokens": {
+   "input": 0,
+   "output": 0,
+   "cache_read": 0,
+   "cache_write": 0
+  },
+  "cost_usd": 0.0,
+  "seconds": 0
+ },
+ "finished": "2026-10-11T13:45:57+09:00"
 }
