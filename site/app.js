@@ -118,9 +118,9 @@ async function appendLog(entry) {
   state.months.set(ym, { sha: res.sha, lines: res.text.split('\n').filter(l => l.trim()) });
 }
 // 同じ id の行を書き換える（あとで評価を足すとき）
-async function rewriteLog(id, date, fn) {
+async function rewriteLog(id, date, fn, label = '評価を追記') {
   const ym = ymOf(date);
-  const res = await gh.mutateFile(`logs/${ym}.jsonl`, text => { let hit = false; const lines = (text || '').split('\n').filter(l => l.trim()).map(l => { const e = parseLine(l); if (e && e.id === id) { hit = true; return JSON.stringify(fn(e)); } return l; }); if (!hit) throw new Error('その記録が見つからない（↻ で更新）'); return lines.join('\n') + '\n'; }, gh.msg(`log ${id} 評価を追記`));
+  const res = await gh.mutateFile(`logs/${ym}.jsonl`, text => { let hit = false; const lines = (text || '').split('\n').filter(l => l.trim()).map(l => { const e = parseLine(l); if (e && e.id === id) { hit = true; return JSON.stringify(fn(e)); } return l; }); if (!hit) throw new Error('その記録が見つからない（↻ で更新）'); return lines.join('\n') + '\n'; }, gh.msg(`log ${id} ${label}`));
   state.months.set(ym, { sha: res.sha, lines: res.text.split('\n').filter(l => l.trim()) });
 }
 
@@ -354,7 +354,7 @@ function renderRecipe() {
 function recipeBodyHTML(r, req, res) {
   const st = statsOf(r); const photo = photoOf(r); const view = detailViewOf(r); const t = r.time || {}; const sv = r.servings || {};
   const ls = logsOf(r.id).sort((a, b) => logKey(b).localeCompare(logKey(a)));
-  const memo = ls.length ? ls.map(memoLine) : (r.memo || []);
+  const memo = ls.length ? ls.map(e => esc(memoLine(e)) + (e.photo || !e.id ? '' : latePhotoHTML(e))) : (r.memo || []).map(esc);
   let h = `<h3 class="rc-title">${esc(r.title)} ${statusBadge(r.status)}${r.version > 1 ? ` <span class="badge ind">v${r.version}</span>` : ''}</h3>
   ${photo ? `<img class="rc-photo" src="${esc(gh.rawUrl(photo))}" alt="${esc(r.title)}" loading="lazy">` : `<div class="ph">${ic('bowl')}<div>${esc(r.image_text || '完成イメージはまだ無い')}<br><span class="sub">作ると写真がここに入る</span></div></div>`}
   <div class="rc-meta"><span>${ic('clock')} <b>${t.planned ?? '—'}</b> 分 <span class="sub">／ ${t.budget === 0 ? '時間無制限' : `予算 ${t.budget ?? '—'} 分`}${isNum(t.active) ? `・手を動かす ${t.active} 分` : ''}</span></span><span>大人 ${sv.adults ?? '—'}・子 ${sv.kids ?? '—'}</span>${st.cooked ? `<span>作った ${st.cooked} 回${st.r_avg != null ? `・R ${st.r_avg}` : ''}${st.f_avg != null ? `・F ${st.f_avg}` : ''}</span>` : ''}</div>
@@ -382,7 +382,7 @@ function recipeBodyHTML(r, req, res) {
   if (r.cleanup) h += `<h3 class="group">片付け</h3><div class="kv"><b>食洗機</b><span>${(r.cleanup.dishwasher || []).map(e => esc(equipLabel(e))).join('、') || '—'}</span><b>手洗い</b><span>${(r.cleanup.hand || []).map(e => esc(equipLabel(e))).join('、') || '—'}</span>${r.cleanup.note ? `<b>メモ</b><span>${esc(r.cleanup.note)}</span>` : ''}</div>`;
   if (Array.isArray(r.changes) && r.changes.length) { const sup = r.supersedes ? recipeById(r.supersedes) : null; h += `<h3 class="group">改訂の内容${sup ? `（改訂元: ${esc(sup.title)}）` : ''}</h3><ul class="changes">${r.changes.map(ch => `<li>${esc(ch.what)}<br><small>${esc(ch.why)}</small></li>`).join('')}</ul>`; }
   else if (r.supersedes) { const sup = recipeById(r.supersedes); h += `<p class="note">改訂元: ${sup ? `<button type="button" class="ghost tiny" data-act="open-recipe" data-id="${esc(sup.id)}">${esc(sup.title)}</button>` : esc(r.supersedes)}</p>`; }
-  h += `<h3 class="group">作ったときのメモ</h3>${memo.length ? `<ul class="memo">${memo.map(m => `<li>${esc(m)}</li>`).join('')}</ul>` : '<p class="empty">まだ作っていない。作ったら「作る」→「できた！」で記録。</p>'}`;
+  h += `<h3 class="group">作ったときのメモ</h3>${memo.length ? `<ul class="memo">${memo.map(m => `<li>${m}</li>`).join('')}</ul>` : '<p class="empty">まだ作っていない。作ったら「作る」→「できた！」で記録。</p>'}`;
   const alts = res && Array.isArray(res.alternatives) ? res.alternatives : [];
   if (alts.length && req) h += `<h3 class="group">別案（タップで詳細を作る）</h3>${altsHTML(alts, req.id)}`;
   return h;
@@ -680,6 +680,26 @@ async function retryPhoto() {
   const ok = await run(async () => { const cur = await gh.getFile(p.path); await gh.putFile(p.path, bytes, gh.msg(`photo ${p.recipe_id || ''} 再送`), cur.sha); }, '写真を送った');
   if (ok) { lsDel(LS.photo); render(); }
 }
+// あとから写真を足す（§8.3）。記録の行（logs）の photo を書き換えるだけ。顔写真（§8.4）と図鑑はログから引くので、それで反映される
+function latePhotoHTML(e, cls = 'tiny') {
+  if (!e || !e.id || !validDate(e.date)) return '';
+  const attrs = `data-act="late-photo" data-log="${esc(e.id)}" data-date="${esc(e.date)}"`;
+  return `<span class="late-photo"><label class="ghost ${cls} photo-btn">${ic('image')}写真を足す<input type="file" accept="image/*" ${attrs} aria-label="ライブラリから写真を足す"></label><label class="ghost ${cls} photo-btn">${ic('camera')}撮る<input type="file" accept="image/*" capture="environment" ${attrs} aria-label="撮って写真を足す"></label></span>`;
+}
+async function addPhotoLater(id, date, file) {
+  if (!file || !requireToken()) return;
+  const e = allLogs().find(x => x.id === id); if (!e) { toast('その記録が見つからない（↻ で更新）', true); return; }
+  let bytes; try { bytes = await resizeImage(file); } catch (err) { toast(err.message, true); return; }
+  let photoFailed = false;
+  const ok = await run(async () => {
+    const path = await nextPhotoPath(e.recipe_id, date);
+    try { await gh.putFile(path, bytes, gh.msg(`photo ${e.recipe_id} ${date}`)); }
+    catch (err) { photoFailed = true; lsSet(LS.photo, { path, b64: gh.b64bytes(bytes), recipe_id: e.recipe_id }); console.warn(err); }
+    await rewriteLog(id, date, x => { x.photo = path; return x; }, '写真を追記');
+  });
+  if (!ok) return; render();
+  toast(photoFailed ? '記録に写真を付けた。写真は送れなかった → 記録カードの「写真を再送」' : '写真を足した。図鑑とレシピの顔に入る', photoFailed);
+}
 
 // ======================================================================
 // 在庫（pantry.json はページが書く。文字・写真・kaji-quest の取り込み。正確さより「だいたい」）
@@ -953,6 +973,7 @@ function renderWeek() {
   const errMed = median(wk.filter(e => isNum(e.planned_minutes) && e.planned_minutes > 0 && isNum(e.actual_minutes)).map(e => Math.abs(e.actual_minutes - e.planned_minutes) / e.planned_minutes));
   const weeks = []; for (let i = 11; i >= 0; i--) { const a = addDays(mon, -7 * i), b = addDays(a, 6); const es = logs.filter(e => e.date >= a && e.date <= b); weeks.push({ a, n: es.length, f: avg(es.map(e => e.f_score).filter(isNum)), r: avg(es.map(e => e.r_score).filter(isNum)) }); }
   const later = logs.filter(e => e.ratings && (e.ratings.partner == null || e.ratings.kid == null) && validDate(e.date) && daysBetween(e.date, t) <= 30).sort((a, b) => logKey(b).localeCompare(logKey(a)));
+  const noPhoto = logs.filter(e => !e.photo && e.id && validDate(e.date) && daysBetween(e.date, t) <= 30).sort((a, b) => logKey(b).localeCompare(logKey(a)));
   const L = state.learned || {}; const budget = +((cfg().generation || {}).budget_usd_per_month) || 0; const digest = state.digests[0];
   const named = ids => (ids || []).map(id => { const r = recipeById(id); return r ? `<button type="button" class="ghost tiny" data-act="open-recipe" data-id="${esc(id)}">${esc(r.title)}</button>` : esc(id); }).join('、');
   let h = head('chart', '今週', `${jaShort(mon)}〜${jaShort(sun)}${state.liveError ? ' ・ 記録を読めていない' : ''}`) + `
@@ -963,6 +984,8 @@ function renderWeek() {
       : ed === 'kid' ? `<span class="seg">${['all', 'half', 'little', 'none', 'absent'].map(k => `<button type="button" class="tiny-btn" data-act="later-kid" data-log="${esc(e.id)}" data-date="${esc(e.date)}" data-v="${k}">${KID_JA[k]}</button>`).join('')}</span>`
       : need.map(f => `<button type="button" class="ghost small" data-act="later-edit" data-id="${esc(e.id)}" data-field="${f}">${f === 'partner' ? 'パートナー' : '子ども'}の評価を入れる</button>`).join('');
     return `<div class="later"><div class="t">${esc(r ? r.title : e.recipe_id)}<small>${jaDate(e.date)}</small></div><div class="ops">${ctl}</div></div>`; }).join('') : '<p class="empty">無し</p>'}
+  <h3 class="group">写真がない記録 ${noPhoto.length} 件</h3>${noPhoto.length ? `<p class="note">あとからでも足せる（30 日以内。古い物はレシピの「作ったときのメモ」から）</p>` + noPhoto.map(e => { const r = recipeById(e.recipe_id);
+    return `<div class="later"><div class="t">${esc(r ? r.title : e.recipe_id)}<small>${jaDate(e.date)}</small></div><div class="ops">${latePhotoHTML(e, 'small')}</div></div>`; }).join('') : '<p class="empty">無し</p>'}
   <h3 class="group">今月</h3><div class="kv"><b>API 費用</b><span>${state.cost == null ? '—' : `$${state.cost.toFixed(2)}`}${budget ? ` ／ 上限 $${budget}` : ''}</span></div>`;
   if ((L.standards || []).length || (L.needs_revision || []).length || (L.retired || []).length) h += `<h3 class="group">学習の結果${L.updated ? ` <span class="sub">${esc(String(L.updated))}</span>` : ''}</h3><div class="kv">${(L.standards || []).length ? `<b>定番</b><span>${named(L.standards)}</span>` : ''}${(L.needs_revision || []).length ? `<b>改訂待ち</b><span>${named(L.needs_revision)}</span>` : ''}${(L.retired || []).length ? `<b>封印</b><span>${named(L.retired)}</span>` : ''}</div>`;
   if (digest) { const props = digest.meta && (digest.meta.proposals || digest.meta.next_week || digest.meta.suggestions);
@@ -1092,6 +1115,7 @@ document.addEventListener('change', ev => {
   const t = ev.target;
   if (t.id === 'rec-photo-cam' || t.id === 'rec-photo-lib') { setRecordPhoto(t.files && t.files[0]); t.value = ''; }
   else if (t.id === 'p-photo') { pantryPhoto(t.files && t.files[0]); t.value = ''; }
+  else if (t.dataset.act === 'late-photo') { addPhotoLater(t.dataset.log, t.dataset.date, t.files && t.files[0]); t.value = ''; }
   else if (t.dataset.act === 'diff-chk' && state.diff) { const r = state.diff.rows[+t.dataset.i]; if (r) r.checked = t.checked; }
   else if (t.dataset.act === 'rec-pc-gone' && rec) { const p = rec.pantry[+t.dataset.i]; if (p) p.gone = t.checked; }
   else if (t.id === 'detail-default') { lsSetRaw(LS.detail, t.value === 'auto' ? '' : t.value); state.detailView = ''; renderRecipe(); decorateCards(); }

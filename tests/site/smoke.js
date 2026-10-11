@@ -44,6 +44,7 @@ async function setup(browser, viewport) {
     const heads = await page.$$eval('#app .card > h2 .h-t', els => els.map(e => e.textContent.trim()));
     for (const h of ['今夜', 'レシピ', '記録', '在庫', '道具', '図鑑', 'レシピ一覧', '今週']) assert(heads.includes(h), `card heading present: ${h}`);
     assert(await page.$eval('#recipe .rc-title', e => e.textContent.includes('鶏もも肉の照り焼き')), 'sample recipe title rendered');
+    assert(await page.$$eval('#recipe .memo li', li => li.length === 1 && li[0].textContent.includes('2026-10-06') && !!li[0].querySelector('input[data-act="late-photo"][data-log="abcabcabcabc"]')), 'memo line from the log without a photo offers 写真を足す');
     const laneCols = await page.$$eval('#recipe table.tl thead th', ths => ths.length - 1);
     assert(laneCols === 3, `段取り表 has 3 lane columns (got ${laneCols})`);
     const laneLabels = await page.$$eval('#recipe table.tl thead th', ths => ths.map(t => t.textContent));

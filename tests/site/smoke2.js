@@ -76,6 +76,15 @@ const PNG = Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAEklEQVR
   const lpk = puts.slice(b4k).find(p => p.path === 'logs/2026/10.jsonl'); const llk = lpk && unb64(lpk.body.content).trim().split('\n').map(l => JSON.parse(l));
   assert(llk && llk[1].id === 'kidkidkidkid' && llk[1].ratings.kid === 'half' && llk[1].f_score === 3.3, `kid rating added later with new F: ${llk && JSON.stringify(llk[1].ratings)} F=${llk && llk[1].f_score}`);
   assert(await page.$eval('#week', e => e.textContent.includes('聞いてない評価 0 件')), '聞いてない評価 count reaches 0');
+  // 4b) 写真をあとから足す（今週の「写真がない記録」→ ライブラリ → photos/ に PUT → 行の photo を書き換え）
+  assert(await page.$eval('#week', e => e.textContent.includes('写真がない記録 2 件')) && await page.$$eval('#week input[data-act="late-photo"][data-log="abcabcabcabc"]', i => i.length === 2 && i.filter(x => x.hasAttribute('capture')).length === 1), 'records without a photo are listed in 今週 with library + camera inputs');
+  const b4p = puts.length; await page.setInputFiles('#week input[data-act="late-photo"][data-log="abcabcabcabc"]:not([capture])', { name: 'dish.png', mimeType: 'image/png', buffer: PNG });
+  await page.waitForFunction(() => document.querySelector('#toast') && document.querySelector('#toast').textContent.includes('写真を足した'), null, { timeout: 10000 }); await page.waitForTimeout(300);
+  const pp4 = puts.slice(b4p).find(p => p.path.startsWith('photos/')); const lp4 = puts.slice(b4p).find(p => p.path === 'logs/2026/10.jsonl'); const ll4 = lp4 && unb64(lp4.body.content).trim().split('\n').map(l => JSON.parse(l));
+  assert(pp4 && pp4.path === 'photos/r-20261008-torimomo-teriyaki/20261006-1.jpg' && /^[A-Za-z0-9+/=]+$/.test(pp4.body.content) && pp4.body.message.startsWith('[skip ci] photo'), `photo PUT to photos/<recipe>/<ymd>-1.jpg with [skip ci]: ${pp4 && pp4.path}`);
+  assert(ll4 && ll4.length === 2 && ll4[0].id === 'abcabcabcabc' && ll4[0].photo === 'photos/r-20261008-torimomo-teriyaki/20261006-1.jpg' && ll4[0].ratings.partner === 5 && ll4[1].photo === null, `log line rewritten in place with the photo path, ratings kept: ${ll4 && ll4[0].photo}`);
+  assert(await page.$eval('#week', e => e.textContent.includes('写真がない記録 1 件')), '写真がない記録 count updates');
+  assert(await page.$$eval('#zukan .zk img', i => i.length) === 1 && await page.$eval('#zukan', e => e.textContent.includes('写真 1 枚')), 'zukan now shows the recipe with the photo added later');
   // 5) なくなった（在庫はあるかないかだけ。数・期限・捨てたは無い）
   assert(await page.$('#pantry [data-act="p-discard"]') === null && await page.$('#pantry [data-act="p-qty"]') === null && !(await page.$eval('#pantry', e => /期限|捨てた|少ない/.test(e.textContent))), 'pantry has no discard/qty controls and no expiry or low text');
   const nItems = await page.$$eval('#pantry .pitem', p => p.length);
