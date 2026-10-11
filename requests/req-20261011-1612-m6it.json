@@ -13,7 +13,44 @@
  "exclude": [],
  "note": "",
  "mode": "pick",
- "status": "pending",
+ "status": "done",
  "error": null,
- "result": null
+ "result": {
+  "feasible": true,
+  "infeasible_reason": null,
+  "nearest_options": [],
+  "alternatives": [
+   {
+    "title": "鶏むね肉の低温調理サラダチキンとかぼちゃの塩昆布和え（翌日分の仕込み）",
+    "minutes": 110,
+    "why": "低温調理で鶏むねを63℃・1時間30分仕込み、翌日は切って和えるだけ。子どもの分は取り分けて中まで加熱する。",
+    "kind": "new"
+   },
+   {
+    "title": "鶏むね肉となすの南蛮漬け風（翌日分の仕込み）",
+    "minutes": 40,
+    "why": "揚げずに焼いて甘酢に漬け、一晩置くと味がなじむ。翌日は出すだけ。",
+    "kind": "new"
+   },
+   {
+    "title": "かぼちゃとコーンの豆腐ハンバーグ（蒸し焼き）とブロッコリーのおかか和え（翌日分の仕込み）",
+    "minutes": 45,
+    "why": "豆腐と野菜中心でやわらかく、子どもが手づかみしやすい小さめの形。翌日は温めるだけ。",
+    "kind": "new"
+   }
+  ],
+  "recipe_id": null,
+  "recipe": null,
+  "model": "claude-code",
+  "prompt_version": 5,
+  "tokens": {
+   "input": 0,
+   "output": 0,
+   "cache_read": 0,
+   "cache_write": 0
+  },
+  "cost_usd": 0.0,
+  "seconds": 0
+ },
+ "finished": "2026-10-11T16:13:27+09:00"
 }
