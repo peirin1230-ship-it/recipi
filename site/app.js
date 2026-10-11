@@ -504,7 +504,7 @@ function cookIngredientsHTML(r, title = '') {
   ings.forEach(i => { const f = String(i.for || ''); const d = dishes.find(x => f && (f === x || x.includes(f) || f.includes(x))); const key = d || f || 'ほか'; if (!groups.has(key)) groups.set(key, []); groups.get(key).push(i); });
   const sv = r.servings || {};
   const li = i => `<li><span class="n">${esc(i.name)}${i.substitute ? `<small>代替: ${esc(i.substitute)}</small>` : ''}</span><span class="q num">${qtyText(i)}</span></li>`;
-  return `<details class="ck-ing" open><summary>${ic('list')}材料${title ? `<span class="ck-rt-s">${esc(title)}</span>` : ''}<span class="sub">大人 ${sv.adults ?? '—'}・子 ${sv.kids ?? '—'} ・ ${ings.length} 品</span></summary>
+  return `<details class="ck-ing" open><summary>${ic('list')}<span class="lb">材料</span>${title ? `<span class="ck-rt-s">${esc(title)}</span>` : ''}<span class="sub">大人 ${sv.adults ?? '—'}・子 ${sv.kids ?? '—'} ・ ${ings.length} 品</span></summary>
   ${[...groups.entries()].map(([k, rows]) => `${groups.size > 1 ? `<div class="g">${esc(k)}</div>` : ''}<ul>${rows.map(li).join('')}</ul>`).join('')}</details>`;
 }
 function startCookTick() { clearInterval(cook.tick); cook.tick = setInterval(cookTick, 1000); cookTick(); }

@@ -327,7 +327,9 @@ details.tip .body { margin: 2px 0 4px; padding: 10px 12px; border-radius: 12px; 
 .ck-off { display: inline-flex; align-items: center; gap: 4px; margin-left: auto; font-size: 14px; }
 .ck-off .tiny-btn { min-width: 40px; min-height: 36px; }
 .cook h3.ck-rt { margin-top: 18px; font-size: 17px; }
-.ck-ing summary .ck-rt-s { font-size: 14.5px; font-weight: 700; margin-left: 6px; }
+.ck-ing summary .lb { white-space: nowrap; }
+.ck-ing summary .ck-rt-s { flex: 1 1 auto; min-width: 0; font-size: 14.5px; font-weight: 700; margin-left: 6px; line-height: 1.3; }
+.ck-ing summary .sub { margin-left: auto; text-align: right; }
 .pickbar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 10px 0 2px; }
 .lrow .ops .tiny-btn { white-space: nowrap; }
 .ck-tl { display: grid; grid-template-columns: 46px 1fr 48px; gap: 0 10px; align-items: center; padding: 10px 0; border-top: 1px solid var(--line); font-size: 17px; line-height: 1.5; }
