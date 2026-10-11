@@ -13,7 +13,44 @@
  "exclude": [],
  "note": "",
  "mode": "pick",
- "status": "pending",
+ "status": "done",
  "error": null,
- "result": null
+ "result": {
+  "feasible": true,
+  "infeasible_reason": null,
+  "nearest_options": [],
+  "alternatives": [
+   {
+    "title": "鶏むね肉とごぼうの炊き込みご飯とにんじんのしらす和え（翌日分の仕込み）",
+    "minutes": 75,
+    "why": "炊飯器に任せる炊き込みで、翌日は温め直すだけ。鶏×炊き込みは未提案。",
+    "kind": "new"
+   },
+   {
+    "title": "豚ロース肉とブロッコリーのミルクシチュー（翌日分の仕込み）",
+    "minutes": 50,
+    "why": "煮込んで一晩置くと味がなじむ。牛乳と野菜で塩分を抑えやすく、子どもも食べやすい。",
+    "kind": "new"
+   },
+   {
+    "title": "鶏むね肉の鶏団子とれんこんの味噌汁（翌日分の仕込み）",
+    "minutes": 45,
+    "why": "チョッパーで団子にして煮る汁物。やわらかく、子どもの取り分けも簡単。",
+    "kind": "new"
+   }
+  ],
+  "recipe_id": null,
+  "recipe": null,
+  "model": "claude-code",
+  "prompt_version": 5,
+  "tokens": {
+   "input": 0,
+   "output": 0,
+   "cache_read": 0,
+   "cache_write": 0
+  },
+  "cost_usd": 0.0,
+  "seconds": 0
+ },
+ "finished": "2026-10-11T16:06:03+09:00"
 }
