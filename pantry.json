@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-11T07:26:54+09:00",
+ "updated": "2026-10-11T19:39:00+09:00",
  "items": [
   {
    "id": "pxqdj5",
@@ -49,13 +49,6 @@
    "loc": "pantry",
    "added": "2026-10-08",
    "src": "manual"
-  },
-  {
-   "id": "prqqra",
-   "name": "鶏むね肉",
-   "loc": "fridge",
-   "added": "2026-10-10",
-   "src": "kaji-quest"
   },
   {
    "id": "piipps",
