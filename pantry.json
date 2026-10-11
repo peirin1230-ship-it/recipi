@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-11T19:39:00+09:00",
+ "updated": "2026-10-11T19:39:18+09:00",
  "items": [
   {
    "id": "pxqdj5",
@@ -109,6 +109,13 @@
   {
    "id": "prklhz",
    "name": "しらす",
+   "loc": "fridge",
+   "added": "2026-10-11",
+   "src": "manual"
+  },
+  {
+   "id": "pkcupe",
+   "name": "きゅうり",
    "loc": "fridge",
    "added": "2026-10-11",
    "src": "manual"
