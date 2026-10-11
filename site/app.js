@@ -192,6 +192,15 @@ function setCurrent(recipe, request) {
   state.current = (recipe || request) ? { recipe: recipe || null, request: request || null } : null; state.detailView = '';
   if (request) lsSet(LS.current, { request }); else if (recipe) lsSet(LS.current, { recipe_id: recipe.id }); else lsDel(LS.current);
 }
+// 作り終えたレシピ（記録がある・status が tried/standard）は、立ち上げ直したときレシピカードに戻さない。一覧から開くのはその場だけ。
+// ただし調理の途中（進み具合が端末にある）なら残す
+function cookInProgress(id) { try { return Object.keys(localStorage).some(k => k.startsWith(LS.cook) && k.slice(LS.cook.length).split('+').includes(id)); } catch { return false; } }
+function cookedAlready(c) {
+  const r = c && c.recipe; if (!r || !r.id || cookInProgress(r.id)) return false;
+  const l = state.recipes.find(x => x.id === r.id); if (l && (l.status === 'tried' || l.status === 'standard')) return true;
+  if (logsOf(r.id).length) return true;
+  return !!(c.request && c.request.id && allLogs().some(e => e.request_id === c.request.id));
+}
 function openRecipe(id) { const r = recipeById(id); if (!r) { toast('そのレシピが見つからない', true); return; } const req = state.current && state.current.request; const keep = req && requestRecipes(req).some(x => x.id === id) ? req : null; setCurrent(r, keep); if (keep) lsSet(LS.current, { request: keep, open: id }); renderRecipe(); decorateCards(); goTo('recipe'); }
 
 // ======================================================================
@@ -366,7 +375,7 @@ function recipeBodyHTML(r, req, res) {
     <button type="button" class="primary big" data-act="cook-open">${ic('timer')}作る</button>
     ${(() => { const n = togetherIds(r, req).filter(id => recipeById(id)).length; return n ? `<button type="button" class="ghost" data-act="cook-together">${ic('timer')}一緒に作る（${n + 1} 品）</button>` : ''; })()}
     ${req && req.type !== 'weekly' ? `<button type="button" class="ghost" data-act="o-again">${ic('refresh')}ほかの案</button>` : ''}
-    <button type="button" class="ghost" data-act="rc-later">あとで</button>
+    <button type="button" class="ghost" data-act="rc-later">${inList(r.id) ? `${ic('x')}閉じる` : 'あとで'}</button>
     ${inList(r.id) ? `<button type="button" class="ghost small danger" data-act="list-del" data-id="${esc(r.id)}">${ic('trash')}一覧から削除</button>` : `<button type="button" class="ghost small" data-act="list-add">${ic('list')}一覧に追加</button>`}
     <button type="button" class="ghost small" data-act="rec-open" data-id="${esc(r.id)}">${ic('camera')}作ったので記録</button>
     ${kq().push_shopping ? `<button type="button" class="ghost small" data-act="rc-shop">${ic('cart')}足りない物を買い物メモへ</button>` : ''}
@@ -1060,7 +1069,7 @@ document.addEventListener('click', ev => {
     // レシピ
     case 'open-recipe': openRecipe(b.dataset.id); break;
     case 'rc-view': state.detailView = b.dataset.v; renderRecipe(); decorateCards(); break;
-    case 'rc-later': setCurrent(null, null); renderRecipe(); decorateCards(); toast('一覧に残した（下書きのまま）'); break;
+    case 'rc-later': { const r = currentRecipe(); const listed = r && inList(r.id); setCurrent(null, null); renderRecipe(); decorateCards(); toast(listed ? '閉じた。見るときは一覧から' : '一覧に残した（下書きのまま）'); break; }
     case 'rc-shop': { const r = currentRecipe(); if (r) pushShopping(missingFor(r)); break; }
     case 'cook-open': openCook(); break;
     case 'cook-close': closeCook(); break;
@@ -1216,6 +1225,7 @@ async function init() {
   // 前回のレシピ・週の献立・考え中の注文を端末から戻す
   const cur = lsGet(LS.current); if (cur && cur.request) { const rs = requestRecipes(cur.request); setCurrent(rs.find(r => r.id === cur.open) || rs[0] || null, cur.request); if (cur.open) lsSet(LS.current, { request: cur.request, open: cur.open }); } else if (cur && cur.recipe_id && recipeById(cur.recipe_id)) setCurrent(recipeById(cur.recipe_id), null);
   // 何も開いていなければレシピカードは空のまま（一覧から開く。前は最新のレシピを勝手に出していたので、一覧に入れた物が復活して見えた）
+  if (cookedAlready(state.current)) setCurrent(null, null);   // 一覧から開いた「作った」レシピは、立ち上げ直したら消す
   // 端末に残ったレシピがリポジトリから消されていたら捨てる（recipes/<id>.md が 404）
   { const rid = state.current && state.current.recipe && state.current.recipe.id; if (rid && !inList(rid)) { try { if ((await gh.fetchRawText(`recipes/${rid}.md`)) === null) setCurrent(null, null); } catch { /* 読めないときは残す */ } } }
   const w = lsGet(LS.weekly); if (w && w.result) state.weekly = w;
@@ -1224,8 +1234,8 @@ async function init() {
   initNav(['order', 'recipe', 'list', 'record', 'pantry', 'week', 'zukan', 'equipment'], { cook: () => openCook(), settings: openSettings, top: () => window.scrollTo({ top: 0 }) });
   state.loaded = true; render();
   await run(loadLive); render();
-  // 注文から作って記録まで済んだレシピがレシピカードに残っていたら消す（別の端末で記録した場合など）
-  { const cur = state.current && state.current.request; if (cur && cur.id && allLogs().some(e => e.request_id === cur.id)) { setCurrent(null, null); render(); } }
+  // 作って記録まで済んだレシピがレシピカードに残っていたら消す（別の端末で記録した場合など。記録はいま読んだ）
+  if (cookedAlready(state.current)) { setCurrent(null, null); render(); }
   if (state.pending) pollTick();
   loadCost();
 }

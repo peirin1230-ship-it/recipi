@@ -174,6 +174,18 @@ async function setup(browser, viewport) {
     assert(await page.$eval('#recipe', e => e.textContent.includes('まだレシピがない')), 'recipe card is cleared after recording (look in the list)');
     assert(await page.$eval('#list', e => /足りない物がある\s*1/.test(e.textContent) && e.querySelector('.lrow .miss') && e.querySelector('.lrow .miss').textContent.includes('小松菜')), 'after 小松菜 ran out, the recipe moves to 足りない物がある with the missing name');
     await page.screenshot({ path: `${SHOTS}/after-record-375.png` });
+    // 作ったレシピを一覧から開く → その場では見える → 立ち上げ直すとカードから消える（調理の途中なら残る）
+    await page.click('#list .lrow [data-act="open-recipe"]'); await page.waitForFunction(() => document.querySelector('#recipe .rc-title'));
+    assert(await page.$eval('#recipe [data-act="rc-later"]', b => b.textContent.includes('閉じる')), 'a recipe opened from the list offers 閉じる instead of あとで');
+    await page.reload({ waitUntil: 'networkidle' }); await page.waitForFunction(() => document.querySelector('#week .stat'));
+    assert(await page.$eval('#recipe', e => e.textContent.includes('まだレシピがない')) && await page.evaluate(() => !localStorage.getItem('recipi.current')), 'a cooked recipe opened from the list does not come back to the card after a reload');
+    await page.click('#list .lrow [data-act="open-recipe"]'); await page.waitForFunction(() => document.querySelector('#recipe .rc-title'));
+    await page.evaluate(() => localStorage.setItem('recipi.cook.r-20261008-torimomo-teriyaki', JSON.stringify({ start: Date.now() - 60000, done: { s0: Date.now() - 30000 }, tl: {}, timers: {} })));
+    await page.reload({ waitUntil: 'networkidle' }); await page.waitForFunction(() => document.querySelector('#week .stat'));
+    assert(await page.$eval('#recipe', e => e.textContent.includes('鶏もも肉の照り焼き')), 'but it stays while cooking is in progress (saved cook progress)');
+    await page.evaluate(() => localStorage.removeItem('recipi.cook.r-20261008-torimomo-teriyaki'));
+    await page.click('#recipe [data-act="rc-later"]');
+    assert(await page.$eval('#recipe', e => e.textContent.includes('まだレシピがない')) && await page.$eval('#toast', e => e.textContent.includes('一覧から')), '閉じる clears the card');
     // 在庫の追加（文字）と捨てた
     await page.fill('#p-add', 'とりもも 300g、しょうゆ、豆腐 1丁、新しい食材');
     const b2 = puts.length; await page.click('[data-act="p-add"]');
