@@ -223,6 +223,27 @@ async function setup(browser, viewport) {
     await page.click('[data-act="pending-cancel"]');
     await page.click('#o-budget .chip[data-v="30"]');
     assert(await page.$eval('#o-budget .chip[data-v="0"]', c => !c.classList.contains('is-on')) && await page.evaluate(() => { const o = JSON.parse(localStorage.getItem('recipi.order')); return o.time_budget === 0; }), 'picking a minutes chip again turns 無制限 off (stored order still 0 until next submit)');
+    // まとめて調理: 一覧で 2 品を選んで開く → 段取りは 1 つの表、手順は 2 本ぶん、開始のずらし → できた → 記録が 1 本ずつ続く
+    await page.evaluate(() => { const o = JSON.parse(localStorage.getItem('recipi.list') || '{}'); o.del = []; localStorage.setItem('recipi.list', JSON.stringify(o)); });
+    await page.reload({ waitUntil: 'networkidle' }); await page.waitForFunction(() => document.querySelector('#week .stat'));
+    assert(await page.$$eval('#list .lrow', r => r.length) === 2, 'two recipes in the list for the multi-cook test');
+    await page.click('#list .lrow:nth-child(1) [data-act="cook-pick"]'); await page.click('#list .lrow:nth-child(2) [data-act="cook-pick"]');
+    assert(await page.$eval('#list .pickbar', e => e.textContent.includes('2 品')), 'pick bar shows 2 selected');
+    await page.click('[data-act="cook-picked"]'); await page.waitForFunction(() => !document.querySelector('#cook').hidden);
+    assert(await page.$$eval('#cook .ck-tl', s => s.length) === 12 && await page.$$eval('#cook .ck-step', s => s.length) === 8 && await page.$$eval('#cook .ck-set-row', s => s.length) === 2, 'merged cook mode: 12 timeline rows, 8 steps, 2 recipes with start offsets');
+    const offBefore = await page.$eval('#cook .ck-set-row:nth-child(2) .num', e => e.textContent);
+    await page.click('[data-act="ck-offset"][data-ri="1"][data-d="1"]');
+    assert(await page.$eval('#cook .ck-set-row:nth-child(2) .num', e => e.textContent) !== offBefore && await page.$$eval('#cook .ck-step', s => s.length) === 8, 'start offset adjusts and the view keeps its steps');
+    await page.click('#cook .ck-step [data-act="ck-step"]');
+    await page.click('[data-act="cook-finish"]');
+    assert(await page.$eval('#record', e => e.textContent.includes('（1/2）')), 'record 1 of 2 opens after a multi-cook');
+    const b7 = puts.length; await page.click('[data-act="rec-save"]');
+    await page.waitForFunction(() => document.querySelector('#record') && document.querySelector('#record').textContent.includes('（2/2）'));
+    await page.click('[data-act="rec-save"]');
+    await page.waitForFunction(() => document.querySelector('#record') && !document.querySelector('#record').textContent.includes('（2/2）'));
+    const logPuts = puts.slice(b7).filter(p => /\/recipi\/contents\/logs\/2026\/10\.jsonl/.test(p.url));
+    const lastId = p => { const lines = Buffer.from(p.body.content, 'base64').toString('utf8').trim().split('\n'); try { return JSON.parse(lines[lines.length - 1]).recipe_id; } catch { return null; } };
+    assert(logPuts.length === 2 && lastId(logPuts[0]) === 'r-20261009-test-new' && lastId(logPuts[1]) === 'r-20261008-torimomo-teriyaki', `both recipes of the multi-cook get a log line, one record after another (${logPuts.map(lastId).join(', ')})`);
     await ctx.close().catch(() => {}); await c2.close();
   }
   await browser.close();

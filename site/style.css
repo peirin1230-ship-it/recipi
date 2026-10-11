@@ -319,6 +319,17 @@ details.tip .body { margin: 2px 0 4px; padding: 10px 12px; border-radius: 12px; 
 .ck-ing li { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; padding: 7px 0; border-top: 1px solid var(--line); font-size: 17px; line-height: 1.45; }
 .ck-ing li .n { font-weight: 700; } .ck-ing li .n small { display: block; font-size: 12.5px; font-weight: 500; color: var(--muted); }
 .ck-ing li .q { flex-shrink: 0; font-size: 18px; font-weight: 800; color: var(--primary-text); white-space: nowrap; }
+.rk { display: inline-grid; place-items: center; width: 20px; height: 20px; margin-right: 6px; border-radius: 6px; font-size: 12px; font-weight: 800; color: #fff; background: var(--primary); vertical-align: 2px; flex-shrink: 0; }
+.rk1 { background: var(--indigo); } .rk2 { background: var(--gold); } .rk3 { background: var(--accent); }
+.ck-set { margin: 4px 0 12px; padding: 6px 12px 8px; border-radius: 14px; background: var(--card); border: 1px solid var(--line); }
+.ck-set-row { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 8px; padding: 6px 0; border-bottom: 1px solid var(--line); font-size: 15px; }
+.ck-set-row:last-of-type { border-bottom: 0; }
+.ck-off { display: inline-flex; align-items: center; gap: 4px; margin-left: auto; font-size: 14px; }
+.ck-off .tiny-btn { min-width: 40px; min-height: 36px; }
+.cook h3.ck-rt { margin-top: 18px; font-size: 17px; }
+.ck-ing summary .ck-rt-s { font-size: 14.5px; font-weight: 700; margin-left: 6px; }
+.pickbar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 10px 0 2px; }
+.lrow .ops .tiny-btn { white-space: nowrap; }
 .ck-tl { display: grid; grid-template-columns: 46px 1fr 48px; gap: 0 10px; align-items: center; padding: 10px 0; border-top: 1px solid var(--line); font-size: 17px; line-height: 1.5; }
 .ck-tl .m { font-size: 20px; font-weight: 800; font-variant-numeric: tabular-nums; }
 .ck-tl .lane { display: inline-block; margin-bottom: 2px; padding: 0 8px; height: 22px; line-height: 22px; border-radius: 999px; background: var(--chip); color: var(--text-2); font-size: 12px; font-weight: 700; }

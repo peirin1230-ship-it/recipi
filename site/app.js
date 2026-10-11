@@ -42,7 +42,7 @@ const state = {
   lastError: null,   // 直近の生成エラー { type, error }
   weekly: null,      // 週の献立の注文（result 入り）
   cost: null,        // 今月の API 費用（requests から集計）
-  order: null, useUpOn: new Set(), detailView: '', zukanSort: 'new', listTab: 'all', listQ: '', q: '', diff: null, showDiffOf: new Set(), laterEdit: null, pAddDraft: '',
+  order: null, useUpOn: new Set(), detailView: '', zukanSort: 'new', listTab: 'all', listQ: '', q: '', diff: null, showDiffOf: new Set(), laterEdit: null, pAddDraft: '', cookPick: new Set(),
 };
 
 // ---- 日付（JST） ----
@@ -364,6 +364,7 @@ function recipeBodyHTML(r, req, res) {
   ${togetherHTML(r, req)}
   <div class="actions left">
     <button type="button" class="primary big" data-act="cook-open">${ic('timer')}作る</button>
+    ${(() => { const n = togetherIds(r, req).filter(id => recipeById(id)).length; return n ? `<button type="button" class="ghost" data-act="cook-together">${ic('timer')}一緒に作る（${n + 1} 品）</button>` : ''; })()}
     ${req && req.type !== 'weekly' ? `<button type="button" class="ghost" data-act="o-again">${ic('refresh')}ほかの案</button>` : ''}
     <button type="button" class="ghost" data-act="rc-later">あとで</button>
     ${inList(r.id) ? `<button type="button" class="ghost small danger" data-act="list-del" data-id="${esc(r.id)}">${ic('trash')}一覧から削除</button>` : `<button type="button" class="ghost small" data-act="list-add">${ic('list')}一覧に追加</button>`}
@@ -387,8 +388,9 @@ function recipeBodyHTML(r, req, res) {
   return h;
 }
 // 一緒に作るレシピ（主菜と、分けた副菜・汁物）。together の id を一覧か注文の結果から引く
+function togetherIds(r, req) { return Array.isArray(r.together) && r.together.length ? r.together : requestRecipes(req).filter(x => x.id !== r.id).map(x => x.id); }
 function togetherHTML(r, req) {
-  const ids = Array.isArray(r.together) ? r.together : requestRecipes(req).filter(x => x.id !== r.id).map(x => x.id);
+  const ids = togetherIds(r, req);
   if (!ids.length) return '';
   const roleOf = x => { const d = (x.dishes || [])[0]; return d && ROLE_JA[d.role] ? ROLE_JA[d.role] : ''; };
   return `<div class="together"><span class="sub">一緒に作る</span>${ids.map(id => { const x = recipeById(id); return x ? `<button type="button" class="chip" data-act="open-recipe" data-id="${esc(id)}">${esc(x.title)}${roleOf(x) ? `<span class="sub">${roleOf(x)}</span>` : ''}</button>` : `<span class="chip">${esc(id)}</span>`; }).join('')}</div>`;
@@ -450,38 +452,59 @@ async function pushShopping(names) {
 // ======================================================================
 // 調理モード（全画面・大きな字・タイマー・Wake Lock・進み具合は端末に保存）
 // ======================================================================
-const cook = { recipe: null, request: null, start: 0, done: {}, tl: {}, timers: {}, fired: new Set(), tick: 0, lock: null };
+const cook = { recipe: null, recipes: [], offsets: [], request: null, start: 0, done: {}, tl: {}, timers: {}, fired: new Set(), tick: 0, lock: null };
 const cookKey = rid => LS.cook + rid;
-function openCook(recipe, request) {
-  recipe = recipe || currentRecipe(); if (!recipe) { toast('先にレシピを選ぶ'); return; }
-  const saved = lsGet(cookKey(recipe.id)) || {};
-  Object.assign(cook, { recipe, request: request || (state.current && state.current.recipe && state.current.recipe.id === recipe.id ? state.current.request : null), start: +saved.start || Date.now(), done: saved.done && typeof saved.done === 'object' ? saved.done : {}, tl: saved.tl && typeof saved.tl === 'object' ? saved.tl : {}, timers: saved.timers && typeof saved.timers === 'object' ? saved.timers : {}, fired: new Set() });
+const cookKeyOf = recipes => cookKey(recipes.map(r => r.id).join('+'));
+// 工程・段取りのキー: 1 本目は s0 / t1（前の版と同じ）、2 本目からは "1:s0" のように本の番号を付ける
+const ck = (ri, k) => ri ? `${ri}:${k}` : k;
+const plannedOf = r => isNum((r.time || {}).planned) ? r.time.planned : Math.max(0, ...(r.timeline || []).map(t => +t.minute || 0));
+// 1 本でも複数でも同じ画面。複数なら段取り表を 1 つに合わせ、短い物は遅く始めて同時に仕上げる（開始のずらし = offsets）
+function openCook(recipeOrList, request) {
+  const recipes = (Array.isArray(recipeOrList) ? recipeOrList : [recipeOrList || currentRecipe()]).filter(Boolean);
+  if (!recipes.length) { toast('先にレシピを選ぶ'); return; }
+  const main = recipes[0]; const saved = lsGet(cookKeyOf(recipes)) || {};
+  const offsets = recipes.map((r, i) => i === 0 ? 0 : Math.max(0, plannedOf(main) - plannedOf(r)));
+  Object.assign(cook, { recipe: main, recipes, offsets: Array.isArray(saved.offsets) && saved.offsets.length === recipes.length ? saved.offsets.map(n => Math.max(0, +n || 0)) : offsets,
+    request: request || (state.current && state.current.recipe && state.current.recipe.id === main.id ? state.current.request : null),
+    start: +saved.start || Date.now(), done: saved.done && typeof saved.done === 'object' ? saved.done : {}, tl: saved.tl && typeof saved.tl === 'object' ? saved.tl : {}, timers: saved.timers && typeof saved.timers === 'object' ? saved.timers : {}, fired: new Set() });
   saveCook(); renderCook(); $('#cook').hidden = false; document.body.style.overflow = 'hidden'; requestWake(); startCookTick();
 }
-function saveCook() { if (cook.recipe) lsSet(cookKey(cook.recipe.id), { start: cook.start, done: cook.done, tl: cook.tl, timers: cook.timers }); }
+function saveCook() { if (cook.recipes.length) lsSet(cookKeyOf(cook.recipes), { start: cook.start, done: cook.done, tl: cook.tl, timers: cook.timers, offsets: cook.offsets }); }
 function closeCook() { $('#cook').hidden = true; document.body.style.overflow = ''; releaseWake(); clearInterval(cook.tick); cook.tick = 0; }
 function renderCook() {
-  const r = cook.recipe; const used = lanesUsed(r); const steps = r.steps || [];
-  const rows = (r.timeline || []).map((t, i) => ({ ...t, i })).sort((a, b) => a.minute - b.minute);
-  let h = `<h3>${esc(r.title)} <span class="sub">${(r.time || {}).planned ?? '—'} 分の段取り</span></h3>`;
-  h += cookIngredientsHTML(r);
-  if (rows.length) h += '<h3 class="sec">段取り（分）</h3>' + rows.map(t => { const lane = used.find(l => l.id === t.lane) || { label: equipLabel(t.lane), kind: 'other' }; const k = 't' + t.i; const on = !!cook.tl[k];
-    return `<div class="ck-tl${on ? ' is-done' : ''}" data-key="${k}"><div class="m">${t.minute}</div><div><span class="lane ${esc(lane.kind)}">${esc(lane.label)}</span><div>${esc(t.text)}</div></div><button type="button" class="tick-btn${on ? ' is-on' : ''}" data-act="ck-tl" data-key="${k}" aria-label="できた" aria-pressed="${on}">${ic('check')}</button></div>`; }).join('');
+  const rs = cook.recipes; const multi = rs.length > 1;
+  const lanes = []; rs.forEach(r => lanesUsed(r).forEach(l => { if (!lanes.some(x => x.id === l.id)) lanes.push(l); }));
+  const total = Math.max(...rs.map((r, ri) => (cook.offsets[ri] || 0) + plannedOf(r)));
+  const mark = ri => multi ? `<span class="rk rk${ri % 4}">${ri + 1}</span>` : '';
+  let h = multi
+    ? `<h3>まとめて調理 <span class="sub">${rs.length} 品 ・ ${total} 分の段取り</span></h3><div class="ck-set">${rs.map((r, ri) => `<div class="ck-set-row">${mark(ri)}<b>${esc(r.title)}</b><span class="sub">${plannedOf(r)} 分</span><span class="ck-off"><button type="button" class="tiny-btn" data-act="ck-offset" data-ri="${ri}" data-d="-1" aria-label="早く始める">−</button><span class="num">開始 +${cook.offsets[ri] || 0} 分</span><button type="button" class="tiny-btn" data-act="ck-offset" data-ri="${ri}" data-d="1" aria-label="遅く始める">＋</button></span></div>`).join('')}<p class="sub">段取りは全部を 1 つの表にしてある。短い物は遅く始めて同時に仕上げる。ずらす分は ＋/− で直せる</p></div>`
+    : `<h3>${esc(rs[0].title)} <span class="sub">${(rs[0].time || {}).planned ?? '—'} 分の段取り</span></h3>`;
+  rs.forEach((r, ri) => { h += cookIngredientsHTML(r, multi ? `${ri + 1}. ${r.title}` : ''); });
+  // 段取り: 全レシピの行に開始のずらしを足して、分の順に並べる
+  const rows = []; rs.forEach((r, ri) => (r.timeline || []).forEach((t, i) => rows.push({ ...t, ri, i, at: (+t.minute || 0) + (cook.offsets[ri] || 0) })));
+  rows.sort((a, b) => a.at - b.at || a.ri - b.ri);
+  if (rows.length) h += '<h3 class="sec">段取り（分）</h3>' + rows.map(t => { const lane = lanes.find(l => l.id === t.lane) || { label: equipLabel(t.lane), kind: 'other' }; const k = ck(t.ri, 't' + t.i); const on = !!cook.tl[k];
+    return `<div class="ck-tl${on ? ' is-done' : ''}" data-key="${k}"><div class="m">${t.at}</div><div>${mark(t.ri)}<span class="lane ${esc(lane.kind)}">${esc(lane.label)}</span><div>${esc(t.text)}</div></div><button type="button" class="tick-btn${on ? ' is-on' : ''}" data-act="ck-tl" data-key="${k}" aria-label="できた" aria-pressed="${on}">${ic('check')}</button></div>`; }).join('');
   h += '<h3 class="sec">手順</h3>';
-  dishesOf(r).forEach(d => { h += `<h3>${esc(d)}</h3>` + steps.map((s, i) => ({ s, i })).filter(x => x.s.dish === d).map(({ s, i }) => { const k = 's' + i; const on = !!cook.done[k];
-    return `<div class="ck-step${on ? ' is-done' : ''}" data-key="${k}"><div class="hd"><button type="button" class="tick-btn big${on ? ' is-on' : ''}" data-act="ck-step" data-key="${k}" aria-label="できた" aria-pressed="${on}">${ic('check')}</button><div class="t">${s.n}. ${esc(s.title)}<small>${s.minutes} 分${s.heat ? ` ・ ${esc(equipLabel(s.heat.equipment))}・${esc(s.heat.level)}` : ''}${s.kind === 'wait' ? ' ・ 触らない' : ''}</small></div></div>
-    ${stepIngHTML(r, s)}<p class="tx">${esc(s.text)}</p>${s.cue ? `<div class="cue">${esc(s.cue)}</div>` : ''}${s.caution ? `<div class="caution">⚠ ${esc(s.caution)}</div>` : ''}${s.kid ? `<div class="kid">🍼 ${esc(s.kid)}</div>` : ''}
-    ${(() => { const sec = +s.timer || Math.round((+s.minutes || 0) * 60); return sec > 0 ? `<div class="row"><button type="button" class="timer-btn" data-act="ck-timer" data-key="${k}" data-sec="${sec}">${ic('timer')}<span class="tv">${fmtSec(sec)}</span></button>${s.timer ? '' : '<span class="sub">工程の目安</span>'}</div>` : ''; })()}</div>`; }).join(''); });   // タイマーは全部の工程に付ける（timer が無ければ工程の分数）
+  rs.forEach((r, ri) => {
+    const steps = r.steps || []; const dishes = dishesOf(r);
+    if (multi) h += `<h3 class="ck-rt">${mark(ri)}${esc(r.title)}</h3>`;
+    dishes.forEach(d => { if (!multi || dishes.length > 1) h += `<h3>${esc(d)}</h3>`;
+      h += steps.map((s, i) => ({ s, i })).filter(x => x.s.dish === d).map(({ s, i }) => { const k = ck(ri, 's' + i); const on = !!cook.done[k]; const sec = +s.timer || Math.round((+s.minutes || 0) * 60);
+        return `<div class="ck-step${on ? ' is-done' : ''}" data-key="${k}"><div class="hd"><button type="button" class="tick-btn big${on ? ' is-on' : ''}" data-act="ck-step" data-key="${k}" aria-label="できた" aria-pressed="${on}">${ic('check')}</button><div class="t">${s.n}. ${esc(s.title)}<small>${s.minutes} 分${s.heat ? ` ・ ${esc(equipLabel(s.heat.equipment))}・${esc(s.heat.level)}` : ''}${s.kind === 'wait' ? ' ・ 触らない' : ''}</small></div></div>
+        ${stepIngHTML(r, s)}<p class="tx">${esc(s.text)}</p>${s.cue ? `<div class="cue">${esc(s.cue)}</div>` : ''}${s.caution ? `<div class="caution">⚠ ${esc(s.caution)}</div>` : ''}${s.kid ? `<div class="kid">🍼 ${esc(s.kid)}</div>` : ''}
+        ${sec > 0 ? `<div class="row"><button type="button" class="timer-btn" data-act="ck-timer" data-key="${k}" data-sec="${sec}">${ic('timer')}<span class="tv">${fmtSec(sec)}</span></button>${s.timer ? '' : '<span class="sub">工程の目安</span>'}</div>` : ''}</div>`; }).join(''); });
+  });
   $('#cook-body').innerHTML = h;
 }
 // 調理画面の材料（分量つき）。料理ごと（for が料理名なら）にまとめ、残りは用途ごと。閉じられる
-function cookIngredientsHTML(r) {
+function cookIngredientsHTML(r, title = '') {
   const ings = r.ingredients || []; if (!ings.length) return '';
   const dishes = dishesOf(r); const groups = new Map();
   ings.forEach(i => { const f = String(i.for || ''); const d = dishes.find(x => f && (f === x || x.includes(f) || f.includes(x))); const key = d || f || 'ほか'; if (!groups.has(key)) groups.set(key, []); groups.get(key).push(i); });
   const sv = r.servings || {};
   const li = i => `<li><span class="n">${esc(i.name)}${i.substitute ? `<small>代替: ${esc(i.substitute)}</small>` : ''}</span><span class="q num">${qtyText(i)}</span></li>`;
-  return `<details class="ck-ing" open><summary>${ic('list')}材料<span class="sub">大人 ${sv.adults ?? '—'}・子 ${sv.kids ?? '—'} ・ ${ings.length} 品</span></summary>
+  return `<details class="ck-ing" open><summary>${ic('list')}材料${title ? `<span class="ck-rt-s">${esc(title)}</span>` : ''}<span class="sub">大人 ${sv.adults ?? '—'}・子 ${sv.kids ?? '—'} ・ ${ings.length} 品</span></summary>
   ${[...groups.entries()].map(([k, rows]) => `${groups.size > 1 ? `<div class="g">${esc(k)}</div>` : ''}<ul>${rows.map(li).join('')}</ul>`).join('')}</details>`;
 }
 function startCookTick() { clearInterval(cook.tick); cook.tick = setInterval(cookTick, 1000); cookTick(); }
@@ -515,9 +538,13 @@ function computeStepMinutes(r, start, done) {
   return Object.keys(out).length ? out : null;
 }
 function finishCook() {
-  const r = cook.recipe; const actual = Math.max(1, Math.round((Date.now() - cook.start) / 60000));
-  const step_minutes = computeStepMinutes(r, cook.start, cook.done);
-  closeCook(); markCookedLocal(r); openRecord(r, { actual, request: cook.request, step_minutes, fromCook: true }); goTo('record');
+  const rs = cook.recipes; const actual = Math.max(1, Math.round((Date.now() - cook.start) / 60000));
+  const doneFor = ri => { const o = {}; Object.entries(cook.done).forEach(([k, v]) => { const m = /^(?:(\d+):)?(s\d+)$/.exec(k); if (m && (+m[1] || 0) === ri) o[m[2]] = v; }); return o; };
+  const items = rs.map((r, ri) => ({ recipe: r, step_minutes: computeStepMinutes(r, cook.start, doneFor(ri)) }));
+  const key = cookKeyOf(rs); const request = cook.request;
+  closeCook(); lsDel(key); rs.forEach(markCookedLocal);
+  const [first, ...queue] = items;
+  openRecord(first.recipe, { actual, request, step_minutes: first.step_minutes, fromCook: true, queue, queueTotal: items.length }); goTo('record');
 }
 
 // ======================================================================
@@ -527,7 +554,7 @@ let rec = null;
 function openRecord(recipe, opts = {}) {
   const planned = recipe.time && isNum(recipe.time.planned) ? recipe.time.planned : null;
   if (rec && rec.photo && rec.photo.url) URL.revokeObjectURL(rec.photo.url);
-  rec = { recipe, request: opts.request || null, actual: opts.actual || planned || 20, planned, fidelity: null, deviation: '', finish: null, me: null, partner: null, partnerLater: false, kid: null, kidLater: false, learned: '', photo: null, step_minutes: opts.step_minutes || null, fromCook: !!opts.fromCook, startedAt: Date.now(), pantry: pantryRowsFor(recipe) };
+  rec = { recipe, request: opts.request || null, actual: opts.actual || planned || 20, planned, fidelity: null, deviation: '', finish: null, me: null, partner: null, partnerLater: false, kid: null, kidLater: false, learned: '', photo: null, step_minutes: opts.step_minutes || null, fromCook: !!opts.fromCook, queue: Array.isArray(opts.queue) ? opts.queue : [], queueTotal: +opts.queueTotal || 0, startedAt: Date.now(), pantry: pantryRowsFor(recipe) };
   renderRecord(); decorateCards();
 }
 // 材料のうち在庫（items）にある物。作ってなくなった物にチェックすると在庫から外す（在庫はあるかないかだけ）
@@ -548,7 +575,7 @@ function renderRecord() {
     return;
   }
   const r = rec.recipe; const dev = rec.fidelity === 'minor' || rec.fidelity === 'major';
-  sec.innerHTML = head('camera', '記録', esc(r.title)) + `
+  sec.innerHTML = head('camera', '記録', `${rec.queueTotal > 1 ? `（${rec.queueTotal - rec.queue.length}/${rec.queueTotal}）` : ''}${esc(r.title)}`) + `
   <div class="rec-row full"><div class="v"><label class="ghost photo-btn">${ic('camera')}写真を撮る<input type="file" accept="image/*" capture="environment" id="rec-photo-cam"></label><label class="ghost photo-btn">${ic('image')}ライブラリ<input type="file" accept="image/*" id="rec-photo-lib"></label>${rec.photo ? `<button type="button" class="ghost tiny" data-act="rec-photo-clear">${ic('x')}消す</button>` : ''}</div>${rec.photo ? `<img class="rec-preview" src="${rec.photo.url}" alt="完成写真">` : ''}</div>
   <div class="rec-row"><div class="lb">${ic('clock')}時間</div><div class="v rec-time"><button type="button" class="tiny-btn" data-act="rec-time" data-d="-5">-5</button><button type="button" class="tiny-btn" data-act="rec-time" data-d="-1">-1</button><b id="rec-actual">${rec.actual}</b><span>分</span><button type="button" class="tiny-btn" data-act="rec-time" data-d="1">+1</button><button type="button" class="tiny-btn" data-act="rec-time" data-d="5">+5</button><span class="sub">見込み ${rec.planned ?? '—'} 分${rec.fromCook ? ' ・ 調理モードの実測' : ''}</span></div></div>
   <div class="rec-row"><div class="lb">${ic('list')}手順どおり？</div><div class="v">${['exact', 'minor', 'major'].map(f => `<button type="button" class="tiny-btn${rec.fidelity === f ? ' is-on' : ''}" data-act="rec-fid" data-v="${f}">${FID_JA[f]}</button>`).join('')}</div></div>
@@ -639,9 +666,11 @@ async function saveRecord() {
   lsDel(cookKey(r.id)); if (rec.photo && rec.photo.url) URL.revokeObjectURL(rec.photo.url);
   markCookedLocal(r);   // 一覧に「作った」として載せる
   setCurrent(null, null);   // 作り終えたレシピはレシピカードから消す。見るときは一覧から
-  const secs = Math.round((Date.now() - rec.startedAt) / 1000); rec = null; render();
+  const secs = Math.round((Date.now() - rec.startedAt) / 1000); const queue = rec.queue || [], total = rec.queueTotal || 0, actual = rec.actual; rec = null; render();
   if (side.length) toast(`記録はした。残りは失敗: ${side.join(' / ')}`, true);
   else toast(photoFailed ? '記録した。写真は送れなかった → 記録カードの「写真を再送」' : `記録した。一覧に「作った」として残した（${secs} 秒）`);
+  // まとめて調理のあとは、残りのレシピの記録を続ける
+  if (queue.length) { const nxt = queue[0]; openRecord(nxt.recipe, { actual, request: null, step_minutes: nxt.step_minutes, fromCook: true, queue: queue.slice(1), queueTotal: total }); goTo('record'); toast(`続けて「${nxt.recipe.title}」の記録`); return; }
   goTo('list');
 }
 async function retryPhoto() {
@@ -891,6 +920,7 @@ function renderList() {
   const counts = {}; state.recipes.forEach(r => { counts[r.status] = (counts[r.status] || 0) + 1; });
   const tabs = [['all', '全部'], ['standard', '定番'], ['tried', '作った'], ['draft', '下書き'], ['retired', '封印']];
   $('#list').innerHTML = head('list', 'レシピ一覧', `${state.recipes.length} 本${Object.keys(listOv().add).length || listOv().del.length ? ' ・ 組み立て待ちの変更あり' : ''}`) + `<div class="chips">${tabs.map(([k, ja]) => chip('list-tab', k, `${ja}${k === 'all' ? '' : counts[k] ? ` <span class="sub">${counts[k]}</span>` : ''}`, state.listTab === k)).join('')}</div>
+  ${state.cookPick.size ? `<div class="pickbar"><span class="sub">${state.cookPick.size} 品を選択中</span><button type="button" class="primary small" data-act="cook-picked">${ic('timer')}まとめて調理</button><button type="button" class="ghost tiny" data-act="cook-pick-clear">解除</button></div>` : ''}
   <div class="field"><input type="text" class="inp" id="list-q" placeholder="料理名・タグ・材料で絞る" value="${esc(state.listQ)}" autocomplete="off"></div><div id="list-rows">${listRowsHTML()}</div>`;
 }
 function listRowsHTML() {
@@ -900,7 +930,7 @@ function listRowsHTML() {
   return rows.map(r => { const st = statsOf(r); const sup = r.supersedes ? recipeById(r.supersedes) : null; const open = state.showDiffOf.has(r.id); const ch = Array.isArray(r.changes) ? r.changes : [];
     return `<div class="lrow"><div class="t">${esc(r.title)} ${statusBadge(r.status)}${r.version > 1 ? ` <span class="badge ind">v${r.version}</span>` : ''}</div>
     <div class="meta">${esc(String(r.created || ''))}${r.time ? ` ・ ${r.time.planned} 分` : ''}${st.cooked ? ` ・ 作った ${st.cooked} 回 ・ R ${st.r_avg ?? '—'} ・ F ${st.f_avg ?? '—'} ・ 最後 ${jaShort(st.last) || '—'}` : ' ・ まだ作っていない'}${sup ? ` ・ 改訂元: ${esc(sup.title)}` : r.supersedes ? ` ・ 改訂元: ${esc(r.supersedes)}` : ''}</div>
-    <div class="ops"><button type="button" class="ghost small" data-act="open-recipe" data-id="${esc(r.id)}">開く</button>${r.supersedes && ch.length ? `<button type="button" class="ghost small" data-act="list-diff" data-id="${esc(r.id)}" aria-expanded="${open}">差分</button>` : ''}<button type="button" class="ghost small danger" data-act="list-del" data-id="${esc(r.id)}" aria-label="${esc(r.title)} を一覧から削除">${ic('trash')}削除</button></div>
+    <div class="ops"><button type="button" class="ghost small" data-act="open-recipe" data-id="${esc(r.id)}">開く</button><button type="button" class="tiny-btn${state.cookPick.has(r.id) ? ' is-on' : ''}" data-act="cook-pick" data-id="${esc(r.id)}" aria-pressed="${state.cookPick.has(r.id)}">${state.cookPick.has(r.id) ? '選択中' : '＋まとめて'}</button>${r.supersedes && ch.length ? `<button type="button" class="ghost small" data-act="list-diff" data-id="${esc(r.id)}" aria-expanded="${open}">差分</button>` : ''}<button type="button" class="ghost small danger" data-act="list-del" data-id="${esc(r.id)}" aria-label="${esc(r.title)} を一覧から削除">${ic('trash')}削除</button></div>
     ${open ? `<div class="diffbox"><b>v${r.version} で変えた点${sup ? `（元: ${esc(sup.title)} v${sup.version || 1}）` : ''}</b><ul class="changes">${ch.map(c => `<li>${esc(c.what)}<br><small>${esc(c.why)}</small></li>`).join('')}</ul></div>` : ''}</div>`; }).join('');
 }
 
@@ -980,7 +1010,7 @@ const sib = (b, on) => $$('.chip, button', b.parentElement).forEach(c => { if (c
 document.addEventListener('touchstart', () => {}, { passive: true });
 document.addEventListener('click', ev => {
   const b = ev.target.closest('[data-act]'); if (!b || b.disabled) return; const act = b.dataset.act; const o = state.order;
-  if (state.busy && !/^(collapse-toggle|rc-view|list-tab|list-diff|zk-sort|open-recipe|ck-|cook-close|o-weekly-toggle)/.test(act)) { toast('処理中…'); return; }
+  if (state.busy && !/^(collapse-toggle|rc-view|list-tab|list-diff|zk-sort|open-recipe|ck-|cook-close|cook-pick|cook-together|o-weekly-toggle)/.test(act)) { toast('処理中…'); return; }
   switch (act) {
     case 'collapse-toggle': setCollapsed(b.dataset.card, !isCollapsed(b.dataset.card)); break;
     // 今夜
@@ -1007,7 +1037,12 @@ document.addEventListener('click', ev => {
     case 'rc-shop': { const r = currentRecipe(); if (r) pushShopping(missingFor(r)); break; }
     case 'cook-open': openCook(); break;
     case 'cook-close': closeCook(); break;
-    case 'cook-reset': if (cook.recipe) { lsDel(cookKey(cook.recipe.id)); openCook(cook.recipe, cook.request); toast('最初から'); } break;
+    case 'cook-reset': if (cook.recipes.length) { lsDel(cookKeyOf(cook.recipes)); openCook(cook.recipes, cook.request); toast('最初から'); } break;
+    case 'cook-together': { const r = currentRecipe(); const req = state.current && state.current.request; if (!r) break; openCook([r, ...togetherIds(r, req).map(recipeById).filter(Boolean)], req); break; }
+    case 'ck-offset': { const ri = +b.dataset.ri; cook.offsets[ri] = Math.max(0, (cook.offsets[ri] || 0) + +b.dataset.d); saveCook(); renderCook(); cookTick(); break; }
+    case 'cook-pick': { const id = b.dataset.id; if (state.cookPick.has(id)) state.cookPick.delete(id); else state.cookPick.add(id); renderList(); decorateCards(); break; }
+    case 'cook-picked': { const rs = [...state.cookPick].map(recipeById).filter(Boolean); if (!rs.length) break; state.cookPick.clear(); renderList(); decorateCards(); openCook(rs, null); break; }
+    case 'cook-pick-clear': state.cookPick.clear(); renderList(); decorateCards(); break;
     case 'cook-finish': finishCook(); break;
     case 'ck-tl': { const k = b.dataset.key; cook.tl[k] = cook.tl[k] ? 0 : Date.now(); const on = !!cook.tl[k]; b.classList.toggle('is-on', on); b.setAttribute('aria-pressed', on); b.closest('.ck-tl').classList.toggle('is-done', on); saveCook(); break; }
     case 'ck-step': { const k = b.dataset.key; cook.done[k] = cook.done[k] ? 0 : Date.now(); const on = !!cook.done[k]; b.classList.toggle('is-on', on); b.setAttribute('aria-pressed', on); b.closest('.ck-step').classList.toggle('is-done', on); saveCook(); break; }
