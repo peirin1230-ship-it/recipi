@@ -13,7 +13,44 @@
  "exclude": [],
  "note": "",
  "mode": "pick",
- "status": "pending",
+ "status": "done",
  "error": null,
- "result": null
+ "result": {
+  "feasible": true,
+  "infeasible_reason": null,
+  "nearest_options": [],
+  "alternatives": [
+   {
+    "title": "鶏むね肉の低温調理バンバンジー風とブロッコリーのだし浸し（翌日分の仕込み）",
+    "minutes": 110,
+    "why": "低温調理器で63℃1時間30分、ごまだれで和えるだけにして翌日は切って出すだけ。",
+    "kind": "new"
+   },
+   {
+    "title": "豚ロース肉の味噌漬けグリル焼きとなすの蒸しびたし（翌日分の仕込み）",
+    "minutes": 45,
+    "why": "漬けておけば翌日は魚焼きグリルで焼くだけ。豚×グリルは一覧に無い組み合わせ。",
+    "kind": "new"
+   },
+   {
+    "title": "ごぼうとしらすの炊き込みご飯とかぼちゃの味噌汁（翌日分の仕込み）",
+    "minutes": 75,
+    "why": "炊飯器でごぼうの香りを炊き込み、翌日は温めるだけ。主菜を魚介の旨みにして変化を出す。",
+    "kind": "new"
+   }
+  ],
+  "recipe_id": null,
+  "recipe": null,
+  "model": "claude-code",
+  "prompt_version": 6,
+  "tokens": {
+   "input": 0,
+   "output": 0,
+   "cache_read": 0,
+   "cache_write": 0
+  },
+  "cost_usd": 0.0,
+  "seconds": 0
+ },
+ "finished": "2026-10-11T16:45:40+09:00"
 }
