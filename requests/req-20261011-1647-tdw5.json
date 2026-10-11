@@ -12,10 +12,466 @@
  "use_up": [],
  "exclude": [],
  "note": "",
- "mode": "pick",
+ "mode": "auto",
  "parent": "req-20261011-1644-yev7",
  "alternative": 0,
- "status": "pending",
+ "status": "done",
  "error": null,
- "result": null
+ "result": {
+  "feasible": true,
+  "infeasible_reason": null,
+  "nearest_options": [],
+  "alternatives": [
+   {
+    "title": "豚ロースとごぼうの炒め煮",
+    "minutes": 30,
+    "why": "豚×根菜の甘辛で、鶏むねと主材料も調理法も変わる。",
+    "kind": "new"
+   },
+   {
+    "title": "れんこんとツナの焼きもち風",
+    "minutes": 25,
+    "why": "れんこんのもちっとした食感を活かし、子どもも手づかみしやすい。",
+    "kind": "new"
+   }
+  ],
+  "recipe_id": "r-20261011-torimune-teion-bambanji-to-broccoli-dash",
+  "recipe": {
+   "id": "r-20261011-torimune-teion-bambanji-to-broccoli-dash",
+   "title": "鶏むね肉の低温調理バンバンジー風とブロッコリーのだし浸し（翌日分の仕込み）",
+   "version": 1,
+   "supersedes": null,
+   "status": "draft",
+   "created": "2026-10-11",
+   "request": "req-20261011-1647-tdw5",
+   "generated_by": {
+    "model": "claude-code",
+    "prompt_version": 6
+   },
+   "type": "recipe_detail",
+   "servings": {
+    "adults": 2,
+    "kids": 1
+   },
+   "time": {
+    "budget": 0,
+    "planned": 121,
+    "active": 30,
+    "raw_estimate": 120,
+    "speed_factor": 1.01
+   },
+   "image_text": "しっとり白い蒸し鶏に、とろりと濃い白ごまのたれ。深い緑のブロッコリーがだしに浸って艶やかに添えられる。",
+   "dishes": [
+    {
+     "name": "鶏むね肉の低温調理バンバンジー風",
+     "role": "main"
+    },
+    {
+     "name": "ブロッコリーのだし浸し",
+     "role": "side"
+    }
+   ],
+   "equipment": [
+    "sous-vide",
+    "pot20",
+    "kettle",
+    "microwave",
+    "blender",
+    "bowl-l",
+    "bowl-m"
+   ],
+   "ingredients": [
+    {
+     "name": "鶏むね肉",
+     "qty": 1,
+     "unit": "枚",
+     "grams": 300,
+     "pantry": "鶏むね肉",
+     "for": "鶏むね肉の低温調理バンバンジー風",
+     "substitute": null,
+     "use_up": true
+    },
+    {
+     "name": "塩",
+     "qty": 0.33,
+     "unit": "小さじ",
+     "grams": 2,
+     "pantry": "塩",
+     "for": "鶏むね肉の低温調理バンバンジー風",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "砂糖",
+     "qty": 0.5,
+     "unit": "小さじ",
+     "grams": 1.5,
+     "pantry": "砂糖",
+     "for": "鶏むね肉の低温調理バンバンジー風",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "酒",
+     "qty": 1,
+     "unit": "大さじ",
+     "grams": 15,
+     "pantry": "酒",
+     "for": "鶏むね肉の低温調理バンバンジー風",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "白ごま",
+     "qty": 3,
+     "unit": "大さじ",
+     "grams": 27,
+     "pantry": "白ごま",
+     "for": "鶏むね肉の低温調理バンバンジー風",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "醤油",
+     "qty": 1,
+     "unit": "小さじ",
+     "grams": 6,
+     "pantry": "醤油",
+     "for": "鶏むね肉の低温調理バンバンジー風",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "酢",
+     "qty": 1,
+     "unit": "大さじ",
+     "grams": 15,
+     "pantry": "酢",
+     "for": "鶏むね肉の低温調理バンバンジー風",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "砂糖",
+     "qty": 1,
+     "unit": "小さじ",
+     "grams": 3,
+     "pantry": "砂糖",
+     "for": "鶏むね肉の低温調理バンバンジー風",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "ごま油",
+     "qty": 1,
+     "unit": "小さじ",
+     "grams": 4,
+     "pantry": "ごま油",
+     "for": "鶏むね肉の低温調理バンバンジー風",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "ブロッコリー",
+     "qty": 1,
+     "unit": "株",
+     "grams": 200,
+     "pantry": "ブロッコリー",
+     "for": "ブロッコリーのだし浸し",
+     "substitute": null,
+     "use_up": true
+    },
+    {
+     "name": "だしパック",
+     "qty": 1,
+     "unit": "袋",
+     "grams": null,
+     "pantry": "だしパック",
+     "for": "ブロッコリーのだし浸し",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "水",
+     "qty": 200,
+     "unit": "ml",
+     "grams": 200,
+     "pantry": null,
+     "for": "ブロッコリーのだし浸し",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "醤油",
+     "qty": 1,
+     "unit": "小さじ",
+     "grams": 6,
+     "pantry": "醤油",
+     "for": "ブロッコリーのだし浸し",
+     "substitute": null,
+     "use_up": false
+    }
+   ],
+   "tags": [
+    "仕込み",
+    "低温調理",
+    "作り置き",
+    "鶏むね肉"
+   ],
+   "salt": {
+    "total_g": 3.8,
+    "adult_per_serving_g": 1.9,
+    "kid_g": 0.2
+   },
+   "kid": {
+    "rule": "separate",
+    "cut": "鶏は 1cm 角以下に裂く。ブロッコリーは 5mm〜1cm に刻む",
+    "note": "低温調理の肉は使わず、取り分けた 50g をレンジで中心まで加熱。たれ・だしは付けない。"
+   },
+   "keep": {
+    "fridge_days": 2,
+    "freezer": false,
+    "reheat": "大人は常温に戻してそのまま（冷たいまま可）。子どもの分は 600W 1 分で湯気が立つまで温め、冷ましてから出す。"
+   },
+   "timeline": [
+    {
+     "minute": 0,
+     "lane": "hands",
+     "text": "鶏むね肉の下ごしらえ・ブライン・袋詰め（子どもの分 50g を取り分け）"
+    },
+    {
+     "minute": 8,
+     "lane": "sous-vide",
+     "text": "63℃ に達したら袋を沈める（100 分）"
+    },
+    {
+     "minute": 10,
+     "lane": "microwave",
+     "text": "子どもの分の鶏を 600W 2 分→裏返して 1 分→2 分休ませる"
+    },
+    {
+     "minute": 16,
+     "lane": "microwave",
+     "text": "ブロッコリーを 600W 3 分 30 秒"
+    },
+    {
+     "minute": 18,
+     "lane": "hands",
+     "text": "子どもの分のブロッコリーを取り分けて刻む"
+    },
+    {
+     "minute": 22,
+     "lane": "hands",
+     "text": "電気ケトルの湯でだしを取る（4 分）→醤油を混ぜ、ブロッコリーを浸す"
+    },
+    {
+     "minute": 30,
+     "lane": "hands",
+     "text": "白ごまをミキサーで粗くすり、ごまだれを作る"
+    },
+    {
+     "minute": 40,
+     "lane": "hands",
+     "text": "洗い物（作りながら）"
+    },
+    {
+     "minute": 108,
+     "lane": "sous-vide",
+     "text": "加熱終了。袋を取り出す"
+    },
+    {
+     "minute": 109,
+     "lane": "hands",
+     "text": "氷水で急冷 10 分"
+    },
+    {
+     "minute": 120,
+     "lane": "hands",
+     "text": "容器に移して冷蔵（翌日は裂いてたれをかけるだけ）"
+    }
+   ],
+   "steps": [
+    {
+     "dish": "鶏むね肉の低温調理バンバンジー風",
+     "n": 1,
+     "title": "下ごしらえとブライン",
+     "kind": "prep",
+     "tag": "marinate",
+     "minutes": 8,
+     "heat": null,
+     "text": "鶏むね肉の皮と余分な脂を外し、厚い所は包丁で開いて厚さ 2.5cm 以下にそろえる。子どもの分としてそぎ切りを 50g 取り分けて別皿へ。残り（約 250g）に塩 小さじ 1/3・砂糖 小さじ 1/2 をすり込み、酒 大さじ 1 と一緒に耐熱の保存袋に入れ、空気を抜いて口を閉じる。",
+     "cue": "全体に塩が行き渡り、袋がぴったり肉に張り付く。",
+     "caution": null,
+     "timer": null,
+     "kid": "取り分けた 50g は味付けしない（塩分は袋に入れる分だけ）。",
+     "ingredients": [
+      "鶏むね肉",
+      "塩",
+      "砂糖",
+      "酒"
+     ]
+    },
+    {
+     "dish": "鶏むね肉の低温調理バンバンジー風",
+     "n": 2,
+     "title": "低温調理（63℃ 100 分）",
+     "kind": "wait",
+     "tag": "wait",
+     "minutes": 100,
+     "heat": {
+      "equipment": "sous-vide",
+      "level": "63℃"
+     },
+     "text": "電気ケトルの湯を鍋（20cm）に注ぎ、足りなければ水を足して低温調理器を 63℃ にセットする。温度に達したら袋を沈め、100 分加熱する。袋が浮くときはボウルの皿で押さえる。",
+     "cue": "63℃ に達してから 100 分。袋の中の肉が白く締まっている。",
+     "caution": "63℃・厚さ 3cm 以下・1 時間 30 分以上が安全の下限。時間を短くしない。",
+     "timer": 6000,
+     "kid": "大人の分だけ。子どもの分は低温調理の肉を使わない。",
+     "ingredients": []
+    },
+    {
+     "dish": "鶏むね肉の低温調理バンバンジー風",
+     "n": 3,
+     "title": "子どもの分を加熱",
+     "kind": "heat",
+     "tag": "microwave",
+     "minutes": 4,
+     "heat": {
+      "equipment": "microwave",
+      "level": "600W"
+     },
+     "text": "取り分けた 50g に酒 小さじ 1/2（袋の酒から）をふり、耐熱皿に並べてラップをし 600W 2 分。裏返して 1 分、ラップのまま 2 分休ませる。",
+     "cue": "切ると中まで白く、透明な汁が出る。赤みが無い。",
+     "caution": "レンジはムラが出る。中心が生なら 30 秒ずつ追加する。",
+     "timer": null,
+     "kid": "冷めたら 1cm 角以下に手で裂いておく（味付けなし・冷蔵 1 日以内）。",
+     "ingredients": []
+    },
+    {
+     "dish": "ブロッコリーのだし浸し",
+     "n": 4,
+     "title": "ブロッコリーを加熱",
+     "kind": "prep",
+     "tag": "microwave",
+     "minutes": 6,
+     "heat": {
+      "equipment": "microwave",
+      "level": "600W"
+     },
+     "text": "ブロッコリーは小房に分け（茎は皮をむいて薄切り）、耐熱ボウルに入れてラップをかけ 600W で 3 分 30 秒加熱する。取り出して 1 分蒸らす。子どもの分は小さめの房 3〜4 個を先に取り分け、5mm〜1cm に刻む。",
+     "cue": "茎に竹串がすっと通り、色が鮮やかな緑。",
+     "caution": "ラップを外すとき蒸気でやけどしない。",
+     "timer": null,
+     "kid": "取り分けた分は味を付けず、冷めてから 1cm 以下に刻む。",
+     "ingredients": [
+      "ブロッコリー"
+     ]
+    },
+    {
+     "dish": "ブロッコリーのだし浸し",
+     "n": 5,
+     "title": "だしを取って浸す",
+     "kind": "prep",
+     "tag": "season",
+     "minutes": 6,
+     "heat": null,
+     "text": "ボウルにだしパックを入れ、電気ケトルの熱湯 200ml（水）を注いで 4 分置く。だしパックを取り出し、醤油 小さじ 1 を混ぜる。粗熱が取れたら大人用のブロッコリーを浸す。",
+     "cue": "だしが黄金色になり、かつおの香りが立つ。",
+     "caution": null,
+     "timer": 240,
+     "kid": null,
+     "ingredients": [
+      "だしパック",
+      "水",
+      "醤油",
+      "ブロッコリー"
+     ]
+    },
+    {
+     "dish": "鶏むね肉の低温調理バンバンジー風",
+     "n": 6,
+     "title": "ごまだれを作る",
+     "kind": "prep",
+     "tag": "season",
+     "minutes": 5,
+     "heat": null,
+     "text": "白ごま 大さじ 3 をミキサーで 20 秒回して粗くすり、ボウルに移す。醤油 小さじ 1・酢 大さじ 1・砂糖 小さじ 1・ごま油 小さじ 1 を加えてよく混ぜ、容器に入れて冷蔵する。",
+     "cue": "とろっとした濃いごまの香りのたれになる。",
+     "caution": null,
+     "timer": null,
+     "kid": "子どもの分には使わない。",
+     "ingredients": [
+      "白ごま",
+      "醤油",
+      "酢",
+      "砂糖",
+      "ごま油"
+     ]
+    },
+    {
+     "dish": "鶏むね肉の低温調理バンバンジー風",
+     "n": 7,
+     "title": "急冷して保存",
+     "kind": "prep",
+     "tag": "cleanup",
+     "minutes": 10,
+     "heat": null,
+     "text": "低温調理が終わったら袋ごと氷水（ボウルに氷と水）に 10 分つけて急冷し、袋のまま冷蔵庫へ。ブロッコリー・たれ・子どもの分もそれぞれ容器に入れて冷蔵する。",
+     "cue": "袋を触って冷たく、温かさが残らない。",
+     "caution": "粗熱を取って 30 分以内に冷蔵。常温に置かない。",
+     "timer": 600,
+     "kid": null,
+     "ingredients": []
+    },
+    {
+     "dish": "鶏むね肉の低温調理バンバンジー風",
+     "n": 8,
+     "title": "翌日の仕上げ",
+     "kind": "serve",
+     "tag": "serve",
+     "minutes": 4,
+     "heat": null,
+     "text": "翌日、袋から出して汁気を拭き、繊維に沿って食べやすく裂くか薄切りにする。ごまだれをかけ、だし浸しのブロッコリーを添える。子どもの分は、別に冷蔵した蒸し鶏とブロッコリーを湯気が立つまで 600W 1 分温め、冷ましてから出す。",
+     "cue": "肉がしっとり裂け、切り口が白い。",
+     "caution": "大人の肉は 2 日以内に食べ切る。",
+     "timer": null,
+     "kid": "子どもの分は味付けなしのまま、冷ましてから手づかみで。",
+     "ingredients": [
+      "鶏むね肉",
+      "白ごま"
+     ]
+    }
+   ],
+   "cleanup": {
+    "dishwasher": [
+     "bowl-l",
+     "bowl-m"
+    ],
+    "hand": [
+     "pot20"
+    ],
+    "note": "ミキサーのカップは使ってすぐ水を入れて洗う"
+   },
+   "photo": null,
+   "stats": {
+    "cooked": 0,
+    "r_avg": null,
+    "f_avg": null,
+    "last": null
+   },
+   "detail": "full",
+   "memo": []
+  },
+  "model": "claude-code",
+  "prompt_version": 6,
+  "tokens": {
+   "input": 0,
+   "output": 0,
+   "cache_read": 0,
+   "cache_write": 0
+  },
+  "cost_usd": 0.0,
+  "seconds": 0
+ },
+ "finished": "2026-10-11T16:48:32+09:00"
 }
