@@ -13,7 +13,44 @@
  "exclude": [],
  "note": "",
  "mode": "pick",
- "status": "pending",
+ "status": "done",
  "error": null,
- "result": null
+ "result": {
+  "feasible": true,
+  "infeasible_reason": null,
+  "nearest_options": [],
+  "alternatives": [
+   {
+    "title": "鶏むね肉の低温調理とブロッコリーのごま和え（仕込み）",
+    "minutes": 120,
+    "why": "低温調理でしっとり。子どもの分は取り分けて中心まで再加熱する。",
+    "kind": "new"
+   },
+   {
+    "title": "豚ロース肉とごぼうの味噌煮込みとにんじんのしらす和え",
+    "minutes": 45,
+    "why": "ごぼうを使い切れる。煮込みで肉がやわらかく、味噌は控えめに。",
+    "kind": "new"
+   },
+   {
+    "title": "魚焼きグリルの焼きなすとしらす豆腐、にんじんのきんぴら",
+    "minutes": 35,
+    "why": "グリルで焼く新しい調理法。豆腐は子どもも食べやすい。",
+    "kind": "new"
+   }
+  ],
+  "recipe_id": null,
+  "recipe": null,
+  "model": "claude-code",
+  "prompt_version": 5,
+  "tokens": {
+   "input": 0,
+   "output": 0,
+   "cache_read": 0,
+   "cache_write": 0
+  },
+  "cost_usd": 0.0,
+  "seconds": 0
+ },
+ "finished": "2026-10-11T13:36:38+09:00"
 }
