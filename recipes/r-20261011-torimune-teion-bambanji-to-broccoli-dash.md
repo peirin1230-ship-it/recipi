@@ -1,4 +1,5 @@
 ---
+listed: "2026-10-11T16:51:14+09:00"
 id: r-20261011-torimune-teion-bambanji-to-broccoli-dash
 title: 鶏むね肉の低温調理バンバンジー風とブロッコリーのだし浸し（翌日分の仕込み）
 version: 1
