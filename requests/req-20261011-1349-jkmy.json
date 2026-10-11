@@ -13,7 +13,44 @@
  "exclude": [],
  "note": "",
  "mode": "pick",
- "status": "pending",
+ "status": "done",
  "error": null,
- "result": null
+ "result": {
+  "feasible": true,
+  "infeasible_reason": null,
+  "nearest_options": [],
+  "alternatives": [
+   {
+    "title": "豚ロース肉の低温調理（冷しゃぶ風）とにんじんのしらす和え（翌日分の仕込み）",
+    "minutes": 150,
+    "why": "63℃ 2 時間の低温調理で朝に仕掛け、翌日は切って和えるだけ。豚×低温調理は一覧に無い。",
+    "kind": "new"
+   },
+   {
+    "title": "鶏むね肉の味噌漬けグリル焼きとブロッコリーのおかか和え（翌日分の仕込み）",
+    "minutes": 35,
+    "why": "前夜に味噌漬けにして翌日はグリルで焼くだけ。味噌は控えめ、鶏×グリル焼き。",
+    "kind": "new"
+   },
+   {
+    "title": "豆腐とれんこんのツナ入りふわふわ焼きとかぼちゃの煮物（作り置き）",
+    "minutes": 45,
+    "why": "豆腐・れんこん・ツナで手づかみしやすい小判形。冷めても食べやすく翌日レンジで温めるだけ。",
+    "kind": "new"
+   }
+  ],
+  "recipe_id": null,
+  "recipe": null,
+  "model": "claude-code",
+  "prompt_version": 5,
+  "tokens": {
+   "input": 0,
+   "output": 0,
+   "cache_read": 0,
+   "cache_write": 0
+  },
+  "cost_usd": 0.0,
+  "seconds": 0
+ },
+ "finished": "2026-10-11T13:50:06+09:00"
 }
