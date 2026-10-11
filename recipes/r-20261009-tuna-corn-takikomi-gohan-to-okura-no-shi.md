@@ -3,7 +3,7 @@ id: r-20261009-tuna-corn-takikomi-gohan-to-okura-no-shi
 title: ツナとコーンの炊き込みご飯とオクラの塩昆布和え
 version: 1
 supersedes: null
-status: draft
+status: tried
 created: '2026-10-09'
 request: req-20261009-2021-hw5p
 generated_by: {model: claude-code, prompt_version: 1}
@@ -173,4 +173,4 @@ detail: full
 - 炊飯器の内釜は洗い物に出さずに冷ましてから手洗い
 
 ## 作ったときのメモ
-
+- 2026-10-11 ・ 64 分（見込み 54）・ R 85 ・ F 3 ・ そのまま
