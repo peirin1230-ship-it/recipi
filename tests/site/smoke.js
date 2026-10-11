@@ -74,6 +74,7 @@ async function setup(browser, viewport) {
     assert(await page.$$eval('#week svg.bars rect', r => r.length) === 24, '12 bars per chart');
     // 一覧・図鑑
     assert(await page.$eval('#list', e => e.textContent.includes('作った 1 回')), 'list stats from logs');
+    assert(await page.$eval('#list', e => /今の在庫で作れる\s*1/.test(e.textContent) && /足りない物がある\s*0/.test(e.textContent)), 'list splits into makeable (1) and short (0) with the fixture pantry');
     assert(await page.$$eval('#zukan .zk', z => z.length) === 1, 'zukan shows placeholder tile for recipe without photo');
     // 検索
     await page.fill('#q', '小松菜');
@@ -170,6 +171,7 @@ async function setup(browser, viewport) {
     assert(puts.slice(before).every(p => p.body.message.startsWith('[skip ci]')), 'all record commits are [skip ci]');
     assert(await page.$eval('#list .lrow', e => e.textContent.includes('作った')) && await page.evaluate(() => (JSON.parse(localStorage.getItem('recipi.list') || '{}').cooked || []).includes('r-20261008-torimomo-teriyaki')), 'recorded recipe shows as 作った in the list on this device (overlay cooked)');
     assert(await page.$eval('#recipe', e => e.textContent.includes('まだレシピがない')), 'recipe card is cleared after recording (look in the list)');
+    assert(await page.$eval('#list', e => /足りない物がある\s*1/.test(e.textContent) && e.querySelector('.lrow .miss') && e.querySelector('.lrow .miss').textContent.includes('小松菜')), 'after 小松菜 ran out, the recipe moves to 足りない物がある with the missing name');
     await page.screenshot({ path: `${SHOTS}/after-record-375.png` });
     // 在庫の追加（文字）と捨てた
     await page.fill('#p-add', 'とりもも 300g、しょうゆ、豆腐 1丁、新しい食材');
@@ -227,7 +229,7 @@ async function setup(browser, viewport) {
     await page.evaluate(() => { const o = JSON.parse(localStorage.getItem('recipi.list') || '{}'); o.del = []; localStorage.setItem('recipi.list', JSON.stringify(o)); });
     await page.reload({ waitUntil: 'networkidle' }); await page.waitForFunction(() => document.querySelector('#week .stat'));
     assert(await page.$$eval('#list .lrow', r => r.length) === 2, 'two recipes in the list for the multi-cook test');
-    await page.click('#list .lrow:nth-child(1) [data-act="cook-pick"]'); await page.click('#list .lrow:nth-child(2) [data-act="cook-pick"]');
+    { const picks = await page.$$('#list .lrow [data-act="cook-pick"]'); await picks[0].click(); const picks2 = await page.$$('#list .lrow [data-act="cook-pick"]'); await picks2[1].click(); }   // 行の前に見出しがあるので nth-child は使わない
     assert(await page.$eval('#list .pickbar', e => e.textContent.includes('2 品')), 'pick bar shows 2 selected');
     await page.click('[data-act="cook-picked"]'); await page.waitForFunction(() => !document.querySelector('#cook').hidden);
     assert(await page.$$eval('#cook .ck-tl', s => s.length) === 12 && await page.$$eval('#cook .ck-step', s => s.length) === 8 && await page.$$eval('#cook .ck-set-row', s => s.length) === 2, 'merged cook mode: 12 timeline rows, 8 steps, 2 recipes with start offsets');

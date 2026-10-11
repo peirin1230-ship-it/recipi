@@ -927,11 +927,15 @@ function listRowsHTML() {
   const tab = state.listTab; const q = normName(state.listQ);
   const rows = state.recipes.filter(r => tab === 'all' ? r.status !== 'retired' : r.status === tab).filter(r => matchRecipe(r, q));
   if (!rows.length) return `<p class="empty">${state.recipes.length ? '該当なし' : 'レシピがまだ無い。「今夜」で考えてもらう。'}</p>`;
-  return rows.map(r => { const st = statsOf(r); const sup = r.supersedes ? recipeById(r.supersedes) : null; const open = state.showDiffOf.has(r.id); const ch = Array.isArray(r.changes) ? r.changes : [];
-    return `<div class="lrow"><div class="t">${esc(r.title)} ${statusBadge(r.status)}${r.version > 1 ? ` <span class="badge ind">v${r.version}</span>` : ''}</div>
-    <div class="meta">${esc(String(r.created || ''))}${r.time ? ` ・ ${r.time.planned} 分` : ''}${st.cooked ? ` ・ 作った ${st.cooked} 回 ・ R ${st.r_avg ?? '—'} ・ F ${st.f_avg ?? '—'} ・ 最後 ${jaShort(st.last) || '—'}` : ' ・ まだ作っていない'}${sup ? ` ・ 改訂元: ${esc(sup.title)}` : r.supersedes ? ` ・ 改訂元: ${esc(r.supersedes)}` : ''}</div>
+  // 今の在庫で作れる物と、足りない物がある物に分ける（在庫が変わるたびに描き直す）
+  const can = rows.filter(r => !missingFor(r).length), cannot = rows.filter(r => missingFor(r).length);
+  const sec = (title, list, empty) => `<h3 class="group">${title} <span class="sub">${list.length}</span></h3>` + (list.length ? list.map(row).join('') : `<p class="empty">${empty}</p>`);
+  function row(r) { const st = statsOf(r); const sup = r.supersedes ? recipeById(r.supersedes) : null; const open = state.showDiffOf.has(r.id); const ch = Array.isArray(r.changes) ? r.changes : []; const miss = missingFor(r);
+    return `<div class="lrow${miss.length ? ' is-short' : ''}"><div class="t">${esc(r.title)} ${statusBadge(r.status)}${r.version > 1 ? ` <span class="badge ind">v${r.version}</span>` : ''}</div>
+    <div class="meta">${miss.length ? `<span class="miss">足りない: ${miss.map(esc).join('・')}</span> ・ ` : ''}${esc(String(r.created || ''))}${r.time ? ` ・ ${r.time.planned} 分` : ''}${st.cooked ? ` ・ 作った ${st.cooked} 回 ・ R ${st.r_avg ?? '—'} ・ F ${st.f_avg ?? '—'} ・ 最後 ${jaShort(st.last) || '—'}` : ' ・ まだ作っていない'}${sup ? ` ・ 改訂元: ${esc(sup.title)}` : r.supersedes ? ` ・ 改訂元: ${esc(r.supersedes)}` : ''}</div>
     <div class="ops"><button type="button" class="ghost small" data-act="open-recipe" data-id="${esc(r.id)}">開く</button><button type="button" class="tiny-btn${state.cookPick.has(r.id) ? ' is-on' : ''}" data-act="cook-pick" data-id="${esc(r.id)}" aria-pressed="${state.cookPick.has(r.id)}">${state.cookPick.has(r.id) ? '選択中' : '＋まとめて'}</button>${r.supersedes && ch.length ? `<button type="button" class="ghost small" data-act="list-diff" data-id="${esc(r.id)}" aria-expanded="${open}">差分</button>` : ''}<button type="button" class="ghost small danger" data-act="list-del" data-id="${esc(r.id)}" aria-label="${esc(r.title)} を一覧から削除">${ic('trash')}削除</button></div>
-    ${open ? `<div class="diffbox"><b>v${r.version} で変えた点${sup ? `（元: ${esc(sup.title)} v${sup.version || 1}）` : ''}</b><ul class="changes">${ch.map(c => `<li>${esc(c.what)}<br><small>${esc(c.why)}</small></li>`).join('')}</ul></div>` : ''}</div>`; }).join('');
+    ${open ? `<div class="diffbox"><b>v${r.version} で変えた点${sup ? `（元: ${esc(sup.title)} v${sup.version || 1}）` : ''}</b><ul class="changes">${ch.map(c => `<li>${esc(c.what)}<br><small>${esc(c.why)}</small></li>`).join('')}</ul></div>` : ''}</div>`; }
+  return sec('今の在庫で作れる', can, '無し。在庫を足すか、「今夜」で在庫に合う物を考えてもらう') + sec('足りない物がある', cannot, '無し');
 }
 
 // ======================================================================
