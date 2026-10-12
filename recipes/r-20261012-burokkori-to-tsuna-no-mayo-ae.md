@@ -3,7 +3,7 @@ id: r-20261012-burokkori-to-tsuna-no-mayo-ae
 title: ブロッコリーとツナのマヨ和え
 version: 1
 supersedes: null
-status: draft
+status: tried
 created: '2026-10-12'
 request: req-20261012-1223-cyn7
 generated_by: {model: claude-code, prompt_version: 7}
@@ -147,4 +147,4 @@ together: [r-20261012-butaroosu-to-nasu-no-kasane-mushi-shioko]
 - 手洗い: —
 
 ## 作ったときのメモ
-
+- 2026-10-13 ・ 28 分（見込み 7）・ R 45 ・ F 3 ・ そのまま
