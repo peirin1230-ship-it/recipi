@@ -13,7 +13,44 @@
  "exclude": [],
  "note": "",
  "mode": "pick",
- "status": "pending",
+ "status": "done",
  "error": null,
- "result": null
+ "result": {
+  "feasible": true,
+  "infeasible_reason": null,
+  "nearest_options": [],
+  "alternatives": [
+   {
+    "title": "豚ロース肉となすの重ね蒸し 塩昆布だれ",
+    "minutes": 40,
+    "why": "豚ロースとなすを重ねて蒸す。炒め・煮・低温調理と違う蒸し料理で、塩昆布の旨みで塩分も控えめ。",
+    "kind": "new"
+   },
+   {
+    "title": "かぼちゃとツナのトースターグラタン",
+    "minutes": 45,
+    "why": "かぼちゃと牛乳、ツナをトースターで焼く。子どもも食べやすいやわらかい洋風。",
+    "kind": "new"
+   },
+   {
+    "title": "しらすとブロッコリーの卵チャーハン",
+    "minutes": 25,
+    "why": "ご飯・卵・しらす・ブロッコリーで手早く炒める。子どもの分は味付け前に取り分けられる。",
+    "kind": "new"
+   }
+  ],
+  "recipe_id": null,
+  "recipe": null,
+  "model": "claude-code",
+  "prompt_version": 7,
+  "tokens": {
+   "input": 0,
+   "output": 0,
+   "cache_read": 0,
+   "cache_write": 0
+  },
+  "cost_usd": 0.0,
+  "seconds": 0
+ },
+ "finished": "2026-10-12T12:23:17+09:00"
 }
