@@ -187,3 +187,13 @@ def test_one_dish_rule_only_when_generating():
     assert validate.validate_recipe(r, ctx()) == []       # 普段の検査では通る
     errs = validate.validate_recipe(r, ctx(one_dish=True))
     assert any("1 レシピ 1 品" in e for e in errs)
+
+
+def test_pantry_rule_is_skipped_when_ctx_has_no_pantry():
+    """指定の料理（dish）では ctx の pantry を None にして、在庫に無い材料を許す。"""
+    r = load_fixture()
+    r["ingredients"].append({"name": "じゃがいも", "qty": 3, "unit": "個", "grams": 450, "pantry": "じゃがいも", "for": r["dishes"][0]["name"], "substitute": None, "use_up": False})
+    with_pantry = validate.validate_recipe(r, ctx(pantry={"items": [], "staples": {}}))
+    assert any("在庫に無い" in e for e in with_pantry)
+    without = validate.validate_recipe(r, ctx(pantry=None))
+    assert not any("在庫に無い" in e for e in without)

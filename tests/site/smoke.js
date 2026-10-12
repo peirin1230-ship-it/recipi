@@ -144,6 +144,16 @@ async function setup(browser, viewport) {
     assert(await page.evaluate(() => { const p = JSON.parse(localStorage.getItem('recipi.pending')); return Array.isArray(p) && p.length === 1 && p[0].id && p[0].type === 'dinner'; }), 'pending request remembered in localStorage');
     await page.screenshot({ path: `${SHOTS}/order-pending-375.png` });
     // 記録の書き込み（ログ・メモ・在庫）
+    // メニューを指定（dish）→ 注文に dish が入り、品数は main・出し方は auto。送ったら欄は空に戻る
+    await page.click('[data-act="pending-cancel"]'); await page.waitForTimeout(100);
+    assert(await page.$eval('#o-dish-hint', e => e.hidden), 'dish hint hidden while the field is empty');
+    await page.fill('#o-dish', 'フライドポテト'); await page.waitForTimeout(50);
+    assert(await page.$eval('#o-dish-hint', e => !e.hidden), 'dish hint appears when a menu is typed');
+    const bD = puts.length; await page.click('[data-act="o-submit"]'); await page.waitForFunction(n => document.querySelectorAll('#o-status .pending').length > 0, bD);
+    const dishPut = puts.slice(bD).find(p => p.url.includes('/contents/requests/')); const dishBody = dishPut ? JSON.parse(Buffer.from(dishPut.body.content, 'base64').toString('utf8')) : {};
+    assert(dishBody.dish === 'フライドポテト' && dishBody.dishes === 'main' && dishBody.mode === 'auto' && dishBody.type === 'dinner' && dishBody.time_budget === 20, `dish order carries dish/dishes=main/mode=auto: ${JSON.stringify({ dish: dishBody.dish, dishes: dishBody.dishes, mode: dishBody.mode })}`);
+    assert(await page.$eval('#o-dish', e => e.value === '') && await page.evaluate(() => !(JSON.parse(localStorage.getItem('recipi.order') || '{}').dish)), 'dish field is cleared after ordering (one-off)');
+    assert(await page.$eval('#toast', e => e.textContent.includes('フライドポテト')), 'toast names the dish');
     await page.click('[data-act="pending-cancel"]');
     await page.click('[data-act="rec-open"]');
     await page.click('[data-act="rec-fid"][data-v="minor"]'); await page.fill('#rec-dev', '醤油を減らした');

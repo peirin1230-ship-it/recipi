@@ -208,7 +208,7 @@ function openRecipe(id) { const r = recipeById(id); if (!r) { toast('そのレ�
 // ======================================================================
 function defaultOrder() {
   const rq = cfg().request || {}; const dd = ((state.family.meals || {}).dinner_default) || {};
-  return { type: rq.default_type || 'dinner', time_budget: +rq.default_budget || 25, servings: { adults: Number.isFinite(+dd.adults) ? +dd.adults : 2, kids: Number.isFinite(+dd.kids) ? +dd.kids : 1 }, dishes: dd.dishes || 'main+side', mood: [], note: '', mode: rq.default_mode || 'auto' };
+  return { type: rq.default_type || 'dinner', time_budget: +rq.default_budget || 25, servings: { adults: Number.isFinite(+dd.adults) ? +dd.adults : 2, kids: Number.isFinite(+dd.kids) ? +dd.kids : 1 }, dishes: dd.dishes || 'main+side', mood: [], note: '', mode: rq.default_mode || 'auto', dish: '' };
 }
 function loadOrder() {
   const d = defaultOrder(); const s = lsGet(LS.order) || {};
@@ -228,6 +228,7 @@ function renderOrder() {
   const html = head('flame', '今夜', '時間を選んで「考えてもらう」だけ。1〜2 分でレシピが出る') + `
   <div class="field"><label>時間（キッチンに立ってから盛り付けまで）</label><div class="chips" id="o-budget">${chips.map(m => chip('o-budget', m, `${m}<span class="sub">分</span>`, o.time_budget === m)).join('')}${chip('o-budget', 0, `${ic('infinity')}無制限`, o.time_budget === 0)}<label class="chip free"><input type="number" id="o-free" inputmode="numeric" min="5" max="180" placeholder="自由" value="${chips.includes(o.time_budget) || o.time_budget === 0 ? '' : o.time_budget}" aria-label="自由入力（分）"><span>分</span></label></div></div>
   <div class="field"><label>種類</label><div class="chips">${TYPES.map(([k, ja]) => chip('o-type', k, ja, o.type === k)).join('')}</div></div>
+  <div class="field"><label for="o-dish">メニューを指定（任意。料理名を書くと、その料理のレシピを作る）</label><input type="text" id="o-dish" maxlength="60" placeholder="例: フライドポテト、ハンバーグ、だし巻き卵" value="${esc(o.dish || '')}"><span class="sub" id="o-dish-hint"${o.dish ? '' : ' hidden'}>指定した料理 1 本だけ作る（品数・候補の設定は使わない）。在庫に無い材料も使い、足りない物は一覧と買い物メモに出る</span></div>
   <div class="row2">
     <div class="field"><label>人数</label><div class="steppers">${stepper('adults', '大人', o.servings.adults)}${stepper('kids', '子ども', o.servings.kids)}</div></div>
     <div class="field"><label for="o-dishes">品数</label><select id="o-dishes" class="select">${DISHES.map(([k, ja]) => `<option value="${k}"${o.dishes === k ? ' selected' : ''}>${ja}</option>`).join('')}</select></div>
@@ -257,18 +258,21 @@ function readOrder() {
   const free = parseInt(($('#o-free') || {}).value, 10); const on = $('#o-budget .chip.is-on');
   o.time_budget = free > 0 ? free : on ? +on.dataset.v : o.time_budget;
   o.note = (($('#o-note') || {}).value || '').trim().slice(0, 200);
+  o.dish = (($('#o-dish') || {}).value || '').trim().slice(0, 60);
   o.dishes = ($('#o-dishes') || {}).value || o.dishes;
   const ws = $('#w-start'); if (ws) { const f = state.weeklyForm || weeklyFormDefault(); if (validDate(ws.value)) f.start_date = ws.value; $$('#o-weekly input[data-day]').forEach(i => { const v = parseInt(i.value, 10); if (v > 0) f.budgets[i.dataset.day] = v; }); state.weeklyForm = f; }
   return o;
 }
 function orderBase(o) {
-  return { time_budget: o.time_budget, servings: { ...o.servings }, dishes: o.dishes, mood: [...(o.mood || [])], use_up: [...(o.use_up || [])], exclude: [...(o.exclude || [])], note: o.note || '', mode: o.mode || 'auto' };
+  const dish = String(o.dish || '').trim();
+  return { time_budget: o.time_budget, servings: { ...o.servings }, dishes: dish ? 'main' : o.dishes, mood: [...(o.mood || [])], use_up: [...(o.use_up || [])], exclude: [...(o.exclude || [])], note: o.note || '', mode: dish ? 'auto' : (o.mode || 'auto'), ...(dish ? { dish } : {}) };
 }
 async function submitOrder(extra = {}) {
   if (!requireToken()) return;
   const o = readOrder(); o.use_up = useUpChoices().filter(n => state.useUpOn.has(n)); lsSet(LS.order, o);
   const req = { id: newRequestId(), ts: isoNow(), type: o.type, ...orderBase(o), ...extra, status: 'pending', error: null, result: null };
   await startRequest(req);
+  if (req.dish && state.pending.some(p => p.id === req.id)) { o.dish = ''; lsSet(LS.order, o); renderOrder(); decorateCards(); }   // 指定の料理は 1 回きり。次の注文は普通に
 }
 // 別案・週の献立の 1 日を詳細にする。親の注文の条件を引き継ぐ
 async function submitDetail(parentId, alt) {
@@ -295,7 +299,7 @@ async function startRequest(req, before) {
   });
   if (!ok) { renderPending(); return; }
   addPending({ id: req.id, type: req.type, since: Date.now(), status: 'pending' });
-  toast(req.type === 'pantry_photo' ? '写真を送った。読み取り中（2〜4 分）。閉じても大丈夫' : req.type === 'suggest_items' ? '買い足す物を考え中（2〜4 分）。閉じても大丈夫' : req.time_budget === 0 ? '時間無制限で注文した。考え中（2〜4 分）。閉じても大丈夫' : '注文した。考え中（2〜4 分）。閉じても大丈夫');
+  toast(req.type === 'pantry_photo' ? '写真を送った。読み取り中（2〜4 分）。閉じても大丈夫' : req.type === 'suggest_items' ? '買い足す物を考え中（2〜4 分）。閉じても大丈夫' : req.dish ? `「${req.dish}」を注文した。考え中（2〜4 分）。閉じても大丈夫` : req.time_budget === 0 ? '時間無制限で注文した。考え中（2〜4 分）。閉じても大丈夫' : '注文した。考え中（2〜4 分）。閉じても大丈夫');
   clearTimeout(pollTimer); pollTimer = setTimeout(pollTick, POLL_MS);
 }
 // 考え中の注文は何件でも持てる（別案 2 つを続けて「詳細に」しても、先の結果を取りこぼさない）。端末に覚える
@@ -400,6 +404,7 @@ function recipeBodyHTML(r, req, res) {
   <div class="tags">${(r.equipment || []).map(e => `<span class="eq">${esc(equipLabel(e))}</span>`).join('')}</div>
   <div class="tags">${(r.tags || []).map(tg => `<span>#${esc(tg)}</span>`).join('')}</div>
   ${togetherHTML(r, req)}
+  ${(() => { const miss = missingFor(r); return req && req.dish && miss.length ? `<p class="note">指定の料理なので在庫に無い物も使っている。足りない: ${miss.map(esc).join('・')}</p>` : ''; })()}
   <div class="actions left">
     <button type="button" class="primary big" data-act="cook-open">${ic('timer')}作る</button>
     ${(() => { const n = togetherIds(r, req).filter(id => recipeById(id)).length; return n ? `<button type="button" class="ghost" data-act="cook-together">${ic('timer')}一緒に作る（${n + 1} 品）</button>` : ''; })()}
@@ -1164,6 +1169,7 @@ document.addEventListener('input', ev => {
   const t = ev.target;
   if (t.id === 'o-free') { const v = parseInt(t.value, 10); if (v > 0) { state.order.time_budget = v; $$('#o-budget .chip[data-act="o-budget"]').forEach(c => c.classList.remove('is-on')); } }
   else if (t.id === 'o-note') state.order.note = t.value;
+  else if (t.id === 'o-dish') { state.order.dish = t.value; const h = $('#o-dish-hint'); if (h) h.hidden = !t.value.trim(); }
   else if (t.id === 'rec-dev' || t.id === 'rec-learned') syncRecordInputs();
   else if (t.id === 'p-add') state.pAddDraft = t.value;
   else if (t.id === 'list-q') { state.listQ = t.value; $('#list-rows').innerHTML = listRowsHTML(); }

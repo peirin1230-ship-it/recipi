@@ -122,3 +122,14 @@ def test_finish_writes_main_and_side_as_separate_recipes(fresh_recipes, tmp_path
     sd, _ = common.read_recipe(common.path("recipes", f"{side_id}.md"))
     assert m["together"] == [side_id] and sd["together"] == [main_id] and "一緒に作る" in body
     assert "出力の JSON スキーマ" in agent.context_text(rid) and "side_recipes" in agent.context_text(rid)
+
+
+def test_new_dish_sets_dish_mode_and_context(root):
+    r = run_cli("new", "--type", "dinner", "--budget", "40", "--dish", "フライドポテト", "--note", "子どもにも")
+    assert r.returncode == 0, r.stderr
+    rid = r.stdout.strip()
+    req = common.read_json(f"requests/{rid}.json")
+    assert req["dish"] == "フライドポテト" and req["mode"] == "auto" and req["dishes"] == "main" and req["time_budget"] == 40
+    text = agent.context_text(rid)
+    assert "指定の料理" in text and "フライドポテト" in text and "在庫に無い材料を使ってよい" in text
+    os.remove(common.path("requests", f"{rid}.json"))

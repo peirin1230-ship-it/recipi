@@ -104,3 +104,30 @@ def test_proposed_splits_deleted_and_alternatives(fresh_recipes):
     assert p["alternatives"] == ["別案 A"]   # 一覧にある物は入れない
     block = agent.request_block(ctx, {"type": "dinner", "time_budget": 25})["text"]
     assert "一覧から消された料理" in block and "消した一皿とサラダ" in block and "別案 A" in block
+
+
+def test_dish_order_fixes_the_dish_and_allows_missing_ingredients(fresh_recipes):
+    """指定の料理: 候補を出さず、その料理 1 本。在庫に無い材料を使ってよい。一覧と同じ料理でもよい（id は -2）。"""
+    write_request({"id": "req-t-dish", "ts": "2026-10-12T17:00:00+09:00", "type": "dinner", "time_budget": 30, "servings": {"adults": 2, "kids": 1}, "dishes": "main+side", "mood": [], "use_up": [], "mode": "pick", "dish": "鶏もも肉の照り焼き"})
+    ctx = agent.Context()
+    req = common.read_json("requests/req-t-dish.json")
+    block = agent.request_block(ctx, req)["text"]
+    assert "指定の料理" in block and "鶏もも肉の照り焼き" in block and "在庫に無い材料を使ってよい" in block and "side_recipes は空" in block
+    assert agent.run("auto", "req-t-dish", mock=True, use_git=False) == 0
+    req = common.read_json("requests/req-t-dish.json")
+    assert req["status"] == "done", req.get("error")
+    assert req["mode"] == "auto"
+    assert "鶏もも肉の照り焼き" in req["result"]["recipe"]["title"]
+    # 一覧の同じ料理（fixture）があっても作れる
+    write_request({"id": "req-t-dish2", "ts": "2026-10-12T17:05:00+09:00", "type": "dinner", "time_budget": 30, "servings": {"adults": 2, "kids": 1}, "dishes": "main", "mood": [], "use_up": [], "mode": "auto", "dish": "鶏もも肉の照り焼き"})
+    assert agent.run("auto", "req-t-dish2", mock=True, use_git=False) == 0
+    req2 = common.read_json("requests/req-t-dish2.json")
+    assert req2["status"] == "done" and req2["result"]["recipe_id"] != req["result"]["recipe_id"]
+
+
+def test_dish_order_rejects_a_different_dish(fresh_recipes):
+    """モックは照り焼きを返すので、「フライドポテト」を指定すると料理名が合わず不合格になる。"""
+    write_request({"id": "req-t-dish3", "ts": "2026-10-12T17:10:00+09:00", "type": "dinner", "time_budget": 30, "servings": {"adults": 2, "kids": 1}, "dishes": "main", "mood": [], "use_up": [], "mode": "auto", "dish": "フライドポテト"})
+    assert agent.run("auto", "req-t-dish3", mock=True, use_git=False) != 0
+    req = common.read_json("requests/req-t-dish3.json")
+    assert req["status"] == "error" and "フライドポテト" in (req["error"] or "")

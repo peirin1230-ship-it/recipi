@@ -198,7 +198,10 @@ def request_block(ctx: Context, req: dict, extra: str = "", *, dedupe: bool = Tr
     )
     recent = ctx.recent(int(cfg["suggest"].get("no_repeat_days", 14)))
     pantry = ctx.pantry_for_prompt()
-    order = {k: v for k, v in req.items() if k in ("type", "time_budget", "servings", "dishes", "mood", "use_up", "exclude", "note", "mode")}
+    order = {k: v for k, v in req.items() if k in ("type", "time_budget", "servings", "dishes", "mood", "use_up", "exclude", "note", "mode", "dish")}
+    dish = str(req.get("dish") or "").strip()
+    pantry_rule = ("\n\n# 在庫（pantry.json。staples は ok/low の物だけ。指定の料理なので在庫に無い材料も使ってよい。ただし在庫にある物を優先し、無い物の pantry にはマスタの名前を書く。買い物に回す）\n"
+                   if dish else "\n\n# 在庫（pantry.json。staples は ok/low の物だけ。無い物は使えない）\n")
     dedupe_text = ""
     if dedupe:
         existing = ctx.existing()
@@ -215,13 +218,19 @@ def request_block(ctx: Context, req: dict, extra: str = "", *, dedupe: bool = Tr
     text = (
         "# 最近作った物（出さない）\n" + (ydump(recent) or "（無し）") +
         dedupe_text +
-        "\n\n# 在庫（pantry.json。staples は ok/low の物だけ。無い物は使えない）\n" + ydump(pantry) +
+        pantry_rule + ydump(pantry) +
         "\n\n# 注文\n" + ydump(order) + time_text +
         f"\n- 注文の種類: {TYPE_NOTES.get(req.get('type'), '')}"
         "\n- 1 レシピ 1 品。注文の dishes: main = 主菜 1 本だけ / main+side = 主菜 + 副菜 1 本（side_recipes）/ main+side+soup = 主菜 + 副菜 + 汁物 / onepot = 一品だけ。副菜・汁物は主菜の待ち時間に作れる 10 分前後にし、それぞれ材料・手順・段取り表・保存・片付けを完結させる。"
         f"\n- 今日: {common.today()}（旬の判断に使う）"
     )
-    if req.get("mode") == "pick":
+    if dish:
+        text += (f"\n\n# 指定の料理（dish）\n- 「{dish}」を作る。料理は変えない（title は「{dish}」そのもの、または「{dish}」を含む名前）。"
+                 "この家の器具・家族・時間に合わせて詳細を組む。一覧に同じ料理があっても構わない。"
+                 "\n- 在庫に無い材料を使ってよい（在庫にある物で代用できるなら代用し、substitute に書く）。使う物の pantry にはマスタの名前を書く。"
+                 "\n- side_recipes は空（指定の料理 1 本だけ）。副菜が要るなら note に書いてある。"
+                 "\n- 別案 2 つは同じ料理の別の作り方（道具・味付け・切り方・揚げる／焼く）にする。")
+    elif req.get("mode") == "pick":
         text += "\n- mode が pick なので、recipe は null にし、alternatives に候補を 3 つ（title / minutes / why / kind）だけ出す。"
     else:
         explore = float(cfg["suggest"].get("explore_ratio", 0.3))
@@ -258,9 +267,10 @@ def generate_recipe(ctx: Context, L: llmmod.LLM, req: dict, *, name: str = "reci
     taken = ([r.get("title") or "" for r in ctx.recipes.values()] + [t for t in (req.get("exclude") or []) if t]
              + ctx.proposed(int(ctx.cfg["suggest"].get("no_repeat_proposed_days", 14)))["deleted"]) if dedupe else []
     servings = req.get("servings") or ctx.family.get("meals", {}).get("dinner_default", {})
-    vctx = {"equipment": ctx.equipment, "family": ctx.family, "pantry": ctx.pantry, "ingredients": ctx.ingredients,
+    dish = str(req.get("dish") or "").strip()
+    vctx = {"equipment": ctx.equipment, "family": ctx.family, "pantry": None if dish else ctx.pantry, "ingredients": ctx.ingredients,
             "overrides": ctx.overrides, "budget": req.get("time_budget"), "speed_factor": ctx.speed_factor,
-            "servings": servings, "config": ctx.cfg, "existing_titles": taken, "one_dish": True}
+            "servings": servings, "config": ctx.cfg, "existing_titles": taken, "one_dish": True}   # 指定の料理は在庫に無い物も使える（買い物に回す）
     vctx.update(validate_ctx_extra or {})
     retries = int(ctx.cfg["generation"].get("max_retries", 2))
     errors: list[str] = []
@@ -294,7 +304,15 @@ def generate_recipe(ctx: Context, L: llmmod.LLM, req: dict, *, name: str = "reci
 # ---- actions ----
 
 def action_recipe(ctx: Context, L: llmmod.LLM, req: dict) -> dict:
-    data, usage, errors = generate_recipe(ctx, L, req)
+    dish = str(req.get("dish") or "").strip()
+    if dish:   # 指定の料理: 候補は出さず、その料理を 1 本。一覧と同じ料理でもよい（id は -2 のように増える）
+        req["mode"] = "auto"
+        req["dish"] = dish
+    data, usage, errors = generate_recipe(ctx, L, req, dedupe=not dish)
+    if dish and data.get("recipe") and not errors:
+        t = validate.norm_title(data["recipe"].get("title") or "")
+        if validate.norm_title(dish) not in t:
+            errors = [f"指定の料理「{dish}」の名前が title に無い（title: {data['recipe'].get('title')}）。「{dish}」を含む名前にする"]
     return finish_recipe(ctx, L, req, data, usage, errors)
 
 
@@ -314,7 +332,7 @@ def action_recipe_detail(ctx: Context, L: llmmod.LLM, req: dict) -> dict:
     else:
         alt = (pres.get("alternatives") or [])[idx]
         title, why, minutes = alt["title"], alt.get("why", ""), alt.get("minutes")
-    for k in ("time_budget", "servings", "dishes", "note"):
+    for k in ("time_budget", "servings", "dishes", "note", "dish"):
         if req.get(k) in (None, "", []) and parent.get(k) not in (None, ""):
             req[k] = parent[k]
     req.setdefault("type", parent.get("type") if parent.get("type") in TYPE_NOTES else "dinner")
@@ -606,6 +624,10 @@ def new_request(args) -> str:
             "use_up": [m for m in (args.use_up or "").replace("、", ",").split(",") if m.strip()],
             "exclude": [], "note": args.note or "", "mode": args.mode or cfg["request"].get("default_mode", "auto"),
         })
+        if getattr(args, "dish", None):   # 指定の料理（「フライドポテト」など）。候補は出さず、その料理 1 本
+            req["dish"] = str(args.dish).strip()
+            req["mode"] = "auto"
+            req["dishes"] = "main"
     elif args.type == "revise":
         req["recipe_id"] = args.recipe
     elif args.type == "pantry_photo":
@@ -716,6 +738,7 @@ def main(argv: list[str]) -> int:
     ap.add_argument("--use-up", dest="use_up")
     ap.add_argument("--note")
     ap.add_argument("--mode")
+    ap.add_argument("--dish", help="指定の料理（「フライドポテト」など）。その料理のレシピを 1 本作る")
     ap.add_argument("--image")
     ap.add_argument("--hint")
     ap.add_argument("--start")

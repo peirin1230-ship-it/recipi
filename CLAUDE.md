@@ -5,7 +5,7 @@ Actions が動いていないとき（Phase 0、または障害時）は、あ�
 
 ## 頼まれたらやること（レシピ）
 「今夜 25 分、大人 2 子 1」のように頼まれたら `/recipi-tonight` の手順（`.claude/skills/recipi-tonight/SKILL.md`）:
-1. `python3 scripts/agent.py new --type dinner --budget 25 --adults 2 --kids 1 ...` で注文を作る（出力が注文 id）
+1. `python3 scripts/agent.py new --type dinner --budget 25 --adults 2 --kids 1 ...` で注文を作る（出力が注文 id）。「フライドポテトの作り方」のように料理が決まっているなら `--dish フライドポテト`（その料理 1 本。在庫に無い材料も可）
 2. `python3 scripts/agent.py context --request <id>` の出力（規則・安全・器具・家族・学習結果・在庫・注文・JSON スキーマ）を全部読む
 3. JSON を `/tmp/recipi-<id>.json` に書き、`python3 scripts/agent.py finish --request <id> --json /tmp/recipi-<id>.json` を実行する
    （検査・`recipes/<id>.md` の書き出し・注文への結果の書き戻し・コミット・push まで行う。不合格なら理由が出るので直してやり直す）
