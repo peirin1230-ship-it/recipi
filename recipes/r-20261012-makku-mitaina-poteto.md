@@ -1,4 +1,5 @@
 ---
+listed: "2026-10-13T04:35:47+09:00"
 id: r-20261012-makku-mitaina-poteto
 title: マックみたいなポテト
 version: 1
