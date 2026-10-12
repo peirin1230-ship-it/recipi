@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-12T20:05:34+09:00",
+ "updated": "2026-10-12T20:05:54+09:00",
  "items": [
   {
    "id": "pxqdj5",
@@ -27,13 +27,6 @@
    "name": "かまぼこ",
    "loc": "fridge",
    "added": "2026-10-08",
-   "src": "manual"
-  },
-  {
-   "id": "p5vngo",
-   "name": "コーン缶",
-   "loc": "pantry",
-   "added": "2026-10-09",
    "src": "manual"
   },
   {
