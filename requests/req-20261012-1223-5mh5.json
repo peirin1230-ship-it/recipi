@@ -12,10 +12,704 @@
  "use_up": [],
  "exclude": [],
  "note": "",
- "mode": "pick",
+ "mode": "auto",
  "parent": "req-20261012-1222-l5ff",
  "alternative": 2,
- "status": "pending",
+ "status": "done",
  "error": null,
- "result": null
+ "result": {
+  "feasible": true,
+  "infeasible_reason": null,
+  "nearest_options": [],
+  "alternatives": [
+   {
+    "title": "ごぼうと豚ロースの甘辛煮",
+    "minutes": 35,
+    "why": "主材料も調理法も変わる。ごぼうを使い切れる",
+    "kind": "new"
+   },
+   {
+    "title": "豆腐とれんこんの焼きだんご",
+    "minutes": 30,
+    "why": "豆腐とれんこんで、子どもが手づかみしやすい",
+    "kind": "new"
+   }
+  ],
+  "recipe_id": "r-20261012-shirasu-to-broccoli-no-tamago-chahan",
+  "recipe": {
+   "id": "r-20261012-shirasu-to-broccoli-no-tamago-chahan",
+   "title": "しらすとブロッコリーの卵チャーハン",
+   "version": 1,
+   "supersedes": null,
+   "status": "draft",
+   "created": "2026-10-12",
+   "request": "req-20261012-1223-5mh5",
+   "generated_by": {
+    "model": "claude-code",
+    "prompt_version": 7
+   },
+   "type": "recipe_detail",
+   "servings": {
+    "adults": 2,
+    "kids": 1
+   },
+   "time": {
+    "budget": 0,
+    "planned": 64,
+    "active": 20,
+    "raw_estimate": 64,
+    "speed_factor": 1.01
+   },
+   "image_text": "ほぐれたご飯に卵の黄色、ブロッコリーの緑、しらすの白が散らばる、ぱらっと仕上がったチャーハン。ごま油の香りで、白ごまをふって平皿に丸く盛る。",
+   "dishes": [
+    {
+     "name": "しらすとブロッコリーの卵チャーハン",
+     "role": "onepot"
+    }
+   ],
+   "equipment": [
+    "rice-cooker",
+    "fp26",
+    "kettle",
+    "bowl-m",
+    "bowl-l",
+    "microwave"
+   ],
+   "ingredients": [
+    {
+     "name": "米",
+     "qty": 1.5,
+     "unit": "合",
+     "grams": 225,
+     "pantry": "米",
+     "for": "しらすとブロッコリーの卵チャーハン",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "卵",
+     "qty": 3,
+     "unit": "個",
+     "grams": 150,
+     "pantry": "卵",
+     "for": "しらすとブロッコリーの卵チャーハン",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "ブロッコリー",
+     "qty": 0.5,
+     "unit": "株",
+     "grams": 120,
+     "pantry": "ブロッコリー",
+     "for": "しらすとブロッコリーの卵チャーハン",
+     "substitute": null,
+     "use_up": true
+    },
+    {
+     "name": "しらす",
+     "qty": 30,
+     "unit": "g",
+     "grams": 30,
+     "pantry": "しらす",
+     "for": "しらすとブロッコリーの卵チャーハン",
+     "substitute": null,
+     "use_up": true
+    },
+    {
+     "name": "ごま油",
+     "qty": 1,
+     "unit": "大さじ",
+     "grams": 12,
+     "pantry": "ごま油",
+     "for": "しらすとブロッコリーの卵チャーハン",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "酒",
+     "qty": 2,
+     "unit": "小さじ",
+     "grams": 10,
+     "pantry": "酒",
+     "for": "しらすとブロッコリーの卵チャーハン",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "醤油",
+     "qty": 1,
+     "unit": "小さじ",
+     "grams": 6,
+     "pantry": "醤油",
+     "for": "しらすとブロッコリーの卵チャーハン",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "塩",
+     "qty": 1,
+     "unit": "ひとつまみ",
+     "grams": 0.5,
+     "pantry": "塩",
+     "for": "しらすとブロッコリーの卵チャーハン",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "こしょう",
+     "qty": null,
+     "unit": "少々",
+     "grams": null,
+     "pantry": "こしょう",
+     "for": "しらすとブロッコリーの卵チャーハン",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "白ごま",
+     "qty": 1,
+     "unit": "小さじ",
+     "grams": 3,
+     "pantry": "白ごま",
+     "for": "しらすとブロッコリーの卵チャーハン",
+     "substitute": null,
+     "use_up": false
+    }
+   ],
+   "tags": [
+    "チャーハン",
+    "卵",
+    "しらす",
+    "ブロッコリー",
+    "一品",
+    "子ども取り分け"
+   ],
+   "salt": {
+    "total_g": 2.2,
+    "adult_per_serving_g": 1.1,
+    "kid_g": 0.1
+   },
+   "kid": {
+    "rule": "separate",
+    "cut": "ブロッコリーは 5mm 以下に刻んだまま。ご飯と卵はそのまま手づかみできるよう、小さく丸めるか平らに広げる",
+    "note": "調味料を入れる前に取り分ける。卵は完全に固まるまで炒め、しらすは湯通ししたものを小さじ 2 だけ混ぜる。冷ましてから出す"
+   },
+   "keep": {
+    "fridge_days": 1,
+    "freezer": true,
+    "reheat": "ラップをして 600W で 1 人分 1 分 30 秒〜2 分。途中で混ぜ、湯気が立つまで温める"
+   },
+   "timeline": [
+    {
+     "minute": 0,
+     "lane": "hands",
+     "text": "米を研いで炊飯器に入れ、早炊きスタート"
+    },
+    {
+     "minute": 3,
+     "lane": "hands",
+     "text": "炊飯中（約 45 分）。ほかの家事ができる"
+    },
+    {
+     "minute": 43,
+     "lane": "hands",
+     "text": "ケトルで湯を沸かす。ブロッコリーを小房に分けてチョッパーで刻む"
+    },
+    {
+     "minute": 46,
+     "lane": "hands",
+     "text": "しらすをザルに入れて湯をかけ塩を抜く。卵を溶く"
+    },
+    {
+     "minute": 48,
+     "lane": "hands",
+     "text": "炊き上がり。ボウルに広げて粗熱を取る"
+    },
+    {
+     "minute": 51,
+     "lane": "microwave",
+     "text": "刻んだブロッコリーを 900W 1 分"
+    },
+    {
+     "minute": 53,
+     "lane": "gas-r",
+     "text": "フライパン 中火 ごま油→卵→ご飯を炒める"
+    },
+    {
+     "minute": 57,
+     "lane": "gas-r",
+     "text": "ブロッコリー・しらすを加え、子どもの分を取り分ける"
+    },
+    {
+     "minute": 59,
+     "lane": "gas-r",
+     "text": "大人の分に醤油・塩・こしょうで味付け"
+    },
+    {
+     "minute": 61,
+     "lane": "hands",
+     "text": "盛り付け・配膳（子どもの分は冷ます）"
+    },
+    {
+     "minute": 64,
+     "lane": "hands",
+     "text": "いただきます"
+    }
+   ],
+   "steps": [
+    {
+     "dish": "しらすとブロッコリーの卵チャーハン",
+     "n": 1,
+     "title": "米を炊く",
+     "kind": "prep",
+     "tag": "rice",
+     "minutes": 3,
+     "heat": null,
+     "text": "米 1.5 合を研いで炊飯器（rice-cooker）に入れ、1.5 合の目盛りまで水を入れて早炊きにする。",
+     "cue": "水が澄んで、炊飯ランプが点いた",
+     "caution": null,
+     "timer": null,
+     "kid": null,
+     "ingredients": [
+      "米"
+     ]
+    },
+    {
+     "dish": "しらすとブロッコリーの卵チャーハン",
+     "n": 2,
+     "title": "炊き上がりを待つ",
+     "kind": "wait",
+     "tag": "wait",
+     "minutes": 40,
+     "heat": null,
+     "text": "炊飯器に任せる（早炊き 45 分）。この間はほかの家事に使う。",
+     "cue": "炊飯器の残り時間が 5 分前後になった",
+     "caution": null,
+     "timer": 2400,
+     "kid": null,
+     "ingredients": []
+    },
+    {
+     "dish": "しらすとブロッコリーの卵チャーハン",
+     "n": 3,
+     "title": "ブロッコリー・しらす・卵の用意",
+     "kind": "prep",
+     "tag": "cut",
+     "minutes": 5,
+     "heat": null,
+     "text": "ケトルで湯 300ml を沸かしておく。ブロッコリー 1/2 株を小房に分け、ぶんぶんチョッパーで 3〜5mm に刻んで耐熱のボウル（中）に入れる。しらす 30g をザルに入れ熱湯を回しかけて塩を抜く。卵 3 個を別のボウルで溶く。",
+     "cue": "ブロッコリーが粒状、しらすがふっくら白くなった",
+     "caution": "チョッパーの刃は鋭いので、手を入れる前にコンセントを抜くか手を離す",
+     "timer": null,
+     "kid": null,
+     "ingredients": [
+      "ブロッコリー",
+      "しらす",
+      "卵"
+     ]
+    },
+    {
+     "dish": "しらすとブロッコリーの卵チャーハン",
+     "n": 4,
+     "title": "ご飯を広げる",
+     "kind": "prep",
+     "tag": "rice",
+     "minutes": 3,
+     "heat": null,
+     "text": "炊き上がったご飯をボウル（大）に移し、ほぐして広げる。",
+     "cue": "湯気が少し落ち着き、粒がくっつかずほぐれる",
+     "caution": null,
+     "timer": null,
+     "kid": null,
+     "ingredients": []
+    },
+    {
+     "dish": "しらすとブロッコリーの卵チャーハン",
+     "n": 5,
+     "title": "ブロッコリーをレンジにかける",
+     "kind": "heat",
+     "tag": "microwave",
+     "minutes": 2,
+     "heat": {
+      "equipment": "microwave",
+      "level": "900W"
+     },
+     "text": "刻んだブロッコリーに水 大さじ 1 を加え、ふんわりラップして 900W で 1 分。",
+     "cue": "鮮やかな緑色で、指で押すとつぶれるやわらかさ",
+     "caution": "ラップを外すときは蒸気でやけどしないよう、向こう側から開ける",
+     "timer": null,
+     "kid": null,
+     "ingredients": []
+    },
+    {
+     "dish": "しらすとブロッコリーの卵チャーハン",
+     "n": 6,
+     "title": "卵とご飯を炒める",
+     "kind": "heat",
+     "tag": "stir-fry",
+     "minutes": 6,
+     "heat": {
+      "equipment": "gas-r",
+      "level": "中火"
+     },
+     "text": "フライパン（fp26）を中火で 1 分予熱し、ごま油 大さじ 1 を入れる。溶き卵を流し入れ、半熟になったらすぐご飯を加えて切るように混ぜ、1 分ほど炒めて卵を全体に絡める。ブロッコリー、水気を切ったしらすを加えて 2 分炒める。",
+     "cue": "ご飯がぱらぱらとほぐれ、卵に生っぽさが無く、パチパチ音がする",
+     "caution": "フッ素加工なので強火にしない",
+     "timer": null,
+     "kid": null,
+     "ingredients": [
+      "ごま油",
+      "卵",
+      "米",
+      "ブロッコリー",
+      "しらす"
+     ]
+    },
+    {
+     "dish": "しらすとブロッコリーの卵チャーハン",
+     "n": 7,
+     "title": "子どもの分を取り分けて味付け",
+     "kind": "heat",
+     "tag": "season",
+     "minutes": 2,
+     "heat": {
+      "equipment": "gas-r",
+      "level": "中火"
+     },
+     "text": "火を止め、ご飯 100g ほどを子ども用の皿に取り分ける。大人の分には酒 小さじ 2 を鍋肌から回し入れ、醤油 小さじ 1、塩 ひとつまみ、こしょうを加えて強めの中火〜中火で 30 秒炒め、白ごま 小さじ 1 をふる。",
+     "cue": "醤油の香りが立ち、全体に均一な色がついた",
+     "caution": null,
+     "timer": null,
+     "kid": "子ども用の分には味付けしない。湯通しのしらす 小さじ 2 を混ぜ、卵が固まっているか確かめ、平らに広げて冷ます",
+     "ingredients": [
+      "酒",
+      "醤油",
+      "塩",
+      "こしょう",
+      "白ごま"
+     ]
+    },
+    {
+     "dish": "しらすとブロッコリーの卵チャーハン",
+     "n": 8,
+     "title": "盛り付けて配膳",
+     "kind": "serve",
+     "tag": "serve",
+     "minutes": 3,
+     "heat": null,
+     "text": "大人の分は平皿に丸く盛る。子どもの分はスプーンで手づかみしやすい小さな丸にして、触って熱くないことを確認して出す。",
+     "cue": "湯気がやわらぎ、子どもの分は人肌程度",
+     "caution": null,
+     "timer": null,
+     "kid": "熱くないか手の甲で確かめてから渡す",
+     "ingredients": []
+    }
+   ],
+   "cleanup": {
+    "dishwasher": [
+     "bowl-l",
+     "bowl-m"
+    ],
+    "hand": [
+     "fp26",
+     "rice-cooker"
+    ],
+    "note": "炊飯器の内釜は水に浸けて洗う"
+   },
+   "photo": null,
+   "stats": {
+    "cooked": 0,
+    "r_avg": null,
+    "f_avg": null,
+    "last": null
+   },
+   "detail": "full",
+   "together": [
+    "r-20261012-ninjin-to-kamaboko-no-goma-zuae"
+   ],
+   "memo": []
+  },
+  "side_recipe_ids": [
+   "r-20261012-ninjin-to-kamaboko-no-goma-zuae"
+  ],
+  "side_recipes": [
+   {
+    "id": "r-20261012-ninjin-to-kamaboko-no-goma-zuae",
+    "title": "にんじんとかまぼこのごま酢和え",
+    "version": 1,
+    "supersedes": null,
+    "status": "draft",
+    "created": "2026-10-12",
+    "request": "req-20261012-1223-5mh5",
+    "generated_by": {
+     "model": "claude-code",
+     "prompt_version": 7
+    },
+    "type": "recipe_detail",
+    "servings": {
+     "adults": 2,
+     "kids": 1
+    },
+    "time": {
+     "budget": 0,
+     "planned": 9,
+     "active": 9,
+     "raw_estimate": 9,
+     "speed_factor": 1.01
+    },
+    "image_text": "細切りのにんじんのオレンジとかまぼこのピンクがつやよく和えられ、白ごまが散る。さっぱりした甘酢の小鉢。",
+    "dishes": [
+     {
+      "name": "にんじんとかまぼこのごま酢和え",
+      "role": "side"
+     }
+    ],
+    "equipment": [
+     "microwave",
+     "bowl-m"
+    ],
+    "ingredients": [
+     {
+      "name": "にんじん",
+      "qty": 1,
+      "unit": "本",
+      "grams": 150,
+      "pantry": "にんじん",
+      "for": "にんじんとかまぼこのごま酢和え",
+      "substitute": null,
+      "use_up": false
+     },
+     {
+      "name": "かまぼこ",
+      "qty": 4,
+      "unit": "切れ",
+      "grams": 40,
+      "pantry": "かまぼこ",
+      "for": "にんじんとかまぼこのごま酢和え",
+      "substitute": null,
+      "use_up": false
+     },
+     {
+      "name": "酢",
+      "qty": 1,
+      "unit": "大さじ",
+      "grams": 15,
+      "pantry": "酢",
+      "for": "にんじんとかまぼこのごま酢和え",
+      "substitute": null,
+      "use_up": false
+     },
+     {
+      "name": "砂糖",
+      "qty": 1,
+      "unit": "小さじ",
+      "grams": 3,
+      "pantry": "砂糖",
+      "for": "にんじんとかまぼこのごま酢和え",
+      "substitute": null,
+      "use_up": false
+     },
+     {
+      "name": "醤油",
+      "qty": 0.5,
+      "unit": "小さじ",
+      "grams": 3,
+      "pantry": "醤油",
+      "for": "にんじんとかまぼこのごま酢和え",
+      "substitute": null,
+      "use_up": false
+     },
+     {
+      "name": "ごま油",
+      "qty": 1,
+      "unit": "小さじ",
+      "grams": 4,
+      "pantry": "ごま油",
+      "for": "にんじんとかまぼこのごま酢和え",
+      "substitute": null,
+      "use_up": false
+     },
+     {
+      "name": "白ごま",
+      "qty": 1,
+      "unit": "小さじ",
+      "grams": 3,
+      "pantry": "白ごま",
+      "for": "にんじんとかまぼこのごま酢和え",
+      "substitute": null,
+      "use_up": false
+     }
+    ],
+    "tags": [
+     "副菜",
+     "にんじん",
+     "かまぼこ",
+     "レンジ",
+     "作り置き"
+    ],
+    "salt": {
+     "total_g": 1.5,
+     "adult_per_serving_g": 0.7,
+     "kid_g": 0.3
+    },
+    "kid": {
+     "rule": "separate",
+     "cut": "にんじんは細切りを 1cm 長さに切って、かまぼこは 1cm 角",
+     "note": "酢和えの前に取り分ける。かまぼこは 1 切れ分だけ細かく刻んで混ぜる"
+    },
+    "keep": {
+     "fridge_days": 2,
+     "freezer": false,
+     "reheat": "冷たいままでよい。食べる前によく混ぜる"
+    },
+    "timeline": [
+     {
+      "minute": 0,
+      "lane": "hands",
+      "text": "にんじんを細切り、かまぼこを短冊に切る"
+     },
+     {
+      "minute": 3,
+      "lane": "microwave",
+      "text": "にんじんを 900W 2 分"
+     },
+     {
+      "minute": 5,
+      "lane": "hands",
+      "text": "にんじんを取り出し、子どもの分を取り分ける"
+     },
+     {
+      "minute": 7,
+      "lane": "hands",
+      "text": "調味料と和える。ごまをふる"
+     },
+     {
+      "minute": 9,
+      "lane": "hands",
+      "text": "小鉢に盛る"
+     }
+    ],
+    "steps": [
+     {
+      "dish": "にんじんとかまぼこのごま酢和え",
+      "n": 1,
+      "title": "切る",
+      "kind": "prep",
+      "tag": "cut",
+      "minutes": 3,
+      "heat": null,
+      "text": "にんじん 1 本を皮をむいて 3mm × 5cm の細切りにする（スライサーで薄切りにしてから切ってもよい）。かまぼこ 4 切れは細切りにする。",
+      "cue": "にんじんが同じ太さにそろった",
+      "caution": null,
+      "timer": null,
+      "kid": null,
+      "ingredients": [
+       "にんじん",
+       "かまぼこ"
+      ]
+     },
+     {
+      "dish": "にんじんとかまぼこのごま酢和え",
+      "n": 2,
+      "title": "レンジにかける",
+      "kind": "heat",
+      "tag": "microwave",
+      "minutes": 2,
+      "heat": {
+       "equipment": "microwave",
+       "level": "900W"
+      },
+      "text": "にんじんを耐熱のボウル（中）に入れてふんわりラップし、900W で 2 分。",
+      "cue": "にんじんが曲がるくらいやわらかく、甘い香り",
+      "caution": "取り出すときは蒸気とボウルの熱に注意",
+      "timer": null,
+      "kid": null,
+      "ingredients": []
+     },
+     {
+      "dish": "にんじんとかまぼこのごま酢和え",
+      "n": 3,
+      "title": "子どもの分を取り分ける",
+      "kind": "prep",
+      "tag": "kid",
+      "minutes": 1,
+      "heat": null,
+      "text": "にんじんを子ども用に大さじ 3 ほど取り分け、1cm に刻む。かまぼこ 1 切れも 1cm 角に刻んで添える。",
+      "cue": "指でつぶせるやわらかさ",
+      "caution": null,
+      "timer": null,
+      "kid": "調味料を入れる前に取り分ける",
+      "ingredients": []
+     },
+     {
+      "dish": "にんじんとかまぼこのごま酢和え",
+      "n": 4,
+      "title": "和える",
+      "kind": "prep",
+      "tag": "season",
+      "minutes": 2,
+      "heat": null,
+      "text": "残りのにんじんの粗熱を取り、酢 大さじ 1、砂糖 小さじ 1、醤油 小さじ 1/2、ごま油 小さじ 1、かまぼこを加えて和え、白ごま 小さじ 1 をふる。",
+      "cue": "砂糖が溶けて全体につやが出た",
+      "caution": null,
+      "timer": null,
+      "kid": null,
+      "ingredients": [
+       "酢",
+       "砂糖",
+       "醤油",
+       "ごま油",
+       "白ごま"
+      ]
+     },
+     {
+      "dish": "にんじんとかまぼこのごま酢和え",
+      "n": 5,
+      "title": "盛り付ける",
+      "kind": "serve",
+      "tag": "serve",
+      "minutes": 1,
+      "heat": null,
+      "text": "小鉢に盛る。",
+      "cue": "にんじんがこんもりと盛れた",
+      "caution": null,
+      "timer": null,
+      "kid": null,
+      "ingredients": []
+     }
+    ],
+    "cleanup": {
+     "dishwasher": [
+      "bowl-m"
+     ],
+     "hand": [],
+     "note": null
+    },
+    "photo": null,
+    "stats": {
+     "cooked": 0,
+     "r_avg": null,
+     "f_avg": null,
+     "last": null
+    },
+    "detail": "full",
+    "together": [
+     "r-20261012-shirasu-to-broccoli-no-tamago-chahan"
+    ],
+    "memo": []
+   }
+  ],
+  "model": "claude-code",
+  "prompt_version": 7,
+  "tokens": {
+   "input": 0,
+   "output": 0,
+   "cache_read": 0,
+   "cache_write": 0
+  },
+  "cost_usd": 0.0,
+  "seconds": 0
+ },
+ "finished": "2026-10-12T12:26:04+09:00"
 }
