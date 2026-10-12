@@ -1,0 +1,20 @@
+{
+ "id": "req-20261012-2037-8swn",
+ "ts": "2026-10-12T20:37:55+09:00",
+ "type": "dinner",
+ "time_budget": 0,
+ "servings": {
+  "adults": 2,
+  "kids": 1
+ },
+ "dishes": "main",
+ "mood": [],
+ "use_up": [],
+ "exclude": [],
+ "note": "",
+ "mode": "auto",
+ "dish": "マックみたいなポテト",
+ "status": "pending",
+ "error": null,
+ "result": null
+}
