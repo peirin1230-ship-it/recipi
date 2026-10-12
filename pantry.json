@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-12T20:05:54+09:00",
+ "updated": "2026-10-13T06:06:46+09:00",
  "items": [
   {
    "id": "pxqdj5",
@@ -70,13 +70,6 @@
    "loc": "fridge",
    "added": "2026-10-10",
    "src": "kaji-quest"
-  },
-  {
-   "id": "phfn93",
-   "name": "豚ロース肉",
-   "loc": "fridge",
-   "added": "2026-10-10",
-   "src": "manual"
   },
   {
    "id": "pp45wz",
