@@ -3,7 +3,7 @@ id: r-20261012-ninjin-to-kamaboko-no-goma-zuae
 title: にんじんとかまぼこのごま酢和え
 version: 1
 supersedes: null
-status: draft
+status: tried
 created: '2026-10-12'
 request: req-20261012-1223-5mh5
 generated_by: {model: claude-code, prompt_version: 7}
@@ -168,4 +168,4 @@ together: [r-20261012-shirasu-to-broccoli-no-tamago-chahan]
 - 手洗い: —
 
 ## 作ったときのメモ
-
+- 2026-10-13 ・ 28 分（見込み 9）・ R 43 ・ F 3 ・ 少し変えた: にんじんは柔らかくならなかったのでフライパンで炒めた ・ 気づき: レンジよりもフライパンが美味しい ・ 📷 20261013-1.jpg
