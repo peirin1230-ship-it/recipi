@@ -35,11 +35,23 @@ const PNG = Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAEklEQVR
   assert(await page.$$eval('#recipe .step', s => s.length) === 7, 'generated recipe (from result.recipe) renders 7 steps');
   assert(await page.evaluate(() => !localStorage.getItem('recipi.pending') && JSON.parse(localStorage.getItem('recipi.current')).request.result.recipe.id === 'r-20261009-test'), 'pending cleared, current request remembered');
   assert(await page.$eval('#o-status', e => !e.querySelector('.pending')), 'pending indicator removed');
-  await page.click('#recipe [data-act="o-detail"]');
-  await page.waitForFunction(n => n, true); await page.waitForTimeout(500);
-  const det = puts.filter(p => p.path.startsWith('requests/')).map(p => JSON.parse(unb64(p.body.content))).find(r => r.type === 'recipe_detail');
-  assert(det && det.alternative === 0 && det.parent && det.parent.startsWith('req-') && det.time_budget === 25, `recipe_detail request has parent/alternative: ${det && JSON.stringify({ parent: det.parent, alternative: det.alternative })}`);
-  await page.waitForFunction(() => !document.querySelector('#o-status .pending'), null, { timeout: 15000 });
+  // 別案 2 つを続けて「詳細に」→ 2 件とも考え中 → 2 件とも届く → 先に頼んだ物も「届いたレシピ」から開ける
+  await page.click('#recipe [data-act="o-detail"][data-alt="0"]'); await page.waitForFunction(() => document.querySelectorAll('#o-status .pending').length === 1);
+  await page.click('#recipe [data-act="o-detail"][data-alt="1"]'); await page.waitForFunction(() => document.querySelectorAll('#o-status .pending').length === 2);
+  assert(await page.evaluate(() => { const p = JSON.parse(localStorage.getItem('recipi.pending')); return Array.isArray(p) && p.length === 2 && p.every(x => x.type === 'recipe_detail'); }) && await page.$eval('#o-status', e => e.textContent.includes('別案を詳しく考え中')), 'two detail orders wait at once (both remembered on the device)');
+  const dets = puts.filter(p => p.path.startsWith('requests/')).map(p => JSON.parse(unb64(p.body.content))).filter(r => r.type === 'recipe_detail'); const det = dets[0];
+  assert(dets.length === 2 && det.alternative === 0 && dets[1].alternative === 1 && det.parent && det.parent.startsWith('req-') && det.time_budget === 25, `recipe_detail requests have parent/alternative: ${det && JSON.stringify({ parent: det.parent, alternative: det.alternative })}`);
+  await page.waitForFunction(() => !document.querySelector('#o-status .pending'), null, { timeout: 15000 }); await page.waitForTimeout(300);
+  assert(await page.evaluate(() => !localStorage.getItem('recipi.pending') && (JSON.parse(localStorage.getItem('recipi.inbox')) || []).length === 3), 'both results arrived; inbox holds the order and the two details');
+  assert(await page.$$eval('#recipe .inbox .chip', c => c.length === 3 && c.filter(x => x.classList.contains('is-on')).length === 1), '届いたレシピ chips list all three results with the current one marked');
+  await page.$eval('#recipe', e => e.scrollIntoView()); await page.screenshot({ path: `${SHOTS}/inbox-375.png` });
+  { const curId = await page.evaluate(() => JSON.parse(localStorage.getItem('recipi.current')).request.id);
+    await page.click(`#recipe .inbox .chip[data-v="${dets[0].id}"]`); await page.waitForTimeout(200);
+    const nowId = await page.evaluate(() => JSON.parse(localStorage.getItem('recipi.current')).request.id);
+    assert(curId === dets[1].id && nowId === dets[0].id && await page.$eval('#recipe .rc-title', e => e.textContent.includes('鶏もも肉')), `tapping a chip switches the card to the first detail (${curId} → ${nowId})`); }
+  await page.click('[data-act="rc-later"]'); await page.waitForTimeout(100);
+  assert(await page.$eval('#recipe', e => e.textContent.includes('まだレシピがない')) && await page.$$eval('#recipe .inbox .chip', c => c.length === 3), 'after あとで the card is empty but the arrived recipes stay reachable');
+  await page.click(`#recipe .inbox .chip[data-v="${dets[1].id}"]`); await page.waitForTimeout(200);
   // 2) 冷蔵庫の写真 → 差分 → 反映
   await page.setInputFiles('#p-photo', { name: 'fridge.png', mimeType: 'image/png', buffer: PNG });
   await page.waitForFunction(() => !!document.querySelector('#p-status .pending'), null, { timeout: 10000 });

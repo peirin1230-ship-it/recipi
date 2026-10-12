@@ -230,6 +230,10 @@ h4.dish { margin: 14px 0 4px; font-size: 15.5px; font-weight: 800; }
 .status { min-height: 20px; margin-top: 6px; font-size: 13.5px; color: var(--text-2); line-height: 1.6; }
 .pending { display: flex; align-items: center; gap: 10px; margin-top: 12px; padding: 12px 14px; border-radius: 16px; background: var(--accent-soft); color: var(--accent-ink); font-weight: 700; font-size: 14px; }
 .pending .ghost.tiny { white-space: nowrap; flex-shrink: 0; }
+.pending + .pending { margin-top: 8px; }
+.inbox { margin: 4px 0 10px; }
+.inbox > .sub { display: block; margin-bottom: 4px; font-size: 12.5px; }
+.inbox .chip .sub { margin-left: 6px; white-space: nowrap; }
 .pending::before { content: ""; width: 16px; height: 16px; flex-shrink: 0; border-radius: 50%; border: 3px solid color-mix(in srgb, var(--accent) 30%, transparent); border-top-color: var(--accent); animation: spin 1s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
 .errbox { margin-top: 12px; padding: 12px 14px; border-radius: 16px; background: var(--danger-soft); color: var(--danger); font-size: 14px; line-height: 1.6; }

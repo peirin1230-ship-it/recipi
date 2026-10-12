@@ -10,7 +10,7 @@ import { $, $$, esc, ic, head, md, toast, setBusy, lsGet, lsSet, lsDel, lsGetRaw
 
 const TZ = 'Asia/Tokyo';
 const TOKEN_KEY = 'recipi.token';
-const LS = { order: 'recipi.order', pending: 'recipi.pending', current: 'recipi.current', weekly: 'recipi.weekly', suggest: 'recipi.suggest', cook: 'recipi.cook.', photo: 'recipi.pendingPhoto', detail: 'recipi.detail', zukan: 'recipi.zukanSort', tab: 'recipi.listTab', listOv: 'recipi.list' };
+const LS = { order: 'recipi.order', pending: 'recipi.pending', current: 'recipi.current', weekly: 'recipi.weekly', suggest: 'recipi.suggest', cook: 'recipi.cook.', photo: 'recipi.pendingPhoto', inbox: 'recipi.inbox', detail: 'recipi.detail', zukan: 'recipi.zukanSort', tab: 'recipi.listTab', listOv: 'recipi.list' };
 const MEMO_HEADING = '## 作ったときのメモ';
 const MOODS = ['さっぱり', 'がっつり', '和', '洋', '中', '麺', '丼', '鍋', 'スープ', '時短'];
 const TYPES = [['dinner', '夕食'], ['prep', '仕込み'], ['breakfast', '朝食'], ['lunchbox', '弁当']];
@@ -36,9 +36,9 @@ function normalizePantry(d) {
 
 const state = {
   config: {}, equipment: {}, family: {}, learned: {}, overrides: {}, ingredients: [], recipes: [], recipesBase: [], knowledge: { tips: [], basics: [], safety: null }, digests: [], build: {},
-  token: '', pantry: { sha: null, data: emptyPantry() }, months: new Map(), loaded: false, busy: false, liveError: '',
+  token: '', pantry: { sha: null, data: emptyPantry() }, months: new Map(), loaded: false, busy: false, liveError: '', inbox: [],
   current: null,     // { recipe, request } 今の「レシピ」カード
-  pending: null,     // 考え中の注文 { id, type, since, status }
+  pending: [],     // 考え中の注文 { id, type, since, status }
   lastError: null,   // 直近の生成エラー { type, error }
   weekly: null,      // 週の献立の注文（result 入り）
   cost: null,        // 今月の API 費用（requests から集計）
@@ -140,7 +140,7 @@ function fScore(r) {
 // ---- レシピの読み方 ----
 // 注文の結果に入っているレシピ（主菜と、1 レシピ 1 品で分けた副菜・汁物）
 function requestRecipes(req) { const res = req && req.result; if (!res) return []; return [res.recipe, ...(Array.isArray(res.side_recipes) ? res.side_recipes : [])].filter(r => r && r.id); }
-const recipeById = id => state.recipes.find(r => r.id === id) || (state.current && state.current.recipe && state.current.recipe.id === id ? state.current.recipe : null) || requestRecipes(state.current && state.current.request).find(r => r.id === id) || null;
+const recipeById = id => state.recipes.find(r => r.id === id) || (state.current && state.current.recipe && state.current.recipe.id === id ? state.current.recipe : null) || requestRecipes(state.current && state.current.request).find(r => r.id === id) || state.inbox.flatMap(requestRecipes).find(r => r.id === id) || null;
 function currentRecipe() { const c = state.current; if (!c || !c.recipe) return null; return state.recipes.find(x => x.id === c.recipe.id) || c.recipe; }
 const avg = arr => arr.length ? arr.reduce((a, b) => a + b, 0) / arr.length : null;
 // 統計: 読み込んだ記録があればそこから（直近 5 回）、無ければ夜間ジョブが書いた stats
@@ -294,33 +294,62 @@ async function startRequest(req, before) {
     await gh.dispatch(req.id);
   });
   if (!ok) { renderPending(); return; }
-  setPending({ id: req.id, type: req.type, since: Date.now(), status: 'pending' });
+  addPending({ id: req.id, type: req.type, since: Date.now(), status: 'pending' });
   toast(req.type === 'pantry_photo' ? '写真を送った。読み取り中（2〜4 分）。閉じても大丈夫' : req.type === 'suggest_items' ? '買い足す物を考え中（2〜4 分）。閉じても大丈夫' : req.time_budget === 0 ? '時間無制限で注文した。考え中（2〜4 分）。閉じても大丈夫' : '注文した。考え中（2〜4 分）。閉じても大丈夫');
   clearTimeout(pollTimer); pollTimer = setTimeout(pollTick, POLL_MS);
 }
-function setPending(p) { state.pending = p; if (p) lsSet(LS.pending, p); else lsDel(LS.pending); renderPending(); }
+// 考え中の注文は何件でも持てる（別案 2 つを続けて「詳細に」しても、先の結果を取りこぼさない）。端末に覚える
+function savePending() { if (state.pending.length) lsSet(LS.pending, state.pending); else lsDel(LS.pending); renderPending(); }
+function addPending(p) { state.pending = state.pending.filter(x => x.id !== p.id); state.pending.push(p); savePending(); }
+function dropPending(id) { state.pending = state.pending.filter(x => x.id !== id); savePending(); }
+function loadPending() { const raw = lsGet(LS.pending); const list = Array.isArray(raw) ? raw : raw && raw.id ? [raw] : []; state.pending = list.filter(p => p && p.id && Date.now() - (+p.since || 0) < POLL_MAX_MS); savePending(); }
+const PENDING_JA = { pantry_photo: '写真を読み取り中', suggest_items: '買い足す物を考え中', recipe_detail: '別案を詳しく考え中', weekly: '週の献立を考え中', prep: '仕込みを考え中' };
 let pollTimer = 0;
 async function pollTick() {
-  clearTimeout(pollTimer); const p = state.pending; if (!p) return;
-  if (Date.now() - p.since > POLL_MAX_MS) { setPending(null); state.lastError = { type: p.type, error: '24 時間たっても結果が来ない。GitHub の Actions の実行ログを確認してからもう一度' }; renderPending(); toast(state.lastError.error, true); return; }
-  try {
-    const { data } = await gh.getJson(`requests/${p.id}.json`);
-    if (data && (data.status === 'done' || data.status === 'error')) { setPending(null); onRequestDone(data); return; }
-    if (data && data.status && data.status !== p.status) { p.status = data.status; lsSet(LS.pending, p); }
-  } catch (e) { console.warn(e); }
+  clearTimeout(pollTimer); if (!state.pending.length) return;
+  const done = [];
+  for (const p of [...state.pending]) {
+    if (Date.now() - p.since > POLL_MAX_MS) { dropPending(p.id); state.lastError = { type: p.type, error: '24 時間たっても結果が来ない。GitHub の Actions の実行ログを確認してからもう一度' }; toast(state.lastError.error, true); continue; }
+    try {
+      const { data } = await gh.getJson(`requests/${p.id}.json`);
+      if (data && (data.status === 'done' || data.status === 'error')) { dropPending(p.id); done.push(data); continue; }
+      if (data && data.status && data.status !== p.status) { p.status = data.status; savePending(); }
+    } catch (e) { console.warn(e); }
+  }
+  done.forEach(onRequestDone);   // 同時に届いたら、あとの物がレシピカードに出る。先の物は「届いたレシピ」から開ける
   renderPending();
-  pollTimer = setTimeout(pollTick, Date.now() - p.since > POLL_SLOW_AFTER_MS ? POLL_SLOW_MS : POLL_MS);
+  if (!state.pending.length) return;
+  const oldest = Math.min(...state.pending.map(p => +p.since || 0));
+  pollTimer = setTimeout(pollTick, Date.now() - oldest > POLL_SLOW_AFTER_MS ? POLL_SLOW_MS : POLL_MS);
 }
 function pendingHTML(scope) {
-  const p = state.pending, err = state.lastError; const pantry = scope === 'pantry'; let html = '';
-  if (p && ((p.type === 'pantry_photo') === pantry)) {
+  const err = state.lastError; const pantry = scope === 'pantry'; let html = '';
+  state.pending.filter(p => (p.type === 'pantry_photo') === pantry).forEach(p => {
     const s = Math.max(0, Math.round((Date.now() - p.since) / 1000));
-    const slow = s * 1000 > POLL_SLOW_AFTER_MS; const what = p.type === 'pantry_photo' ? '写真を読み取り中' : p.type === 'suggest_items' ? '買い足す物を考え中' : '考え中';
-    html += `<div class="pending"><span>${what}${slow ? '。処理が始まれば数分で出る' : '（2〜4 分）'}。閉じても大丈夫<br><span class="sub">${p.status === 'running' ? '生成中' : '順番待ち'} ・ ${fmtSec(s)}</span></span><button type="button" class="ghost tiny" data-act="pending-cancel">やめる</button></div>`;
-  }
+    const slow = s * 1000 > POLL_SLOW_AFTER_MS; const what = PENDING_JA[p.type] || '考え中';
+    html += `<div class="pending"><span>${what}${slow ? '。処理が始まれば数分で出る' : '（2〜4 分）'}。閉じても大丈夫<br><span class="sub">${p.status === 'running' ? '生成中' : '順番待ち'} ・ ${fmtSec(s)}</span></span><button type="button" class="ghost tiny" data-act="pending-cancel" data-id="${esc(p.id)}">やめる</button></div>`;
+  });
   if (err && ((err.type === 'pantry_photo') === pantry)) html += `<div class="errbox">生成できなかった: ${esc(err.error || '理由不明')}<br><button type="button" class="ghost tiny" data-act="error-clear">${ic('x')}閉じる</button></div>`;
   return html;
 }
+// 届いたレシピ（注文の結果）。一覧に載るまでの置き場。レシピカードの上に並び、タップで切り替える。一覧に入った物・作った物・古い物（7 日）は外す
+const INBOX_MAX = 8;
+function inboxAdd(req) { state.inbox = [req, ...state.inbox.filter(x => x.id !== req.id)].slice(0, INBOX_MAX); saveInbox(); }
+function inboxDrop(id) { state.inbox = state.inbox.filter(x => x.id !== id); saveInbox(); }
+function saveInbox() { if (state.inbox.length) lsSet(LS.inbox, state.inbox); else lsDel(LS.inbox); }
+function inboxList() {
+  const keep = req => { const res = req && req.result; if (!res) return false; const r = res.recipe; const ts = Date.parse(res.done_at || req.ts || '') || 0; if (ts && Date.now() - ts > 7 * 24 * 60 * 60 * 1000) return false;
+    if (r && r.id) return !inList(r.id) && !logsOf(r.id).length; return Array.isArray(res.alternatives) && res.alternatives.length > 0; };
+  const list = state.inbox.filter(keep); if (list.length !== state.inbox.length) { state.inbox = list; saveInbox(); }
+  return list;
+}
+function inboxLabel(req) { const res = req.result || {}; const r = res.recipe; if (r && r.title) return `${esc(r.title)}<span class="sub">${(r.time || {}).planned != null ? `${r.time.planned} 分` : ''}</span>`; const n = (res.alternatives || []).length; return `候補 ${n} つ<span class="sub">${esc(hhmm(req.ts))}</span>`; }
+function inboxHTML() {
+  const list = inboxList(); const cur = state.current && state.current.request; if (!list.length || (list.length === 1 && cur && list[0].id === cur.id)) return '';
+  return `<div class="inbox"><span class="sub">届いたレシピ</span><div class="chips">${list.map(req => chip('inbox-open', req.id, inboxLabel(req), !!(cur && cur.id === req.id))).join('')}</div></div>`;
+}
+function inboxOpen(id) { const req = state.inbox.find(x => x.id === id); if (!req) return; const res = req.result || {}; setCurrent(res.recipe || null, req); renderRecipe(); decorateCards(); goTo('recipe'); }
+const hhmm = iso => { const m = /T(\d{2}):(\d{2})/.exec(String(iso || '')); return m ? `${m[1]}:${m[2]}` : ''; };
 function renderPending() { const o = $('#o-status'); if (o) o.innerHTML = pendingHTML('order'); const p = $('#p-status'); if (p) p.innerHTML = pendingHTML('pantry'); }
 // Actions が書き戻した注文を受け取る
 function onRequestDone(req) {
@@ -330,7 +359,7 @@ function onRequestDone(req) {
   if (req.type === 'suggest_items') { state.suggest = { req, checked: (res.items || []).map(() => true) }; lsSet(LS.suggest, state.suggest); render(); goTo('pantry'); toast('買い足すといい物を出した'); return; }
   if (req.type === 'weekly') { state.weekly = req; lsSet(LS.weekly, req); state.showWeekly = false; render(); goTo('order'); toast('週の献立ができた'); return; }
   if (res.recipe && !res.recipe.id && res.recipe_id) res.recipe.id = res.recipe_id;
-  setCurrent(res.recipe || null, req); render(); goTo('recipe');
+  inboxAdd(req); setCurrent(res.recipe || null, req); render(); goTo('recipe');
   toast(res.feasible === false ? '時間に収まらなかった。近い案を出した' : res.recipe ? 'レシピができた' : '候補ができた');
 }
 function weeklyHTML() {
@@ -345,7 +374,7 @@ function weeklyHTML() {
 // ======================================================================
 function renderRecipe() {
   const c = state.current; const r = currentRecipe(); const req = c && c.request; const res = (req && req.result) || null;
-  let html = head('bowl', 'レシピ', r && r.time ? `${r.time.planned} 分 ・ ${esc(r.title)}` : '');
+  let html = head('bowl', 'レシピ', r && r.time ? `${r.time.planned} 分 ・ ${esc(r.title)}` : '') + inboxHTML();
   if (!c) { $('#recipe').innerHTML = html + '<p class="empty">まだレシピがない。「今夜」で考えてもらうか、一覧・図鑑から開く。</p>'; return; }
   if (res && res.feasible === false) {
     html += `<div class="infeasible"><b>${req.time_budget} 分には収まらなかった。</b><br>${esc(res.infeasible_reason || '')}</div>`;
@@ -1064,12 +1093,13 @@ document.addEventListener('click', ev => {
     case 'o-weekly-submit': submitWeekly(); break;
     case 'weekly-clear': state.weekly = null; lsDel(LS.weekly); render(); break;
     case 'weekly-shop': pushShopping(((state.weekly && state.weekly.result && state.weekly.result.shopping) || []).map(s => s.name).filter(Boolean)); break;
-    case 'pending-cancel': setPending(null); clearTimeout(pollTimer); toast('ページでは待つのをやめた（生成は続く。↻ で確認）'); break;
+    case 'pending-cancel': if (b.dataset.id) dropPending(b.dataset.id); else { state.pending = []; savePending(); } if (!state.pending.length) clearTimeout(pollTimer); toast('ページでは待つのをやめた（生成は続く。↻ で確認）'); break;
+    case 'inbox-open': inboxOpen(b.dataset.v); break;
     case 'error-clear': state.lastError = null; renderPending(); break;
     // レシピ
     case 'open-recipe': openRecipe(b.dataset.id); break;
     case 'rc-view': state.detailView = b.dataset.v; renderRecipe(); decorateCards(); break;
-    case 'rc-later': { const r = currentRecipe(); const listed = r && inList(r.id); setCurrent(null, null); renderRecipe(); decorateCards(); toast(listed ? '閉じた。見るときは一覧から' : '一覧に残した（下書きのまま）'); break; }
+    case 'rc-later': { const r = currentRecipe(); const listed = r && inList(r.id); setCurrent(null, null); renderRecipe(); decorateCards(); toast(listed ? '閉じた。見るときは一覧から' : '閉じた。「届いたレシピ」からまた開ける'); break; }
     case 'rc-shop': { const r = currentRecipe(); if (r) pushShopping(missingFor(r)); break; }
     case 'cook-open': openCook(); break;
     case 'cook-close': closeCook(); break;
@@ -1167,7 +1197,7 @@ document.addEventListener('visibilitychange', () => {
   if (document.visibilityState === 'visible') { renderSky(); checkUpdate(false); }
   if (document.visibilityState !== 'visible') return;
   if (!$('#cook').hidden) requestWake();
-  if (state.pending) pollTick();
+  if (state.pending.length) pollTick();
 });
 
 // ---- 上の見出し（台所の窓）: 時刻で空・日と月・灯り・鍋の湯気・あいさつが変わる ----
@@ -1230,13 +1260,13 @@ async function init() {
   { const rid = state.current && state.current.recipe && state.current.recipe.id; if (rid && !inList(rid)) { try { if ((await gh.fetchRawText(`recipes/${rid}.md`)) === null) setCurrent(null, null); } catch { /* 読めないときは残す */ } } }
   const w = lsGet(LS.weekly); if (w && w.result) state.weekly = w;
   const sg = lsGet(LS.suggest); if (sg && sg.req && sg.req.result) state.suggest = sg;
-  const p = lsGet(LS.pending); if (p && p.id && Date.now() - (+p.since || 0) < POLL_MAX_MS) state.pending = p; else lsDel(LS.pending);
+  loadPending(); state.inbox = (lsGet(LS.inbox) || []).filter(x => x && x.id && x.result);
   initNav(['order', 'recipe', 'list', 'record', 'pantry', 'week', 'zukan', 'equipment'], { cook: () => openCook(), settings: openSettings, top: () => window.scrollTo({ top: 0 }) });
   state.loaded = true; render();
   await run(loadLive); render();
   // 作って記録まで済んだレシピがレシピカードに残っていたら消す（別の端末で記録した場合など。記録はいま読んだ）
   if (cookedAlready(state.current)) { setCurrent(null, null); render(); }
-  if (state.pending) pollTick();
+  if (state.pending.length) pollTick();
   loadCost();
 }
 $('#btn-reload').addEventListener('click', reload);

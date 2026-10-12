@@ -141,7 +141,7 @@ async function setup(browser, viewport) {
     assert(reqPut && reqPut.body.message.startsWith('[skip ci]'), 'request commit message has [skip ci]');
     const disp = puts.find(p => p.url.endsWith('/dispatches'));
     assert(disp && disp.body.event_type === 'agent' && disp.body.client_payload.request_id === reqBody.id, 'dispatch event_type=agent with request_id');
-    assert(await page.evaluate(() => { const p = JSON.parse(localStorage.getItem('recipi.pending')); return p && p.id && p.type === 'dinner'; }), 'pending request remembered in localStorage');
+    assert(await page.evaluate(() => { const p = JSON.parse(localStorage.getItem('recipi.pending')); return Array.isArray(p) && p.length === 1 && p[0].id && p[0].type === 'dinner'; }), 'pending request remembered in localStorage');
     await page.screenshot({ path: `${SHOTS}/order-pending-375.png` });
     // 記録の書き込み（ログ・メモ・在庫）
     await page.click('[data-act="pending-cancel"]');
