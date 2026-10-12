@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-13T06:06:46+09:00",
+ "updated": "2026-10-13T06:37:12+09:00",
  "items": [
   {
    "id": "pxqdj5",
@@ -81,13 +81,6 @@
   {
    "id": "pcmurp",
    "name": "ごぼう",
-   "loc": "fridge",
-   "added": "2026-10-10",
-   "src": "manual"
-  },
-  {
-   "id": "pl6o61",
-   "name": "にんじん",
    "loc": "fridge",
    "added": "2026-10-10",
    "src": "manual"
