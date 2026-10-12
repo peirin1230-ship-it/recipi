@@ -1,4 +1,5 @@
 ---
+listed: "2026-10-12T12:26:20+09:00"
 id: r-20261012-shirasu-to-broccoli-no-tamago-chahan
 title: しらすとブロッコリーの卵チャーハン
 version: 1
