@@ -1,4 +1,5 @@
 ---
+listed: "2026-10-13T20:46:23+09:00"
 id: r-20261013-nasu-to-tofu-no-yakibitashi
 title: なすと豆腐の焼き浸し
 version: 1
