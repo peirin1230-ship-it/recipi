@@ -389,6 +389,7 @@ function renderRecipe() {
     const alts = res && Array.isArray(res.alternatives) ? res.alternatives : [];
     if (alts.length) html += `<h3 class="group">候補（タップで詳細を作る）</h3>${altsHTML(alts, req.id)}`;
     else if (!(res && res.feasible === false)) html += '<p class="empty">レシピが入っていない。</p>';
+    html += `<div class="actions left"><button type="button" class="ghost small" data-act="rc-later">${ic('x')}閉じる</button></div>`;
     $('#recipe').innerHTML = html; return;
   }
   $('#recipe').innerHTML = html + recipeBodyHTML(r, req, res);
@@ -410,9 +411,10 @@ function recipeBodyHTML(r, req, res) {
     ${(() => { const n = togetherIds(r, req).filter(id => recipeById(id)).length; return n ? `<button type="button" class="ghost" data-act="cook-together">${ic('timer')}一緒に作る（${n + 1} 品）</button>` : ''; })()}
     ${req && req.type !== 'weekly' ? `<button type="button" class="ghost" data-act="o-again">${ic('refresh')}ほかの案</button>` : ''}
     <button type="button" class="ghost" data-act="rc-later">${inList(r.id) ? `${ic('x')}閉じる` : 'あとで'}</button>
-    ${inList(r.id) ? `<button type="button" class="ghost small danger" data-act="list-del" data-id="${esc(r.id)}">${ic('trash')}一覧から削除</button>` : `<button type="button" class="ghost small" data-act="list-add">${ic('list')}一覧に追加</button>`}
+    ${inList(r.id) ? '' : `<button type="button" class="ghost small" data-act="list-add">${ic('list')}一覧に追加</button>`}
     <button type="button" class="ghost small" data-act="rec-open" data-id="${esc(r.id)}">${ic('camera')}作ったので記録</button>
     ${kq().push_shopping ? `<button type="button" class="ghost small" data-act="rc-shop">${ic('cart')}足りない物を買い物メモへ</button>` : ''}
+    <button type="button" class="ghost small danger" data-act="list-del" data-id="${esc(r.id)}">${ic('trash')}削除</button>
   </div>
   <div class="actions left"><span class="toggle"><button type="button" data-act="rc-view" data-v="full" class="${view === 'full' ? 'is-on' : ''}">細かい版</button><button type="button" data-act="rc-view" data-v="compact" class="${view === 'compact' ? 'is-on' : ''}">短い版</button></span></div>
   <h3 class="group">材料（大人 ${sv.adults ?? '—'}・子 ${sv.kids ?? '—'}）</h3>
@@ -433,7 +435,7 @@ function recipeBodyHTML(r, req, res) {
 // 一緒に作るレシピ（主菜と、分けた副菜・汁物）。together の id を一覧か注文の結果から引く
 function togetherIds(r, req) { return Array.isArray(r.together) && r.together.length ? r.together : requestRecipes(req).filter(x => x.id !== r.id).map(x => x.id); }
 function togetherHTML(r, req) {
-  const ids = togetherIds(r, req);
+  const ids = togetherIds(r, req).filter(id => recipeById(id));   // 消したレシピは出さない
   if (!ids.length) return '';
   const roleOf = x => { const d = (x.dishes || [])[0]; return d && ROLE_JA[d.role] ? ROLE_JA[d.role] : ''; };
   return `<div class="together"><span class="sub">一緒に作る</span>${ids.map(id => { const x = recipeById(id); return x ? `<button type="button" class="chip" data-act="open-recipe" data-id="${esc(id)}">${esc(x.title)}${roleOf(x) ? `<span class="sub">${roleOf(x)}</span>` : ''}</button>` : `<span class="chip">${esc(id)}</span>`; }).join('')}</div>`;
@@ -911,7 +913,7 @@ function renderZukan() {
 // ======================================================================
 // レシピ一覧（状態のタブ・検索・統計・改訂の差分）
 // 一覧の元は Pages を組み立てたときの recipes.json（recipes/*.md）。Generator のコミットは [skip ci] なので、
-// 「一覧に追加」「一覧から削除」はこの端末では即座に反映し（localStorage の上書き）、リポジトリには [skip ci] 無しで
+// 「一覧に追加」「削除」はこの端末では即座に反映し（localStorage の上書き）、リポジトリには [skip ci] 無しで
 // コミットして build-pages を走らせる。組み立てが終わって recipes.json に反映されたら上書きは消える
 // ======================================================================
 const inList = id => state.recipes.some(r => r.id === id);
@@ -966,18 +968,52 @@ function markCookedLocal(r) {
   else if (!ov.cooked.includes(r.id)) ov.cooked.push(r.id);
   saveListOv(ov); mergeListOverlay();
 }
-async function listDel(id) {
+// レシピを削除（recipes/<id>.md を消す）。一覧にある物も、届いたばかりで一覧に無い物も消せる。作った記録と写真は残る。
+// 一覧（同梱か、この端末で追加した物）にある物は [skip ci] 無しでコミットして一覧を組み直す。一覧に無い物は組み直さない（[skip ci]）
+// 一緒に作るレシピ（together）があれば、それも消すか聞く。消した本命の別案はレシピカードに残る（別の案を選べる）
+async function deleteRecipe(id) {
   const r = recipeById(id); if (!r) { toast('そのレシピが見つからない', true); return; }
   if (!requireToken()) return;
   const n = logsOf(id).length;
-  if (!confirm(`「${r.title}」を一覧から削除する？\nrecipes/${id}.md を消す。${n ? `作った記録 ${n} 件と写真は残る。` : ''}`)) return;
-  const path = `recipes/${id}.md`;
-  const ok = await run(async () => { const f = await gh.getFile(path); await gh.deleteFile(path, `一覧から削除: ${r.title}`, f.sha); }, '一覧から削除した');
-  if (!ok) return;
-  const ov = listOv(); delete ov.add[id]; if (state.recipesBase.some(x => x.id === id) && !ov.del.includes(id)) ov.del.push(id); saveListOv(ov);
-  if (state.current && state.current.recipe && state.current.recipe.id === id) setCurrent(null, null);
-  if (state.current && state.current.request && (state.current.request.result || {}).recipe_id === id) setCurrent(null, null);
-  mergeListOverlay(); render();
+  if (!confirm(`「${r.title}」を削除する？${n ? `\n作った記録 ${n} 件と写真は残る。` : ''}`)) return;
+  const mates = togetherIds(r, requestOf(id)).map(recipeById).filter(Boolean);
+  const withMates = mates.length > 0 && confirm(`一緒に作る「${mates.map(x => x.title).join('」「')}」も削除する？\n（キャンセルなら「${r.title}」だけ削除）`);
+  const targets = [r, ...(withMates ? mates : [])];
+  const ov0 = listOv(); const listed = x => state.recipesBase.some(b => b.id === x.id) || !!ov0.add[x.id];
+  const gone = [];
+  const ok = await run(async () => {
+    for (const x of targets) {
+      const path = `recipes/${x.id}.md`; const f = await gh.getFile(path);
+      if (f.sha) await gh.deleteFile(path, listed(x) ? `レシピを削除: ${x.title}` : gh.msg(`レシピを削除: ${x.title}`), f.sha);
+      gone.push(x.id);
+    }
+  }, targets.length > 1 ? `${targets.length} 品を削除した` : '削除した');
+  if (!gone.length) return;   // 途中で失敗しても、消せた物は端末からも外す
+  const ov = listOv(); gone.forEach(g => { delete ov.add[g]; if (state.recipesBase.some(b => b.id === g) && !ov.del.includes(g)) ov.del.push(g); state.cookPick.delete(g); }); saveListOv(ov);
+  forgetRecipes(gone); mergeListOverlay(); render();
+  if (ok && state.current && !currentRecipe() && state.current.request) toast('削除した。別案から選び直せる');
+}
+// そのレシピが入っている注文（レシピカードのか、届いたレシピの）
+function requestOf(id) {
+  const cur = state.current && state.current.request;
+  if (cur && requestRecipes(cur).some(x => x.id === id)) return cur;
+  return state.inbox.find(req => requestRecipes(req).some(x => x.id === id)) || null;
+}
+// 消したレシピを、注文の結果（レシピカード・届いたレシピ）から外す。本命が消えたら残った副菜を本命の位置に、全部消えたら別案だけ残す
+function forgetRecipes(ids) {
+  const strip = req => {
+    if (!req || !req.result) return req; const all = requestRecipes(req); if (!all.some(x => ids.includes(x.id))) return req;
+    const rest = all.filter(x => !ids.includes(x.id));
+    return { ...req, result: { ...req.result, recipe: rest[0] || null, recipe_id: rest[0] ? rest[0].id : null, side_recipes: rest.slice(1) } };
+  };
+  const alive = req => { const res = req && req.result; return !!res && (!!res.recipe || (Array.isArray(res.alternatives) && res.alternatives.length > 0)); };
+  state.inbox = state.inbox.map(strip).filter(alive); saveInbox();
+  const c = state.current; if (!c) return;
+  const req2 = c.request ? strip(c.request) : null; const curId = c.recipe && c.recipe.id;
+  if (curId && !ids.includes(curId) && !c.request) return;   // 一覧から開いた別のレシピ
+  if (req2 && !alive(req2)) { setCurrent(null, null); return; }
+  if (curId && ids.includes(curId)) { if (req2) setCurrent(req2.result.recipe, req2); else setCurrent(null, null); return; }
+  if (req2) { setCurrent(c.recipe, req2); if (c.recipe) lsSet(LS.current, { request: req2, open: c.recipe.id }); }
 }
 function renderList() {
   const counts = {}; state.recipes.forEach(r => { counts[r.status] = (counts[r.status] || 0) + 1; });
@@ -996,7 +1032,7 @@ function listRowsHTML() {
   function row(r) { const st = statsOf(r); const sup = r.supersedes ? recipeById(r.supersedes) : null; const open = state.showDiffOf.has(r.id); const ch = Array.isArray(r.changes) ? r.changes : []; const miss = missingFor(r);
     return `<div class="lrow${miss.length ? ' is-short' : ''}"><div class="t">${esc(r.title)} ${statusBadge(r.status)}${r.version > 1 ? ` <span class="badge ind">v${r.version}</span>` : ''}</div>
     <div class="meta">${miss.length ? `<span class="miss">足りない: ${miss.map(esc).join('・')}</span> ・ ` : ''}${esc(String(r.created || ''))}${r.time ? ` ・ ${r.time.planned} 分` : ''}${st.cooked ? ` ・ 作った ${st.cooked} 回 ・ R ${st.r_avg ?? '—'} ・ F ${st.f_avg ?? '—'} ・ 最後 ${jaShort(st.last) || '—'}` : ' ・ まだ作っていない'}${sup ? ` ・ 改訂元: ${esc(sup.title)}` : r.supersedes ? ` ・ 改訂元: ${esc(r.supersedes)}` : ''}</div>
-    <div class="ops"><button type="button" class="ghost small" data-act="open-recipe" data-id="${esc(r.id)}">開く</button><button type="button" class="tiny-btn${state.cookPick.has(r.id) ? ' is-on' : ''}" data-act="cook-pick" data-id="${esc(r.id)}" aria-pressed="${state.cookPick.has(r.id)}">${state.cookPick.has(r.id) ? '選択中' : '＋まとめて'}</button>${r.supersedes && ch.length ? `<button type="button" class="ghost small" data-act="list-diff" data-id="${esc(r.id)}" aria-expanded="${open}">差分</button>` : ''}<button type="button" class="ghost small danger" data-act="list-del" data-id="${esc(r.id)}" aria-label="${esc(r.title)} を一覧から削除">${ic('trash')}削除</button></div>
+    <div class="ops"><button type="button" class="ghost small" data-act="open-recipe" data-id="${esc(r.id)}">開く</button><button type="button" class="tiny-btn${state.cookPick.has(r.id) ? ' is-on' : ''}" data-act="cook-pick" data-id="${esc(r.id)}" aria-pressed="${state.cookPick.has(r.id)}">${state.cookPick.has(r.id) ? '選択中' : '＋まとめて'}</button>${r.supersedes && ch.length ? `<button type="button" class="ghost small" data-act="list-diff" data-id="${esc(r.id)}" aria-expanded="${open}">差分</button>` : ''}<button type="button" class="ghost small danger" data-act="list-del" data-id="${esc(r.id)}" aria-label="${esc(r.title)} を削除">${ic('trash')}削除</button></div>
     ${open ? `<div class="diffbox"><b>v${r.version} で変えた点${sup ? `（元: ${esc(sup.title)} v${sup.version || 1}）` : ''}</b><ul class="changes">${ch.map(c => `<li>${esc(c.what)}<br><small>${esc(c.why)}</small></li>`).join('')}</ul></div>` : ''}</div>`; }
   return sec('今の在庫で作れる', can, '無し。在庫を足すか、「今夜」で在庫に合う物を考えてもらう') + sec('足りない物がある', cannot, '無し');
 }
@@ -1148,7 +1184,7 @@ document.addEventListener('click', ev => {
     case 'zk-sort': state.zukanSort = b.dataset.v; lsSetRaw(LS.zukan, state.zukanSort); renderZukan(); decorateCards(); break;
     case 'list-tab': state.listTab = b.dataset.v; lsSetRaw(LS.tab, state.listTab); renderList(); decorateCards(); break;
     case 'list-add': listAdd(); break;
-    case 'list-del': listDel(b.dataset.id); break;
+    case 'list-del': deleteRecipe(b.dataset.id); break;
     case 'list-diff': if (state.showDiffOf.has(b.dataset.id)) state.showDiffOf.delete(b.dataset.id); else state.showDiffOf.add(b.dataset.id); $('#list-rows').innerHTML = listRowsHTML(); break;
     case 'later-edit': state.laterEdit = { id: b.dataset.id, field: b.dataset.field || 'partner' }; renderWeek(); decorateCards(); break;
     case 'later-star': setLaterRating(b.dataset.log, b.dataset.date, 'partner', +b.dataset.v); break;

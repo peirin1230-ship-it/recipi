@@ -13,11 +13,13 @@ async function setup(browser, viewport) {
   const errors = [];
   page.on('console', m => { if (m.type() === 'error' && !/Failed to load resource: .* 404/.test(m.text())) errors.push(m.text()); });
   page.on('pageerror', e => errors.push('pageerror: ' + e.message));
-  const puts = []; const store = {}; const mock = { recipe: null };   // mock.recipe = { id, text }: 一覧に無いがリポジトリにはあるレシピ
-  await page.route('https://raw.githubusercontent.com/**', route => { const u = route.request().url(); if (mock.recipe && u.includes(`/recipes/${mock.recipe.id}.md`)) return route.fulfill({ status: 200, contentType: 'text/plain', body: mock.recipe.text }); if (u.includes('/recipes/')) return route.fulfill({ status: 404, body: '' }); return route.continue(); });
+  const puts = []; const store = {}; const mock = { recipe: null, extra: new Set() };   // mock.recipe = { id, text }: 一覧に無いがリポジトリにはあるレシピ。mock.extra: 同じく（中身は要らない物）
+  const extraHit = u => [...mock.extra].some(id => u.includes(`/recipes/${id}.md`));
+  await page.route('https://raw.githubusercontent.com/**', route => { const u = route.request().url(); if (mock.recipe && u.includes(`/recipes/${mock.recipe.id}.md`)) return route.fulfill({ status: 200, contentType: 'text/plain', body: mock.recipe.text }); if (extraHit(u)) return route.fulfill({ status: 200, contentType: 'text/plain', body: '---\nid: x\n---\n' }); if (u.includes('/recipes/')) return route.fulfill({ status: 404, body: '' }); return route.continue(); });
   await page.route('https://api.github.com/**', async route => {
     const req = route.request(); const url = req.url();
     if (req.method() === 'DELETE') { puts.push({ url, method: 'DELETE', body: JSON.parse(req.postData()) }); return route.fulfill({ status: 200, contentType: 'application/json', body: '{}' }); }
+    if (req.method() === 'GET' && url.includes('/contents/recipes/') && extraHit(url)) return route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ sha: 'x1', content: b64('---\nid: x\n---\n') }) });
     if (req.method() === 'GET' && url.includes('/contents/recipes/') && (url.includes('torimomo') || (mock.recipe && url.includes(mock.recipe.id))) && mock.serve) { const text = mock.recipe && url.includes(mock.recipe.id) ? mock.recipe.text : fs.readFileSync(require('path').join(__dirname, '..', 'fixtures', 'recipes', 'r-20261008-torimomo-teriyaki.md'), 'utf8'); return route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ sha: 'r1', content: b64(text) }) }); }
     if (req.method() === 'PUT') { const body = JSON.parse(req.postData()); puts.push({ url, body }); store[url.split('/contents/')[1].split('?')[0]] = body.content; return route.fulfill({ status: 201, contentType: 'application/json', body: JSON.stringify({ content: { sha: 'newsha' } }) }); }
     if (req.method() === 'POST' && url.endsWith('/dispatches')) { puts.push({ url, body: JSON.parse(req.postData()) }); return route.fulfill({ status: 204, body: '' }); }
@@ -212,13 +214,13 @@ async function setup(browser, viewport) {
     assert(await page.$$eval('#nav .nav-chip', c => c.map(x => x.textContent.trim()).slice(0, 5).join(',')) === '今夜,レシピ,調理,一覧,記録', 'nav chips follow the new order');
     assert(await page.$$eval('#list .lrow [data-act="list-del"]', b => b.length) === 1, 'each list row has a 削除 button');
     await page.click('#list .lrow [data-act="open-recipe"]');
-    assert(await page.$('#recipe [data-act="list-del"]') !== null && await page.$('#recipe [data-act="list-add"]') === null, 'recipe card of a listed recipe offers 一覧から削除, not 追加');
+    assert(await page.$('#recipe [data-act="list-del"]') !== null && await page.$('#recipe [data-act="list-add"]') === null, 'recipe card of a listed recipe offers 削除, not 追加');
     // 削除: 確認 → GET sha → DELETE（[skip ci] 無し）→ 端末の一覧から消え、上書きに残る
     mock.serve = true; page.once('dialog', d => d.accept());
     const b3 = puts.length; await page.click('#list .lrow [data-act="list-del"]');
-    await page.waitForFunction(() => document.querySelector('#toast') && document.querySelector('#toast').textContent.includes('一覧から削除'));
+    await page.waitForFunction(() => document.querySelector('#toast') && document.querySelector('#toast').textContent.includes('削除した'));
     const del = puts.slice(b3).find(p => p.method === 'DELETE');
-    assert(del && del.url.includes('/contents/recipes/r-20261008-torimomo-teriyaki.md') && del.body.sha === 'r1' && !del.body.message.includes('[skip ci]') && del.body.message.includes('一覧から削除'), `DELETE recipes/<id>.md without [skip ci]: ${del && del.body.message}`);
+    assert(del && del.url.includes('/contents/recipes/r-20261008-torimomo-teriyaki.md') && del.body.sha === 'r1' && !del.body.message.includes('[skip ci]') && del.body.message.includes('レシピを削除'), `DELETE recipes/<id>.md without [skip ci] (listed → rebuild): ${del && del.body.message}`);
     assert(await page.$$eval('#list .lrow', r => r.length) === 0 && await page.evaluate(() => JSON.parse(localStorage.getItem('recipi.list')).del.includes('r-20261008-torimomo-teriyaki')), 'deleted recipe leaves the list on this device (overlay del)');
     assert(await page.$eval('#recipe', e => e.textContent.includes('まだレシピがない')), 'current recipe cleared when deleted');
     // 追加: 注文の結果にあるが同梱の一覧に無いレシピ → 「一覧に追加」→ 端末の一覧に出て、front matter に listed: が付く（[skip ci] 無し）
@@ -236,6 +238,33 @@ async function setup(browser, viewport) {
     await page.click('#list .lrow [data-act="open-recipe"]');
     assert(await page.$eval('#recipe', e => e.textContent.includes('テスト用の新しい一皿')) && await page.$('#recipe [data-act="list-del"]') !== null, 'opening from the list shows it in the recipe card with 削除');
     await page.screenshot({ path: `${SHOTS}/list-375.png` });
+    // 削除: 届いたばかりで一覧に無いレシピ（副菜つき・別案つき）。カードに「一覧に追加」と「削除」。一緒に作る物も消すか聞く
+    {
+      const mk = (id, title, role, together) => ({ ...newRecipe, id, title, dishes: [{ name: title, role }], together });
+      const dm = mk('r-20261013-del-main', '削除テストの主菜', 'main', ['r-20261013-del-side']), ds = mk('r-20261013-del-side', '削除テストの副菜', 'side', ['r-20261013-del-main']);
+      const reqOf = () => ({ id: 'req-20261013-0000-del', type: 'dinner', status: 'done', result: { feasible: true, recipe_id: dm.id, recipe: dm, side_recipes: [ds], alternatives: [{ title: '別案その一', minutes: 20, why: 'x', kind: 'new' }, { title: '別案その二', minutes: 25, why: 'y', kind: 'new' }] } });
+      const open = async () => { await page.evaluate(q => localStorage.setItem('recipi.current', JSON.stringify({ request: q })), reqOf()); await page.reload({ waitUntil: 'networkidle' }); await page.waitForFunction(() => document.querySelector('#week .stat') && document.querySelector('#recipe .rc-title')); };
+      mock.extra = new Set([dm.id, ds.id]); await open();
+      assert(await page.$('#recipe [data-act="list-add"]') !== null && await page.$('#recipe [data-act="list-del"]') !== null, 'a fresh recipe not in the list offers both 一覧に追加 and 削除');
+      await page.$eval('#recipe .actions', e => e.scrollIntoView({ block: 'center' })); await page.waitForTimeout(200); await page.screenshot({ path: `${SHOTS}/delete-buttons-375.png` });
+      // (a) 両方の確認に OK → 主菜と副菜を削除 → 別案だけ残る
+      const msgs = []; const both = d => { msgs.push(d.message()); d.accept(); }; page.on('dialog', both);
+      const b6 = puts.length; await page.click('#recipe [data-act="list-del"]');
+      await page.waitForFunction(() => document.querySelector('#toast') && document.querySelector('#toast').textContent.includes('別案から選び直せる')); page.off('dialog', both);
+      const del6 = puts.slice(b6).filter(p => p.method === 'DELETE');
+      assert(msgs.length === 2 && msgs[0].includes('削除テストの主菜') && msgs[1].includes('削除テストの副菜'), `asks to delete the recipe, then whether to delete the together dish too: ${msgs.join(' / ')}`);
+      assert(del6.length === 2 && del6[0].url.includes('recipes/r-20261013-del-main.md') && del6[1].url.includes('recipes/r-20261013-del-side.md') && del6.every(d => d.body.sha === 'x1' && d.body.message.startsWith('[skip ci]') && d.body.message.includes('レシピを削除')), `both files deleted with [skip ci] (not in the list, no rebuild): ${del6.map(d => d.body.message).join(' / ')}`);
+      assert(await page.$$eval('#recipe .alt', a => a.length) === 2 && await page.$('#recipe .rc-title') === null && await page.evaluate(() => { const c = JSON.parse(localStorage.getItem('recipi.current')); return c.request.result.recipe === null && c.request.result.alternatives.length === 2; }), 'with every dish deleted, the card keeps the 別案 to pick from');
+      await page.$eval('#recipe', e => e.scrollIntoView()); await page.waitForTimeout(200); await page.screenshot({ path: `${SHOTS}/delete-alts-375.png` });
+      // (b) 2 つ目の確認はキャンセル → 主菜だけ削除 → 副菜がカードに残り、消した主菜は「一緒に作る」に出ない
+      await open(); const msgs2 = []; const first = d => { msgs2.push(d.message()); if (msgs2.length === 1) d.accept(); else d.dismiss(); }; page.on('dialog', first);
+      const b7 = puts.length; await page.click('#recipe [data-act="list-del"]');
+      await page.waitForFunction(() => document.querySelector('#recipe .rc-title') && document.querySelector('#recipe .rc-title').textContent.includes('削除テストの副菜')); page.off('dialog', first);
+      const del7 = puts.slice(b7).filter(p => p.method === 'DELETE');
+      assert(msgs2.length === 2 && del7.length === 1 && del7[0].url.includes('recipes/r-20261013-del-main.md'), `cancel on the second question deletes only the recipe itself (${del7.length} DELETE)`);
+      assert(await page.$('#recipe .together') === null && await page.$('#recipe [data-act="cook-together"]') === null, 'the deleted main is no longer offered under 一緒に作る');
+      mock.extra = new Set(); await page.evaluate(() => localStorage.removeItem('recipi.current')); await page.reload({ waitUntil: 'networkidle' }); await page.waitForFunction(() => document.querySelector('#week .stat'));
+    }
     // 時間チップの「無制限」→ 考えてもらう: 注文は time_budget 0、自由入力は空のまま
     await page.click('#o-budget .chip[data-v="0"]');
     assert(await page.$eval('#o-budget .chip[data-v="0"]', c => c.classList.contains('is-on')) && await page.$eval('#o-free', i => i.value === ''), '無制限 chip selects and clears the free input');
