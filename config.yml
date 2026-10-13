@@ -44,7 +44,11 @@ kaji_quest:
   branch: main
   import_shopping: true           # kaji-quest の買い物記録（mode: shop）を在庫に取り込む
   push_shopping: true             # 足りない物を kaji-quest の買い物メモに足す（PAT に両方のリポジトリが要る）
-  write_cook_log: true            # 調理の記録を kaji-quest の dinner-cook（夜ご飯を作る）の完了としても書く
+  write_cook_log: true            # 調理の記録を kaji-quest の「朝ごはんを作る／昼ごはんを作る／夜ご飯を作る」の完了としても書く（調理が完成した時刻で決める）
+  cook_tasks:                     # 完成した時刻 → kaji-quest のタスク。時間帯は kaji-quest と同じ（朝 4〜11 時・昼 11〜17 時・夜 17〜翌 4 時）。weight は kaji-quest の load から
+    morning: { task_id: breakfast-cook, title: 朝ごはんを作る, weight: 1.25 }
+    noon: { task_id: lunch-cook, title: 昼ごはんを作る, weight: 1.25 }     # kaji-quest に昼のタスクは無い。記録には「昼ごはんを作る」（料理・昼）として出る
+    night: { task_id: dinner-cook, title: 夜ご飯を作る, weight: 1.35 }
 
 privacy:
   log_time: true                  # false で記録の ts を日付だけにする

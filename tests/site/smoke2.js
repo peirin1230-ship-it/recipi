@@ -17,7 +17,7 @@ const PNG = Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAEklEQVR
     if (url.includes('kaji-quest/main/logs/2026/10.jsonl')) return route.fulfill({ status: 200, contentType: 'text/plain', body: JSON.stringify({ date: '2026-10-06', mode: 'shop', status: 'done', items: ['卵', 'キュレル', 'しょうゆ', 'ほうれん草', 'れんこん 1節'], id: 'shop0001aaaa' }) + '\n' + JSON.stringify({ date: '2026-10-05', mode: 'full', task_id: 'dishes', id: 'x' }) + '\n' });
     return route.fulfill({ status: 404, body: '' }); });
   await page.route('https://api.github.com/**', route => { const req = route.request(); const url = req.url(); const path = (url.split('/contents/')[1] || '').split('?')[0];
-    if (req.method() === 'PUT') { const body = JSON.parse(req.postData()); puts.push({ path, body }); store[path] = body.content; return route.fulfill({ status: 201, contentType: 'application/json', body: JSON.stringify({ content: { sha: 's' + puts.length } }) }); }
+    if (req.method() === 'PUT') { const body = JSON.parse(req.postData()); puts.push({ path, body, url }); if (!url.includes('/kaji-quest/')) store[path] = body.content; return route.fulfill({ status: 201, contentType: 'application/json', body: JSON.stringify({ content: { sha: 's' + puts.length } }) }); }
     if (req.method() === 'POST' && url.endsWith('/dispatches')) { puts.push({ path: 'dispatch', body: JSON.parse(req.postData()) }); return route.fulfill({ status: 204, body: '' }); }
     if (path.startsWith('requests/') && store[path]) { const r = JSON.parse(unb64(store[path])); r.status = 'done';
       if (r.type === 'pantry_photo') r.result = { items: [{ name: 'とりむね', qty: 250, unit: 'g', loc: 'fridge', confidence: 0.9 }, { name: '謎の物', qty: null, unit: null, loc: 'fridge', confidence: 0.3 }], staples: [{ name: 'ごま油', state: 'low' }], cost_usd: 0.03 };
@@ -105,14 +105,20 @@ const PNG = Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAEklEQVR
   assert(db && db.items.length === nItems - 1 && Array.isArray(db.discarded) && db.discarded.length === 0, `なくなった removes the item (${nItems} → ${db && db.items.length}) without a discarded entry`);
   assert(!(await page.$eval('#week', e => /捨てた/.test(e.textContent))), '今週 no longer shows 捨てた');
   // 6) 調理モードのチェック時刻 → step_minutes（start=10 分前、s0 を 6 分前、s1 を 2 分前にチェック済み → prep 4.0 / wait 4.0）
+  // 時計を昼の 12:30 に固定 → 完成時刻で kaji-quest の「昼ごはんを作る」になる
+  await page.clock.setFixedTime(new Date('2026-10-13T12:30:00+09:00'));
   await page.evaluate(() => { const now = Date.now(); localStorage.setItem('recipi.cook.r-20261009-test', JSON.stringify({ start: now - 600000, done: { s0: now - 360000, s1: now - 120000 }, tl: {}, timers: {} })); });
   await page.click('[data-act="cook-open"]'); await page.waitForFunction(() => !document.querySelector('#cook').hidden);
   assert(await page.$$eval('#cook .ck-step.is-done', s => s.length) === 2, 'cook mode resumes saved progress (2 steps done)');
   await page.click('[data-act="cook-finish"]'); await page.waitForFunction(() => document.querySelector('#rec-actual'));
   assert(await page.$eval('#rec-actual', e => e.textContent === '10'), 'actual minutes computed from start time (10)');
+  assert(await page.$eval('#record .rec-kq', e => e.textContent.includes('昼ごはんを作る') && e.textContent.includes('完成 12:30')), 'record card says it will be recorded in kaji-quest as 昼ごはんを作る (finished 12:30)');
   const b6 = puts.length; await page.click('[data-act="rec-save"]');
   await page.waitForFunction(() => document.querySelector('#toast') && document.querySelector('#toast').textContent.includes('記録した')); await page.waitForTimeout(300);
-  const lp6 = puts.slice(b6).find(p => p.path === 'logs/2026/10.jsonl'); const last6 = lp6 && JSON.parse(unb64(lp6.body.content).trim().split('\n').pop());
+  assert(await page.$eval('#toast', e => e.textContent.includes('kaji-quest に「昼ごはんを作る」')), 'toast names the kaji-quest task');
+  { const kp = puts.slice(b6).filter(p => p.url.includes('/kaji-quest/contents/logs/2026/10.jsonl')); const kl = kp.length && JSON.parse(unb64(kp[0].body.content).trim().split('\n').pop());
+    assert(kp.length === 1 && kl.task_id === 'lunch-cook' && kl.title === '昼ごはんを作る' && kl.slot === 'noon' && kl.area === 'cooking' && kl.date === '2026-10-13' && kl.ts.startsWith('2026-10-13T12:30') && kl.actual_minutes === 10 && kl.weight === 1.25 && kl.weighted_minutes === 12.5 && kp[0].body.message.includes('昼ごはんを作る'), `kaji-quest line is lunch by the finish time: ${JSON.stringify(kl)}`); }
+  const lp6 = puts.slice(b6).find(p => p.path === 'logs/2026/10.jsonl' && !p.url.includes('/kaji-quest/')); const last6 = lp6 && JSON.parse(unb64(lp6.body.content).trim().split('\n').pop());
   assert(last6 && last6.recipe_id === 'r-20261009-test' && last6.request_id && last6.step_minutes && last6.step_minutes.prep === 4 && last6.step_minutes.wait === 4 && Object.keys(last6.step_minutes).length === 2, `step_minutes per kind from check timestamps: ${last6 && JSON.stringify(last6.step_minutes)} request_id=${last6 && last6.request_id}`);
   assert(await page.evaluate(() => !localStorage.getItem('recipi.cook.r-20261009-test')), 'cook progress cleared after record');
   assert(errors.length === 0, `no console errors (flows)${errors.length ? ': ' + errors.join(' | ') : ''}`);

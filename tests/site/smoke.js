@@ -311,6 +311,9 @@ async function setup(browser, viewport) {
     await page.waitForFunction(() => document.querySelector('#record') && !document.querySelector('#record').textContent.includes('（2/2）'));
     const logPuts = puts.slice(b7).filter(p => /\/recipi\/contents\/logs\/2026\/10\.jsonl/.test(p.url));
     const lastId = p => { const lines = Buffer.from(p.body.content, 'base64').toString('utf8').trim().split('\n'); try { return JSON.parse(lines[lines.length - 1]).recipe_id; } catch { return null; } };
+    { const kqPuts = puts.slice(b7).filter(p => /\/kaji-quest\/contents\/logs\//.test(p.url)); const kl = kqPuts.map(p => JSON.parse(Buffer.from(p.body.content, 'base64').toString('utf8').trim().split('\n').pop()));
+      const h = await page.evaluate(() => +new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Tokyo', hour: '2-digit', hourCycle: 'h23' }).format(new Date())); const want = h >= 4 && h < 11 ? 'breakfast-cook' : h >= 11 && h < 17 ? 'lunch-cook' : 'dinner-cook';
+      assert(kqPuts.length === 1 && kl[0].task_id === want && kl[0].area === 'cooking', `a multi-cook writes one kaji-quest line for the session, by the hour finished (${kl.map(x => x.task_id).join(', ')}; want ${want} at ${h}h)`); }
     assert(logPuts.length === 2 && lastId(logPuts[0]) === 'r-20261009-test-new' && lastId(logPuts[1]) === 'r-20261008-torimomo-teriyaki', `both recipes of the multi-cook get a log line, one record after another (${logPuts.map(lastId).join(', ')})`);
     await ctx.close().catch(() => {}); await c2.close();
   }

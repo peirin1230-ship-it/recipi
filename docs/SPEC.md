@@ -887,7 +887,7 @@ kaji-quest §8.4 と同じ。UTC 表記、数十分の遅延あり、長期間�
 |------|------|------|------|
 | kaji-quest → recipi | 買い物の記録（`mode: shop` の `items`）を在庫に取り込む | ページを開いたとき、または「取り込む」で kaji-quest の `logs/` を読む（公開リポジトリなので `raw.githubusercontent.com` から取得。未取込の行だけ `src: kaji-quest` で追加） | `kaji_quest.import_shopping: true` |
 | recipi → kaji-quest | 在庫に無くてレシピに要る物、`staples` の `none` を買い物メモに足す | kaji-quest の `shopping.json` に Contents API で追記（PAT の Repository access に両方を選ぶ） | `kaji_quest.push_shopping: true` |
-| recipi → kaji-quest | 調理の記録を kaji-quest の `dinner-cook`（夜ご飯を作る）の完了としても書く | kaji-quest の `logs/` に 1 行追記（`actual_minutes` は recipi の実測、`learned` は気づき） | `kaji_quest.write_cook_log: false`（既定 off。kaji-quest 側で手順ごとに記録する運用と二重になるため） |
+| recipi → kaji-quest | 調理の記録を kaji-quest の「朝ごはんを作る」（`breakfast-cook`）・「昼ごはんを作る」（`lunch-cook`。kaji-quest のルーチンには無いが、記録には料理・昼として出る）・「夜ご飯を作る」（`dinner-cook`）の完了としても書く。どれにするかは**調理が完成した時刻**（調理モードの「できた！」。調理モードを通らずに記録したときは記録した時刻）で決める。時間帯は kaji-quest と同じ（朝 4〜11 時・昼 11〜17 時・夜 17〜翌 4 時）。まとめて調理は 1 回分として 1 行だけ書く。記録画面に「kaji-quest には『…』で記録する」と出る | kaji-quest の `logs/` に 1 行追記（`date`・`ts` は完成した時刻、`slot` は morning / noon / night、`actual_minutes` は recipi の実測、`weight` は `kaji_quest.cook_tasks`、`learned` は気づき） | `kaji_quest.write_cook_log: false` で止める。タスクの id・名前・重みは `kaji_quest.cook_tasks` |
 | kaji-quest → recipi | 「翌日の献立を決める」「夜ご飯を作る」の詳細に recipi のページへのリンク | kaji-quest の `routines/daily.yml` の `checklist` に URL を書く | kaji-quest 側 |
 
 XP・バッジ・ストリークは recipi に持たない。料理の継続は kaji-quest が数える。recipi が持つのは**料理の中身の記録**だけ。

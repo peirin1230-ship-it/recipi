@@ -71,7 +71,7 @@ github.com にログインしておく。ターミナルは要らない。
 |---|---|---|
 | kaji-quest → recipi | kaji-quest で「買い物を記録」した物を、ページの「在庫」の「kaji-quest の買い物を取り込む」で在庫に入れる（確認してから反映） | `config.yml` の `kaji_quest.import_shopping`（on） |
 | recipi → kaji-quest | レシピカードの「足りない物を買い物メモへ」で、在庫に無い材料を kaji-quest の買い物メモに足す | `kaji_quest.push_shopping`（on。ページ用トークンに kaji-quest も含める） |
-| recipi → kaji-quest | 調理を記録すると、kaji-quest の「夜ご飯を作る」も実時間つきで完了として記録される（kaji-quest 側で重ねて記録しなくてよい） | `kaji_quest.write_cook_log`（on） |
+| recipi → kaji-quest | 調理を記録すると、kaji-quest にも実時間つきで完了として記録される。調理が完成した時刻で「朝ごはんを作る」（4〜11 時）・「昼ごはんを作る」（11〜17 時）・「夜ご飯を作る」（17〜翌 4 時）を選ぶ。まとめて調理は 1 回分だけ（kaji-quest 側で重ねて記録しなくてよい） | `kaji_quest.write_cook_log`（on）、`kaji_quest.cook_tasks` |
 | kaji-quest → recipi | kaji-quest のページ右上の家のアイコン横にある 🍳 から recipi へ。「翌日の献立を決める」「夜ご飯を作る」「翌日分の仕込み」の詳細にも recipi の URL | kaji-quest 側 |
 | recipi → kaji-quest | recipi のページ右上の家のアイコンから kaji-quest へ | — |
 
