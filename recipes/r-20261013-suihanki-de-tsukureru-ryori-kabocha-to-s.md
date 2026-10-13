@@ -3,7 +3,7 @@ id: r-20261013-suihanki-de-tsukureru-ryori-kabocha-to-s
 title: 炊飯器で作れる料理：かぼちゃとしらすの炊き込みご飯
 version: 2
 supersedes: null
-status: draft
+status: tried
 created: '2026-10-13'
 request: req-20261013-2245-7oa1
 generated_by: {model: claude-code, prompt_version: 8}
@@ -236,4 +236,4 @@ changes:
 - かぼちゃの約 1/3 をぶんぶんチョッパーで米粒くらいに刻み、米に混ぜて炊く。残りの 2/3 は 1.5cm 角で上にのせる — 甘さと色がご飯全体に回り、子どもも食べやすい。ペーストにすると炊く水がどろっとして炊きむらや底の焦げが出るので、刻む程度にとどめる
 
 ## 作ったときのメモ
-
+- 2026-10-14 ・ 49 分（見込み 107）・ R 71 ・ F 4 ・ そのまま
