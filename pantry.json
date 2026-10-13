@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-13T06:38:07+09:00",
+ "updated": "2026-10-14T05:48:52+09:00",
  "items": [
   {
    "id": "pxqdj5",
@@ -44,13 +44,6 @@
    "src": "manual"
   },
   {
-   "id": "piipps",
-   "name": "豆腐",
-   "loc": "fridge",
-   "added": "2026-10-10",
-   "src": "kaji-quest"
-  },
-  {
    "id": "pu7k66",
    "name": "れんこん",
    "loc": "fridge",
@@ -65,24 +58,10 @@
    "src": "kaji-quest"
   },
   {
-   "id": "pp45wz",
-   "name": "なす",
-   "loc": "fridge",
-   "added": "2026-10-10",
-   "src": "manual"
-  },
-  {
    "id": "pcmurp",
    "name": "ごぼう",
    "loc": "fridge",
    "added": "2026-10-10",
-   "src": "manual"
-  },
-  {
-   "id": "prklhz",
-   "name": "しらす",
-   "loc": "fridge",
-   "added": "2026-10-11",
    "src": "manual"
   },
   {
