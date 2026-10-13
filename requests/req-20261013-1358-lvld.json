@@ -1,0 +1,23 @@
+{
+ "id": "req-20261013-1358-lvld",
+ "ts": "2026-10-13T13:58:37+09:00",
+ "type": "prep",
+ "time_budget": 0,
+ "servings": {
+  "adults": 2,
+  "kids": 1
+ },
+ "dishes": "main",
+ "mood": [],
+ "use_up": [],
+ "exclude": [
+  "鶏むね肉とごぼうのそぼろ煮（翌日分の仕込み）",
+  "なすとツナの味噌グリル焼き",
+  "かまぼこと卵のレンジ茶碗蒸し"
+ ],
+ "note": "",
+ "mode": "auto",
+ "status": "pending",
+ "error": null,
+ "result": null
+}
