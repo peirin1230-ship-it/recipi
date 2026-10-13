@@ -243,7 +243,7 @@ async function setup(browser, viewport) {
       const mk = (id, title, role, together) => ({ ...newRecipe, id, title, dishes: [{ name: title, role }], together });
       const dm = mk('r-20261013-del-main', '削除テストの主菜', 'main', ['r-20261013-del-side']), ds = mk('r-20261013-del-side', '削除テストの副菜', 'side', ['r-20261013-del-main']);
       const reqOf = () => ({ id: 'req-20261013-0000-del', type: 'dinner', status: 'done', result: { feasible: true, recipe_id: dm.id, recipe: dm, side_recipes: [ds], alternatives: [{ title: '別案その一', minutes: 20, why: 'x', kind: 'new' }, { title: '別案その二', minutes: 25, why: 'y', kind: 'new' }] } });
-      const open = async () => { await page.evaluate(q => localStorage.setItem('recipi.current', JSON.stringify({ request: q })), reqOf()); await page.reload({ waitUntil: 'networkidle' }); await page.waitForFunction(() => document.querySelector('#week .stat') && document.querySelector('#recipe .rc-title')); };
+      const open = async () => { await page.evaluate(q => { localStorage.setItem('recipi.current', JSON.stringify({ request: q })); localStorage.setItem('recipi.inbox', JSON.stringify([q])); }, reqOf()); await page.reload({ waitUntil: 'networkidle' }); await page.waitForFunction(() => document.querySelector('#week .stat') && document.querySelector('#recipe .rc-title')); };
       mock.extra = new Set([dm.id, ds.id]); await open();
       assert(await page.$('#recipe [data-act="list-add"]') !== null && await page.$('#recipe [data-act="list-del"]') !== null, 'a fresh recipe not in the list offers both 一覧に追加 and 削除');
       await page.$eval('#recipe .actions', e => e.scrollIntoView({ block: 'center' })); await page.waitForTimeout(200); await page.screenshot({ path: `${SHOTS}/delete-buttons-375.png` });
@@ -256,6 +256,12 @@ async function setup(browser, viewport) {
       assert(del6.length === 2 && del6[0].url.includes('recipes/r-20261013-del-main.md') && del6[1].url.includes('recipes/r-20261013-del-side.md') && del6.every(d => d.body.sha === 'x1' && d.body.message.startsWith('[skip ci]') && d.body.message.includes('レシピを削除')), `both files deleted with [skip ci] (not in the list, no rebuild): ${del6.map(d => d.body.message).join(' / ')}`);
       assert(await page.$$eval('#recipe .alt', a => a.length) === 2 && await page.$('#recipe .rc-title') === null && await page.evaluate(() => { const c = JSON.parse(localStorage.getItem('recipi.current')); return c.request.result.recipe === null && c.request.result.alternatives.length === 2; }), 'with every dish deleted, the card keeps the 別案 to pick from');
       await page.$eval('#recipe', e => e.scrollIntoView()); await page.waitForTimeout(200); await page.screenshot({ path: `${SHOTS}/delete-alts-375.png` });
+      // 候補だけになった結果も削除できる（端末の「届いたレシピ」とカードから外す。リポジトリには書かない）
+      assert(await page.evaluate(() => { const ib = JSON.parse(localStorage.getItem('recipi.inbox') || '[]'); return ib.length === 1 && ib[0].result.recipe === null && ib[0].result.alternatives.length === 2; }) && await page.$('#recipe [data-act="cand-del"]') !== null, 'the candidates-only result stays in 届いたレシピ and its card offers 削除');
+      const b6c = puts.length; const cmsg = []; page.once('dialog', d => { cmsg.push(d.message()); d.accept(); }); await page.click('#recipe [data-act="cand-del"]');
+      await page.waitForFunction(() => document.querySelector('#toast') && document.querySelector('#toast').textContent.includes('候補を削除した'));
+      assert(cmsg.length === 1 && cmsg[0].includes('候補 2 つ') && puts.length === b6c, `deleting the candidates asks once and writes nothing to the repo: ${cmsg.join(' / ')}`);
+      assert(await page.evaluate(() => !localStorage.getItem('recipi.current') && !localStorage.getItem('recipi.inbox')) && await page.$eval('#recipe', e => e.textContent.includes('まだレシピがない') && !e.querySelector('.inbox')), 'candidates leave the card and 届いたレシピ');
       // (b) 2 つ目の確認はキャンセル → 主菜だけ削除 → 副菜がカードに残り、消した主菜は「一緒に作る」に出ない
       await open(); const msgs2 = []; const first = d => { msgs2.push(d.message()); if (msgs2.length === 1) d.accept(); else d.dismiss(); }; page.on('dialog', first);
       const b7 = puts.length; await page.click('#recipe [data-act="list-del"]');

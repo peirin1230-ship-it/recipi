@@ -389,7 +389,7 @@ function renderRecipe() {
     const alts = res && Array.isArray(res.alternatives) ? res.alternatives : [];
     if (alts.length) html += `<h3 class="group">候補（タップで詳細を作る）</h3>${altsHTML(alts, req.id)}`;
     else if (!(res && res.feasible === false)) html += '<p class="empty">レシピが入っていない。</p>';
-    html += `<div class="actions left"><button type="button" class="ghost small" data-act="rc-later">${ic('x')}閉じる</button></div>`;
+    html += `<div class="actions left"><button type="button" class="ghost small" data-act="rc-later">${ic('x')}閉じる</button><button type="button" class="ghost small danger" data-act="cand-del">${ic('trash')}削除</button></div>`;
     $('#recipe').innerHTML = html; return;
   }
   $('#recipe').innerHTML = html + recipeBodyHTML(r, req, res);
@@ -999,6 +999,14 @@ function requestOf(id) {
   if (cur && requestRecipes(cur).some(x => x.id === id)) return cur;
   return state.inbox.find(req => requestRecipes(req).some(x => x.id === id)) || null;
 }
+// 候補だけの結果（候補 3 つ・本命を消したあとの別案・時間に収まらなかった近い案）を削除する。
+// レシピのファイルは無いので、この端末の「届いたレシピ」とレシピカードから外すだけ（requests/ の注文は履歴として残る）
+function deleteCandidates() {
+  const req = state.current && state.current.request; if (!req) return;
+  const n = ((req.result || {}).alternatives || []).length;
+  if (!confirm(`${n ? `候補 ${n} つ` : 'この結果'}を削除する？`)) return;
+  inboxDrop(req.id); setCurrent(null, null); renderRecipe(); decorateCards(); toast('候補を削除した');
+}
 // 消したレシピを、注文の結果（レシピカード・届いたレシピ）から外す。本命が消えたら残った副菜を本命の位置に、全部消えたら別案だけ残す
 function forgetRecipes(ids) {
   const strip = req => {
@@ -1136,6 +1144,7 @@ document.addEventListener('click', ev => {
     case 'weekly-shop': pushShopping(((state.weekly && state.weekly.result && state.weekly.result.shopping) || []).map(s => s.name).filter(Boolean)); break;
     case 'pending-cancel': if (b.dataset.id) dropPending(b.dataset.id); else { state.pending = []; savePending(); } if (!state.pending.length) clearTimeout(pollTimer); toast('ページでは待つのをやめた（生成は続く。↻ で確認）'); break;
     case 'inbox-open': inboxOpen(b.dataset.v); break;
+    case 'cand-del': deleteCandidates(); break;
     case 'error-clear': state.lastError = null; renderPending(); break;
     // レシピ
     case 'open-recipe': openRecipe(b.dataset.id); break;
