@@ -119,7 +119,7 @@ def build(out_dir: str) -> None:
     ver = (os.environ.get("GITHUB_SHA") or common.now().strftime("%Y%m%d%H%M%S"))[:12]
     for name, pairs in {
         "index.html": [('href="style.css"', f'href="style.css?v={ver}"'), ('src="app.js"', f'src="app.js?v={ver}"')],
-        "app.js": [("from './api.js'", f"from './api.js?v={ver}'"), ("from './ui.js'", f"from './ui.js?v={ver}'")],
+        "app.js": [("from './api.js'", f"from './api.js?v={ver}'"), ("from './ui.js'", f"from './ui.js?v={ver}'"), ("from './steps.js'", f"from './steps.js?v={ver}'")],
     }.items():
         p = os.path.join(out_dir, name)
         if os.path.exists(p):

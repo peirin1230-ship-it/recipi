@@ -291,9 +291,17 @@ async function setup(browser, viewport) {
     assert(await page.$eval('#list .pickbar', e => e.textContent.includes('2 品')), 'pick bar shows 2 selected');
     await page.click('[data-act="cook-picked"]'); await page.waitForFunction(() => !document.querySelector('#cook').hidden);
     assert(await page.$$eval('#cook .ck-tl', s => s.length) === 12 && await page.$$eval('#cook .ck-step', s => s.length) === 8 && await page.$$eval('#cook .ck-set-row', s => s.length) === 2, 'merged cook mode: 12 timeline rows, 8 steps, 2 recipes with start offsets');
+    // 手順は全レシピを始める分の順に 1 列（段取りと同じ時計）。各手順に「N 分〜」とレシピの印
+    const stepOrder = () => page.$$eval('#cook .ck-step', els => els.map(e => ({ at: parseInt(e.querySelector('.ck-at b').textContent, 10), rk: e.querySelector('.ck-at .rk').textContent.trim(), key: e.dataset.key })));
+    const o1 = await stepOrder();
+    assert(await page.$eval('#cook', e => e.textContent.includes('手順（始める順）')) && o1.length === 8 && o1.every((x, i) => i === 0 || x.at >= o1[i - 1].at), `multi-cook steps are listed by start minute: ${o1.map(x => `${x.rk}@${x.at}`).join(' ')}`);
+    assert(new Set(o1.map(x => x.rk)).size === 2, 'steps of both recipes appear in the merged list');
+    await page.$eval('#cook .ck-note', e => e.scrollIntoView()); await page.waitForTimeout(150); await page.screenshot({ path: `${SHOTS}/multi-steps-375.png` });
     const offBefore = await page.$eval('#cook .ck-set-row:nth-child(2) .num', e => e.textContent);
     await page.click('[data-act="ck-offset"][data-ri="1"][data-d="1"]');
     assert(await page.$eval('#cook .ck-set-row:nth-child(2) .num', e => e.textContent) !== offBefore && await page.$$eval('#cook .ck-step', s => s.length) === 8, 'start offset adjusts and the view keeps its steps');
+    const o2 = await stepOrder(); const at = (o, k) => (o.find(x => x.key === k) || {}).at;
+    assert(o1.filter(x => x.key.startsWith('1:')).every(x => at(o2, x.key) === x.at + 1) && o1.filter(x => !x.key.startsWith('1:')).every(x => at(o2, x.key) === x.at) && o2.every((x, i) => i === 0 || x.at >= o2[i - 1].at), 'shifting a recipe by +1 minute moves only its steps and keeps the list in time order');
     await page.click('#cook .ck-step [data-act="ck-step"]');
     await page.click('[data-act="cook-finish"]');
     assert(await page.$eval('#record', e => e.textContent.includes('（1/2）')), 'record 1 of 2 opens after a multi-cook');

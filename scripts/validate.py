@@ -217,6 +217,21 @@ def validate_recipe(recipe: dict, ctx: dict | None = None) -> list[str]:
     elif r["timeline"] and raw < max(row.get("minute", 0) for row in r["timeline"]):
         errors.append("raw_estimate が段取り表の最後の分より小さい")
 
+    # ---- 手順の開始の分（steps[].start。あれば段取り表の時計の中。料理ごとに順番どおり） ----
+    if isinstance(raw, int) and raw > 0:
+        last_by_dish: dict = {}
+        for st in r["steps"]:
+            v_ = st.get("start")
+            if v_ is None:
+                continue
+            if not isinstance(v_, int) or v_ < 0 or v_ > raw:
+                errors.append(f"手順「{st.get('title')}」の start {v_} が段取り表の範囲（0〜{raw} 分）の外")
+                continue
+            d = st.get("dish")
+            if v_ < last_by_dish.get(d, -1):
+                errors.append(f"手順「{st.get('title')}」の start {v_} が同じ料理の前の手順より早い（手順は始める順に並べる）")
+            last_by_dish[d] = v_
+
     # ---- 子ども ----
     servings = ctx.get("servings") or {}
     kids = servings.get("kids", 0)

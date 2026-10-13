@@ -343,6 +343,10 @@ details.tip .body { margin: 2px 0 4px; padding: 10px 12px; border-radius: 12px; 
 .ck-tl .lane.heat { background: var(--accent-soft); color: var(--accent-ink); }
 .ck-tl.is-done, .ck-step.is-done { opacity: .45; }
 .ck-step { padding: 12px 0; border-top: 1px solid var(--line); }
+.ck-at { display: flex; align-items: center; gap: 6px; margin: -2px 0 8px; font-size: 13px; color: var(--muted); min-width: 0; }
+.ck-at b { font-size: 15px; color: var(--text); }
+.ck-at .sub { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
+.ck-note { margin: 0 0 8px; font-size: 12.5px; }
 .ck-step .hd { display: flex; align-items: flex-start; gap: 10px; }
 .ck-step .hd .t { flex: 1; font-size: 19px; font-weight: 800; line-height: 1.4; }
 .ck-step .hd .t small { display: block; font-size: 13px; color: var(--muted); font-weight: 600; }

@@ -197,3 +197,19 @@ def test_pantry_rule_is_skipped_when_ctx_has_no_pantry():
     assert any("在庫に無い" in e for e in with_pantry)
     without = validate.validate_recipe(r, ctx(pantry=None))
     assert not any("在庫に無い" in e for e in without)
+
+
+def test_step_start_must_fit_the_timeline_and_keep_order():
+    """steps[].start（始める分）は任意。あれば 0〜raw_estimate の中で、同じ料理の中では順番どおり。"""
+    r = load_fixture()
+    raw = r.get("raw_estimate") or (r.get("time") or {}).get("raw_estimate")
+    assert not [e for e in validate.validate_recipe(r, ctx()) if "start" in e]
+    r2 = copy.deepcopy(r)
+    r2["steps"][0]["start"] = raw + 5
+    assert any("段取り表の範囲" in e for e in validate.validate_recipe(r2, ctx()))
+    r3 = copy.deepcopy(r)
+    d = r3["steps"][0]["dish"]; same = [s for s in r3["steps"] if s["dish"] == d]
+    same[0]["start"], same[1]["start"] = 5, 2
+    assert any("前の手順より早い" in e for e in validate.validate_recipe(r3, ctx()))
+    same[0]["start"], same[1]["start"] = 0, 2
+    assert not [e for e in validate.validate_recipe(r3, ctx()) if "start" in e]

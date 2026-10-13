@@ -56,6 +56,7 @@ STEP = _obj({
     "kind": {"type": "string", "enum": STEP_KINDS},
     "tag": {"type": ["string", "null"], "enum": STEP_TAGS + [None]},
     "minutes": _n(),
+    "start": _i(True),             # この工程を始める分（段取り表の minute と同じ時計）。まとめて調理で手順を時系列に並べる
     "heat": {"anyOf": [_obj({"equipment": _s(), "level": _s()}), {"type": "null"}]},
     "text": _s(),
     "cue": _s(),

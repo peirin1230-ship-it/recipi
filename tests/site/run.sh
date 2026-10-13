@@ -17,6 +17,7 @@ PY
 RECIPI_ROOT="$TMP" python3 "$ROOT/scripts/build_site.py" "$ROOT/_site_test" >/dev/null
 (cd "$ROOT/_site_test" && python3 -m http.server 8765 >/dev/null 2>&1 &) ; sleep 1
 status=0
+node "$ROOT/tests/site/steps_test.mjs" | tail -1 || status=1
 node "$ROOT/tests/site/smoke.js" | tail -1 || status=1
 node "$ROOT/tests/site/smoke2.js" | tail -1 || status=1
 fuser -k 8765/tcp >/dev/null 2>&1 || true

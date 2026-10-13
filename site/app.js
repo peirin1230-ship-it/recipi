@@ -6,6 +6,7 @@
  *       生成は repository_dispatch で Actions（agent.yml）を起こし、requests/<id>.json を 5 秒ごとに読み直す（docs/SPEC.md §12.2）
  */
 import * as gh from './api.js';
+import { stepStarts } from './steps.js';
 import { $, $$, esc, ic, head, md, toast, setBusy, lsGet, lsSet, lsDel, lsGetRaw, lsSetRaw, decorateCards, setCollapsed, isCollapsed, initNav, goTo, updateNav, stars, beep, unlockAudio } from './ui.js';
 
 const TZ = 'Asia/Tokyo';
@@ -530,16 +531,24 @@ function renderCook() {
   rows.sort((a, b) => a.at - b.at || a.ri - b.ri);
   if (rows.length) h += '<h3 class="sec">段取り（分）</h3>' + rows.map(t => { const lane = lanes.find(l => l.id === t.lane) || { label: equipLabel(t.lane), kind: 'other' }; const k = ck(t.ri, 't' + t.i); const on = !!cook.tl[k];
     return `<div class="ck-tl${on ? ' is-done' : ''}" data-key="${k}"><div class="m">${t.at}</div><div>${mark(t.ri)}<span class="lane ${esc(lane.kind)}">${esc(lane.label)}</span><div>${esc(t.text)}</div></div><button type="button" class="tick-btn${on ? ' is-on' : ''}" data-act="ck-tl" data-key="${k}" aria-label="できた" aria-pressed="${on}">${ic('check')}</button></div>`; }).join('');
-  h += '<h3 class="sec">手順</h3>';
-  rs.forEach((r, ri) => {
-    const steps = r.steps || []; const dishes = dishesOf(r);
-    if (multi) h += `<h3 class="ck-rt">${mark(ri)}${esc(r.title)}</h3>`;
-    dishes.forEach(d => { if (!multi || dishes.length > 1) h += `<h3>${esc(d)}</h3>`;
-      h += steps.map((s, i) => ({ s, i })).filter(x => x.s.dish === d).map(({ s, i }) => { const k = ck(ri, 's' + i); const on = !!cook.done[k]; const sec = +s.timer || Math.round((+s.minutes || 0) * 60);
-        return `<div class="ck-step${on ? ' is-done' : ''}" data-key="${k}"><div class="hd"><button type="button" class="tick-btn big${on ? ' is-on' : ''}" data-act="ck-step" data-key="${k}" aria-label="できた" aria-pressed="${on}">${ic('check')}</button><div class="t">${s.n}. ${esc(s.title)}<small>${s.minutes} 分${s.heat ? ` ・ ${esc(equipLabel(s.heat.equipment))}・${esc(s.heat.level)}` : ''}${s.kind === 'wait' ? ' ・ 触らない' : ''}</small></div></div>
-        ${stepIngHTML(r, s)}<p class="tx">${esc(s.text)}</p>${s.cue ? `<div class="cue">${esc(s.cue)}</div>` : ''}${s.caution ? `<div class="caution">⚠ ${esc(s.caution)}</div>` : ''}${s.kid ? `<div class="kid">🍼 ${esc(s.kid)}</div>` : ''}
-        ${sec > 0 ? `<div class="row"><button type="button" class="timer-btn" data-act="ck-timer" data-key="${k}" data-sec="${sec}">${ic('timer')}<span class="tv">${fmtSec(sec)}</span></button>${s.timer ? '' : '<span class="sub">工程の目安</span>'}</div>` : ''}</div>`; }).join(''); });
-  });
+  // 手順の 1 枚。キーは前の版と同じ（1 本目は s0、2 本目からは "1:s0"）ので、途中の進み具合・タイマーはそのまま
+  const stepCard = (r, ri, s, i, at = null) => { const k = ck(ri, 's' + i); const on = !!cook.done[k]; const sec = +s.timer || Math.round((+s.minutes || 0) * 60);
+    return `<div class="ck-step${on ? ' is-done' : ''}" data-key="${k}">${at !== null ? `<div class="ck-at">${mark(ri)}<b class="num">${at} 分〜</b><span class="sub">${esc(dishesOf(r).length > 1 && s.dish ? s.dish : r.title)}</span></div>` : ''}<div class="hd"><button type="button" class="tick-btn big${on ? ' is-on' : ''}" data-act="ck-step" data-key="${k}" aria-label="できた" aria-pressed="${on}">${ic('check')}</button><div class="t">${s.n}. ${esc(s.title)}<small>${s.minutes} 分${s.heat ? ` ・ ${esc(equipLabel(s.heat.equipment))}・${esc(s.heat.level)}` : ''}${s.kind === 'wait' ? ' ・ 触らない' : ''}</small></div></div>
+    ${stepIngHTML(r, s)}<p class="tx">${esc(s.text)}</p>${s.cue ? `<div class="cue">${esc(s.cue)}</div>` : ''}${s.caution ? `<div class="caution">⚠ ${esc(s.caution)}</div>` : ''}${s.kid ? `<div class="kid">🍼 ${esc(s.kid)}</div>` : ''}
+    ${sec > 0 ? `<div class="row"><button type="button" class="timer-btn" data-act="ck-timer" data-key="${k}" data-sec="${sec}">${ic('timer')}<span class="tv">${fmtSec(sec)}</span></button>${s.timer ? '' : '<span class="sub">工程の目安</span>'}</div>` : ''}</div>`; };
+  if (multi) {
+    // まとめて調理: 全部のレシピの手順を、始める分（段取りと同じ時計 + 開始のずらし）の順に 1 列に並べる
+    const items = []; rs.forEach((r, ri) => { const st = stepStarts(r); (r.steps || []).forEach((s, i) => items.push({ r, ri, s, i, at: (st[i] || 0) + (cook.offsets[ri] || 0) })); });
+    items.sort((a, b) => a.at - b.at || a.ri - b.ri || a.i - b.i);
+    h += '<h3 class="sec">手順（始める順）</h3><p class="sub ck-note">全部のレシピの手順を、段取りと同じ時計で始める順に並べた。番号はレシピの中の番号</p>' + items.map(x => stepCard(x.r, x.ri, x.s, x.i, x.at)).join('');
+  } else {
+    h += '<h3 class="sec">手順</h3>';
+    rs.forEach((r, ri) => {
+      const steps = r.steps || []; const dishes = dishesOf(r);
+      dishes.forEach(d => { if (dishes.length > 1) h += `<h3>${esc(d)}</h3>`;
+        h += steps.map((s, i) => ({ s, i })).filter(x => x.s.dish === d).map(({ s, i }) => stepCard(r, ri, s, i)).join(''); });
+    });
+  }
   $('#cook-body').innerHTML = h;
 }
 // 調理画面の材料（分量つき）。料理ごと（for が料理名なら）にまとめ、残りは用途ごと。閉じられる
