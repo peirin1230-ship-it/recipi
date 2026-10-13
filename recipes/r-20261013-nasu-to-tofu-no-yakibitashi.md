@@ -4,7 +4,7 @@ id: r-20261013-nasu-to-tofu-no-yakibitashi
 title: なすと豆腐の焼き浸し
 version: 1
 supersedes: null
-status: draft
+status: tried
 created: '2026-10-13'
 request: req-20261013-2042-dzpe
 generated_by: {model: claude-code, prompt_version: 8}
@@ -238,4 +238,4 @@ detail: full
 - フライパンは粗熱が取れてから洗う。ケトルは湯が冷めてから
 
 ## 作ったときのメモ
-
+- 2026-10-14 ・ 49 分（見込み 47）・ R 91 ・ F 4 ・ そのまま ・ 気づき: 豆腐が崩れてしまった
