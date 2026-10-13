@@ -14,7 +14,389 @@
  "note": "",
  "mode": "auto",
  "dish": "炊飯器で作れる料理",
- "status": "pending",
+ "status": "done",
  "error": null,
- "result": null
+ "result": {
+  "feasible": true,
+  "infeasible_reason": null,
+  "nearest_options": [],
+  "alternatives": [
+   {
+    "title": "炊飯器で作れる料理：かぼちゃとしらすの炊き込みご飯",
+    "minutes": 70,
+    "why": "主材料をかぼちゃに変え、しらすの旨みで醤油を減らす",
+    "kind": "new"
+   },
+   {
+    "title": "炊飯器で作れる料理：れんこんと豆腐の蒸しもの風ご飯",
+    "minutes": 75,
+    "why": "れんこんのもちっとした食感を米の上で蒸し煮にする",
+    "kind": "new"
+   }
+  ],
+  "recipe_id": "r-20261013-suihanki-de-tsukureru-ryori-torimune-gob",
+  "recipe": {
+   "id": "r-20261013-suihanki-de-tsukureru-ryori-torimune-gob",
+   "title": "炊飯器で作れる料理：鶏むねとごぼうの炊き込みご飯",
+   "version": 1,
+   "supersedes": null,
+   "status": "draft",
+   "created": "2026-10-13",
+   "request": "req-20261013-2242-44cg",
+   "generated_by": {
+    "model": "claude-code",
+    "prompt_version": 8
+   },
+   "type": "prep",
+   "servings": {
+    "adults": 2,
+    "kids": 1
+   },
+   "time": {
+    "budget": 0,
+    "planned": 90,
+    "active": 20,
+    "raw_estimate": 90,
+    "speed_factor": 1.01
+   },
+   "image_text": "醤油の薄い茶色に染まったご飯の上に、白くしっとりした鶏むね肉とささがきのごぼうがのっている。仕上げに白ごまを振ると香りが立つ。",
+   "dishes": [
+    {
+     "name": "鶏むねとごぼうの炊き込みご飯",
+     "role": "onepot"
+    }
+   ],
+   "equipment": [
+    "rice-cooker",
+    "microwave",
+    "bowl-m"
+   ],
+   "ingredients": [
+    {
+     "name": "米",
+     "qty": 2,
+     "unit": "合",
+     "grams": 300,
+     "pantry": "米",
+     "for": "鶏むねとごぼうの炊き込みご飯",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "鶏むね肉",
+     "qty": 1,
+     "unit": "枚",
+     "grams": 250,
+     "pantry": "鶏むね肉",
+     "for": "鶏むねとごぼうの炊き込みご飯",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "ごぼう",
+     "qty": 0.5,
+     "unit": "本",
+     "grams": 80,
+     "pantry": "ごぼう",
+     "for": "鶏むねとごぼうの炊き込みご飯",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "醤油",
+     "qty": 1,
+     "unit": "大さじ",
+     "grams": 18,
+     "pantry": "醤油",
+     "for": "鶏むねとごぼうの炊き込みご飯",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "酒",
+     "qty": 2,
+     "unit": "大さじ",
+     "grams": 30,
+     "pantry": "酒",
+     "for": "鶏むねとごぼうの炊き込みご飯",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "みりん",
+     "qty": 1,
+     "unit": "大さじ",
+     "grams": 18,
+     "pantry": "みりん",
+     "for": "鶏むねとごぼうの炊き込みご飯",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "砂糖",
+     "qty": 1,
+     "unit": "小さじ",
+     "grams": 3,
+     "pantry": "砂糖",
+     "for": "鶏むねとごぼうの炊き込みご飯",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "塩",
+     "qty": 0.125,
+     "unit": "小さじ",
+     "grams": 0.75,
+     "pantry": "塩",
+     "for": "鶏むねとごぼうの炊き込みご飯",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "だしパック",
+     "qty": 1,
+     "unit": "個",
+     "grams": null,
+     "pantry": "だしパック",
+     "for": "鶏むねとごぼうの炊き込みご飯",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "水",
+     "qty": 360,
+     "unit": "ml",
+     "grams": 360,
+     "pantry": null,
+     "for": "鶏むねとごぼうの炊き込みご飯",
+     "substitute": null,
+     "use_up": false
+    }
+   ],
+   "tags": [
+    "炊飯器",
+    "仕込み",
+    "鶏むね",
+    "作り置き"
+   ],
+   "salt": {
+    "total_g": 3.4,
+    "adult_per_serving_g": 1.7,
+    "kid_g": 0.6
+   },
+   "kid": {
+    "rule": "separate",
+    "cut": "鶏肉は 1cm 角、ごぼうは 5mm に刻む",
+    "note": "炊き込みご飯は味が付いているので量は 100g 前後。熱いまま出さず冷まして"
+   },
+   "keep": {
+    "fridge_days": 1,
+    "freezer": true,
+    "reheat": "レンジ 900W で 1 食分 約 1 分 10 秒、途中でほぐす。冷凍は 2 分。湯気が立つまで"
+   },
+   "timeline": [
+    {
+     "minute": 0,
+     "lane": "hands",
+     "text": "鶏むね肉をそぎ切りにして下味"
+    },
+    {
+     "minute": 3,
+     "lane": "hands",
+     "text": "ごぼうをささがきにして水にさらす"
+    },
+    {
+     "minute": 8,
+     "lane": "hands",
+     "text": "米を研いで調味料・水・だしパックを入れる"
+    },
+    {
+     "minute": 13,
+     "lane": "hands",
+     "text": "具をのせて炊飯器（rice-cooker）を通常コースで炊く。60 分は別の家事"
+    },
+    {
+     "minute": 73,
+     "lane": "hands",
+     "text": "炊き上がり。蓋を開けず蒸らす"
+    },
+    {
+     "minute": 83,
+     "lane": "hands",
+     "text": "混ぜて、子どもの分を取り分け、保存用に小分け"
+    },
+    {
+     "minute": 88,
+     "lane": "hands",
+     "text": "粗熱を取って冷蔵。炊飯器の釜と内蓋を洗う（食洗機に入らない物は手洗い）"
+    },
+    {
+     "minute": 90,
+     "lane": "microwave",
+     "text": "（翌日）レンジで温めて盛り付け・配膳"
+    }
+   ],
+   "steps": [
+    {
+     "dish": "鶏むねとごぼうの炊き込みご飯",
+     "n": 1,
+     "title": "鶏むね肉の下味",
+     "kind": "prep",
+     "tag": "marinate",
+     "minutes": 3,
+     "heat": null,
+     "text": "鶏むね肉 1 枚（250g）の皮を外し、繊維を断つようにそぎ切り（厚さ 1cm・3cm 幅）にして包丁の背で軽く叩く。ボウル（中）に入れ、酒 大さじ 1・砂糖 小さじ 1・塩 小さじ 1/8 を揉み込んで置く（水分を抱えてぱさつきを防ぐ下味）。",
+     "cue": "肉の表面がしっとり湿って、全体に砂糖と塩がなじむ",
+     "caution": null,
+     "timer": null,
+     "kid": null,
+     "ingredients": [
+      "鶏むね肉",
+      "酒",
+      "砂糖",
+      "塩"
+     ]
+    },
+    {
+     "dish": "鶏むねとごぼうの炊き込みご飯",
+     "n": 2,
+     "title": "ごぼうをささがきにする",
+     "kind": "prep",
+     "tag": "cut",
+     "minutes": 5,
+     "heat": null,
+     "text": "ごぼう 1/2 本をたわしで洗い、ピーラーでささがきにしながら水を張ったボウルに落とす。水を 2 回替えてザルにあげる。下味の置き時間に並行する。",
+     "cue": "水が薄い茶色になって、ごぼうが白っぽくなる",
+     "caution": null,
+     "timer": null,
+     "kid": null,
+     "ingredients": [
+      "ごぼう"
+     ]
+    },
+    {
+     "dish": "鶏むねとごぼうの炊き込みご飯",
+     "n": 3,
+     "title": "米と調味料を釜にセット",
+     "kind": "prep",
+     "tag": "rice",
+     "minutes": 5,
+     "heat": null,
+     "text": "米 2 合を研いで水を切り、炊飯器の内釜に入れる。醤油 大さじ 1・酒 大さじ 1・みりん 大さじ 1 を加え、2 合の目盛りまで水を入れてから大さじ 3 を捨てる（調味料の分）。だしパック 1 個を沈めて軽く混ぜる。",
+     "cue": "釜の水面が平らで、米の表面が水に浸かっている",
+     "caution": null,
+     "timer": null,
+     "kid": null,
+     "ingredients": [
+      "米",
+      "醤油",
+      "酒",
+      "みりん",
+      "水",
+      "だしパック"
+     ]
+    },
+    {
+     "dish": "鶏むねとごぼうの炊き込みご飯",
+     "n": 4,
+     "title": "具をのせて炊く",
+     "kind": "wait",
+     "tag": "rice",
+     "minutes": 60,
+     "heat": {
+      "equipment": "rice-cooker",
+      "level": "通常コース"
+     },
+     "text": "だしパックを取り出し、米を混ぜない。ごぼう、鶏むね肉を広げて米の上にのせる（混ぜると炊きムラになる）。炊飯器（rice-cooker）を通常コース（60 分）で炊く。炊いている間はほかの家事へ。",
+     "cue": "炊き上がりのメロディが鳴る。炊飯中の 60 分は手が空く",
+     "caution": "具を米に混ぜ込まない。鶏肉が米に埋まると火が通りにくい",
+     "timer": 3600,
+     "kid": null,
+     "ingredients": [
+      "ごぼう",
+      "鶏むね肉"
+     ]
+    },
+    {
+     "dish": "鶏むねとごぼうの炊き込みご飯",
+     "n": 5,
+     "title": "蒸らす",
+     "kind": "wait",
+     "tag": "wait",
+     "minutes": 10,
+     "heat": null,
+     "text": "炊飯器の蓋を開けず、そのまま 10 分蒸らす。余熱でむね肉がしっとり仕上がる。",
+     "cue": "蓋を開けたとき湯気が立ち、鶏肉が白くなっている",
+     "caution": null,
+     "timer": 600,
+     "kid": null,
+     "ingredients": []
+    },
+    {
+     "dish": "鶏むねとごぼうの炊き込みご飯",
+     "n": 6,
+     "title": "混ぜて取り分け・保存",
+     "kind": "prep",
+     "tag": "kid",
+     "minutes": 4,
+     "heat": null,
+     "text": "蓋を開け、しゃもじで底から返して鶏肉・ごぼうをほぐす。鶏肉を 1 切れ切って中心が白く、透明な汁が出ることを確かめる。子どもの分（1 食 100g 前後）を別の器へ取り、鶏肉は 1cm 角、ごぼうは 5mm に刻んで冷ます。残りは 1 食分ずつラップで平らに包み、粗熱が取れたら 30 分以内に冷蔵（食べきれない分は冷凍）。",
+     "cue": "鶏肉の断面に赤みが無く、ごぼうが箸でつぶれるやわらかさ",
+     "caution": "常温に置きっぱなしにしない。30 分以内に冷蔵へ",
+     "timer": null,
+     "kid": "ごぼうは繊維が強いので 5mm に刻む。鶏肉は 1cm 角。熱いまま出さず、冷ましてから",
+     "ingredients": [
+      "鶏むね肉",
+      "ごぼう"
+     ]
+    },
+    {
+     "dish": "鶏むねとごぼうの炊き込みご飯",
+     "n": 7,
+     "title": "翌日の仕上げ：温めて出す",
+     "kind": "serve",
+     "tag": "microwave",
+     "minutes": 3,
+     "heat": null,
+     "text": "食べる日に、1 食分のラップを外して耐熱の器に入れ、レンジ（microwave）900W で約 1 分 10 秒（600W なら 1 分 40 秒）。途中で一度ほぐす。水 小さじ 1 を振ると乾かない。子どもの分は人肌に冷ましてから。",
+     "cue": "湯気が立ち、中心まで熱い。冷凍の場合は 900W で 2 分、途中でほぐす",
+     "caution": null,
+     "timer": null,
+     "kid": "温めたあと 2 分置いて、さわって熱くないことを確かめてから出す",
+     "ingredients": []
+    }
+   ],
+   "cleanup": {
+    "dishwasher": [
+     "bowl-m"
+    ],
+    "hand": [
+     "rice-cooker"
+    ],
+    "note": "釜は米粒が付く前に水に浸ける"
+   },
+   "photo": null,
+   "stats": {
+    "cooked": 0,
+    "r_avg": null,
+    "f_avg": null,
+    "last": null
+   },
+   "detail": "full",
+   "memo": []
+  },
+  "side_recipe_ids": [],
+  "side_recipes": [],
+  "model": "claude-code",
+  "prompt_version": 8,
+  "tokens": {
+   "input": 0,
+   "output": 0,
+   "cache_read": 0,
+   "cache_write": 0
+  },
+  "cost_usd": 0.0,
+  "seconds": 0
+ },
+ "finished": "2026-10-13T22:43:52+09:00"
 }
