@@ -1,0 +1,22 @@
+{
+ "id": "req-20261013-2245-7oa1",
+ "ts": "2026-10-13T22:45:19+09:00",
+ "type": "recipe_detail",
+ "time_budget": 0,
+ "servings": {
+  "adults": 2,
+  "kids": 1
+ },
+ "dishes": "main",
+ "mood": [],
+ "use_up": [],
+ "exclude": [],
+ "note": "",
+ "mode": "auto",
+ "dish": "炊飯器で作れる料理",
+ "parent": "req-20261013-2242-44cg",
+ "alternative": 0,
+ "status": "pending",
+ "error": null,
+ "result": null
+}
