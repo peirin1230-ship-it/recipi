@@ -1,25 +1,25 @@
 {
- "updated": "2026-10-14T05:49:19+09:00",
+ "updated": "2026-10-14T21:46:15+09:00",
  "items": [
   {
    "id": "pxqdj5",
    "name": "卵",
    "loc": "fridge",
-   "added": "2026-09-24",
+   "added": "2026-10-14",
    "src": "manual"
   },
   {
    "id": "p1qnvb",
    "name": "牛乳",
    "loc": "fridge",
-   "added": "2026-09-24",
+   "added": "2026-10-14",
    "src": "manual"
   },
   {
    "id": "pw63nn",
    "name": "ヨーグルト",
    "loc": "fridge",
-   "added": "2026-10-09",
+   "added": "2026-10-14",
    "src": "manual"
   },
   {
@@ -70,6 +70,13 @@
    "loc": "fridge",
    "added": "2026-10-12",
    "src": "manual"
+  },
+  {
+   "id": "pgs9zq",
+   "name": "コーン缶",
+   "loc": "pantry",
+   "added": "2026-10-14",
+   "src": "kaji-quest"
   }
  ],
  "staples": {
@@ -84,14 +91,14 @@
   "ごま油": "ok",
   "オリーブオイル": "ok",
   "バター": "ok",
-  "マヨネーズ": "none",
+  "マヨネーズ": "ok",
   "ケチャップ": "ok",
   "めんつゆ": "none",
   "ポン酢": "none",
   "鶏がらスープの素": "ok",
   "コンソメ": "ok",
   "だしパック": "ok",
-  "片栗粉": "none",
+  "片栗粉": "ok",
   "小麦粉": "none",
   "パン粉": "none",
   "白ごま": "ok",
@@ -119,6 +126,9 @@
   "mv23psep1094",
   "mudlzf54c4jd",
   "mufew9oo1wfj",
-  "mumh51oou4ve"
+  "mumh51oou4ve",
+  "mv23xlv9bzro",
+  "mv7y84fhagyz",
+  "mv81fv3rz2lf"
  ]
 }
