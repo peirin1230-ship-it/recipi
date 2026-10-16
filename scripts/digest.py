@@ -25,7 +25,8 @@ def week_range(week: str) -> tuple[str, str]:
     return start.isoformat(), (start + dt.timedelta(days=6)).isoformat()
 
 
-def build_digest(week: str, *, use_llm: bool, mock: bool) -> tuple[str, dict]:
+def build_digest(week: str, *, use_llm: bool, mock: bool, L: llmmod.LLM | None = None) -> tuple[str, dict]:
+    """L を渡すとそれで提案を作る（無料の経路では agent.py の finish が Claude Code の答えを渡す）。"""
     cfg = common.load_config()
     start, end = week_range(week)
     ctx = agent.Context()
@@ -50,7 +51,7 @@ def build_digest(week: str, *, use_llm: bool, mock: bool) -> tuple[str, dict]:
         summary = {"week": week, "quality": q, "previous_week": prev, "cooked": cooked, "standards": ctx.standards(),
                    "recent_30d": ctx.recent(30), "staples_low": low, "today": common.today()}
         blocks = agent.house_blocks(ctx) + [{"type": "text", "text": "# 今週のまとめ\n" + agent.ydump(summary) + "\n\n# 在庫\n" + agent.ydump(pantry)}]
-        L = llmmod.LLM(cfg, mock=mock, mock_responses={"digest": {"comment": "来週は魚を 1 回入れてみる。", "proposals": [{"title": "鮭のムニエル", "minutes": 25, "why": "魚が 2 週間出ていない"}, {"title": "豚こまと野菜の味噌炒め", "minutes": 20, "why": "にんじんの使い切り"}, {"title": "カレーライス", "minutes": 45, "why": "日曜にまとめて作って月曜も"}], "shopping": [{"name": "鮭", "qty": "2 切れ", "reason": "ムニエル"}]}})
+        L = L or llmmod.LLM(cfg, mock=mock, mock_responses={"digest": {"comment": "来週は魚を 1 回入れてみる。", "proposals": [{"title": "鮭のムニエル", "minutes": 25, "why": "魚が 2 週間出ていない"}, {"title": "豚こまと野菜の味噌炒め", "minutes": 20, "why": "にんじんの使い切り"}, {"title": "カレーライス", "minutes": 45, "why": "日曜にまとめて作って月曜も"}], "shopping": [{"name": "鮭", "qty": "2 切れ", "reason": "ムニエル"}]}})
         try:
             data, _ = L.structured(name="digest", system=body, blocks=blocks, schema=schema.DIGEST_OUTPUT, effort="medium", max_tokens=4000)
             proposals, shopping, comment = data.get("proposals") or [], data.get("shopping") or [], data.get("comment") or ""
@@ -110,15 +111,22 @@ def main(argv: list[str]) -> int:
     a = ap.parse_args(argv)
     week = a.week or common.week_key(common.today())
     use_llm = not a.no_llm
+    free = False   # API キーが無い → 数字のまとめを書き、来週の提案は注文にして Claude Code のルーティンに回す（無料）
     if use_llm and not a.mock and os.environ.get("RECIPI_MOCK") != "1" and not llmmod.has_api_key():
-        use_llm = False
-        print("ANTHROPIC_API_KEY が無いので、来週の提案（Claude）は飛ばして数字だけのまとめにする（Secrets に鍵を置けば使う）")
+        use_llm, free = False, True
+        print("ANTHROPIC_API_KEY が無いので、数字のまとめを書き、来週の提案は Claude Code のルーティンに回す（無料）")
     text, meta = build_digest(week, use_llm=use_llm, mock=a.mock)
     rel = f"docs/digests/{week}.md"
     common.write_text(rel, text)
     print(rel)
+    paths, fire = [rel], []
+    if free and not any(d.get("type") == "digest" and d.get("week") == week for d in learn.pending_system_requests()):
+        req = learn.new_system_request("digest", week=week)
+        paths.append(agent.save_request(req))
+        fire.append(req["id"])
     if not a.no_git:
-        common.git_commit_push([rel], f"digest: {week}", common.load_config()["repo"].get("branch", "main"))
+        common.git_commit_push(paths, f"digest: {week}", common.load_config()["repo"].get("branch", "main"))
+    learn.fire_output(fire)   # 注文が main に載ってからルーティンを呼ぶ（次の手順）
     return 0
 
 

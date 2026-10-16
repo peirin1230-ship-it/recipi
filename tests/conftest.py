@@ -18,6 +18,12 @@ for name in os.listdir(os.path.join(TMP, "requests")):
 # 本物の記録（logs/）も使わない（テストは自分で書く）
 shutil.rmtree(os.path.join(TMP, "logs"), ignore_errors=True)
 os.makedirs(os.path.join(TMP, "logs"), exist_ok=True)
+# 学習の結果も本物を使わない（夜間の学習が速度係数などを書き換えると、時間予算の検査の結果が変わるため）。最初の状態にする
+with open(os.path.join(TMP, "profile", "learned.yml"), "w", encoding="utf-8") as f:
+    f.write("updated: null\nwindow_days: 90\nn_logs: 0\nlast_log_id: null\n"
+            "speed_factor: {overall: 1.0, prep: 1.0, heat: 1.0, serve: 1.0}\n"
+            "likes: []\ndislikes: []\npartner: {likes: [], dislikes: []}\nkid: {eats_well: [], refuses: [], works_if: []}\n"
+            "equipment_notes: []\nrecipe_notes: []\nstandards: []\nneeds_revision: []\nrevised: []\nretired: []\nquality: []\n")
 os.environ["RECIPI_ROOT"] = TMP
 os.environ["RECIPI_MOCK"] = "1"
 sys.path.insert(0, os.path.join(REPO, "scripts"))

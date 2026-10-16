@@ -33,6 +33,14 @@ jobs:
           cache: pip
       - run: pip install -r requirements.txt
       - name: Learn
+        id: learn
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         run: python3 scripts/learn.py ${{ inputs.force && '--force' || '' }}
+      # API キーが無いとき、Claude を使う所は注文（requests/）にしてあるので、Claude Code のルーティンに処理してもらう（無料）
+      - name: Claude を使う所をルーティンへ
+        if: steps.learn.outputs.fire != ''
+        env:
+          ROUTINE_FIRE_URL: ${{ secrets.ROUTINE_FIRE_URL }}
+          ROUTINE_FIRE_TOKEN: ${{ secrets.ROUTINE_FIRE_TOKEN }}
+        run: python3 scripts/fire_routine.py ${{ steps.learn.outputs.fire }}

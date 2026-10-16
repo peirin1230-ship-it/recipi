@@ -93,7 +93,7 @@ XP・バッジ・ストリークは kaji-quest が数える。recipi は料理�
 | 手順に付くコツ | `knowledge/tips/*.md`（1 コツ 1 ファイル。`tags:` に工程の種類） |
 | レシピを手で直す | `recipes/<id>.md`（front matter が本体。本文は人が読む用） |
 | 見た目や動き | `site/`（`index.html` / `app.js` / `style.css`） |
-| 学習・ダイジェストの時刻 | `.github/workflows/nightly-learn.yml`（03:30 JST）/ `weekly-digest.yml`（日曜 20:00 JST） |
+| 学習・ダイジェストの時刻 | `.github/workflows/nightly-learn.yml`（03:30 JST）/ `weekly-digest.yml`（日曜 20:00 JST）。集計はその場で、記録のメモのまとめ・改訂・来週の提案はレシピと同じルーティンに回す（無料） |
 | ルーティンの指示文 | https://claude.ai/code/routines（Edit。定期実行は無し） |
 
 ## 開発

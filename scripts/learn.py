@@ -84,7 +84,7 @@ def elements(recipe: dict) -> list[str]:
 
 
 class Learner:
-    def __init__(self, cfg: dict, *, use_llm: bool, mock: bool):
+    def __init__(self, cfg: dict, *, use_llm: bool, mock: bool, L: llmmod.LLM | None = None):
         self.cfg = cfg
         self.lc = cfg.get("learn") or {}
         self.window = int(self.lc.get("window_days", 90))
@@ -97,7 +97,8 @@ class Learner:
         self.family = common.read_yaml("family.yml", {}) or {}
         self.equipment = common.read_yaml("equipment.yml", {}) or {}
         self.use_llm = use_llm
-        self.L = llmmod.LLM(cfg, mock=mock)
+        self.L = L or llmmod.LLM(cfg, mock=mock)
+        self.notes_log_id = self.learned.get("notes_log_id")   # 言葉の抽出をどの記録まで済ませたか
         self.changed_recipes: set[str] = set()
         self.changed_paths: set[str] = set()
         self.notes: list[str] = []
@@ -260,9 +261,12 @@ class Learner:
         }
 
     # ---- 4. 言葉の抽出（Generator）----
-    def summarize(self) -> dict:
+    def existing_notes(self) -> dict:
         existing = {k: list(self.learned.get(k) or []) for k in ("equipment_notes", "recipe_notes")}
         existing["kid_works_if"] = list((self.learned.get("kid") or {}).get("works_if") or [])
+        return existing
+
+    def note_texts(self) -> list[dict]:
         texts = []
         for e in self.logs:
             meta = self.recipes.get(e.get("recipe_id") or "") or {}
@@ -270,16 +274,34 @@ class Learner:
                 if e.get(key):
                     texts.append({"date": e.get("date"), "recipe": meta.get("title") or e.get("recipe_id"), "kind": key, "text": e[key],
                                   "r": e.get("r_score"), "f": e.get("f_score"), "kid": (e.get("ratings") or {}).get("kid")})
-        if not texts or not self.use_llm:
-            return existing
+        return texts
+
+    def newest_text_log_id(self) -> str | None:
+        """言葉（変えた点・気づき・写真の一言）のある記録のうち、いちばん新しい物の id。"""
+        ids = [e.get("id") for e in self.logs if any(e.get(k) for k in ("deviation", "learned", "photo_note"))]
+        return ids[-1] if ids else None
+
+    def ask_notes(self, L: llmmod.LLM, name: str = "learn") -> dict:
+        """記録の言葉から notes をまとめてもらう。失敗はそのまま投げる（無料の経路では Captured が出る）。"""
+        texts = self.note_texts()
+        if not texts:
+            raise ValueError("まとめる記録（変えた点・気づき・写真の一言）が無い")
         _, body = common.read_prompt("learn")
-        blocks = [{"type": "text", "text": "# 器具\n" + agent.ydump(self.equipment) + "\n\n# 既存の notes（existing）\n" + agent.ydump(existing) + "\n\n# 記録（新しい順）\n" + agent.ydump(list(reversed(texts))[:120])}]
+        blocks = [{"type": "text", "text": "# 器具\n" + agent.ydump(self.equipment) + "\n\n# 既存の notes（existing）\n" + agent.ydump(self.existing_notes()) + "\n\n# 記録（新しい順）\n" + agent.ydump(list(reversed(texts))[:120])}]
+        data, _ = L.structured(name=name, system=body, blocks=blocks, schema=schema.LEARN_OUTPUT, effort="medium", max_tokens=4000)
+        return {"equipment_notes": (data.get("equipment_notes") or [])[:10], "recipe_notes": (data.get("recipe_notes") or [])[:10], "kid_works_if": (data.get("kid_works_if") or [])[:5]}
+
+    def summarize(self) -> dict:
+        existing = self.existing_notes()
+        if not self.note_texts() or not self.use_llm:
+            return existing
         try:
-            data, _ = self.L.structured(name="learn", system=body, blocks=blocks, schema=schema.LEARN_OUTPUT, effort="medium", max_tokens=4000)
+            out = self.ask_notes(self.L)
         except llmmod.LLMError as e:
             self.notes.append(f"要約を飛ばした: {e}")
             return existing
-        return {"equipment_notes": (data.get("equipment_notes") or [])[:10], "recipe_notes": (data.get("recipe_notes") or [])[:10], "kid_works_if": (data.get("kid_works_if") or [])[:5]}
+        self.notes_log_id = self.newest_text_log_id()
+        return out
 
     # ---- 5. 改訂 ----
     def revise(self) -> list[str]:
@@ -387,6 +409,7 @@ class Learner:
             "partner": prefs["partner"], "kid": prefs["kid"],
             "equipment_notes": summary.get("equipment_notes") or [],
             "recipe_notes": summary.get("recipe_notes") or [],
+            "notes_log_id": self.notes_log_id,
             "standards": self.standards,
             "needs_revision": [r for r in self.needs_revision],
             "revised": revised,
@@ -416,6 +439,81 @@ def pick_photo(entries: list[dict]) -> str | None:
     return best.get("photo") if best else None
 
 
+# ---- 無料の経路: Claude を使う所を注文にして、Claude Code のルーティンに回す（API キーが無いとき）----
+SYSTEM_TYPES = ("learn_notes", "revise", "photo_note", "digest")   # 夜間・週次のジョブが出す注文（ページは出さない）
+STALE_DAYS = 3   # この日数たっても処理されない注文はあきらめる（次に必要なら出し直す）
+
+
+def pending_system_requests() -> list[dict]:
+    out = []
+    for p in sorted(glob.glob(common.path("requests", "*.json"))):
+        d = common.read_json(os.path.relpath(p, common.ROOT)) or {}
+        if d.get("type") in SYSTEM_TYPES and d.get("status") in ("pending", "running"):
+            out.append(d)
+    return out
+
+
+def new_system_request(type_: str, **fields) -> dict:
+    rid = f"req-{common.now().strftime('%Y%m%d-%H%M')}-{common.new_id(4)}"
+    return {"id": rid, "ts": common.now().isoformat(timespec="seconds"), "type": type_, "by": "nightly" if type_ != "digest" else "weekly",
+            "status": "pending", "error": None, "result": None, **fields}
+
+
+def queue_free_orders(learner: "Learner") -> list[str]:
+    """Claude を使う所（言葉の抽出・改訂・写真の一言）を requests/ に注文として置く。置いた注文の id を返す。
+    同じ物が処理待ちなら出さない。STALE_DAYS たっても処理されない注文は error にする。"""
+    cutoff = (common.now() - dt.timedelta(days=STALE_DAYS)).isoformat(timespec="seconds")
+    pend = []
+    for d in pending_system_requests():
+        if (d.get("ts") or "") < cutoff:
+            d.update({"status": "error", "error": f"{STALE_DAYS} 日たってもルーティンで処理されなかった（必要なら次の夜にまた出す）"})
+            learner.changed_paths.add(agent.save_request(d))
+        else:
+            pend.append(d)
+    queued: list[str] = []
+
+    def put(req: dict) -> None:
+        learner.changed_paths.add(agent.save_request(req))
+        queued.append(req["id"])
+        pend.append(req)
+
+    newest = learner.newest_text_log_id()
+    if newest and newest != learner.notes_log_id and not any(d["type"] == "learn_notes" for d in pend):
+        put(new_system_request("learn_notes", through_log_id=newest))
+    for rid in learner.needs_revision:
+        if not any(d["type"] == "revise" and d.get("recipe_id") == rid for d in pend):
+            put(new_system_request("revise", recipe_id=rid))
+    if learner.lc.get("photo_note"):
+        cands = [e for e in learner.logs if e.get("photo") and not e.get("photo_note") and os.path.exists(common.path(e["photo"]))]
+        for e in cands[-3:]:
+            if not any(d["type"] == "photo_note" and d.get("log_id") == e.get("id") for d in pend):
+                put(new_system_request("photo_note", log_id=e.get("id")))
+    for rid in queued:
+        learner.notes.append(f"ルーティンに回した: {rid}")
+    return queued
+
+
+def notes_from_request(L: llmmod.LLM, req: dict) -> dict:
+    """注文 learn_notes の処理（agent.py の context / finish から呼ぶ）。まとめを profile/learned.yml に書く。"""
+    lr = Learner(common.load_config(), use_llm=True, mock=False, L=L)
+    out = lr.ask_notes(L, name="learn_notes")
+    learned = common.read_yaml("profile/learned.yml", {}) or {}
+    learned["equipment_notes"], learned["recipe_notes"] = out["equipment_notes"], out["recipe_notes"]
+    learned.setdefault("kid", {})["works_if"] = out["kid_works_if"]
+    learned["notes_log_id"] = req.get("through_log_id") or lr.newest_text_log_id()
+    common.write_yaml("profile/learned.yml", learned, header=LEARNED_HEADER)
+    return {**out, "_paths": ["profile/learned.yml"]}
+
+
+def fire_output(ids: list[str]) -> None:
+    """GitHub Actions に、ルーティンに渡す注文 id を伝える（空白区切り。次の手順が API トリガーを呼ぶ）。"""
+    print("fire: " + (" ".join(ids) if ids else "（無し）"))
+    out = os.environ.get("GITHUB_OUTPUT")
+    if out and ids:
+        with open(out, "a", encoding="utf-8") as f:
+            f.write("fire=" + " ".join(ids) + "\n")
+
+
 def has_new_logs(learned: dict, logs: list[dict]) -> bool:
     if not logs:
         return False
@@ -432,21 +530,29 @@ def main(argv: list[str]) -> int:
     a = ap.parse_args(argv)
     cfg = common.load_config()
     use_llm = not a.no_llm
+    free = False   # API キーが無い → Claude を使う所は注文にしてルーティンに回す（無料）
     if use_llm and not a.mock and os.environ.get("RECIPI_MOCK") != "1" and not llmmod.has_api_key():
-        use_llm = False
-        print("ANTHROPIC_API_KEY が無いので、Claude を使う所（言葉の抽出・改訂・写真の一言）は飛ばして統計だけ更新する（Secrets に鍵を置けば使う）")
+        use_llm, free = False, True
+        print("ANTHROPIC_API_KEY が無いので、Claude を使う所（言葉の抽出・改訂・写真の一言）は注文にして Claude Code のルーティンに回す（無料）")
     learner = Learner(cfg, use_llm=use_llm, mock=a.mock)
     if not a.force and not has_new_logs(learner.learned, learner.logs_all):
         print("新しい記録が無いので何もしない")
         return 0
     learner.run(dry_run=a.dry_run)
+    fire: list[str] = []
+    if free and not a.dry_run:
+        queue_free_orders(learner)
+        fire = [d["id"] for d in pending_system_requests() if d.get("by") == "nightly"]
     for n in learner.notes:
         print(n)
     if a.dry_run or a.no_git:
+        if a.no_git:
+            fire_output(fire)
         return 0
     paths = sorted(learner.changed_paths | {"profile/learned.yml", "recipes", "requests", "inbox", "logs"})
     if common.git_commit_push(paths, f"learn: {common.today()}", cfg["repo"].get("branch", "main")):
         print("committed")
+    fire_output(fire)   # 注文が main に載ってからルーティンを呼ぶ（次の手順）
     return 0
 
 

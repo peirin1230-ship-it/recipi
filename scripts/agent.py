@@ -33,6 +33,8 @@ TYPE_TO_ACTION = {
     "dinner": "recipe", "prep": "recipe", "breakfast": "recipe", "lunchbox": "recipe",
     "recipe_detail": "recipe_detail", "pantry_photo": "pantry_photo", "revise": "revise", "weekly": "weekly",
     "suggest_items": "suggest_items",
+    # 夜間・週次のジョブが API キー無しのときに出す注文（Claude Code のルーティンが処理する。scripts/learn.py の SYSTEM_TYPES）
+    "learn_notes": "learn_notes", "photo_note": "photo_note", "digest": "digest",
 }
 TYPE_NOTES = {
     "dinner": "夕食。1 レシピ 1 品: recipe は主菜 1 本。注文の dishes が main+side なら副菜を side_recipes に 1 本、main+side+soup なら副菜と汁物を 1 本ずつ、main / onepot なら side_recipes は空。",
@@ -525,9 +527,35 @@ def rewrite_log(log_id: str, patch: dict) -> bool:
     return False
 
 
+def action_learn_notes(ctx: Context, L: llmmod.LLM, req: dict) -> dict:
+    """記録の言葉（変えた点・気づき・写真の一言）から notes をまとめ、profile/learned.yml に書く（夜間の学習の一部）。"""
+    import learn  # learn.py が agent.py を読むので、ここで読む
+    return learn.notes_from_request(L, req)
+
+
+def action_photo_note_req(ctx: Context, L: llmmod.LLM, req: dict) -> dict:
+    out = action_photo_note(ctx, L, req.get("log_id") or "")
+    if out is None:
+        raise ValueError(f"記録 {req.get('log_id')} の写真が見つからない")
+    return {"log_id": req.get("log_id"), "note": out.get("note"), "_paths": ["logs"]}
+
+
+def action_digest(ctx: Context, L: llmmod.LLM, req: dict) -> dict:
+    """週次ダイジェストの「来週の提案」と買い物候補を足して docs/digests/<週>.md を書き直す。"""
+    import digest
+    week = req.get("week") or common.week_key(common.today())
+    text, meta = digest.build_digest(week, use_llm=True, mock=False, L=L)
+    rel = f"docs/digests/{week}.md"
+    common.write_text(rel, text)
+    return {"week": week, "proposals": meta.get("proposals") or [], "shopping": meta.get("shopping") or [], "comment": meta.get("comment") or "", "_paths": [rel]}
+
+
 ACTIONS = {"recipe": action_recipe, "recipe_detail": action_recipe_detail, "pantry_photo": action_pantry_photo,
-           "revise": action_revise, "weekly": action_weekly, "suggest_items": action_suggest_items}
-PROMPT_OF = {"revise": "revise", "weekly": "weekly", "pantry_photo": "pantry_photo", "suggest_items": "suggest_items"}   # それ以外は recipe
+           "revise": action_revise, "weekly": action_weekly, "suggest_items": action_suggest_items,
+           "learn_notes": action_learn_notes, "photo_note": action_photo_note_req, "digest": action_digest}
+PROMPT_OF = {"revise": "revise", "weekly": "weekly", "pantry_photo": "pantry_photo", "suggest_items": "suggest_items",
+             "learn_notes": "learn", "photo_note": "photo_note", "digest": "digest"}   # それ以外は recipe
+REBUILD_ACTIONS = {"digest", "revise"}   # ページの同梱データを作り直す（[skip ci] を付けない）: 来週の提案・改訂版を一覧に出す
 
 
 # ---- 無料の経路（Claude Code が Generator を務める。docs/SPEC.md §7.7）----
@@ -603,7 +631,8 @@ def finish(rid: str, json_path: str, *, use_git: bool) -> int:
     paths = [save_request(req)] + extra_paths
     print(json.dumps({"status": "done", "recipe_id": result.get("recipe_id")}, ensure_ascii=False))
     if use_git:
-        common.git_commit_push(paths, f"agent: {action} {rid} done [skip ci]", ctx.cfg["repo"].get("branch", "main"))
+        msg = f"agent: {action} {rid} done" + ("" if action in REBUILD_ACTIONS else " [skip ci]")
+        common.git_commit_push(paths, msg, ctx.cfg["repo"].get("branch", "main"))
     return 0
 
 

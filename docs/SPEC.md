@@ -276,7 +276,7 @@ meals:
 
 | 項目 | 内容 |
 |------|------|
-| `type` | `dinner` / `prep` / `breakfast` / `lunchbox`（レシピ生成）/ `recipe_detail`（別案や週の献立の 1 日を詳細化。`parent` に元の注文 id、`alternative` に番号）/ `pantry_photo`（`image` に `inbox/<id>.jpg`、`hint` に fridge / freezer / pantry）/ `revise`（`recipe_id`）/ `weekly`（`start_date`、曜日ごとの `budgets`）/ `suggest_items`（買い足すといい食材。`note` に一言） |
+| `type` | `dinner` / `prep` / `breakfast` / `lunchbox`（レシピ生成）/ `recipe_detail`（別案や週の献立の 1 日を詳細化。`parent` に元の注文 id、`alternative` に番号）/ `pantry_photo`（`image` に `inbox/<id>.jpg`、`hint` に fridge / freezer / pantry）/ `revise`（`recipe_id`）/ `weekly`（`start_date`、曜日ごとの `budgets`）/ `suggest_items`（買い足すといい食材。`note` に一言）/ 夜間・週次のジョブが API キー無しのときに出す `learn_notes`（`through_log_id`）・`photo_note`（`log_id`）・`digest`（`week`）（§12.3 / §12.4） |
 | `time_budget` | 分。**買い物を除き、キッチンに立ってから盛り付けまで**。`0` は**時間無制限**（予算の検査をしない。手間のかかる料理・仕込み・品数を増やす案も可。見込みは正直に書く） |
 | `dishes` | `main` / `main+side` / `main+side+soup` / `onepot`（丼・麺の 1 品） |
 | `mood` | 自由タグ。`さっぱり` `がっつり` `和` `洋` `中` `麺` `丼` `鍋` など。無くてもよい |
@@ -866,13 +866,14 @@ kaji-quest と同じ。`site/**`, `config.yml`, `equipment.yml`, `family.yml`, `
 
 ### 12.3 `nightly-learn.yml`
 - **トリガー**: 03:30 JST（`30 18 * * *` UTC）＋ `workflow_dispatch`
-- **処理**: §9.4。新しいログが無ければ即終了。Secrets に `ANTHROPIC_API_KEY` が無いとき（Generator をルーティンが務める運用）は、Claude を使う所（言葉の抽出・改訂・写真の一言）を飛ばして決定的な部分（統計・速度係数・好み・定番・封印）だけ行い、成功で終わる。
+- **処理**: §9.4。新しいログが無ければ即終了。
+- **API キーが無いとき（無料の経路）**: 決定的な部分（統計・速度係数・好み・定番・封印）はこの workflow が行い、Claude を使う所は `requests/` に注文として置く。`learn_notes`（記録の変えた点・気づき・写真の一言から notes をまとめる。`through_log_id` まで。済んだら `learned.yml` の `notes_log_id`）、`revise`（改訂待ちのレシピ。`recipe_id`）、`photo_note`（`learn.photo_note` が true のとき。`log_id`。1 晩 3 件まで）。同じ物が処理待ちなら出さない。学習のコミットのあと `scripts/fire_routine.py` が Claude Code のルーティン（ページの注文と同じ API トリガー）を注文 id の並びで呼び、ルーティンが `/recipi-orders` の手順（context → JSON → finish）で処理する。3 日たっても処理されない注文は error にして、必要なら次の夜に出し直す。注文には `by: nightly`（週次は `weekly`）が付く。
 - **出力**: `profile/learned.yml`、`recipes/*.md` の `stats` / `photo` / `status`、改訂版、`requests/` と `inbox/` の掃除。1 コミット（`[skip ci]` は付けない → `build-pages` が走り、ページの同梱データが更新される）。
 
 ### 12.4 `weekly-digest.yml`
 - **トリガー**: 日曜 20:00 JST（`0 11 * * 0` UTC）。kaji-quest の週報（21:00）の前に出す
 - **処理**: `quality` の今週分、作った料理と写真、定番・改訂・封印の変化、在庫と季節から**来週の提案 3 つ**（一行）、買い物候補（`staples` の `none` と提案に要る物）
-- **鍵が無いとき**: `ANTHROPIC_API_KEY` が無ければ来週の提案と買い物候補（Claude）を飛ばし、数字だけのまとめを書く。
+- **API キーが無いとき（無料の経路）**: まず数字だけのまとめを書いてコミットし、来週の提案と買い物候補は `digest` の注文（`week`）にしてルーティンに回す。ルーティンの finish が同じファイルに提案を足して書き直す（`[skip ci]` を付けないのでページの「今週」に出る）。
 - **出力**: `docs/digests/2026-W41.md`（`scripts/digest.py`。front matter に数字と提案を持ち、ページの「今週」はそれを読む）。通知はしない（kaji-quest の 17:00 帰宅前の通知からページへ飛ぶ運用で足りる）
 
 ### 12.5 cron の注意

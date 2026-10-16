@@ -133,3 +133,88 @@ def test_new_dish_sets_dish_mode_and_context(root):
     text = agent.context_text(rid)
     assert "指定の料理" in text and "フライドポテト" in text and "在庫に無い材料を使ってよい" in text
     os.remove(common.path("requests", f"{rid}.json"))
+
+
+# ---- 夜間・週次の Claude を使う所も無料の経路（ルーティン）で: learn_notes / photo_note / digest ----
+import base64  # noqa: E402
+
+import learn  # noqa: E402
+
+RID_T = "r-20261008-torimomo-teriyaki"
+PNG = base64.b64decode("iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAEklEQVR4nGP4z8DwHwyBNAMDACrKBP8Bm0FCAAAAAElFTkSuQmCC")
+
+
+def _log(i, **kw):
+    e = {"id": f"fp{i:03d}", "date": common.today(), "recipe_id": RID_T, "version": 1, "type": "dinner", "planned_minutes": 18, "actual_minutes": 20,
+         "fidelity": "minor", "finish": 4, "ratings": {"me": 4, "partner": 4, "kid": "all"}, "photo": None, "learned": None, "pantry_used": [],
+         "r_score": 70, "f_score": 4.0}
+    e.update(kw)
+    common.append_log(e)
+    return e
+
+
+def _save(req):
+    agent.save_request(req)
+    return req["id"]
+
+
+import shutil  # noqa: E402
+
+import pytest  # noqa: E402
+
+
+@pytest.fixture
+def isolated(root, tmp_path):
+    """記録・学習の結果・ダイジェストを元に戻す（後のテストが記録の数を数えるため）。"""
+    keep = tmp_path / "keep"
+    shutil.copytree(common.path("logs"), keep / "logs")
+    shutil.copy(common.path("profile", "learned.yml"), keep / "learned.yml")
+    yield root
+    shutil.rmtree(common.path("logs"))
+    shutil.copytree(keep / "logs", common.path("logs"))
+    shutil.copy(keep / "learned.yml", common.path("profile", "learned.yml"))
+    shutil.rmtree(common.path("docs", "digests"), ignore_errors=True)
+
+
+def test_learn_notes_order_through_context_and_finish(isolated, tmp_path):
+    _log(1, deviation="醤油を減らした", learned="皮目は 2 分半で十分")
+    rid = _save(learn.new_system_request("learn_notes", through_log_id="fp001"))
+    text = agent.context_text(rid)
+    assert "記録（新しい順）" in text and "皮目は 2 分半で十分" in text and "equipment_notes" in text and f"/tmp/recipi-{rid}.json" in text
+    ans = tmp_path / "notes.json"
+    ans.write_text(json.dumps({"equipment_notes": ["右のコンロは中火でも強い"], "recipe_notes": ["醤油は 8 割で評価が上がる"], "kid_works_if": ["葉物は 5mm に刻む"]}, ensure_ascii=False), encoding="utf-8")
+    assert agent.finish(rid, str(ans), use_git=False) == 0
+    req = common.read_json(f"requests/{rid}.json")
+    assert req["status"] == "done" and req["result"]["cost_usd"] == 0.0 and req["result"]["model"] == "claude-code"
+    learned = common.read_yaml("profile/learned.yml")
+    assert learned["equipment_notes"] == ["右のコンロは中火でも強い"] and learned["kid"]["works_if"] == ["葉物は 5mm に刻む"] and learned["notes_log_id"] == "fp001"
+
+
+def test_photo_note_order_shows_the_image_and_writes_the_log(isolated, tmp_path):
+    rel = f"photos/{RID_T}/20261017-9.jpg"
+    os.makedirs(common.path(os.path.dirname(rel)), exist_ok=True)
+    with open(common.path(rel), "wb") as f:
+        f.write(PNG)
+    _log(2, photo=rel)
+    rid = _save(learn.new_system_request("photo_note", log_id="fp002"))
+    text = agent.context_text(rid)
+    assert f"（画像 `{rel}` を Read で見る）" in text
+    ans = tmp_path / "note.json"
+    ans.write_text(json.dumps({"note": "照りは十分。小松菜はもう少し細かく"}, ensure_ascii=False), encoding="utf-8")
+    assert agent.finish(rid, str(ans), use_git=False) == 0
+    assert next(e for e in common.iter_logs() if e.get("id") == "fp002")["photo_note"] == "照りは十分。小松菜はもう少し細かく"
+
+
+def test_digest_order_adds_proposals(isolated, tmp_path):
+    _log(3)
+    week = common.week_key(common.today())
+    rid = _save(learn.new_system_request("digest", week=week))
+    text = agent.context_text(rid)
+    assert "今週のまとめ" in text and "proposals" in text
+    ans = tmp_path / "digest.json"
+    with open(os.path.join(os.path.dirname(__file__), "fixtures", "digest.json"), encoding="utf-8") as f:
+        ans.write_text(f.read(), encoding="utf-8")
+    assert agent.finish(rid, str(ans), use_git=False) == 0
+    m, _ = common.split_front_matter(common.read_text(f"docs/digests/{week}.md"))
+    assert m["proposals"][0]["title"] == "鮭のムニエル" and m["shopping"][0]["name"] == "鮭"
+    assert "digest" in agent.REBUILD_ACTIONS   # 提案はページの「今週」に出るので、組み直しのコミットにする

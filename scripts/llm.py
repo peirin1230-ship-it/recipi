@@ -165,6 +165,8 @@ class LLM:
             "pantry_photo": "tests/fixtures/pantry_photo.json",
             "photo_note": "tests/fixtures/photo_note.json",
             "learn": "tests/fixtures/learn.json",
+            "learn_notes": "tests/fixtures/learn.json",
+            "digest": "tests/fixtures/digest.json",
             "weekly": "tests/fixtures/weekly.json",
             "suggest_items": "tests/fixtures/suggest_items.json",
         }

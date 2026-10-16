@@ -99,3 +99,43 @@ def test_llm_client_without_key_is_an_llm_error(monkeypatch):
 def test_water_is_not_a_preference():
     r = {"tags": ["和"], "ingredients": [{"name": "水", "pantry": None, "grams": 400}, {"name": "鶏もも肉", "pantry": "鶏もも肉", "grams": 300}, {"name": "湯", "pantry": None, "grams": 200}]}
     assert learn.elements(r) == ["和", "鶏もも肉"]
+
+
+def test_queue_free_orders_once_and_marks_stale(root):
+    """API キーが無いとき、言葉の抽出・改訂を注文にしてルーティンに回す。同じ物は二重に出さない。古い注文はあきらめる。"""
+    import agent
+    for name in [n for n in os.listdir(common.path("requests")) if n.endswith(".json")]:
+        os.remove(common.path("requests", name))
+    add_log(20, learned="強火は焦げる")
+    L = learn.Learner(common.load_config(), use_llm=False, mock=True)
+    L.run(dry_run=True)
+    L.needs_revision = [RID]
+    q1 = learn.queue_free_orders(L)
+    types = sorted(common.read_json(f"requests/{i}.json")["type"] for i in q1)
+    assert types == ["learn_notes", "revise"]
+    assert learn.queue_free_orders(L) == []   # 処理待ちがあれば出さない
+    # 3 日より古い処理待ちは error にして、次に出し直す
+    for i in q1:
+        d = common.read_json(f"requests/{i}.json"); d["ts"] = "2026-01-01T00:00:00+09:00"; agent.save_request(d)
+    q2 = learn.queue_free_orders(L)
+    assert len(q2) == 2 and all(common.read_json(f"requests/{i}.json")["status"] == "error" for i in q1)
+    # まとめ済み（notes_log_id が最新）なら learn_notes は出さない
+    for i in q2:
+        os.remove(common.path("requests", f"{i}.json"))
+    L.notes_log_id = L.newest_text_log_id(); L.needs_revision = []
+    assert learn.queue_free_orders(L) == []
+
+
+def test_nightly_without_key_hands_orders_to_the_routine(root, monkeypatch, tmp_path):
+    for k in ("ANTHROPIC_API_KEY", "ANTHROPIC_AUTH_TOKEN", "RECIPI_MOCK"):
+        monkeypatch.delenv(k, raising=False)
+    for name in [n for n in os.listdir(common.path("requests")) if n.endswith(".json")]:
+        os.remove(common.path("requests", name))
+    out = tmp_path / "gh_output"
+    monkeypatch.setenv("GITHUB_OUTPUT", str(out))
+    add_log(21, deviation="醤油を減らした")
+    assert learn.main(["--no-git", "--force"]) == 0
+    fire = out.read_text(encoding="utf-8").strip()
+    assert fire.startswith("fire=req-")
+    ids = fire[len("fire="):].split()
+    assert any(common.read_json(f"requests/{i}.json")["type"] == "learn_notes" for i in ids)
