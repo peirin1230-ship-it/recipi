@@ -15,6 +15,7 @@ kid:
   works_if: []
 equipment_notes: []
 recipe_notes: []
+notes_log_id: null
 standards: []
 needs_revision: []
 revised: []
