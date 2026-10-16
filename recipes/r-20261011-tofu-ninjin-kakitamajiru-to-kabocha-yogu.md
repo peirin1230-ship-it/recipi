@@ -134,8 +134,8 @@ cleanup:
   dishwasher: [bowl-m]
   hand: [pot20]
   note: null
-photo: null
-stats: {cooked: 0, r_avg: null, f_avg: null, last: null}
+photo: photos/r-20261011-tofu-ninjin-kakitamajiru-to-kabocha-yogu/20261011-1.jpg
+stats: {cooked: 1, r_avg: 53, f_avg: 3.0, last: '2026-10-11'}
 detail: full
 ---
 
@@ -214,4 +214,5 @@ detail: full
 - 手洗い: 鍋
 
 ## 作ったときのメモ
+
 - 2026-10-11 ・ 24 分（見込み 11）・ R 53 ・ F 4 ・ そのまま ・ 気づき: カボチャはペーストにしてみてもいいかも ・ 📷 20261011-1.jpg

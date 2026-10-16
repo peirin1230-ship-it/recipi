@@ -102,8 +102,8 @@ cleanup:
   dishwasher: [bowl-m]
   hand: []
   note: null
-photo: null
-stats: {cooked: 0, r_avg: null, f_avg: null, last: null}
+photo: photos/r-20261012-ninjin-to-kamaboko-no-goma-zuae/20261013-1.jpg
+stats: {cooked: 1, r_avg: 43, f_avg: 3.0, last: '2026-10-13'}
 detail: full
 together: [r-20261012-shirasu-to-broccoli-no-tamago-chahan]
 ---
@@ -168,4 +168,5 @@ together: [r-20261012-shirasu-to-broccoli-no-tamago-chahan]
 - 手洗い: —
 
 ## 作ったときのメモ
+
 - 2026-10-13 ・ 28 分（見込み 9）・ R 43 ・ F 3 ・ 少し変えた: にんじんは柔らかくならなかったのでフライパンで炒めた ・ 気づき: レンジよりもフライパンが美味しい ・ 📷 20261013-1.jpg

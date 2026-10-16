@@ -1,16 +1,16 @@
 # profile/learned.yml — nightly-learn（scripts/learn.py）が logs/ から生成する。手で直さない（直すなら profile/overrides.yml）。
-updated: '2026-10-11'
+updated: '2026-10-17'
 window_days: 90
-n_logs: 1
-last_log_id: m7xxb59bwgc7
-speed_factor: {overall: 1.01, prep: 1.02, heat: 1.01, serve: 1.01}
+n_logs: 7
+last_log_id: fhjyzqit8cul
+speed_factor: {overall: 1.07, prep: 1.68, heat: 0.9, serve: 0.91}
 likes: []
 dislikes: []
 partner:
-  likes: []
+  likes: [炊き込みご飯, 子ども取り分け, 米]
   dislikes: []
 kid:
-  eats_well: []
+  eats_well: [炊き込みご飯, 子ども取り分け, 米]
   refuses: []
   works_if: []
 equipment_notes: []
@@ -21,11 +21,20 @@ revised: []
 retired: []
 quality:
 - week: 2026-W41
-  generated: 5
-  cooked: 1
-  f_avg: 3.0
-  r_avg: 73
+  generated: 8
+  cooked: 3
+  f_avg: 2.93
+  r_avg: 70
   time_err_median: 0.29
   new_ratio: 1.0
-  adoption: 0.2
-  prompt_versions: {'3': 2, '1': 2, '2': 1}
+  adoption: 0.38
+  prompt_versions: {'3': 2, '6': 1, '1': 2, '4': 1, '2': 1, '5': 1}
+- week: 2026-W42
+  generated: 7
+  cooked: 4
+  f_avg: 3.42
+  r_avg: 62
+  time_err_median: 1.33
+  new_ratio: 1.0
+  adoption: 0.57
+  prompt_versions: {'8': 7}

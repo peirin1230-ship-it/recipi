@@ -86,8 +86,8 @@ cleanup:
   dishwasher: [bowl-m]
   hand: [rice-cooker]
   note: 炊飯器の内釜は洗い物に出さずに冷ましてから手洗い
-photo: null
-stats: {cooked: 0, r_avg: null, f_avg: null, last: null}
+photo: photos/r-20261009-tuna-corn-takikomi-gohan-to-okura-no-shi/20261011-1.jpg
+stats: {cooked: 1, r_avg: 85, f_avg: 3.3, last: '2026-10-11'}
 detail: full
 ---
 
@@ -173,4 +173,5 @@ detail: full
 - 炊飯器の内釜は洗い物に出さずに冷ましてから手洗い
 
 ## 作ったときのメモ
+
 - 2026-10-11 ・ 64 分（見込み 54）・ R 85 ・ F 3 ・ そのまま

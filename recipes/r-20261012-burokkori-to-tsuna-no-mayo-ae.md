@@ -85,8 +85,8 @@ cleanup:
   dishwasher: [bowl-l]
   hand: []
   note: null
-photo: null
-stats: {cooked: 0, r_avg: null, f_avg: null, last: null}
+photo: photos/r-20261012-burokkori-to-tsuna-no-mayo-ae/20261013-1.jpg
+stats: {cooked: 1, r_avg: 45, f_avg: 3.0, last: '2026-10-13'}
 detail: full
 together: [r-20261012-butaroosu-to-nasu-no-kasane-mushi-shioko]
 ---
@@ -147,4 +147,5 @@ together: [r-20261012-butaroosu-to-nasu-no-kasane-mushi-shioko]
 - 手洗い: —
 
 ## 作ったときのメモ
+
 - 2026-10-13 ・ 28 分（見込み 7）・ R 45 ・ F 3 ・ そのまま

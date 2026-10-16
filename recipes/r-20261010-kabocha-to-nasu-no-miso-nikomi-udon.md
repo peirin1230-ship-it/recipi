@@ -128,7 +128,7 @@ cleanup:
   hand: [pot20]
   note: null
 photo: photos/r-20261010-kabocha-to-nasu-no-miso-nikomi-udon/20261010-1.jpg
-stats: {cooked: 1, r_avg: 73, f_avg: 3.0, last: '2026-10-10'}
+stats: {cooked: 1, r_avg: 73, f_avg: 2.5, last: '2026-10-10'}
 detail: full
 ---
 
