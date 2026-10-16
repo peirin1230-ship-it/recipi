@@ -866,12 +866,13 @@ kaji-quest と同じ。`site/**`, `config.yml`, `equipment.yml`, `family.yml`, `
 
 ### 12.3 `nightly-learn.yml`
 - **トリガー**: 03:30 JST（`30 18 * * *` UTC）＋ `workflow_dispatch`
-- **処理**: §9.4。新しいログが無ければ即終了。
+- **処理**: §9.4。新しいログが無ければ即終了。Secrets に `ANTHROPIC_API_KEY` が無いとき（Generator をルーティンが務める運用）は、Claude を使う所（言葉の抽出・改訂・写真の一言）を飛ばして決定的な部分（統計・速度係数・好み・定番・封印）だけ行い、成功で終わる。
 - **出力**: `profile/learned.yml`、`recipes/*.md` の `stats` / `photo` / `status`、改訂版、`requests/` と `inbox/` の掃除。1 コミット（`[skip ci]` は付けない → `build-pages` が走り、ページの同梱データが更新される）。
 
 ### 12.4 `weekly-digest.yml`
 - **トリガー**: 日曜 20:00 JST（`0 11 * * 0` UTC）。kaji-quest の週報（21:00）の前に出す
 - **処理**: `quality` の今週分、作った料理と写真、定番・改訂・封印の変化、在庫と季節から**来週の提案 3 つ**（一行）、買い物候補（`staples` の `none` と提案に要る物）
+- **鍵が無いとき**: `ANTHROPIC_API_KEY` が無ければ来週の提案と買い物候補（Claude）を飛ばし、数字だけのまとめを書く。
 - **出力**: `docs/digests/2026-W41.md`（`scripts/digest.py`。front matter に数字と提案を持ち、ページの「今週」はそれを読む）。通知はしない（kaji-quest の 17:00 帰宅前の通知からページへ飛ぶ運用で足りる）
 
 ### 12.5 cron の注意

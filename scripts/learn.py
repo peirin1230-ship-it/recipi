@@ -76,6 +76,8 @@ def elements(recipe: dict) -> list[str]:
             out.append(t)
     for i in recipe.get("ingredients") or []:
         name = i.get("pantry") or i.get("name")
+        if name in schema.FREE_INGREDIENTS or i.get("name") in schema.FREE_INGREDIENTS:   # 水・湯は好き嫌いに数えない
+            continue
         if name and (i.get("grams") or 0) >= 100 and name not in out:
             out.append(name)
     return out
@@ -429,7 +431,11 @@ def main(argv: list[str]) -> int:
     ap.add_argument("--mock", action="store_true")
     a = ap.parse_args(argv)
     cfg = common.load_config()
-    learner = Learner(cfg, use_llm=not a.no_llm, mock=a.mock)
+    use_llm = not a.no_llm
+    if use_llm and not a.mock and os.environ.get("RECIPI_MOCK") != "1" and not llmmod.has_api_key():
+        use_llm = False
+        print("ANTHROPIC_API_KEY が無いので、Claude を使う所（言葉の抽出・改訂・写真の一言）は飛ばして統計だけ更新する（Secrets に鍵を置けば使う）")
+    learner = Learner(cfg, use_llm=use_llm, mock=a.mock)
     if not a.force and not has_new_logs(learner.learned, learner.logs_all):
         print("新しい記録が無いので何もしない")
         return 0

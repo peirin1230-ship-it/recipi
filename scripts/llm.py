@@ -23,6 +23,11 @@ PRICES_USD_PER_MTOK = {   # 2026-10 時点。input / output / cache_read
 }
 
 
+def has_api_key() -> bool:
+    """Claude API の鍵があるか。Generator を Claude Code のルーティンが務める運用（Phase 0）では無い。"""
+    return bool(os.environ.get("ANTHROPIC_API_KEY") or os.environ.get("ANTHROPIC_AUTH_TOKEN"))
+
+
 class LLMError(RuntimeError):
     pass
 
@@ -65,6 +70,8 @@ class LLM:
     @property
     def client(self):
         if self._client is None:
+            if not has_api_key():   # SDK は送るときまで鍵の無さを言わず、LLMError でない TypeError で落ちるので、先に確かめる
+                raise LLMError("Claude API を使えない（ANTHROPIC_API_KEY が無い。Secrets に置く）")
             try:
                 import anthropic  # 遅延 import（mock のときは要らない）
                 self._client = anthropic.Anthropic()

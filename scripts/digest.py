@@ -109,7 +109,11 @@ def main(argv: list[str]) -> int:
     ap.add_argument("--mock", action="store_true")
     a = ap.parse_args(argv)
     week = a.week or common.week_key(common.today())
-    text, meta = build_digest(week, use_llm=not a.no_llm, mock=a.mock)
+    use_llm = not a.no_llm
+    if use_llm and not a.mock and os.environ.get("RECIPI_MOCK") != "1" and not llmmod.has_api_key():
+        use_llm = False
+        print("ANTHROPIC_API_KEY が無いので、来週の提案（Claude）は飛ばして数字だけのまとめにする（Secrets に鍵を置けば使う）")
+    text, meta = build_digest(week, use_llm=use_llm, mock=a.mock)
     rel = f"docs/digests/{week}.md"
     common.write_text(rel, text)
     print(rel)

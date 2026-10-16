@@ -67,3 +67,35 @@ def test_pick_photo():
     assert learn.pick_photo(entries) == "a.jpg"
     assert learn.pick_photo([{"photo": "a.jpg", "finish": 2}, {"photo": "b.jpg", "finish": 3}]) == "b.jpg"
     assert learn.pick_photo([{"photo": None}]) is None
+
+
+def test_nightly_without_api_key_skips_claude_and_updates_stats(root, monkeypatch, capsys):
+    """Secrets に ANTHROPIC_API_KEY が無い（Generator はルーティン）。言葉の抽出が要る記録があっても落ちずに、統計だけ更新する。"""
+    monkeypatch.delenv("ANTHROPIC_API_KEY", raising=False)
+    monkeypatch.delenv("ANTHROPIC_AUTH_TOKEN", raising=False)
+    monkeypatch.delenv("RECIPI_MOCK", raising=False)
+    add_log(7, learned="皮目は 2 分半で十分", deviation="醤油を減らした")
+    assert learn.main(["--no-git", "--force"]) == 0
+    out = capsys.readouterr().out
+    assert "ANTHROPIC_API_KEY が無い" in out
+    learned = common.read_yaml("profile/learned.yml")
+    assert learned["updated"] == common.today() and learned["last_log_id"] == list(common.iter_logs())[-1]["id"]   # 統計は最後の記録まで進んだ
+
+
+def test_llm_client_without_key_is_an_llm_error(monkeypatch):
+    import llm
+    monkeypatch.delenv("RECIPI_MOCK", raising=False)
+    monkeypatch.delenv("ANTHROPIC_API_KEY", raising=False)
+    monkeypatch.delenv("ANTHROPIC_AUTH_TOKEN", raising=False)
+    L = llm.LLM(common.load_config(), mock=False)
+    try:
+        L.structured(name="learn", system="x", blocks=[{"type": "text", "text": "y"}], schema={"type": "object"})
+    except llm.LLMError as e:
+        assert "ANTHROPIC_API_KEY" in str(e)
+    else:
+        raise AssertionError("LLMError が出ない")
+
+
+def test_water_is_not_a_preference():
+    r = {"tags": ["和"], "ingredients": [{"name": "水", "pantry": None, "grams": 400}, {"name": "鶏もも肉", "pantry": "鶏もも肉", "grams": 300}, {"name": "湯", "pantry": None, "grams": 200}]}
+    assert learn.elements(r) == ["和", "鶏もも肉"]
