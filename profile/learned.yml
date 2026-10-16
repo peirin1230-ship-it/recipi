@@ -13,9 +13,9 @@ kid:
   eats_well: [炊き込みご飯, 子ども取り分け, 米]
   refuses: []
   works_if: []
-equipment_notes: []
+equipment_notes: [レンジだとにんじんが固く残るので、フライパンで炒める]
 recipe_notes: []
-notes_log_id: null
+notes_log_id: y76dmrg1tqgo
 standards: []
 needs_revision: []
 revised: []

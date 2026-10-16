@@ -3,8 +3,25 @@
  "ts": "2026-10-17T07:47:57+09:00",
  "type": "learn_notes",
  "by": "nightly",
- "status": "pending",
+ "status": "done",
  "error": null,
- "result": null,
- "through_log_id": "y76dmrg1tqgo"
+ "result": {
+  "equipment_notes": [
+   "レンジだとにんじんが固く残るので、フライパンで炒める"
+  ],
+  "recipe_notes": [],
+  "kid_works_if": [],
+  "model": "claude-code",
+  "prompt_version": 1,
+  "tokens": {
+   "input": 0,
+   "output": 0,
+   "cache_read": 0,
+   "cache_write": 0
+  },
+  "cost_usd": 0.0,
+  "seconds": 0
+ },
+ "through_log_id": "y76dmrg1tqgo",
+ "finished": "2026-10-17T07:48:19+09:00"
 }
