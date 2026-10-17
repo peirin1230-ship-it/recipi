@@ -3,7 +3,133 @@
  "ts": "2026-10-17T15:55:01+09:00",
  "type": "suggest_items",
  "note": "",
- "status": "pending",
+ "status": "done",
  "error": null,
- "result": null
+ "result": {
+  "items": [
+   {
+    "name": "玉ねぎ",
+    "qty": "3個",
+    "reason": "鶏むねの照り焼きや卵とじなど、ほぼ何にでも合う土台の野菜",
+    "enables": [
+     "鶏むねと玉ねぎの卵とじ",
+     "ツナ玉ねぎのオムレツ"
+    ],
+    "priority": "main",
+    "known": true
+   },
+   {
+    "name": "にんじん",
+    "qty": "3本",
+    "reason": "れんこん・ごぼうと合わせて根菜の煮物やきんぴらが作れ、子どもも食べやすい",
+    "enables": [
+     "れんこんとごぼうのきんぴら",
+     "にんじんしりしり"
+    ],
+    "priority": "main",
+    "known": true
+   },
+   {
+    "name": "豆腐",
+    "qty": "2丁",
+    "reason": "鶏むねと並ぶ平日の主菜で、子どもも食べやすい",
+    "enables": [
+     "鶏むねと豆腐のふわふわ焼き",
+     "豆腐とコーンの卵とじ"
+    ],
+    "priority": "stock",
+    "known": true
+   },
+   {
+    "name": "冷凍うどん",
+    "qty": "4玉",
+    "reason": "常備すると時間がない夜の主食になる",
+    "enables": [
+     "ツナとコーンのバターうどん",
+     "卵とじうどん"
+    ],
+    "priority": "stock",
+    "known": true
+   },
+   {
+    "name": "しらす",
+    "qty": "1パック",
+    "reason": "ご飯やうどんにのせるだけで手軽に使え、子どもの取り分けにも向く",
+    "enables": [
+     "しらす入り卵焼き",
+     "しらすとコーンの混ぜご飯"
+    ],
+    "priority": "kid",
+    "known": true
+   },
+   {
+    "name": "小松菜",
+    "qty": "1束",
+    "reason": "レンジで加熱でき、塩昆布やツナと合わせる副菜にすぐ使える",
+    "enables": [
+     "小松菜とツナの塩昆布和え",
+     "小松菜と卵の炒め物"
+    ],
+    "priority": "stock",
+    "known": true
+   },
+   {
+    "name": "さつまいも",
+    "qty": "2本",
+    "reason": "今が旬で甘く、低温調理器で甘みが出て子どもも食べやすい",
+    "enables": [
+     "さつまいもの甘煮",
+     "さつまいもとコーンのサラダ"
+    ],
+    "priority": "season",
+    "known": true
+   },
+   {
+    "name": "鮭",
+    "qty": "2切れ",
+    "reason": "魚焼きグリルで焼くだけで主菜になり、子どもの分は骨を取って出せる",
+    "enables": [
+     "鮭のグリル焼き",
+     "鮭とコーンのバター蒸し"
+    ],
+    "priority": "main",
+    "known": true
+   },
+   {
+    "name": "キャベツ",
+    "qty": "1/2玉",
+    "reason": "ツナや卵と合わせる炒め物や副菜に使い回せる",
+    "enables": [
+     "キャベツとツナの蒸し煮",
+     "キャベツ入りお好み焼き風卵焼き"
+    ],
+    "priority": "stock",
+    "known": true
+   },
+   {
+    "name": "バナナ",
+    "qty": "1房",
+    "reason": "ヨーグルト・牛乳と合わせて朝食やおやつになり、ミキサーも使える",
+    "enables": [
+     "バナナヨーグルト",
+     "バナナミルク"
+    ],
+    "priority": "kid",
+    "known": true
+   }
+  ],
+  "note": "鶏むねと豆腐、玉ねぎがあれば平日の主菜が組めて、旬のさつまいもは副菜やおやつになる",
+  "feasible": true,
+  "model": "claude-code",
+  "prompt_version": 1,
+  "tokens": {
+   "input": 0,
+   "output": 0,
+   "cache_read": 0,
+   "cache_write": 0
+  },
+  "cost_usd": 0.0,
+  "seconds": 0
+ },
+ "finished": "2026-10-17T15:55:45+09:00"
 }
