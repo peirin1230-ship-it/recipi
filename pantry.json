@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-18T19:30:49+09:00",
+ "updated": "2026-10-18T19:34:44+09:00",
  "items": [
   {
    "id": "pxqdj5",
@@ -124,6 +124,13 @@
    "id": "p4vctj",
    "name": "冷凍うどん",
    "loc": "freezer",
+   "added": "2026-10-18",
+   "src": "manual"
+  },
+  {
+   "id": "pb6ju3",
+   "name": "じゃがいも",
+   "loc": "pantry",
    "added": "2026-10-18",
    "src": "manual"
   }
