@@ -15,7 +15,44 @@
  "exclude": [],
  "note": "低温調理器具",
  "mode": "pick",
- "status": "pending",
+ "status": "done",
  "error": null,
- "result": null
+ "result": {
+  "feasible": true,
+  "infeasible_reason": null,
+  "nearest_options": [],
+  "alternatives": [
+   {
+    "title": "さつまいもの低温調理 焼き芋風 バター塩昆布",
+    "minutes": 150,
+    "why": "さつまいもを 65℃ で 1 時間 → 85℃ で 1 時間置くと甘みが出て、低温調理器の得意技を使い切れる。",
+    "kind": "new"
+   },
+   {
+    "title": "豚肉の低温調理 しょうが玉ねぎだれ",
+    "minutes": 135,
+    "why": "豚肉を 63℃ で 2 時間かけてしっとりさせ、玉ねぎのたれで食べる。さつまいもは別に添えられる。",
+    "kind": "new"
+   },
+   {
+    "title": "さつまいもと玉ねぎの低温調理ポタージュ",
+    "minutes": 100,
+    "why": "85℃ で柔らかくした根菜をミキサーにかけ、牛乳でのばす。子どもも飲みやすい。",
+    "kind": "new"
+   }
+  ],
+  "recipe_id": null,
+  "recipe": null,
+  "model": "claude-code",
+  "prompt_version": 10,
+  "tokens": {
+   "input": 0,
+   "output": 0,
+   "cache_read": 0,
+   "cache_write": 0
+  },
+  "cost_usd": 0.0,
+  "seconds": 0
+ },
+ "finished": "2026-10-18T12:27:24+09:00"
 }
