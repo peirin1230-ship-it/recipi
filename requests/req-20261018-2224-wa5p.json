@@ -13,7 +13,44 @@
  "exclude": [],
  "note": "",
  "mode": "pick",
- "status": "pending",
+ "status": "done",
  "error": null,
- "result": null
+ "result": {
+  "feasible": true,
+  "infeasible_reason": null,
+  "nearest_options": [],
+  "alternatives": [
+   {
+    "title": "バナナとヨーグルトのミキサースムージー",
+    "minutes": 5,
+    "why": "火を使わずミキサーで 1 分。バナナの在庫を朝のうちに使い切れて、子どもも飲みやすい。",
+    "kind": "new"
+   },
+   {
+    "title": "冷凍うどんのしらす釜玉風",
+    "minutes": 8,
+    "why": "レンジで解凍した冷凍うどんに卵としらすを絡めるだけ。火を使わず朝に軽い主食になる（子どもの卵は完全に固める）。",
+    "kind": "new"
+   },
+   {
+    "title": "エリンギと玉ねぎの和風ふわふわオムレツ",
+    "minutes": 12,
+    "why": "フライパン 1 つで焼ける卵料理。エリンギと玉ねぎでかさ増しして、主菜と野菜が一度に取れる。",
+    "kind": "new"
+   }
+  ],
+  "recipe_id": null,
+  "recipe": null,
+  "model": "claude-code",
+  "prompt_version": 10,
+  "tokens": {
+   "input": 0,
+   "output": 0,
+   "cache_read": 0,
+   "cache_write": 0
+  },
+  "cost_usd": 0.0,
+  "seconds": 0
+ },
+ "finished": "2026-10-18T22:24:49+09:00"
 }
