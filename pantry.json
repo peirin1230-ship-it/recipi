@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-14T21:46:15+09:00",
+ "updated": "2026-10-18T12:15:28+09:00",
  "items": [
   {
    "id": "pxqdj5",
@@ -77,6 +77,83 @@
    "loc": "pantry",
    "added": "2026-10-14",
    "src": "kaji-quest"
+  },
+  {
+   "id": "pl6d66",
+   "name": "豆腐",
+   "loc": "fridge",
+   "added": "2026-10-18",
+   "src": "kaji-quest"
+  },
+  {
+   "id": "pd3s0y",
+   "name": "玉ねぎ",
+   "loc": "pantry",
+   "added": "2026-10-18",
+   "src": "kaji-quest"
+  },
+  {
+   "id": "pi4b5p",
+   "name": "しらす",
+   "loc": "fridge",
+   "added": "2026-10-18",
+   "src": "kaji-quest"
+  },
+  {
+   "id": "pl4sz2",
+   "name": "さつまいも",
+   "loc": "pantry",
+   "added": "2026-10-18",
+   "src": "kaji-quest"
+  },
+  {
+   "id": "pr485z",
+   "name": "バナナ",
+   "loc": "pantry",
+   "added": "2026-10-18",
+   "src": "kaji-quest"
+  },
+  {
+   "id": "p7xw8q",
+   "name": "ピーマン",
+   "loc": "fridge",
+   "added": "2026-10-18",
+   "src": "kaji-quest"
+  },
+  {
+   "id": "ptazhn",
+   "name": "エリンギ",
+   "loc": "fridge",
+   "added": "2026-10-18",
+   "src": "kaji-quest"
+  },
+  {
+   "id": "p9c5yy",
+   "name": "白菜",
+   "loc": "fridge",
+   "added": "2026-10-18",
+   "src": "kaji-quest"
+  },
+  {
+   "id": "pmptm3",
+   "name": "豚ひき肉",
+   "loc": "fridge",
+   "added": "2026-10-18",
+   "src": "kaji-quest"
+  },
+  {
+   "id": "py9ps7",
+   "name": "豚肉",
+   "loc": "fridge",
+   "added": "2026-10-18",
+   "src": "kaji-quest"
+  },
+  {
+   "id": "ptfgfj",
+   "name": "せせり",
+   "loc": "fridge",
+   "added": "2026-10-18",
+   "src": "kaji-quest"
   }
  ],
  "staples": {
@@ -129,6 +206,7 @@
   "mumh51oou4ve",
   "mv23xlv9bzro",
   "mv7y84fhagyz",
-  "mv81fv3rz2lf"
+  "mv81fv3rz2lf",
+  "mvd9501omzgb"
  ]
 }
