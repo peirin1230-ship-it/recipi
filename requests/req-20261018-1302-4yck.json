@@ -14,10 +14,326 @@
  ],
  "exclude": [],
  "note": "低温調理器具",
- "mode": "pick",
+ "mode": "auto",
  "parent": "req-20261018-1226-h2hr",
  "alternative": 0,
- "status": "pending",
+ "status": "done",
  "error": null,
- "result": null
+ "result": {
+  "feasible": true,
+  "infeasible_reason": null,
+  "nearest_options": [],
+  "alternatives": [
+   {
+    "title": "鶏せせりと白菜のしょうが炒め",
+    "minutes": 20,
+    "why": "肉の主菜で調理法が炒め物。在庫のせせりと白菜を使い切れる。",
+    "kind": "new"
+   },
+   {
+    "title": "豚ひき肉と豆腐のそぼろ丼",
+    "minutes": 20,
+    "why": "ひき肉と豆腐で子どもも食べやすく、フライパン 1 つで済む。",
+    "kind": "new"
+   }
+  ],
+  "recipe_id": "r-20261018-satsumaimo-no-teion-chori-yakiimo-fu-but",
+  "recipe": {
+   "id": "r-20261018-satsumaimo-no-teion-chori-yakiimo-fu-but",
+   "title": "さつまいもの低温調理 焼き芋風 バター塩昆布",
+   "version": 1,
+   "supersedes": null,
+   "status": "draft",
+   "created": "2026-10-18",
+   "request": "req-20261018-1302-4yck",
+   "generated_by": {
+    "model": "claude-code",
+    "prompt_version": 10
+   },
+   "type": "recipe_detail",
+   "servings": {
+    "adults": 2,
+    "kids": 1
+   },
+   "time": {
+    "budget": 0,
+    "planned": 158,
+    "active": 25,
+    "raw_estimate": 150,
+    "speed_factor": 1.07
+   },
+   "image_text": "断面が黄金色にとろりと光るさつまいもの輪切りに、溶けたバターと塩昆布がからむ。皮は赤紫で、切り口はきつね色の焼き目が付いている。",
+   "dishes": [
+    {
+     "name": "さつまいもの低温調理 焼き芋風 バター塩昆布",
+     "role": "main"
+    }
+   ],
+   "equipment": [
+    "sous-vide",
+    "fp26",
+    "pot20",
+    "kettle"
+   ],
+   "ingredients": [
+    {
+     "name": "さつまいも",
+     "qty": 2,
+     "unit": "本",
+     "grams": 400,
+     "pantry": "さつまいも",
+     "for": "さつまいもの低温調理 焼き芋風 バター塩昆布",
+     "substitute": null,
+     "use_up": true
+    },
+    {
+     "name": "バター",
+     "qty": 1,
+     "unit": "大さじ",
+     "grams": 12,
+     "pantry": "バター",
+     "for": "さつまいもの低温調理 焼き芋風 バター塩昆布",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "塩昆布",
+     "qty": 2,
+     "unit": "小さじ",
+     "grams": 4,
+     "pantry": "塩昆布",
+     "for": "さつまいもの低温調理 焼き芋風 バター塩昆布",
+     "substitute": null,
+     "use_up": false
+    }
+   ],
+   "tags": [
+    "低温調理",
+    "さつまいも",
+    "仕込み",
+    "焼き芋風",
+    "子ども取り分け"
+   ],
+   "salt": {
+    "total_g": 1.2,
+    "adult_per_serving_g": 0.6,
+    "kid_g": 0
+   },
+   "kid": {
+    "rule": "separate",
+    "cut": "85℃で柔らかくなった後、バター・塩昆布の前に取り分けて 1cm 角の棒状に切る",
+    "note": "味付け前に取り分けるので塩分ほぼ 0。さつまいもの甘みだけで足りる。皮はむいて、熱くないか確かめて出す。"
+   },
+   "keep": {
+    "fridge_days": 2,
+    "freezer": false,
+    "reheat": "レンジ 600W で 1 人分 1 分〜1 分 30 秒、湯気が立つまで。途中で混ぜる"
+   },
+   "timeline": [
+    {
+     "minute": 0,
+     "lane": "hands",
+     "text": "ケトルで湯を沸かしながら、さつまいもを洗って 2cm 厚の輪切りにする"
+    },
+    {
+     "minute": 8,
+     "lane": "hands",
+     "text": "袋に並べて空気を抜く"
+    },
+    {
+     "minute": 10,
+     "lane": "sous-vide",
+     "text": "湯 65℃ に袋を沈める（60 分）"
+    },
+    {
+     "minute": 40,
+     "lane": "hands",
+     "text": "（待ち時間）洗い物と、食卓の準備"
+    },
+    {
+     "minute": 70,
+     "lane": "sous-vide",
+     "text": "設定を 85℃ に上げる（温まるまで約 10 分）"
+    },
+    {
+     "minute": 80,
+     "lane": "sous-vide",
+     "text": "85℃ に届いたら 60 分"
+    },
+    {
+     "minute": 140,
+     "lane": "hands",
+     "text": "袋から出して水けをふく。子どもの分を取り分けて冷ます"
+    },
+    {
+     "minute": 143,
+     "lane": "gas-r",
+     "text": "フライパンにバターを溶かし、切り口を焼く"
+    },
+    {
+     "minute": 146,
+     "lane": "gas-r",
+     "text": "裏返して 1〜2 分焼く"
+    },
+    {
+     "minute": 148,
+     "lane": "hands",
+     "text": "塩昆布をからめて盛り付け"
+    },
+    {
+     "minute": 150,
+     "lane": "hands",
+     "text": "子どもの分を 1cm 角に切って配膳"
+    }
+   ],
+   "steps": [
+    {
+     "dish": "さつまいもの低温調理 焼き芋風 バター塩昆布",
+     "n": 1,
+     "title": "洗って切り、袋に入れる",
+     "kind": "prep",
+     "tag": "cut",
+     "minutes": 10,
+     "start": 0,
+     "heat": null,
+     "text": "電気ケトルで湯 1L を沸かし始める。さつまいも 2本（400g）をよく洗い、皮つきのまま厚さ 2cm の輪切りにする。耐熱の保存袋（湯せん可）に重ならないよう並べ、空気を抜いて口を閉じる。",
+     "cue": "輪切りが全部 2cm 厚でそろい、袋の中で重ならない。",
+     "caution": null,
+     "timer": null,
+     "kid": "皮は食べやすいので残してよい。気になるなら子どもの分だけ後でむく。",
+     "ingredients": [
+      "さつまいも"
+     ]
+    },
+    {
+     "dish": "さつまいもの低温調理 焼き芋風 バター塩昆布",
+     "n": 2,
+     "title": "低温調理器を 65℃ にして 1 時間",
+     "kind": "wait",
+     "tag": "wait",
+     "minutes": 60,
+     "start": 10,
+     "heat": {
+      "equipment": "sous-vide",
+      "level": "65℃"
+     },
+     "text": "鍋（pot20）に水を張り、ケトルの湯を足して 60℃ 前後にしてから低温調理器を 65℃ に設定する。温度に届いたら袋を沈め、65℃ で 60 分置く。この間は火を使わないので手が空く。",
+     "cue": "袋が湯に沈み、設定温度の表示が 65℃ で安定している。",
+     "caution": "袋が浮くときは皿などで押さえ、全体を湯に沈める。",
+     "timer": 3600,
+     "kid": null,
+     "ingredients": []
+    },
+    {
+     "dish": "さつまいもの低温調理 焼き芋風 バター塩昆布",
+     "n": 3,
+     "title": "85℃に上げて 1 時間",
+     "kind": "wait",
+     "tag": "wait",
+     "minutes": 70,
+     "start": 70,
+     "heat": {
+      "equipment": "sous-vide",
+      "level": "85℃"
+     },
+     "text": "袋を入れたまま設定を 85℃ に上げる。湯が温まるまで 10 分ほどかかる。85℃ に届いてから 60 分置く（ケトルの熱湯を足すと早い）。",
+     "cue": "表示が 85℃ になってから 60 分。竹串がすっと通る柔らかさ。",
+     "caution": "蒸発で湯が減ったら熱湯を足し、袋が湯から出ないようにする。",
+     "timer": 3600,
+     "kid": null,
+     "ingredients": []
+    },
+    {
+     "dish": "さつまいもの低温調理 焼き芋風 バター塩昆布",
+     "n": 4,
+     "title": "取り出して水けをふく",
+     "kind": "prep",
+     "tag": "cut",
+     "minutes": 3,
+     "start": 140,
+     "heat": null,
+     "text": "袋ごと取り出して、やけどに気をつけて袋から出し、キッチンペーパーで表面の水けをふく。皮に 1 本ずつ竹串を通して柔らかさを確かめる。",
+     "cue": "竹串に抵抗なく通り、断面がしっとり黄金色。",
+     "caution": null,
+     "timer": null,
+     "kid": "子どもの分 4〜5 切れをここで取り分け、皿で冷ます（バターと塩昆布は付けない）。",
+     "ingredients": [
+      "さつまいも"
+     ]
+    },
+    {
+     "dish": "さつまいもの低温調理 焼き芋風 バター塩昆布",
+     "n": 5,
+     "title": "バターで焼き目を付ける",
+     "kind": "heat",
+     "tag": "sear",
+     "minutes": 5,
+     "start": 143,
+     "heat": {
+      "equipment": "fp26",
+      "level": "中火"
+     },
+     "text": "フライパン（fp26）を中火で 1 分予熱し、バター 大さじ 1（12g）を溶かす。さつまいもを切り口を下にして並べ、触らずに 2 分、裏返してさらに 1〜2 分焼く。",
+     "cue": "切り口がきつね色で、バターの香ばしい匂いがする。",
+     "caution": "バターは焦げやすい。茶色が濃くなったら火を弱火に落とす。",
+     "timer": null,
+     "kid": "大人の分だけを焼く。子どもの分は取り分け済みのまま、1cm 角の棒状に切って冷ます。",
+     "ingredients": [
+      "さつまいも",
+      "バター"
+     ]
+    },
+    {
+     "dish": "さつまいもの低温調理 焼き芋風 バター塩昆布",
+     "n": 6,
+     "title": "塩昆布をのせて盛る",
+     "kind": "serve",
+     "tag": "serve",
+     "minutes": 2,
+     "start": 148,
+     "heat": null,
+     "text": "火を止め、塩昆布 小さじ 2（4g）を全体にからめる。大人 2人分を器に盛る。子どもの分は 1cm 角の手づかみサイズに切って渡す（バター・塩昆布なし）。",
+     "cue": "塩昆布がバターで少しほぐれ、全体につやがある。",
+     "caution": null,
+     "timer": null,
+     "kid": "熱いので冷めたことを手で確かめてから出す。",
+     "ingredients": [
+      "塩昆布"
+     ]
+    }
+   ],
+   "cleanup": {
+    "dishwasher": [
+     "bowl-m"
+    ],
+    "hand": [
+     "fp26",
+     "pot20"
+    ],
+    "note": "袋は洗って干せば再利用できる。低温調理器は水けをふいて片付ける。"
+   },
+   "photo": null,
+   "stats": {
+    "cooked": 0,
+    "r_avg": null,
+    "f_avg": null,
+    "last": null
+   },
+   "detail": "full",
+   "memo": []
+  },
+  "side_recipe_ids": [],
+  "side_recipes": [],
+  "model": "claude-code",
+  "prompt_version": 10,
+  "tokens": {
+   "input": 0,
+   "output": 0,
+   "cache_read": 0,
+   "cache_write": 0
+  },
+  "cost_usd": 0.0,
+  "seconds": 0
+ },
+ "finished": "2026-10-18T13:03:47+09:00"
 }
