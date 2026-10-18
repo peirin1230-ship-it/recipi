@@ -3,8 +3,46 @@
  "ts": "2026-10-18T23:15:56+09:00",
  "type": "digest",
  "by": "weekly",
- "status": "pending",
+ "status": "done",
  "error": null,
- "result": null,
- "week": "2026-W42"
+ "result": {
+  "week": "2026-W42",
+  "proposals": [
+   {
+    "title": "豚肉と白菜の重ね蒸し ポン酢",
+    "minutes": 20,
+    "why": "白菜と豚肉を使い切れる。フライパンのふた蒸しで洗い物も少ない"
+   },
+   {
+    "title": "せせりと玉ねぎのグリル焼き 塩昆布のせ",
+    "minutes": 25,
+    "why": "最近作っていない魚焼きグリルを使う。せせりはぱさつかず子どもも食べやすい"
+   },
+   {
+    "title": "かぼちゃの低温調理ポタージュ",
+    "minutes": 90,
+    "why": "休日向け。85℃で柔らかくしてミキサーにかけ、牛乳と玉ねぎで子どもも飲みやすい"
+   }
+  ],
+  "shopping": [
+   {
+    "name": "ポン酢",
+    "qty": "1本",
+    "reason": "重ね蒸しのたれに使う（残りが少ない）"
+   }
+  ],
+  "comment": "来週は低温調理器とミキサーを使う日も作ってみる",
+  "model": "claude-code",
+  "prompt_version": 1,
+  "tokens": {
+   "input": 0,
+   "output": 0,
+   "cache_read": 0,
+   "cache_write": 0
+  },
+  "cost_usd": 0.0,
+  "seconds": 1
+ },
+ "week": "2026-W42",
+ "finished": "2026-10-18T23:16:21+09:00"
 }
