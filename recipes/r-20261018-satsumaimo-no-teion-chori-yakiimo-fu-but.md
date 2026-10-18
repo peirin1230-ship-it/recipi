@@ -1,4 +1,5 @@
 ---
+listed: "2026-10-18T17:20:04+09:00"
 id: r-20261018-satsumaimo-no-teion-chori-yakiimo-fu-but
 title: さつまいもの低温調理 焼き芋風 バター塩昆布
 version: 1
