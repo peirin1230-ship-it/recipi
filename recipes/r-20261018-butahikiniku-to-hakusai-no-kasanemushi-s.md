@@ -1,4 +1,5 @@
 ---
+listed: "2026-10-18T17:20:10+09:00"
 id: r-20261018-butahikiniku-to-hakusai-no-kasanemushi-s
 title: 豚ひき肉と白菜の重ね蒸し 塩昆布だれ
 version: 1
