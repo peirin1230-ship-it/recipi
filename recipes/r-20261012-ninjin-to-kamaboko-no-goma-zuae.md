@@ -103,7 +103,7 @@ cleanup:
   hand: []
   note: null
 photo: photos/r-20261012-ninjin-to-kamaboko-no-goma-zuae/20261013-1.jpg
-stats: {cooked: 1, r_avg: 43, f_avg: 3.0, last: '2026-10-13'}
+stats: {cooked: 1, r_avg: 43, f_avg: 2.7, last: '2026-10-13'}
 detail: full
 together: [r-20261012-shirasu-to-broccoli-no-tamago-chahan]
 ---

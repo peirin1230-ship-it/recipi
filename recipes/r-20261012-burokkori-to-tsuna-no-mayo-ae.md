@@ -86,7 +86,7 @@ cleanup:
   hand: []
   note: null
 photo: photos/r-20261012-burokkori-to-tsuna-no-mayo-ae/20261013-1.jpg
-stats: {cooked: 1, r_avg: 45, f_avg: 3.0, last: '2026-10-13'}
+stats: {cooked: 1, r_avg: 45, f_avg: 2.7, last: '2026-10-13'}
 detail: full
 together: [r-20261012-butaroosu-to-nasu-no-kasane-mushi-shioko]
 ---

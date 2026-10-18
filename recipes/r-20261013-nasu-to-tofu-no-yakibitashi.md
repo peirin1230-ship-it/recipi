@@ -151,7 +151,7 @@ cleanup:
   hand: [fp26, pot20]
   note: フライパンは粗熱が取れてから洗う。ケトルは湯が冷めてから
 photo: photos/r-20261013-nasu-to-tofu-no-yakibitashi/20261014-1.jpg
-stats: {cooked: 1, r_avg: 91, f_avg: 4.0, last: '2026-10-14'}
+stats: {cooked: 1, r_avg: 91, f_avg: 2.7, last: '2026-10-14'}
 detail: full
 ---
 

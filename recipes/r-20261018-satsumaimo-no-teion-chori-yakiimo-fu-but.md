@@ -1,5 +1,5 @@
 ---
-listed: "2026-10-18T17:20:04+09:00"
+listed: '2026-10-18T17:20:04+09:00'
 id: r-20261018-satsumaimo-no-teion-chori-yakiimo-fu-but
 title: さつまいもの低温調理 焼き芋風 バター塩昆布
 version: 1
@@ -124,8 +124,8 @@ cleanup:
   dishwasher: [bowl-m]
   hand: [fp26, pot20]
   note: 袋は洗って干せば再利用できる。低温調理器は水けをふいて片付ける。
-photo: null
-stats: {cooked: 0, r_avg: null, f_avg: null, last: null}
+photo: photos/r-20261018-satsumaimo-no-teion-chori-yakiimo-fu-but/20261018-1.jpg
+stats: {cooked: 1, r_avg: 68, f_avg: 4.0, last: '2026-10-18'}
 detail: full
 ---
 
@@ -201,4 +201,5 @@ detail: full
 - 袋は洗って干せば再利用できる。低温調理器は水けをふいて片付ける。
 
 ## 作ったときのメモ
+
 - 2026-10-18 ・ 60 分（見込み 158）・ R 68 ・ F 4 ・ そのまま ・ 気づき: もう少し甘くしたい
