@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-18T12:15:34+09:00",
+ "updated": "2026-10-18T12:15:42+09:00",
  "items": [
   {
    "id": "pxqdj5",
@@ -42,13 +42,6 @@
    "loc": "pantry",
    "added": "2026-10-08",
    "src": "manual"
-  },
-  {
-   "id": "pu7k66",
-   "name": "れんこん",
-   "loc": "fridge",
-   "added": "2026-10-10",
-   "src": "kaji-quest"
   },
   {
    "id": "pcmurp",
