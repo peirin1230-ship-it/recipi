@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-18T12:15:42+09:00",
+ "updated": "2026-10-18T17:19:07+09:00",
  "items": [
   {
    "id": "pxqdj5",
@@ -140,6 +140,13 @@
    "loc": "fridge",
    "added": "2026-10-18",
    "src": "kaji-quest"
+  },
+  {
+   "id": "pzfa5b",
+   "name": "かぼちゃ",
+   "loc": "fridge",
+   "added": "2026-10-18",
+   "src": "manual"
   }
  ],
  "staples": {
