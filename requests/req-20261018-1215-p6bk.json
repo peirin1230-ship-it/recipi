@@ -1,0 +1,19 @@
+{
+ "id": "req-20261018-1215-p6bk",
+ "ts": "2026-10-18T12:15:58+09:00",
+ "type": "dinner",
+ "time_budget": 0,
+ "servings": {
+  "adults": 2,
+  "kids": 1
+ },
+ "dishes": "main",
+ "mood": [],
+ "use_up": [],
+ "exclude": [],
+ "note": "",
+ "mode": "pick",
+ "status": "pending",
+ "error": null,
+ "result": null
+}
