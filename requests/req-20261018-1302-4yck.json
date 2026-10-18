@@ -1,0 +1,23 @@
+{
+ "id": "req-20261018-1302-4yck",
+ "ts": "2026-10-18T13:02:38+09:00",
+ "type": "recipe_detail",
+ "time_budget": 0,
+ "servings": {
+  "adults": 2,
+  "kids": 1
+ },
+ "dishes": "main",
+ "mood": [],
+ "use_up": [
+  "さつまいも"
+ ],
+ "exclude": [],
+ "note": "低温調理器具",
+ "mode": "pick",
+ "parent": "req-20261018-1226-h2hr",
+ "alternative": 0,
+ "status": "pending",
+ "error": null,
+ "result": null
+}
