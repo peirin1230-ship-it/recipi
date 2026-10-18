@@ -13,7 +13,44 @@
  "exclude": [],
  "note": "",
  "mode": "pick",
- "status": "pending",
+ "status": "done",
  "error": null,
- "result": null
+ "result": {
+  "feasible": true,
+  "infeasible_reason": null,
+  "nearest_options": [],
+  "alternatives": [
+   {
+    "title": "豚ひき肉と白菜の重ね蒸し 塩昆布だれ",
+    "minutes": 30,
+    "why": "白菜と豚ひき肉をフライパンで蒸し煮にして、塩昆布の旨みで塩分を抑える。子どもの分は味付け前に取り分けやすい。",
+    "kind": "new"
+   },
+   {
+    "title": "せせりとピーマンの魚焼きグリル焼き",
+    "minutes": 25,
+    "why": "せせりの脂をグリルで落として香ばしく焼く。ピーマンも同じグリルで一緒に焼ける。",
+    "kind": "new"
+   },
+   {
+    "title": "さつまいもと豚肉の味噌バター煮",
+    "minutes": 35,
+    "why": "さつまいもの甘さと豚肉、バターの組み合わせ。最近多い鶏むねと違い、煮込みで主材料も変わる。",
+    "kind": "new"
+   }
+  ],
+  "recipe_id": null,
+  "recipe": null,
+  "model": "claude-code",
+  "prompt_version": 10,
+  "tokens": {
+   "input": 0,
+   "output": 0,
+   "cache_read": 0,
+   "cache_write": 0
+  },
+  "cost_usd": 0.0,
+  "seconds": 0
+ },
+ "finished": "2026-10-18T12:16:42+09:00"
 }
