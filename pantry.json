@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-18T19:30:37+09:00",
+ "updated": "2026-10-18T19:30:47+09:00",
  "items": [
   {
    "id": "pxqdj5",
@@ -48,13 +48,6 @@
    "name": "ごぼう",
    "loc": "fridge",
    "added": "2026-10-10",
-   "src": "manual"
-  },
-  {
-   "id": "pkcupe",
-   "name": "きゅうり",
-   "loc": "fridge",
-   "added": "2026-10-11",
    "src": "manual"
   },
   {
