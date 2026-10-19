@@ -3,7 +3,7 @@ id: r-20261013-kabocha-to-tofu-no-chawanmushi
 title: かぼちゃと豆腐の茶碗蒸し
 version: 1
 supersedes: null
-status: draft
+status: tried
 created: '2026-10-13'
 request: req-20261013-1355-wey7
 generated_by: {model: claude-code, prompt_version: 8}
@@ -272,4 +272,4 @@ detail: full
 - フライパンの湯は冷めてから捨てる
 
 ## 作ったときのメモ
-
+- 2026-10-19 ・ 54 分（見込み 36）・ R 73 ・ F 4 ・ そのまま ・ 気づき: 蒸す作業がうまくいかなかった。フライパンよりもボールの高さがあり難しかった
