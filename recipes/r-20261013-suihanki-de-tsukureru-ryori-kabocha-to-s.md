@@ -147,7 +147,7 @@ cleanup:
   hand: [rice-cooker]
   note: 内釜は米粒が付く前にぬるま湯に浸ける
 photo: photos/r-20261013-suihanki-de-tsukureru-ryori-kabocha-to-s/20261014-1.jpg
-stats: {cooked: 1, r_avg: 71, f_avg: 3.7, last: '2026-10-14'}
+stats: {cooked: 2, r_avg: 76, f_avg: 4.3, last: '2026-10-19'}
 detail: full
 changes:
 - {what: かぼちゃの約 1/3 をぶんぶんチョッパーで米粒くらいに刻み、米に混ぜて炊く。残りの 2/3 は 1.5cm 角で上にのせる, why: 甘さと色がご飯全体に回り、子どもも食べやすい。ペーストにすると炊く水がどろっとして炊きむらや底の焦げが出るので、刻む程度にとどめる}

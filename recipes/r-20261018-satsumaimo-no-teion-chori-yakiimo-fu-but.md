@@ -125,7 +125,7 @@ cleanup:
   hand: [fp26, pot20]
   note: 袋は洗って干せば再利用できる。低温調理器は水けをふいて片付ける。
 photo: photos/r-20261018-satsumaimo-no-teion-chori-yakiimo-fu-but/20261018-1.jpg
-stats: {cooked: 1, r_avg: 68, f_avg: 4.0, last: '2026-10-18'}
+stats: {cooked: 1, r_avg: 68, f_avg: 3.3, last: '2026-10-18'}
 detail: full
 ---
 

@@ -1,17 +1,22 @@
 # profile/learned.yml — nightly-learn（scripts/learn.py）が logs/ から生成する。手で直さない（直すなら profile/overrides.yml）。
-updated: '2026-10-19'
+updated: '2026-10-20'
 window_days: 90
-n_logs: 8
-last_log_id: efv1n7801gsd
-speed_factor: {overall: 1.06, prep: 1.48, heat: 0.97, serve: 0.91}
-likes: []
+n_logs: 11
+last_log_id: 8bax655hqw9t
+speed_factor: {overall: 1.08, prep: 1.65, heat: 0.86, serve: 0.86}
+likes:
+- {key: 炊き込みご飯, score: 0.33, n: 3}
+- {key: 米, score: 0.33, n: 3}
+- {key: かぼちゃ, score: 0.27, n: 3}
+- {key: 子ども取り分け, score: 0.22, n: 4}
 dislikes:
 - {key: 作り置き, score: -0.4, n: 3}
+- {key: 仕込み, score: -0.27, n: 3}
 partner:
-  likes: [炊き込みご飯, 子ども取り分け, 米]
+  likes: [炊飯器, しらす, チョッパー, 炊き込みご飯, 米, かぼちゃ, 子ども取り分け]
   dislikes: [なす, 豆腐, 副菜, レンジ, 野菜]
 kid:
-  eats_well: [炊き込みご飯, 子ども取り分け, 米]
+  eats_well: [子ども取り分け, 炊き込みご飯, 米, 仕込み, 炊飯器, かぼちゃ, しらす, チョッパー]
   refuses: []
   works_if: []
 equipment_notes: [レンジだとにんじんが固く残るので、フライパンで炒める]
@@ -30,13 +35,22 @@ quality:
   time_err_median: 0.29
   new_ratio: 1.0
   adoption: 0.38
-  prompt_versions: {'3': 2, '6': 1, '1': 2, '4': 1, '2': 1, '5': 1}
+  prompt_versions: {'6': 1, '1': 2, '2': 1, '4': 1, '3': 2, '5': 1}
 - week: 2026-W42
   generated: 7
   cooked: 5
-  f_avg: 3.16
+  f_avg: 3.02
   r_avg: 64
   time_err_median: 0.62
   new_ratio: 1.0
   adoption: 0.71
   prompt_versions: {'8': 7}
+- week: 2026-W43
+  generated: 0
+  cooked: 3
+  f_avg: 4.1
+  r_avg: 69
+  time_err_median: 0.5
+  new_ratio: 0.67
+  adoption: null
+  prompt_versions: {}
