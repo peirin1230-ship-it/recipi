@@ -3,7 +3,7 @@ id: r-20261009-kamaboko-to-tamago-no-milk-soup
 title: かまぼこと卵のミルクスープ
 version: 1
 supersedes: null
-status: draft
+status: tried
 created: '2026-10-09'
 request: req-20261009-2021-lazp
 generated_by: {model: claude-code, prompt_version: 1}
@@ -180,4 +180,4 @@ detail: full
 - 鍋は牛乳の膜がつくので、使い終わったら先に水に浸けておく
 
 ## 作ったときのメモ
-
+- 2026-10-19 ・ 54 分（見込み 20）・ R 53 ・ F 4.5 ・ そのまま ・ 📷 20261019-1.jpg
