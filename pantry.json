@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-19T20:44:01+09:00",
+ "updated": "2026-10-19T21:29:34+09:00",
  "items": [
   {
    "id": "pxqdj5",
@@ -112,6 +112,20 @@
    "loc": "pantry",
    "added": "2026-10-18",
    "src": "manual"
+  },
+  {
+   "id": "puiz59",
+   "name": "納豆",
+   "loc": "fridge",
+   "added": "2026-10-19",
+   "src": "kaji-quest"
+  },
+  {
+   "id": "pn7bek",
+   "name": "うずらの卵",
+   "loc": "fridge",
+   "added": "2026-10-19",
+   "src": "kaji-quest"
   }
  ],
  "staples": {
@@ -165,6 +179,9 @@
   "mv23xlv9bzro",
   "mv7y84fhagyz",
   "mv81fv3rz2lf",
-  "mvd9501omzgb"
+  "mvd9501omzgb",
+  "mvf28jj18wg6",
+  "mvf2e3ocwctv",
+  "mvf8e7cid80k"
  ]
 }
