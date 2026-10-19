@@ -38,7 +38,7 @@ def build_digest(week: str, *, use_llm: bool, mock: bool, L: llmmod.LLM | None =
     cooked = []
     for e in logs:
         r = ctx.recipes.get(e.get("recipe_id") or "") or {}
-        cooked.append({"date": e.get("date"), "title": r.get("title") or e.get("recipe_id"), "r": e.get("r_score"), "f": e.get("f_score"),
+        cooked.append({"date": e.get("date"), "title": r.get("title") or e.get("title") or e.get("recipe_id"), "r": e.get("r_score"), "f": e.get("f_score"),
                        "minutes": e.get("actual_minutes"), "photo": e.get("photo"), "learned": e.get("learned")})
     learned = ctx.learned
     pantry = ctx.pantry_for_prompt()

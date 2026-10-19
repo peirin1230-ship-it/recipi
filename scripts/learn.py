@@ -272,7 +272,7 @@ class Learner:
             meta = self.recipes.get(e.get("recipe_id") or "") or {}
             for key in ("deviation", "learned", "photo_note"):
                 if e.get(key):
-                    texts.append({"date": e.get("date"), "recipe": meta.get("title") or e.get("recipe_id"), "kind": key, "text": e[key],
+                    texts.append({"date": e.get("date"), "recipe": meta.get("title") or e.get("title") or e.get("recipe_id"), "kind": key, "text": e[key],
                                   "r": e.get("r_score"), "f": e.get("f_score"), "kid": (e.get("ratings") or {}).get("kid")})
         return texts
 

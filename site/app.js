@@ -107,6 +107,11 @@ const parseLine = l => { try { const e = JSON.parse(l); return e && typeof e ===
 const appendLine = (text, line) => { const base = (text || '').replace(/\s+$/, ''); return (base ? base + '\n' : '') + line + '\n'; };
 function allLogs() { return [...state.months.keys()].sort().flatMap(ym => state.months.get(ym).lines.map(parseLine).filter(Boolean)); }
 const logsOf = rid => allLogs().filter(e => e.recipe_id === rid);
+// 記録の料理名。レシピを消しても記録は残るので、記録に書いた名前（title）を使う。どちらも無ければ id
+function logTitleHTML(e) {
+  const r = recipeById(e.recipe_id);
+  return r ? esc(r.title) : `${esc(e.title || e.recipe_id)} <span class="badge">削除済み</span>`;
+}
 const logKey = e => `${e.date || ''}${e.ts || ''}`;
 async function fetchMonth(ym) { const f = await gh.getFile(`logs/${ym}.jsonl`); return { sha: f.sha, lines: (f.text || '').split('\n').filter(l => l.trim()) }; }
 async function loadLogs() {
@@ -711,7 +716,7 @@ async function saveRecord() {
   if (!rec || !requireToken()) return; syncRecordInputs();
   const r = rec.recipe; const p = nowParts(); const date = p.date;
   const ratings = { me: rec.me, partner: rec.partnerLater ? null : rec.partner, kid: rec.kid };
-  const entry = { id: uid(12), date, ts: p.iso, recipe_id: r.id, version: +r.version || 1, request_id: rec.request ? rec.request.id : (r.request || null), type: r.type || (rec.request && rec.request.type) || 'dinner',
+  const entry = { id: uid(12), date, ts: p.iso, recipe_id: r.id, title: r.title || null, version: +r.version || 1, request_id: rec.request ? rec.request.id : (r.request || null), type: r.type || (rec.request && rec.request.type) || 'dinner',
     planned_minutes: rec.planned, actual_minutes: rec.actual, fidelity: rec.fidelity, deviation: (rec.fidelity === 'minor' || rec.fidelity === 'major') && rec.deviation ? rec.deviation : null, finish: rec.finish, ratings, photo: null, learned: rec.learned || null,
     pantry_used: rec.pantry.map(x => x.item.id), r_score: rScore(rec.planned, rec.actual, rec.fidelity, rec.finish), f_score: fScore(ratings) };
   if (rec.step_minutes) entry.step_minutes = rec.step_minutes;
@@ -1091,9 +1096,9 @@ function renderWeek() {
     const ctl = ed === 'partner' ? stars('later-star', 0, `data-log="${esc(e.id)}" data-date="${esc(e.date)}"`)
       : ed === 'kid' ? `<span class="seg">${['all', 'half', 'little', 'none', 'absent'].map(k => `<button type="button" class="tiny-btn" data-act="later-kid" data-log="${esc(e.id)}" data-date="${esc(e.date)}" data-v="${k}">${KID_JA[k]}</button>`).join('')}</span>`
       : need.map(f => `<button type="button" class="ghost small" data-act="later-edit" data-id="${esc(e.id)}" data-field="${f}">${f === 'partner' ? 'パートナー' : '子ども'}の評価を入れる</button>`).join('');
-    return `<div class="later"><div class="t">${esc(r ? r.title : e.recipe_id)}<small>${jaDate(e.date)}</small></div><div class="ops">${ctl}</div></div>`; }).join('') : '<p class="empty">無し</p>'}
+    return `<div class="later"><div class="t">${logTitleHTML(e)}<small>${jaDate(e.date)}</small></div><div class="ops">${ctl}</div></div>`; }).join('') : '<p class="empty">無し</p>'}
   <h3 class="group">写真がない記録 ${noPhoto.length} 件</h3>${noPhoto.length ? `<p class="note">あとからでも足せる（30 日以内。古い物はレシピの「作ったときのメモ」から）</p>` + noPhoto.map(e => { const r = recipeById(e.recipe_id);
-    return `<div class="later"><div class="t">${esc(r ? r.title : e.recipe_id)}<small>${jaDate(e.date)}</small></div><div class="ops">${latePhotoHTML(e, 'small')}</div></div>`; }).join('') : '<p class="empty">無し</p>'}
+    return `<div class="later"><div class="t">${logTitleHTML(e)}<small>${jaDate(e.date)}</small></div><div class="ops">${latePhotoHTML(e, 'small')}</div></div>`; }).join('') : '<p class="empty">無し</p>'}
   <h3 class="group">今月</h3><div class="kv"><b>API 費用</b><span>${state.cost == null ? '—' : `$${state.cost.toFixed(2)}`}${budget ? ` ／ 上限 $${budget}` : ''}</span></div>`;
   if ((L.standards || []).length || (L.needs_revision || []).length || (L.retired || []).length) h += `<h3 class="group">学習の結果${L.updated ? ` <span class="sub">${esc(String(L.updated))}</span>` : ''}</h3><div class="kv">${(L.standards || []).length ? `<b>定番</b><span>${named(L.standards)}</span>` : ''}${(L.needs_revision || []).length ? `<b>改訂待ち</b><span>${named(L.needs_revision)}</span>` : ''}${(L.retired || []).length ? `<b>封印</b><span>${named(L.retired)}</span>` : ''}</div>`;
   if (digest) { const props = digest.meta && (digest.meta.proposals || digest.meta.next_week || digest.meta.suggestions);

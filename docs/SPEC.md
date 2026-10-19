@@ -374,6 +374,7 @@ detail: full                           # full / compact（定番になると com
   "date": "2026-10-08",
   "ts": "2026-10-08T19:05:40+09:00",
   "recipe_id": "r-20261008-torimomo-teriyaki",
+  "title": "鶏もも肉の照り焼き",
   "version": 1,
   "request_id": "req-20261008-1712",
   "type": "dinner",
@@ -394,6 +395,7 @@ detail: full                           # full / compact（定番になると com
 
 | 項目 | 値 | 入力 |
 |------|----|------|
+| `title` | 記録したときのレシピの料理名。レシピを削除しても記録には名前が残る（ページは「削除済み」を付けて出す） | 自動 |
 | `planned_minutes` / `actual_minutes` | レシピの見込み／調理モードの開始〜「できた」の実測。手で直せる | 自動 |
 | `fidelity` | `exact`（そのまま）/ `minor`（少し変えた）/ `major`（かなり変えた） | 1 タップ |
 | `deviation` | 変えた点 1 行。`minor` / `major` のとき | 任意 |

@@ -25,7 +25,7 @@ async function setup(browser, viewport) {
     if (req.method() === 'POST' && url.endsWith('/dispatches')) { puts.push({ url, body: JSON.parse(req.postData()) }); return route.fulfill({ status: 204, body: '' }); }
     if (url.includes('/contents/pantry.json')) return route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ sha: 'p1', content: store['pantry.json'] || b64(pantry) }) });
     if (url.includes('/contents/logs/2026/10.jsonl')) {
-      const line = JSON.stringify({ id: 'abcabcabcabc', date: '2026-10-06', ts: '2026-10-06T19:05:40+09:00', recipe_id: 'r-20261008-torimomo-teriyaki', version: 1, request_id: null, type: 'dinner', planned_minutes: 18, actual_minutes: 22, fidelity: 'minor', deviation: '醤油を減らした', finish: 4, ratings: { me: 4, partner: null, kid: 'all' }, photo: null, learned: '皮目は 2 分半で十分', pantry_used: [], r_score: 73, f_score: 4.5 });
+      const line = JSON.stringify({ id: 'abcabcabcabc', date: '2026-10-06', ts: '2026-10-06T19:05:40+09:00', recipe_id: 'r-20261008-torimomo-teriyaki', title: '記録に残した照り焼きの名前', version: 1, request_id: null, type: 'dinner', planned_minutes: 18, actual_minutes: 22, fidelity: 'minor', deviation: '醤油を減らした', finish: 4, ratings: { me: 4, partner: null, kid: 'all' }, photo: null, learned: '皮目は 2 分半で十分', pantry_used: [], r_score: 73, f_score: 4.5 });
       return route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ sha: 'l1', content: store['logs/2026/10.jsonl'] || b64(line + '\nnot json\n') }) });
     }
     return route.fulfill({ status: 404, contentType: 'application/json', body: '{"message":"Not Found"}' });
@@ -173,6 +173,7 @@ async function setup(browser, viewport) {
     const logText = logPut ? Buffer.from(logPut.body.content, 'base64').toString('utf8') : '';
     const lines = logText.trim().split('\n'); const last = JSON.parse(lines[lines.length - 1]);
     assert(lines.length === 3 && lines[1] === 'not json', 'existing lines kept (including the malformed one), new line appended');
+    assert(last.title && last.title.includes('鶏もも肉の照り焼き'), `log line keeps the recipe title (survives a later delete): ${last.title}`);
     assert(last.recipe_id === 'r-20261008-torimomo-teriyaki' && last.planned_minutes === 18 && last.actual_minutes === 22 && last.fidelity === 'minor' && last.deviation === '醤油を減らした' && last.finish === 4 && last.ratings.me === 4 && last.ratings.partner === 5 && last.ratings.kid === 'all' && last.learned === '皮目は 2 分半' && last.id.length === 12 && /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\+09:00$/.test(last.ts) && last.pantry_used.length === 2, `log line matches contract: ${JSON.stringify(last)}`);
     assert(last.r_score === Math.round(40 * (1 - 4 / 18) + 20 + 22.5) && last.f_score === 4.7, `R=${last.r_score} (expected ${Math.round(40 * (1 - 4 / 18) + 20 + 22.5)}), F=${last.f_score} (expected 4.7)`);
     const memoPut = puts.slice(before).find(p => p.url.includes('/contents/recipes/'));
@@ -223,6 +224,7 @@ async function setup(browser, viewport) {
     assert(del && del.url.includes('/contents/recipes/r-20261008-torimomo-teriyaki.md') && del.body.sha === 'r1' && !del.body.message.includes('[skip ci]') && del.body.message.includes('レシピを削除'), `DELETE recipes/<id>.md without [skip ci] (listed → rebuild): ${del && del.body.message}`);
     assert(await page.$$eval('#list .lrow', r => r.length) === 0 && await page.evaluate(() => JSON.parse(localStorage.getItem('recipi.list')).del.includes('r-20261008-torimomo-teriyaki')), 'deleted recipe leaves the list on this device (overlay del)');
     assert(await page.$eval('#recipe', e => e.textContent.includes('まだレシピがない')), 'current recipe cleared when deleted');
+    assert(await page.$$eval('#week .later .t', ts => ts.some(t => t.textContent.includes('記録に残した照り焼きの名前') && t.textContent.includes('削除済み')) && !ts.some(t => t.textContent.includes('r-20261008-torimomo-teriyaki'))), 'a record of a deleted recipe shows the title saved in the log with 削除済み, not the id');
     // 追加: 注文の結果にあるが同梱の一覧に無いレシピ → 「一覧に追加」→ 端末の一覧に出て、front matter に listed: が付く（[skip ci] 無し）
     const newRecipe = { id: 'r-20261009-test-new', title: 'テスト用の新しい一皿', status: 'draft', created: '2026-10-09', version: 1, type: 'dinner', time: { planned: 20, budget: 20, active: 12 }, servings: { adults: 2, kids: 1 }, dishes: [{ name: 'テスト', role: 'main' }], equipment: [], tags: ['テスト'], ingredients: [{ name: '卵', qty: 2, unit: '個', for: 'テスト' }], steps: [{ n: 1, dish: 'テスト', title: '焼く', minutes: 5, kind: 'heat', text: '焼く', cue: '色づく' }], timeline: [{ minute: 0, lane: 'hands', text: '焼く' }], memo: [] };
     mock.recipe = { id: newRecipe.id, text: `---\nid: ${newRecipe.id}\ntitle: ${newRecipe.title}\nstatus: draft\ncreated: 2026-10-09\n---\n\n# ${newRecipe.title}\n` };
