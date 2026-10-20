@@ -1,0 +1,24 @@
+{
+ "id": "req-20261020-1854-ebvl",
+ "ts": "2026-10-20T18:54:23+09:00",
+ "type": "recipe_detail",
+ "time_budget": 0,
+ "servings": {
+  "adults": 2,
+  "kids": 1
+ },
+ "dishes": "main",
+ "mood": [],
+ "use_up": [
+  "うずらの卵",
+  "白菜"
+ ],
+ "exclude": [],
+ "note": "",
+ "mode": "pick",
+ "parent": "req-20261020-1849-m4b1",
+ "alternative": 0,
+ "status": "pending",
+ "error": null,
+ "result": null
+}
