@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-19T21:29:34+09:00",
+ "updated": "2026-10-21T06:38:48+09:00",
  "items": [
   {
    "id": "pxqdj5",
@@ -72,20 +72,6 @@
    "src": "kaji-quest"
   },
   {
-   "id": "p9c5yy",
-   "name": "白菜",
-   "loc": "fridge",
-   "added": "2026-10-18",
-   "src": "kaji-quest"
-  },
-  {
-   "id": "py9ps7",
-   "name": "豚肉",
-   "loc": "fridge",
-   "added": "2026-10-18",
-   "src": "kaji-quest"
-  },
-  {
    "id": "ptfgfj",
    "name": "せせり",
    "loc": "fridge",
@@ -116,13 +102,6 @@
   {
    "id": "puiz59",
    "name": "納豆",
-   "loc": "fridge",
-   "added": "2026-10-19",
-   "src": "kaji-quest"
-  },
-  {
-   "id": "pn7bek",
-   "name": "うずらの卵",
    "loc": "fridge",
    "added": "2026-10-19",
    "src": "kaji-quest"
