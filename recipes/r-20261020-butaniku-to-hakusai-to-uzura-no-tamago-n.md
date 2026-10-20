@@ -1,5 +1,5 @@
 ---
-listed: "2026-10-20T19:49:46+09:00"
+listed: '2026-10-20T19:49:46+09:00'
 id: r-20261020-butaniku-to-hakusai-to-uzura-no-tamago-n
 title: 豚肉と白菜とうずらの卵の中華風とろみ煮
 version: 1
@@ -192,7 +192,7 @@ cleanup:
   hand: [fp26, pot20]
   note: ゆでた鍋は卵を冷やす間に洗っておく。
 photo: null
-stats: {cooked: 0, r_avg: null, f_avg: null, last: null}
+stats: {cooked: 1, r_avg: 83, f_avg: 4.0, last: '2026-10-21'}
 detail: full
 ---
 
@@ -286,4 +286,5 @@ detail: full
 - ゆでた鍋は卵を冷やす間に洗っておく。
 
 ## 作ったときのメモ
+
 - 2026-10-21 ・ 32 分（見込み 42）・ R 83 ・ F 4 ・ そのまま ・ 気づき: 工程と材料が矛盾？

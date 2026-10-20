@@ -1,14 +1,14 @@
 # profile/learned.yml — nightly-learn（scripts/learn.py）が logs/ から生成する。手で直さない（直すなら profile/overrides.yml）。
-updated: '2026-10-20'
+updated: '2026-10-21'
 window_days: 90
-n_logs: 11
-last_log_id: 8bax655hqw9t
-speed_factor: {overall: 1.08, prep: 1.65, heat: 0.86, serve: 0.86}
+n_logs: 12
+last_log_id: o8pbv4xouyp9
+speed_factor: {overall: 1.06, prep: 1.37, heat: 0.85, serve: 0.86}
 likes:
 - {key: 炊き込みご飯, score: 0.33, n: 3}
 - {key: 米, score: 0.33, n: 3}
 - {key: かぼちゃ, score: 0.27, n: 3}
-- {key: 子ども取り分け, score: 0.22, n: 4}
+- {key: 子ども取り分け, score: 0.24, n: 5}
 dislikes:
 - {key: 作り置き, score: -0.4, n: 3}
 - {key: 仕込み, score: -0.27, n: 3}
@@ -35,7 +35,7 @@ quality:
   time_err_median: 0.29
   new_ratio: 1.0
   adoption: 0.38
-  prompt_versions: {'6': 1, '1': 2, '2': 1, '4': 1, '3': 2, '5': 1}
+  prompt_versions: {'3': 2, '6': 1, '1': 2, '4': 1, '2': 1, '5': 1}
 - week: 2026-W42
   generated: 7
   cooked: 5
@@ -47,10 +47,10 @@ quality:
   prompt_versions: {'8': 7}
 - week: 2026-W43
   generated: 0
-  cooked: 3
-  f_avg: 4.1
-  r_avg: 69
+  cooked: 4
+  f_avg: 4.08
+  r_avg: 72
   time_err_median: 0.5
-  new_ratio: 0.67
+  new_ratio: 0.75
   adoption: null
   prompt_versions: {}
