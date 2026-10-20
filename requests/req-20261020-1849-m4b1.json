@@ -1,0 +1,22 @@
+{
+ "id": "req-20261020-1849-m4b1",
+ "ts": "2026-10-20T18:49:19+09:00",
+ "type": "dinner",
+ "time_budget": 0,
+ "servings": {
+  "adults": 2,
+  "kids": 1
+ },
+ "dishes": "main",
+ "mood": [],
+ "use_up": [
+  "うずらの卵",
+  "白菜"
+ ],
+ "exclude": [],
+ "note": "",
+ "mode": "pick",
+ "status": "pending",
+ "error": null,
+ "result": null
+}
