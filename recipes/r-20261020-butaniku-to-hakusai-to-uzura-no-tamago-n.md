@@ -1,4 +1,5 @@
 ---
+listed: "2026-10-20T19:49:46+09:00"
 id: r-20261020-butaniku-to-hakusai-to-uzura-no-tamago-n
 title: 豚肉と白菜とうずらの卵の中華風とろみ煮
 version: 1
