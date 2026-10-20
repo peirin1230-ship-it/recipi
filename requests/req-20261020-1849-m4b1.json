@@ -16,7 +16,44 @@
  "exclude": [],
  "note": "",
  "mode": "pick",
- "status": "pending",
+ "status": "done",
  "error": null,
- "result": null
+ "result": {
+  "feasible": true,
+  "infeasible_reason": null,
+  "nearest_options": [],
+  "alternatives": [
+   {
+    "title": "豚肉と白菜とうずらの卵の中華風とろみ煮",
+    "minutes": 35,
+    "why": "白菜とうずらの卵を一度に使い切れる、鍋 1 つの煮物。子どもの分は取り分けてから味付け。",
+    "kind": "new"
+   },
+   {
+    "title": "白菜とコーンのミルクグラタン（トースター）うずらの卵のせ",
+    "minutes": 40,
+    "why": "白菜を牛乳で蒸し煮にしてトースターで焼き目を付ける。うずらの卵は中まで固めて 4 等分に。",
+    "kind": "new"
+   },
+   {
+    "title": "豚肉とうずらの卵の低温調理角煮風 白菜添え",
+    "minutes": 150,
+    "why": "時間無制限を活かし、低温調理器で豚肉をしっとり。煮汁で白菜とうずらの卵も味が入る。",
+    "kind": "new"
+   }
+  ],
+  "recipe_id": null,
+  "recipe": null,
+  "model": "claude-code",
+  "prompt_version": 10,
+  "tokens": {
+   "input": 0,
+   "output": 0,
+   "cache_read": 0,
+   "cache_write": 0
+  },
+  "cost_usd": 0.0,
+  "seconds": 0
+ },
+ "finished": "2026-10-20T18:49:59+09:00"
 }
