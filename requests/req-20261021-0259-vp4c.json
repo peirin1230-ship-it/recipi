@@ -15,7 +15,44 @@
  "exclude": [],
  "note": "",
  "mode": "pick",
- "status": "pending",
+ "status": "done",
  "error": null,
- "result": null
+ "result": {
+  "feasible": true,
+  "infeasible_reason": null,
+  "nearest_options": [],
+  "alternatives": [
+   {
+    "title": "せせりと白菜の塩昆布炊き込みご飯",
+    "minutes": 70,
+    "why": "白菜を刻んで炊飯器へ。炊き込みご飯は家族の好評枠で、子どもの取り分けもしやすい。",
+    "kind": "new"
+   },
+   {
+    "title": "白菜とエリンギのツナお好み焼き風",
+    "minutes": 30,
+    "why": "白菜を細かく刻んで卵と焼く。フライパン1つで手づかみしやすい形になる。",
+    "kind": "new"
+   },
+   {
+    "title": "豚肉と白菜のしょうが炒め ごま油風味",
+    "minutes": 25,
+    "why": "白菜をたっぷり使う炒め物。豚肉は片栗粉をまぶして柔らかく仕上げる。",
+    "kind": "new"
+   }
+  ],
+  "recipe_id": null,
+  "recipe": null,
+  "model": "claude-code",
+  "prompt_version": 10,
+  "tokens": {
+   "input": 0,
+   "output": 0,
+   "cache_read": 0,
+   "cache_write": 0
+  },
+  "cost_usd": 0.0,
+  "seconds": 0
+ },
+ "finished": "2026-10-21T03:00:35+09:00"
 }
