@@ -1,4 +1,5 @@
 ---
+listed: "2026-10-23T01:14:45+09:00"
 id: r-20261023-banana-tamago-renji-mushipan-fu
 title: バナナと卵のレンジ蒸しパン風
 version: 1
