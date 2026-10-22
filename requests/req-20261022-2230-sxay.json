@@ -15,7 +15,44 @@
  "exclude": [],
  "note": "",
  "mode": "pick",
- "status": "pending",
+ "status": "done",
  "error": null,
- "result": null
+ "result": {
+  "feasible": true,
+  "infeasible_reason": null,
+  "nearest_options": [],
+  "alternatives": [
+   {
+    "title": "バナナと卵のレンジ蒸しパン風",
+    "minutes": 10,
+    "why": "バナナを1本使い切れる。卵と牛乳、片栗粉をレンジで固めるだけで火を使わず、手づかみでも食べやすい。",
+    "kind": "new"
+   },
+   {
+    "title": "バナナ入りミルクがゆ",
+    "minutes": 15,
+    "why": "熟れたバナナの甘さで砂糖いらず。米と牛乳でやわらかく、子どもも食べやすい朝の一品。",
+    "kind": "new"
+   },
+   {
+    "title": "豆腐とバナナのなめらかヨーグルトボウル",
+    "minutes": 5,
+    "why": "ミキサーで混ぜるだけで火も包丁もほぼ不要。バナナと豆腐のたんぱく質で朝に軽く食べられる。",
+    "kind": "new"
+   }
+  ],
+  "recipe_id": null,
+  "recipe": null,
+  "model": "claude-code",
+  "prompt_version": 10,
+  "tokens": {
+   "input": 0,
+   "output": 0,
+   "cache_read": 0,
+   "cache_write": 0
+  },
+  "cost_usd": 0.0,
+  "seconds": 0
+ },
+ "finished": "2026-10-22T22:31:26+09:00"
 }
