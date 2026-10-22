@@ -1,0 +1,23 @@
+{
+ "id": "req-20261023-0102-l4ia",
+ "ts": "2026-10-23T01:02:18+09:00",
+ "type": "recipe_detail",
+ "time_budget": 0,
+ "servings": {
+  "adults": 2,
+  "kids": 1
+ },
+ "dishes": "main+side",
+ "mood": [],
+ "use_up": [
+  "バナナ"
+ ],
+ "exclude": [],
+ "note": "",
+ "mode": "pick",
+ "parent": "req-20261022-2230-sxay",
+ "alternative": 0,
+ "status": "pending",
+ "error": null,
+ "result": null
+}
