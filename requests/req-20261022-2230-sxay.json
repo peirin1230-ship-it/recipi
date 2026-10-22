@@ -1,0 +1,21 @@
+{
+ "id": "req-20261022-2230-sxay",
+ "ts": "2026-10-22T22:30:39+09:00",
+ "type": "breakfast",
+ "time_budget": 0,
+ "servings": {
+  "adults": 2,
+  "kids": 1
+ },
+ "dishes": "main+side",
+ "mood": [],
+ "use_up": [
+  "バナナ"
+ ],
+ "exclude": [],
+ "note": "",
+ "mode": "pick",
+ "status": "pending",
+ "error": null,
+ "result": null
+}
