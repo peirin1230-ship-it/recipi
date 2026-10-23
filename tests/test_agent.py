@@ -90,8 +90,14 @@ def test_suggest_items_mock(root):
     req = common.read_json("requests/req-t-suggest.json")
     names = [i["name"] for i in req["result"]["items"]]
     assert "鶏むね肉" in names and "さつまいも" in names and req["result"]["note"]
-    assert all(i["priority"] in ("main", "stock", "kid", "season") for i in req["result"]["items"])
-    assert "買い足す" in agent.context_text("req-t-suggest")
+    assert all(i["priority"] in ("main", "new", "stock", "kid", "season") for i in req["result"]["items"])
+    by = {i["name"]: i for i in req["result"]["items"]}
+    # 新しいレシピ用: 一覧にある料理（鶏もも肉の照り焼き）は外し、一覧に無い料理だけ残す
+    assert by["鮭"]["priority"] == "new" and by["鮭"]["enables"] == ["鮭のちゃんちゃん焼き"]
+    # 挙げた料理が全部一覧にある物は「新しいレシピ」にしない
+    assert by["小松菜"]["priority"] == "main"
+    text = agent.context_text("req-t-suggest")
+    assert "買い足す" in text and "レシピ一覧にある料理" in text and "鶏もも肉の照り焼きと小松菜のおひたし" in text and "priority: new" in text
 
 
 def test_proposed_splits_deleted_and_alternatives(fresh_recipes):

@@ -473,8 +473,17 @@ def action_suggest_items(ctx: Context, L: llmmod.LLM, req: dict) -> dict:
     pantry = ctx.pantry_for_prompt()
     none_staples = [k for k, v in (ctx.pantry.get("staples") or {}).items() if v == "none"]
     seasonal = [it["name"] for it in ctx.ingredients.items if common.now().month in (it.get("season") or [])]
+    # 一覧にある料理（レシピ名と、その中の料理名）と、消された料理。新しいレシピの提案に同じ料理を出さない
+    known_titles = []
+    for row in ctx.existing():
+        for t in [row.get("title")] + list(row.get("dishes") or []):
+            if t and t not in known_titles:
+                known_titles.append(t)
+    known_titles += [t for t in ctx.proposed(int(ctx.cfg["suggest"].get("no_repeat_proposed_days", 14)))["deleted"] if t not in known_titles]
+    known = {validate.norm_title(t) for t in known_titles}
     text = ("# 在庫\n" + ydump(pantry) + "\n\n# 切らしている調味料・乾物（staples: none）\n" + (ydump(none_staples) or "（無し）") +
             "\n\n# 最近作った物\n" + (ydump(ctx.recent(14)) or "（無し）") + "\n\n# 旬の食材（マスタの season に今月がある物）\n" + (ydump(seasonal) or "（無し）") +
+            "\n\n# レシピ一覧にある料理（priority: new の enables には出さない。これと違う新しい料理を挙げる）\n" + (ydump(known_titles) or "（無し）") +
             f"\n\n# 今日: {common.today()}\n# 注文の一言: {req.get('note') or '（無し）'}")
     blocks = house_blocks(ctx) + [{"type": "text", "text": text}]
     data, _ = L.structured(name="suggest_items", system=system, blocks=blocks, schema=schema.SUGGEST_ITEMS_OUTPUT, effort="medium", max_tokens=6000)
@@ -484,8 +493,13 @@ def action_suggest_items(ctx: Context, L: llmmod.LLM, req: dict) -> dict:
         if not name or name in seen or any(b in name for b in ctx.allergens()):
             continue
         seen.add(name)
-        items.append({"name": name, "qty": it.get("qty"), "reason": it.get("reason", ""), "enables": (it.get("enables") or [])[:3],
-                      "priority": it.get("priority") or "main", "known": bool(ctx.ingredients.get(name))})
+        prio, enables = it.get("priority") or "main", [e for e in (it.get("enables") or []) if e][:3]
+        if prio == "new":   # 一覧にある料理は「新しいレシピ」に数えない。全部が一覧にある物なら、ただの主菜向けに戻す
+            enables = [e for e in enables if validate.norm_title(e) not in known]
+            if not enables:
+                prio, enables = "main", [e for e in (it.get("enables") or []) if e][:3]
+        items.append({"name": name, "qty": it.get("qty"), "reason": it.get("reason", ""), "enables": enables,
+                      "priority": prio, "known": bool(ctx.ingredients.get(name))})
     return {"items": items, "note": (data.get("note") or "").strip(), "feasible": True, "_paths": []}
 
 

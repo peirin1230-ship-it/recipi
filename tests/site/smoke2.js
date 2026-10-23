@@ -20,7 +20,8 @@ const PNG = Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAEklEQVR
     if (req.method() === 'PUT') { const body = JSON.parse(req.postData()); puts.push({ path, body, url }); if (!url.includes('/kaji-quest/')) store[path] = body.content; return route.fulfill({ status: 201, contentType: 'application/json', body: JSON.stringify({ content: { sha: 's' + puts.length } }) }); }
     if (req.method() === 'POST' && url.endsWith('/dispatches')) { puts.push({ path: 'dispatch', body: JSON.parse(req.postData()) }); return route.fulfill({ status: 204, body: '' }); }
     if (path.startsWith('requests/') && store[path]) { const r = JSON.parse(unb64(store[path])); r.status = 'done';
-      if (r.type === 'pantry_photo') r.result = { items: [{ name: 'とりむね', qty: 250, unit: 'g', loc: 'fridge', confidence: 0.9 }, { name: '謎の物', qty: null, unit: null, loc: 'fridge', confidence: 0.3 }], staples: [{ name: 'ごま油', state: 'low' }], cost_usd: 0.03 };
+      if (r.type === 'suggest_items') r.result = { items: [{ name: '鶏むね肉', qty: '600g', reason: '低温調理でサラダチキン', enables: ['サラダチキン'], priority: 'main' }, { name: '鮭', qty: '2 切れ', reason: '鮭のちゃんちゃん焼きを作るのに要る', enables: ['鮭のちゃんちゃん焼き'], priority: 'new' }], note: '新しい料理も 1 つ', cost_usd: 0 };
+      else if (r.type === 'pantry_photo') r.result = { items: [{ name: 'とりむね', qty: 250, unit: 'g', loc: 'fridge', confidence: 0.9 }, { name: '謎の物', qty: null, unit: null, loc: 'fridge', confidence: 0.3 }], staples: [{ name: 'ごま油', state: 'low' }], cost_usd: 0.03 };
       else r.result = { ...fixture, recipe_id: 'r-20261009-test', recipe: { ...fixture.recipe, id: 'r-20261009-test', version: 1, status: 'draft', created: '2026-10-09', time: { budget: 20, planned: 18, active: 14, raw_estimate: 18, speed_factor: 1.0 }, photo: null, stats: { cooked: 0 }, detail: 'full', memo: [] }, cost_usd: 0.1 };
       return route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ sha: 'r1', content: b64(JSON.stringify(r)) }) }); }
     if (path === 'pantry.json') return route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ sha: 'p1', content: store['pantry.json'] || b64(pantry) }) });
@@ -104,6 +105,12 @@ const PNG = Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAEklEQVR
   const dp = puts.slice(b5).find(p => p.path === 'pantry.json'); const db = dp && JSON.parse(unb64(dp.body.content));
   assert(db && db.items.length === nItems - 1 && Array.isArray(db.discarded) && db.discarded.length === 0, `なくなった removes the item (${nItems} → ${db && db.items.length}) without a discarded entry`);
   assert(!(await page.$eval('#week', e => /捨てた/.test(e.textContent))), '今週 no longer shows 捨てた');
+  // 5b) 買い足すといい物: 一覧に無い新しいレシピに要る物も、料理名つきで別の欄に出る
+  await page.click('#pantry [data-act="p-suggest"]');
+  await page.waitForFunction(() => document.querySelector('#pantry') && document.querySelector('#pantry').textContent.includes('新しいレシピに'), null, { timeout: 15000 });
+  assert(await page.$eval('#pantry', e => e.textContent.includes('新しいレシピに（一覧に無い料理）') && e.textContent.includes('新しい料理: 鮭のちゃんちゃん焼き') && e.textContent.includes('今週の主菜に')), 'suggestions show a 新しいレシピに group with the new dish names');
+  { const sq = puts.filter(p => p.path.startsWith('requests/')).map(p => JSON.parse(unb64(p.body.content))).find(r => r.type === 'suggest_items'); assert(!!sq, 'suggest_items request written'); }
+  await page.$eval('#pantry .band', e => e.scrollIntoView({ block: 'center' })); await page.waitForTimeout(150); await page.screenshot({ path: `${SHOTS}/suggest-new-375.png` });
   // 6) 調理モードのチェック時刻 → step_minutes（start=10 分前、s0 を 6 分前、s1 を 2 分前にチェック済み → prep 4.0 / wait 4.0）
   // 時計を昼の 12:30 に固定 → 完成時刻で kaji-quest の「昼ごはんを作る」になる
   await page.clock.setFixedTime(new Date('2026-10-13T12:30:00+09:00'));

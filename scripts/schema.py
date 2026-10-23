@@ -186,8 +186,8 @@ SUGGEST_ITEMS_OUTPUT = _obj({
         "name": _s(),                                  # 食材名（data/ingredients.yml の正規化名に寄せる）
         "qty": _s(True),                               # 「300g」「1 束」など。無ければ null
         "reason": _s(),                                # なぜ（一行）
-        "enables": _arr(_s()),                         # これがあれば作れる物（料理名を 1〜3 つ）
-        "priority": {"type": "string", "enum": ["main", "stock", "kid", "season"]},   # main: 今週の主菜になる / stock: 常備すると楽 / kid: 子ども向け / season: 旬
+        "enables": _arr(_s()),                         # これがあれば作れる物（料理名を 1〜3 つ）。new ではレシピ一覧に無い新しい料理名
+        "priority": {"type": "string", "enum": ["main", "new", "stock", "kid", "season"]},   # main: 今週の主菜になる / new: 一覧に無い新しいレシピに要る / stock: 常備すると楽 / kid: 子ども向け / season: 旬
     })),
     "note": _s(),                                      # 全体の一言（60 字以内）
 })

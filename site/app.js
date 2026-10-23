@@ -783,17 +783,17 @@ async function savePantry(mutator, label) {
   state.pantry = { sha: res.sha, data: normalizePantry(JSON.parse(res.text)) };
 }
 // 買い足すといい食材（Generator に在庫・器具・家族・旬から出してもらう）
-const PRIO_JA = { main: '今週の主菜に', stock: '常備すると楽', kid: '子ども向け', season: '旬' };
+const PRIO_JA = { main: '今週の主菜に', new: '新しいレシピに（一覧に無い料理）', stock: '常備すると楽', kid: '子ども向け', season: '旬' };
 function suggestItems() { if (!requireToken()) return; startRequest({ id: newRequestId(), ts: isoNow(), type: 'suggest_items', note: '', status: 'pending', error: null, result: null }); }
 function sgSelected(s) { return ((s.req.result || {}).items || []).filter((_, i) => s.checked[i]); }
 function suggestHTML() {
   const s = state.suggest; const res = s && s.req && s.req.result; const items = res && Array.isArray(res.items) ? res.items : [];
   const btn = `<div class="actions left"><button type="button" class="ghost small" data-act="p-suggest">${ic('bulb')}買い足すといい物を聞く</button></div>`;
   if (!items.length) return btn;
-  const order = ['main', 'kid', 'stock', 'season']; const groups = order.map(p => [p, items.map((it, i) => ({ it, i })).filter(x => (x.it.priority || 'main') === p)]).filter(g => g[1].length);
+  const order = ['main', 'new', 'kid', 'stock', 'season']; const groups = order.map(p => [p, items.map((it, i) => ({ it, i })).filter(x => (x.it.priority || 'main') === p)]).filter(g => g[1].length);
   return btn + `<h3 class="group">買い足すといい物 <span class="sub">${esc(jaShort((s.req.ts || '').slice(0, 10)))}</span><button type="button" class="ghost tiny" data-act="sg-clear" aria-label="消す">${ic('x')}</button></h3>
   ${res.note ? `<p class="sub">${esc(res.note)}</p>` : ''}
-  ${groups.map(([p, rows]) => `<div class="band soon">${PRIO_JA[p] || p}</div>` + rows.map(({ it, i }) => `<label class="sg-row"><input type="checkbox" data-act="sg-chk" data-i="${i}"${s.checked[i] ? ' checked' : ''}><span class="nm">${esc(it.name)}${it.qty ? ` <span class="sub">${esc(it.qty)}</span>` : ''}</span><span class="why">${esc(it.reason || '')}${(it.enables || []).length ? `<br><span class="sub">→ ${it.enables.map(esc).join(' / ')}</span>` : ''}</span></label>`).join('')).join('')}
+  ${groups.map(([p, rows]) => `<div class="band soon">${PRIO_JA[p] || p}</div>` + rows.map(({ it, i }) => `<label class="sg-row"><input type="checkbox" data-act="sg-chk" data-i="${i}"${s.checked[i] ? ' checked' : ''}><span class="nm">${esc(it.name)}${it.qty ? ` <span class="sub">${esc(it.qty)}</span>` : ''}</span><span class="why">${esc(it.reason || '')}${(it.enables || []).length ? `<br><span class="sub">→ ${it.priority === 'new' ? '新しい料理: ' : ''}${it.enables.map(esc).join(' / ')}</span>` : ''}</span></label>`).join('')).join('')}
   <div class="actions left">${kq().push_shopping ? `<button type="button" class="primary small" data-act="sg-push">${ic('cart')}買い物メモへ（kaji-quest）</button>` : ''}<button type="button" class="ghost small" data-act="sg-copy">コピー</button></div>`;
 }
 async function copyText(text) { try { await navigator.clipboard.writeText(text); toast('コピーした'); } catch { toast(text); } }
