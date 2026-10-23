@@ -3,7 +3,136 @@
  "ts": "2026-10-24T08:48:33+09:00",
  "type": "suggest_items",
  "note": "",
- "status": "pending",
+ "status": "done",
  "error": null,
- "result": null
+ "result": {
+  "items": [
+   {
+    "name": "鶏むね肉",
+    "qty": "1枚",
+    "reason": "低温調理器でしっとり。せせりと違い淡白で子どもの取り分けも楽",
+    "enables": [
+     "鶏むね肉の低温調理とかぼちゃのレンジ蒸し",
+     "鶏むね肉の玉ねぎ味噌炒め"
+    ],
+    "priority": "main",
+    "known": true
+   },
+   {
+    "name": "豚こま切れ肉",
+    "qty": "200g",
+    "reason": "玉ねぎ・じゃがいもと合わせて平日25分の主菜になる",
+    "enables": [
+     "豚こまとじゃがいもの味噌炒め",
+     "肉じゃが風うどん"
+    ],
+    "priority": "main",
+    "known": true
+   },
+   {
+    "name": "小松菜",
+    "qty": "1束",
+    "reason": "レンジ1分半で副菜になり、豆腐や卵と相性が良い",
+    "enables": [
+     "小松菜と卵の中華炒め",
+     "小松菜と油揚げの味噌汁"
+    ],
+    "priority": "stock",
+    "known": true
+   },
+   {
+    "name": "にんじん",
+    "qty": "2本",
+    "reason": "スライサーで時短でき、子どもの取り分けにも使いやすい",
+    "enables": [
+     "にんじんしりしりの卵とじ"
+    ],
+    "priority": "stock",
+    "known": true
+   },
+   {
+    "name": "しらす",
+    "qty": "1パック",
+    "reason": "子どもがよく食べる。うどんやご飯に足すだけでたんぱく質が取れる",
+    "enables": [
+     "しらすと小松菜の炊き込みご飯"
+    ],
+    "priority": "kid",
+    "known": true
+   },
+   {
+    "name": "さつまいも",
+    "qty": "2本",
+    "reason": "旬。低温調理で甘くなり、子どもも食べやすい",
+    "enables": [
+     "さつまいもと豚こまの味噌バター炒め"
+    ],
+    "priority": "season",
+    "known": true
+   },
+   {
+    "name": "れんこん",
+    "qty": "1節",
+    "reason": "旬。チョッパーで刻んでつくね風にできる",
+    "enables": [
+     "れんこんのもちもち焼き"
+    ],
+    "priority": "season",
+    "known": true
+   },
+   {
+    "name": "鶏ひき肉",
+    "qty": "200g",
+    "reason": "チョッパーと炊飯器を活かした鶏そぼろ丼を作るのに要る",
+    "enables": [
+     "鶏ひき肉と豆腐のそぼろ丼"
+    ],
+    "priority": "new",
+    "known": true
+   },
+   {
+    "name": "鮭",
+    "qty": "2切れ",
+    "reason": "魚焼きグリルで焼き鮭を作るのに要る（骨は子どもの分で取る）",
+    "enables": [
+     "グリル焼き鮭とかぼちゃの味噌マヨ焼き"
+    ],
+    "priority": "new",
+    "known": true
+   },
+   {
+    "name": "餃子の皮",
+    "qty": "1袋",
+    "reason": "豆腐と玉ねぎ、じゃがいもでトースター焼きのピザ風を作るのに要る",
+    "enables": [
+     "じゃがいもとツナの餃子の皮ピザ"
+    ],
+    "priority": "new",
+    "known": true
+   },
+   {
+    "name": "油揚げ",
+    "qty": "2枚",
+    "reason": "冷凍うどんと玉ねぎで煮込みきつねうどんを作るのに要る",
+    "enables": [
+     "きつねうどん（玉ねぎ入り）"
+    ],
+    "priority": "new",
+    "known": true
+   }
+  ],
+  "note": "鶏むねと小松菜があれば、在庫の豆腐・卵と合わせて平日の主菜と副菜が組める",
+  "feasible": true,
+  "model": "claude-code",
+  "prompt_version": 2,
+  "tokens": {
+   "input": 0,
+   "output": 0,
+   "cache_read": 0,
+   "cache_write": 0
+  },
+  "cost_usd": 0.0,
+  "seconds": 0
+ },
+ "finished": "2026-10-24T08:49:14+09:00"
 }
