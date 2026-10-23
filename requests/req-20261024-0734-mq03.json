@@ -3,7 +3,133 @@
  "ts": "2026-10-24T07:34:54+09:00",
  "type": "suggest_items",
  "note": "",
- "status": "pending",
+ "status": "done",
  "error": null,
- "result": null
+ "result": {
+  "items": [
+   {
+    "name": "鶏むね肉",
+    "qty": "300g 1枚",
+    "reason": "低温調理器でしっとり仕込めて、かぼちゃやじゃがいもと合わせやすい",
+    "enables": [
+     "鶏むねの低温調理とかぼちゃの煮物",
+     "鶏むねとエリンギの炒め物"
+    ],
+    "priority": "main",
+    "known": true
+   },
+   {
+    "name": "鮭",
+    "qty": "2切れ",
+    "reason": "魚焼きグリルで焼くだけの主菜。骨を外せば子どもも食べやすい",
+    "enables": [
+     "鮭のグリルとじゃがいもの味噌汁",
+     "鮭と玉ねぎのバター蒸し"
+    ],
+    "priority": "main",
+    "known": true
+   },
+   {
+    "name": "豚こま切れ肉",
+    "qty": "250g",
+    "reason": "玉ねぎ・じゃがいもと炒めるだけで 25 分以内の主菜になる",
+    "enables": [
+     "豚じゃが風炒め煮",
+     "豚こまと玉ねぎの卵とじ"
+    ],
+    "priority": "main",
+    "known": true
+   },
+   {
+    "name": "しらす",
+    "qty": "1パック",
+    "reason": "家族みんな好きで、かぼちゃやうどんに足すだけで一品になる",
+    "enables": [
+     "かぼちゃとしらすの炊き込みご飯",
+     "しらすの釜玉うどん"
+    ],
+    "priority": "kid",
+    "known": true
+   },
+   {
+    "name": "ブロッコリー",
+    "qty": "1個",
+    "reason": "子どもが手づかみしやすく、ツナ・卵と合わせて副菜が早い",
+    "enables": [
+     "ブロッコリーとツナのマヨ和え",
+     "ブロッコリーと卵の炒め物"
+    ],
+    "priority": "kid",
+    "known": true
+   },
+   {
+    "name": "にんじん",
+    "qty": "2本",
+    "reason": "スライサーで時短でき、子どもの取り分けにも使いやすい",
+    "enables": [
+     "にんじんしりしりの卵とじ",
+     "にんじんとツナのラペ"
+    ],
+    "priority": "stock",
+    "known": true
+   },
+   {
+    "name": "小松菜",
+    "qty": "1束",
+    "reason": "レンジで 1 分半、うどんや卵炒めの青物に便利",
+    "enables": [
+     "小松菜と卵の炒め物",
+     "小松菜とツナの和え物"
+    ],
+    "priority": "stock",
+    "known": true
+   },
+   {
+    "name": "キャベツ",
+    "qty": "1/2玉",
+    "reason": "チョッパーで刻めて、うどん・炒め物・スープに幅広く使える",
+    "enables": [
+     "キャベツとツナの焼きうどん",
+     "キャベツと卵のスープ"
+    ],
+    "priority": "stock",
+    "known": true
+   },
+   {
+    "name": "さつまいも",
+    "qty": "2本",
+    "reason": "旬。低温調理で甘く仕上がり、子どもも食べやすい",
+    "enables": [
+     "さつまいもの低温調理 焼き芋風",
+     "さつまいもと玉ねぎの味噌汁"
+    ],
+    "priority": "season",
+    "known": true
+   },
+   {
+    "name": "れんこん",
+    "qty": "1節",
+    "reason": "旬。スライサーで細切りにしてきんぴらや焼き物に",
+    "enables": [
+     "れんこんと豚こまのきんぴら",
+     "れんこんの卵焼き"
+    ],
+    "priority": "season",
+    "known": true
+   }
+  ],
+  "note": "鶏むねと鮭があれば平日の主菜が組める。旬のさつまいもも一緒に",
+  "feasible": true,
+  "model": "claude-code",
+  "prompt_version": 1,
+  "tokens": {
+   "input": 0,
+   "output": 0,
+   "cache_read": 0,
+   "cache_write": 0
+  },
+  "cost_usd": 0.0,
+  "seconds": 0
+ },
+ "finished": "2026-10-24T07:35:41+09:00"
 }
