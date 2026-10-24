@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-24T11:09:12+09:00",
+ "updated": "2026-10-24T11:25:54+09:00",
  "items": [
   {
    "id": "pxqdj5",
@@ -168,6 +168,13 @@
    "loc": "fridge",
    "added": "2026-10-24",
    "src": "kaji-quest"
+  },
+  {
+   "id": "ps3i2o",
+   "name": "冷凍ホタテ",
+   "loc": "fridge",
+   "added": "2026-10-24",
+   "src": "manual"
   }
  ],
  "staples": {
