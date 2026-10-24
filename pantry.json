@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-24T11:08:40+09:00",
+ "updated": "2026-10-24T11:09:02+09:00",
  "items": [
   {
    "id": "pxqdj5",
@@ -112,6 +112,62 @@
    "loc": "fridge",
    "added": "2026-10-24",
    "src": "manual"
+  },
+  {
+   "id": "p77cum",
+   "name": "豚こま切れ肉",
+   "loc": "fridge",
+   "added": "2026-10-24",
+   "src": "kaji-quest"
+  },
+  {
+   "id": "pv3fc0",
+   "name": "にんじん",
+   "loc": "fridge",
+   "added": "2026-10-24",
+   "src": "kaji-quest"
+  },
+  {
+   "id": "pvdwus",
+   "name": "しらす",
+   "loc": "fridge",
+   "added": "2026-10-24",
+   "src": "kaji-quest"
+  },
+  {
+   "id": "pbo709",
+   "name": "さつまいも",
+   "loc": "pantry",
+   "added": "2026-10-24",
+   "src": "kaji-quest"
+  },
+  {
+   "id": "p5yobz",
+   "name": "れんこん",
+   "loc": "fridge",
+   "added": "2026-10-24",
+   "src": "kaji-quest"
+  },
+  {
+   "id": "pezv0p",
+   "name": "餃子の皮",
+   "loc": "fridge",
+   "added": "2026-10-24",
+   "src": "kaji-quest"
+  },
+  {
+   "id": "p5lx05",
+   "name": "かまぼこ",
+   "loc": "fridge",
+   "added": "2026-10-24",
+   "src": "kaji-quest"
+  },
+  {
+   "id": "pq7thz",
+   "name": "ハツ",
+   "loc": "fridge",
+   "added": "2026-10-24",
+   "src": "kaji-quest"
   }
  ],
  "staples": {
@@ -168,6 +224,8 @@
   "mvd9501omzgb",
   "mvf28jj18wg6",
   "mvf2e3ocwctv",
-  "mvf8e7cid80k"
+  "mvf8e7cid80k",
+  "mvhwp8xiv3ej",
+  "mvlq7mkep218"
  ]
 }
