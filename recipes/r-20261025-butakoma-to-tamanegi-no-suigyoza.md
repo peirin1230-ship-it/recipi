@@ -1,4 +1,5 @@
 ---
+listed: "2026-10-25T16:01:10+09:00"
 id: r-20261025-butakoma-to-tamanegi-no-suigyoza
 title: 豚こま切れ肉と玉ねぎの水餃子
 version: 1
