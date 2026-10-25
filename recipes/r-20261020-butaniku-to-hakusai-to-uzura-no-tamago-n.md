@@ -192,7 +192,7 @@ cleanup:
   hand: [fp26, pot20]
   note: ゆでた鍋は卵を冷やす間に洗っておく。
 photo: photos/r-20261020-butaniku-to-hakusai-to-uzura-no-tamago-n/20261021-1.jpg
-stats: {cooked: 1, r_avg: 83, f_avg: 4.0, last: '2026-10-21'}
+stats: {cooked: 1, r_avg: 83, f_avg: 3.3, last: '2026-10-21'}
 detail: full
 ---
 

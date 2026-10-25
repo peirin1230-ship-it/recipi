@@ -1,5 +1,5 @@
 ---
-listed: "2026-10-25T20:26:54+09:00"
+listed: '2026-10-25T20:26:54+09:00'
 id: r-20261025-seseri-to-eringi-no-grill-shioyaki
 title: せせりとエリンギのグリル塩焼き
 version: 1
@@ -77,8 +77,8 @@ cleanup:
   dishwasher: []
   hand: [grill]
   note: 使った日はグリルの受け皿を洗う
-photo: null
-stats: {cooked: 0, r_avg: null, f_avg: null, last: null}
+photo: photos/r-20261025-seseri-to-eringi-no-grill-shioyaki/20261025-1.jpg
+stats: {cooked: 1, r_avg: 60, f_avg: 4.0, last: '2026-10-25'}
 detail: full
 together: [r-20261025-gyusuji-to-jagaimo-no-shio-butter-nikomi]
 ---
@@ -139,4 +139,5 @@ together: [r-20261025-gyusuji-to-jagaimo-no-shio-butter-nikomi]
 - 使った日はグリルの受け皿を洗う
 
 ## 作ったときのメモ
+
 - 2026-10-25 ・ 252 分（見込み 11）・ R 60 ・ F 4 ・ そのまま

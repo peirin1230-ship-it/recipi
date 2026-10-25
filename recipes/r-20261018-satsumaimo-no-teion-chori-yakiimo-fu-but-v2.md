@@ -125,8 +125,8 @@ cleanup:
   dishwasher: []
   hand: [pot20, fp26]
   note: 袋は再利用しない。低温調理器は水けをふいて乾かす
-photo: null
-stats: {cooked: 0, r_avg: null, f_avg: null, last: null}
+photo: photos/r-20261018-satsumaimo-no-teion-chori-yakiimo-fu-but-v2/20261025-1.jpg
+stats: {cooked: 1, r_avg: 82, f_avg: 4.0, last: '2026-10-25'}
 detail: full
 changes:
 - {what: 甘くする段階を 65℃ で 60 分から 70℃ で 90 分に変えた, why: 記録（10-18）の気づき「もう少し甘くしたい」と家の人の要望。さつまいものでんぷんは 70℃ 前後でほどけ、そこで糖に変わりやすい。65℃
@@ -217,4 +217,5 @@ changes:
 - 品種の目安（紅はるか・シルクスイートなどのねっとり系）を手順に書いた — 甘さと柔らかさは品種で大きく変わる。買うときに選べるように
 
 ## 作ったときのメモ
+
 - 2026-10-25 ・ 252 分（見込み 209）・ R 92 ・ F 4 ・ そのまま ・ 📷 20261025-1.jpg

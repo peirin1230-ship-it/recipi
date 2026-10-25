@@ -4,7 +4,7 @@ id: r-20261018-satsumaimo-no-teion-chori-yakiimo-fu-but
 title: さつまいもの低温調理 焼き芋風 バター塩昆布
 version: 1
 supersedes: null
-status: tried
+status: retired
 created: '2026-10-18'
 request: req-20261018-1302-4yck
 generated_by: {model: claude-code, prompt_version: 10}
@@ -127,6 +127,7 @@ cleanup:
 photo: photos/r-20261018-satsumaimo-no-teion-chori-yakiimo-fu-but/20261018-1.jpg
 stats: {cooked: 1, r_avg: 68, f_avg: 3.3, last: '2026-10-18'}
 detail: full
+retired_reason: 改訂版 r-20261018-satsumaimo-no-teion-chori-yakiimo-fu-but-v2 に置き換え
 ---
 
 ## 段取り表（158 分）

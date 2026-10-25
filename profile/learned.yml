@@ -1,23 +1,24 @@
 # profile/learned.yml — nightly-learn（scripts/learn.py）が logs/ から生成する。手で直さない（直すなら profile/overrides.yml）。
-updated: '2026-10-25'
+updated: '2026-10-26'
 window_days: 90
-n_logs: 13
-last_log_id: 8n7cuagu0ckl
-speed_factor: {overall: 1.04, prep: 1.42, heat: 0.94, serve: 0.86}
+n_logs: 16
+last_log_id: ff6v39hc0ep4
+speed_factor: {overall: 1.12, prep: 1.55, heat: 1.04, serve: 0.77}
 likes:
 - {key: quick, score: 0.4, n: 3}
 - {key: soup, score: 0.4, n: 3}
 - {key: 卵, score: 0.4, n: 3}
 - {key: 炊き込みご飯, score: 0.33, n: 3}
 - {key: 米, score: 0.33, n: 3}
+- {key: 子ども取り分け, score: 0.3, n: 7}
 - {key: かぼちゃ, score: 0.27, n: 3}
-- {key: 子ども取り分け, score: 0.24, n: 5}
 dislikes:
 - {key: 作り置き, score: -0.4, n: 3}
 - {key: 仕込み, score: -0.27, n: 3}
+- {key: 副菜, score: -0.24, n: 3}
 partner:
   likes: [炊飯器, しらす, チョッパー, milk, egg, pot-one, 牛乳, 炊き込みご飯]
-  dislikes: [なす, 豆腐, 副菜, レンジ, 野菜]
+  dislikes: [なす, 豆腐, レンジ, 野菜]
 kid:
   eats_well: [子ども取り分け, 炊き込みご飯, 米, 仕込み, 炊飯器, かぼちゃ, しらす, チョッパー, soup, milk, egg, quick]
   refuses: []
@@ -50,10 +51,10 @@ quality:
   prompt_versions: {'8': 7}
 - week: 2026-W43
   generated: 0
-  cooked: 5
-  f_avg: 4.26
-  r_avg: 77
+  cooked: 8
+  f_avg: 4.2
+  r_avg: 76
   time_err_median: 0.5
-  new_ratio: 0.6
+  new_ratio: 0.75
   adoption: null
   prompt_versions: {}
