@@ -3,8 +3,56 @@
  "ts": "2026-10-25T23:45:31+09:00",
  "type": "digest",
  "by": "weekly",
- "status": "pending",
+ "status": "done",
  "error": null,
- "result": null,
- "week": "2026-W43"
+ "result": {
+  "week": "2026-W43",
+  "proposals": [
+   {
+    "title": "豚こまとれんこんの甘辛炒め",
+    "minutes": 20,
+    "why": "豚こまとれんこんを使い切れる。フライパン1つで平日向き"
+   },
+   {
+    "title": "餃子の皮のツナコーンピザ風",
+    "minutes": 15,
+    "why": "餃子の皮とツナ・コーンの在庫で、トースターで焼くだけ。子どもの取り分けもしやすい"
+   },
+   {
+    "title": "ホタテとコーンの炊き込みご飯",
+    "minutes": 60,
+    "why": "休日向け。炊き込みご飯は家族の評価が高く、冷凍ホタテを使える"
+   }
+  ],
+  "shopping": [
+   {
+    "name": "めんつゆ",
+    "qty": null,
+    "reason": "定番が残り少ない"
+   },
+   {
+    "name": "しょうがチューブ",
+    "qty": null,
+    "reason": "定番が残り少ない。甘辛炒めに使う"
+   },
+   {
+    "name": "ピザ用チーズ",
+    "qty": "1袋",
+    "reason": "ツナコーンピザ風に要る"
+   }
+  ],
+  "comment": "来週は仕込みなしの20分メニューを軸にしてみる",
+  "model": "claude-code",
+  "prompt_version": 1,
+  "tokens": {
+   "input": 0,
+   "output": 0,
+   "cache_read": 0,
+   "cache_write": 0
+  },
+  "cost_usd": 0.0,
+  "seconds": 1
+ },
+ "week": "2026-W43",
+ "finished": "2026-10-25T23:46:02+09:00"
 }
