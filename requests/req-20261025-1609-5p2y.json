@@ -16,7 +16,44 @@
  "exclude": [],
  "note": "",
  "mode": "pick",
- "status": "pending",
+ "status": "done",
  "error": null,
- "result": null
+ "result": {
+  "feasible": true,
+  "infeasible_reason": null,
+  "nearest_options": [],
+  "alternatives": [
+   {
+    "title": "牛すじとじゃがいもの塩バター煮込み",
+    "minutes": 150,
+    "why": "牛すじを鍋で弱火にじっくり煮て柔らかくし、じゃがいもに旨みを吸わせる。塩控えめでも味が決まり、子どもの分は煮汁を洗って取り分けやすい。",
+    "kind": "new"
+   },
+   {
+    "title": "せせりとエリンギのバター醤油炒め",
+    "minutes": 20,
+    "why": "せせりの脂でエリンギを炒めるだけの短時間の一品。せせりを使い切れて、子どもの分は味付け前に取り分けられる。",
+    "kind": "new"
+   },
+   {
+    "title": "牛すじとにんじんの煮込みうどん",
+    "minutes": 160,
+    "why": "牛すじの出汁をうどんにかける。冷凍うどんとにんじんで一品完結し、牛すじも使い切れる。",
+    "kind": "new"
+   }
+  ],
+  "recipe_id": null,
+  "recipe": null,
+  "model": "claude-code",
+  "prompt_version": 10,
+  "tokens": {
+   "input": 0,
+   "output": 0,
+   "cache_read": 0,
+   "cache_write": 0
+  },
+  "cost_usd": 0.0,
+  "seconds": 0
+ },
+ "finished": "2026-10-25T16:10:01+09:00"
 }
