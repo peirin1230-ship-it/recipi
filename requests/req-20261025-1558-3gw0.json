@@ -12,10 +12,761 @@
  "use_up": [],
  "exclude": [],
  "note": "",
- "mode": "pick",
+ "mode": "auto",
  "parent": "req-20261025-1556-63d2",
  "alternative": 2,
- "status": "pending",
+ "status": "done",
  "error": null,
- "result": null
+ "result": {
+  "feasible": true,
+  "infeasible_reason": null,
+  "nearest_options": [],
+  "alternatives": [
+   {
+    "title": "豚こまとじゃがいもの味噌バター炒め",
+    "minutes": 20,
+    "why": "ホタテではなく豚肉で。フライパン一つで子どもの分を先に取れる。",
+    "kind": "new"
+   },
+   {
+    "title": "しらすとかぼちゃの豆腐ハンバーグ",
+    "minutes": 30,
+    "why": "豆腐とチョッパーで柔らかく、1歳児も手づかみしやすい。",
+    "kind": "new"
+   }
+  ],
+  "recipe_id": "r-20261025-reitou-hotate-to-jagaimo-no-milk-chowder",
+  "recipe": {
+   "id": "r-20261025-reitou-hotate-to-jagaimo-no-milk-chowder",
+   "title": "冷凍ホタテとじゃがいものミルクチャウダー",
+   "version": 1,
+   "supersedes": null,
+   "status": "draft",
+   "created": "2026-10-25",
+   "request": "req-20261025-1558-3gw0",
+   "generated_by": {
+    "model": "claude-code",
+    "prompt_version": 10
+   },
+   "type": "recipe_detail",
+   "servings": {
+    "adults": 2,
+    "kids": 1
+   },
+   "time": {
+    "budget": 0,
+    "planned": 39,
+    "active": 28,
+    "raw_estimate": 35,
+    "speed_factor": 1.04
+   },
+   "image_text": "白くとろりとしたスープに、角切りのじゃがいもとオレンジ色のにんじん、ぷりっとしたホタテが浮かぶ。仕上げのこしょうとバターのつやで、湯気の立つ温かい一皿。",
+   "dishes": [
+    {
+     "name": "冷凍ホタテとじゃがいものミルクチャウダー",
+     "role": "main"
+    }
+   ],
+   "equipment": [
+    "gas-l",
+    "pot20",
+    "kettle",
+    "bowl-m"
+   ],
+   "ingredients": [
+    {
+     "name": "冷凍ホタテ",
+     "qty": 120,
+     "unit": "g",
+     "grams": 120,
+     "pantry": "冷凍ホタテ",
+     "for": "冷凍ホタテとじゃがいものミルクチャウダー",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "じゃがいも",
+     "qty": 2,
+     "unit": "個",
+     "grams": 300,
+     "pantry": "じゃがいも",
+     "for": "冷凍ホタテとじゃがいものミルクチャウダー",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "玉ねぎ",
+     "qty": 1,
+     "unit": "個",
+     "grams": 200,
+     "pantry": "玉ねぎ",
+     "for": "冷凍ホタテとじゃがいものミルクチャウダー",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "にんじん",
+     "qty": 0.5,
+     "unit": "本",
+     "grams": 75,
+     "pantry": "にんじん",
+     "for": "冷凍ホタテとじゃがいものミルクチャウダー",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "バター",
+     "qty": 20,
+     "unit": "g",
+     "grams": 20,
+     "pantry": "バター",
+     "for": "冷凍ホタテとじゃがいものミルクチャウダー",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "小麦粉",
+     "qty": 2,
+     "unit": "大さじ",
+     "grams": 18,
+     "pantry": "小麦粉",
+     "for": "冷凍ホタテとじゃがいものミルクチャウダー",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "コンソメ",
+     "qty": 0.5,
+     "unit": "個",
+     "grams": 2.5,
+     "pantry": "コンソメ",
+     "for": "冷凍ホタテとじゃがいものミルクチャウダー",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "水",
+     "qty": 250,
+     "unit": "ml",
+     "grams": 250,
+     "pantry": null,
+     "for": "冷凍ホタテとじゃがいものミルクチャウダー",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "牛乳",
+     "qty": 400,
+     "unit": "ml",
+     "grams": 410,
+     "pantry": "牛乳",
+     "for": "冷凍ホタテとじゃがいものミルクチャウダー",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "塩",
+     "qty": 0.25,
+     "unit": "小さじ",
+     "grams": 1.5,
+     "pantry": "塩",
+     "for": "冷凍ホタテとじゃがいものミルクチャウダー",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "こしょう",
+     "qty": 0.05,
+     "unit": "小さじ",
+     "grams": 0.1,
+     "pantry": "こしょう",
+     "for": "冷凍ホタテとじゃがいものミルクチャウダー",
+     "substitute": null,
+     "use_up": false
+    }
+   ],
+   "tags": [
+    "soup",
+    "milk",
+    "ホタテ",
+    "じゃがいも",
+    "子ども取り分け",
+    "冷凍食材"
+   ],
+   "salt": {
+    "total_g": 3.1,
+    "adult_per_serving_g": 1.4,
+    "kid_g": 0.3
+   },
+   "kid": {
+    "rule": "separate",
+    "cut": "ホタテは5mm以下に刻む。じゃがいも・にんじんは1cm角のまま、スプーンでつぶせる固さ。",
+    "note": "塩を入れる前の鍋から取り分けて冷ます。ホタテは中心まで白く火が通ってから刻む。熱いうちは出さない。"
+   },
+   "keep": {
+    "fridge_days": 1,
+    "freezer": false,
+    "reheat": "小鍋に移し、牛乳を大さじ1足して弱火で湯気が立つまで温める。沸騰させない。"
+   },
+   "timeline": [
+    {
+     "minute": 0,
+     "lane": "hands",
+     "text": "ホタテを水に浸けて解凍、ケトルで湯を沸かす"
+    },
+    {
+     "minute": 2,
+     "lane": "hands",
+     "text": "じゃがいも・にんじんを切る、玉ねぎをチョッパーで刻む"
+    },
+    {
+     "minute": 10,
+     "lane": "gas-l",
+     "text": "バターで玉ねぎ・にんじんを炒める"
+    },
+    {
+     "minute": 14,
+     "lane": "gas-l",
+     "text": "小麦粉を加えて炒める"
+    },
+    {
+     "minute": 15,
+     "lane": "gas-l",
+     "text": "湯・コンソメ・じゃがいもを入れて蓋をして煮る"
+    },
+    {
+     "minute": 16,
+     "lane": "hands",
+     "text": "副菜（れんこんのバター醤油焼き）を作る"
+    },
+    {
+     "minute": 16,
+     "lane": "hands",
+     "text": "ホタテの水気を取り、1cmに切る"
+    },
+    {
+     "minute": 25,
+     "lane": "gas-l",
+     "text": "じゃがいもに竹串が通るのを確認"
+    },
+    {
+     "minute": 26,
+     "lane": "gas-l",
+     "text": "牛乳とホタテを加えて弱火で温める"
+    },
+    {
+     "minute": 30,
+     "lane": "hands",
+     "text": "子どもの分を取り分けて冷ます"
+    },
+    {
+     "minute": 31,
+     "lane": "gas-l",
+     "text": "大人の鍋に塩・こしょうで味を調える"
+    },
+    {
+     "minute": 32,
+     "lane": "hands",
+     "text": "盛り付け・配膳"
+    }
+   ],
+   "steps": [
+    {
+     "dish": "冷凍ホタテとじゃがいものミルクチャウダー",
+     "n": 1,
+     "title": "ホタテの解凍と湯沸かし",
+     "kind": "prep",
+     "tag": "wait",
+     "minutes": 2,
+     "start": 0,
+     "heat": null,
+     "text": "ボウル（中）に冷凍ホタテを入れ、かぶるくらいの水を注いで解凍する。同時にケトルに水 300ml を入れてスイッチを入れる。",
+     "cue": "ホタテの表面の氷が溶け、指で押すと戻る柔らかさ（約15分）。",
+     "caution": null,
+     "timer": null,
+     "kid": null,
+     "ingredients": [
+      "冷凍ホタテ"
+     ]
+    },
+    {
+     "dish": "冷凍ホタテとじゃがいものミルクチャウダー",
+     "n": 2,
+     "title": "野菜を切る",
+     "kind": "prep",
+     "tag": "cut",
+     "minutes": 8,
+     "start": 2,
+     "heat": null,
+     "text": "じゃがいもは皮をむいて1.5cm角に切り、水にさらす。にんじんは皮をむいて5mm角に切る。玉ねぎは四つ割りにしてぶんぶんチョッパーに入れ、数回に分けて1cm弱の粗みじんにする（刻みすぎない）。",
+     "cue": "玉ねぎが米粒より大きい粗みじんで、ペースト状になっていない。",
+     "caution": "チョッパーは回しすぎると水っぽくなる。1〜2秒ずつ数回。",
+     "timer": null,
+     "kid": null,
+     "ingredients": [
+      "じゃがいも",
+      "にんじん",
+      "玉ねぎ"
+     ]
+    },
+    {
+     "dish": "冷凍ホタテとじゃがいものミルクチャウダー",
+     "n": 3,
+     "title": "玉ねぎ・にんじんを炒める",
+     "kind": "heat",
+     "tag": "stir-fry",
+     "minutes": 4,
+     "start": 10,
+     "heat": {
+      "equipment": "gas-l",
+      "level": "中火"
+     },
+     "text": "鍋（pot20）にバター20gを入れ、ガスコンロ左の中火で溶かす。玉ねぎとにんじんを入れて木べらではなく菜箸で混ぜながら炒める。",
+     "cue": "バターが泡立ち、玉ねぎが透き通ってしんなりする。",
+     "caution": "バターは焦げやすい。茶色くなる前に野菜を入れる。",
+     "timer": null,
+     "kid": null,
+     "ingredients": [
+      "バター",
+      "玉ねぎ",
+      "にんじん"
+     ]
+    },
+    {
+     "dish": "冷凍ホタテとじゃがいものミルクチャウダー",
+     "n": 4,
+     "title": "小麦粉を炒める",
+     "kind": "heat",
+     "tag": "stir-fry",
+     "minutes": 1,
+     "start": 14,
+     "heat": {
+      "equipment": "gas-l",
+      "level": "弱火"
+     },
+     "text": "火を弱火に落とし、小麦粉 大さじ2をふり入れる。粉気がなくなるまで1分混ぜる。",
+     "cue": "粉が見えなくなり、鍋底が少しさらっとする。",
+     "caution": null,
+     "timer": null,
+     "kid": null,
+     "ingredients": [
+      "小麦粉"
+     ]
+    },
+    {
+     "dish": "冷凍ホタテとじゃがいものミルクチャウダー",
+     "n": 5,
+     "title": "煮る",
+     "kind": "wait",
+     "tag": "simmer",
+     "minutes": 10,
+     "start": 15,
+     "heat": {
+      "equipment": "gas-l",
+      "level": "弱火"
+     },
+     "text": "ケトルの湯250mlを少しずつ加えて混ぜ、ダマを溶かす。水気を切ったじゃがいもとコンソメ1/2個を入れ、蓋をして弱火で10分煮る。ここで副菜に取りかかる。",
+     "cue": "じゃがいもに竹串がすっと通る。",
+     "caution": "底が焦げつくので、途中で一度底から混ぜる。",
+     "timer": 600,
+     "kid": null,
+     "ingredients": [
+      "水",
+      "コンソメ",
+      "じゃがいも"
+     ]
+    },
+    {
+     "dish": "冷凍ホタテとじゃがいものミルクチャウダー",
+     "n": 6,
+     "title": "ホタテを切る",
+     "kind": "prep",
+     "tag": "cut",
+     "minutes": 3,
+     "start": 16,
+     "heat": null,
+     "text": "解凍したホタテをキッチンペーパーで押さえて水気を取り、1cm角に切る。",
+     "cue": "ホタテの断面が白くて透明感があり、水が出ていない。",
+     "caution": null,
+     "timer": null,
+     "kid": null,
+     "ingredients": [
+      "冷凍ホタテ"
+     ]
+    },
+    {
+     "dish": "冷凍ホタテとじゃがいものミルクチャウダー",
+     "n": 7,
+     "title": "牛乳とホタテを加える",
+     "kind": "heat",
+     "tag": "simmer",
+     "minutes": 4,
+     "start": 26,
+     "heat": {
+      "equipment": "gas-l",
+      "level": "弱火"
+     },
+     "text": "牛乳400mlとホタテを入れ、弱火で混ぜながら温める。縁がふつふつしたら火を弱めて2分煮る。",
+     "cue": "スープ全体に湯気が立ち、ホタテの中心まで白く不透明になる。",
+     "caution": "牛乳は沸騰させると膜が張り分離しやすい。縁がふつふつする程度。",
+     "timer": null,
+     "kid": "この段階（塩を入れる前）が子どもの取り分けタイミング。",
+     "ingredients": [
+      "牛乳",
+      "冷凍ホタテ"
+     ]
+    },
+    {
+     "dish": "冷凍ホタテとじゃがいものミルクチャウダー",
+     "n": 8,
+     "title": "子どもの分を取り分ける",
+     "kind": "serve",
+     "tag": "kid",
+     "minutes": 2,
+     "start": 30,
+     "heat": null,
+     "text": "塩を入れる前に、子どもの分をお玉2杯ぶんボウルに取る。ホタテを5mm以下に刻み、じゃがいもを軽くつぶして冷ます。",
+     "cue": "スプーンですくって手の甲に落とし、ぬるいと感じる温度。",
+     "caution": null,
+     "timer": null,
+     "kid": "1歳児は火傷しやすい。必ず冷ましてから。",
+     "ingredients": [
+      "冷凍ホタテ"
+     ]
+    },
+    {
+     "dish": "冷凍ホタテとじゃがいものミルクチャウダー",
+     "n": 9,
+     "title": "大人の分を味付け",
+     "kind": "heat",
+     "tag": "season",
+     "minutes": 1,
+     "start": 31,
+     "heat": {
+      "equipment": "gas-l",
+      "level": "弱火"
+     },
+     "text": "残った鍋に塩 小さじ1/4とこしょうを加えて混ぜ、味を見る。足りなければ塩は足さず、こしょうで調える。",
+     "cue": "ホタテのうまみとミルクの甘みがあり、塩味がやや控えめ。",
+     "caution": null,
+     "timer": null,
+     "kid": null,
+     "ingredients": [
+      "塩",
+      "こしょう"
+     ]
+    },
+    {
+     "dish": "冷凍ホタテとじゃがいものミルクチャウダー",
+     "n": 10,
+     "title": "盛り付け・配膳",
+     "kind": "serve",
+     "tag": "serve",
+     "minutes": 3,
+     "start": 32,
+     "heat": null,
+     "text": "器に盛り、副菜と一緒に出す。子どもの分は別の器で。",
+     "cue": "スープが熱々で、表面にバターのつやが出ている。",
+     "caution": null,
+     "timer": null,
+     "kid": null,
+     "ingredients": []
+    }
+   ],
+   "cleanup": {
+    "dishwasher": [
+     "bowl-m"
+    ],
+    "hand": [
+     "pot20"
+    ],
+    "note": "牛乳のスープは鍋が焦げつきやすいので、冷める前に水を張る。"
+   },
+   "photo": null,
+   "stats": {
+    "cooked": 0,
+    "r_avg": null,
+    "f_avg": null,
+    "last": null
+   },
+   "detail": "full",
+   "together": [
+    "r-20261025-renkon-no-butter-shoyu-yaki"
+   ],
+   "memo": []
+  },
+  "side_recipe_ids": [
+   "r-20261025-renkon-no-butter-shoyu-yaki"
+  ],
+  "side_recipes": [
+   {
+    "id": "r-20261025-renkon-no-butter-shoyu-yaki",
+    "title": "れんこんのバター醤油焼き",
+    "version": 1,
+    "supersedes": null,
+    "status": "draft",
+    "created": "2026-10-25",
+    "request": "req-20261025-1558-3gw0",
+    "generated_by": {
+     "model": "claude-code",
+     "prompt_version": 10
+    },
+    "type": "recipe_detail",
+    "servings": {
+     "adults": 2,
+     "kids": 1
+    },
+    "time": {
+     "budget": 0,
+     "planned": 11,
+     "active": 9,
+     "raw_estimate": 10,
+     "speed_factor": 1.04
+    },
+    "image_text": "薄く切ったれんこんがこんがり焼き色に。バターと醤油の香りがつやつやと絡んでいる。",
+    "dishes": [
+     {
+      "name": "れんこんのバター醤油焼き",
+      "role": "side"
+     }
+    ],
+    "equipment": [
+     "gas-r",
+     "fp26"
+    ],
+    "ingredients": [
+     {
+      "name": "れんこん",
+      "qty": 1,
+      "unit": "節",
+      "grams": 150,
+      "pantry": "れんこん",
+      "for": "れんこんのバター醤油焼き",
+      "substitute": null,
+      "use_up": false
+     },
+     {
+      "name": "バター",
+      "qty": 5,
+      "unit": "g",
+      "grams": 5,
+      "pantry": "バター",
+      "for": "れんこんのバター醤油焼き",
+      "substitute": null,
+      "use_up": false
+     },
+     {
+      "name": "水",
+      "qty": 2,
+      "unit": "大さじ",
+      "grams": 30,
+      "pantry": null,
+      "for": "れんこんのバター醤油焼き",
+      "substitute": null,
+      "use_up": false
+     },
+     {
+      "name": "醤油",
+      "qty": 1,
+      "unit": "小さじ",
+      "grams": 6,
+      "pantry": "醤油",
+      "for": "れんこんのバター醤油焼き",
+      "substitute": null,
+      "use_up": false
+     },
+     {
+      "name": "白ごま",
+      "qty": 0.5,
+      "unit": "小さじ",
+      "grams": 1.5,
+      "pantry": "白ごま",
+      "for": "れんこんのバター醤油焼き",
+      "substitute": null,
+      "use_up": false
+     }
+    ],
+    "tags": [
+     "side",
+     "れんこん",
+     "フライパン",
+     "子ども取り分け"
+    ],
+    "salt": {
+     "total_g": 0.9,
+     "adult_per_serving_g": 0.5,
+     "kid_g": 0.0
+    },
+    "kid": {
+     "rule": "separate",
+     "cut": "いちょう切りを4等分にして1cm角以下にする。",
+     "note": "醤油を入れる前に子どもの分を取り分ける。柔らかく蒸し焼きにし、丸ごと飲み込まないよう小さく切る。"
+    },
+    "keep": {
+     "fridge_days": 2,
+     "freezer": false,
+     "reheat": "フライパンかレンジ（600W 30秒）で温める。"
+    },
+    "timeline": [
+     {
+      "minute": 0,
+      "lane": "hands",
+      "text": "れんこんを皮むきして3mmのいちょう切り、酢水にさらす"
+     },
+     {
+      "minute": 3,
+      "lane": "gas-r",
+      "text": "バターで焼く"
+     },
+     {
+      "minute": 6,
+      "lane": "gas-r",
+      "text": "水を入れて蓋をして蒸し焼き"
+     },
+     {
+      "minute": 8,
+      "lane": "gas-r",
+      "text": "子どもの分を取り分け、醤油を絡める"
+     },
+     {
+      "minute": 9,
+      "lane": "hands",
+      "text": "ごまをふって盛り付け"
+     }
+    ],
+    "steps": [
+     {
+      "dish": "れんこんのバター醤油焼き",
+      "n": 1,
+      "title": "れんこんを切る",
+      "kind": "prep",
+      "tag": "cut",
+      "minutes": 3,
+      "start": 0,
+      "heat": null,
+      "text": "れんこんは皮をむき、3mm厚のいちょう切りにする。水にさらして水気を切る。",
+      "cue": "切り口が白く、水気が切れている。",
+      "caution": null,
+      "timer": null,
+      "kid": null,
+      "ingredients": [
+       "れんこん"
+      ]
+     },
+     {
+      "dish": "れんこんのバター醤油焼き",
+      "n": 2,
+      "title": "焼く",
+      "kind": "heat",
+      "tag": "sear",
+      "minutes": 3,
+      "start": 3,
+      "heat": {
+       "equipment": "gas-r",
+       "level": "中火"
+      },
+      "text": "フライパン（fp26）にバターを溶かし、れんこんを重ならないように並べて中火で焼く。触らず2分、返してさらに1分。",
+      "cue": "縁が透き通って、片面にうっすら焼き色。",
+      "caution": null,
+      "timer": null,
+      "kid": null,
+      "ingredients": [
+       "れんこん",
+       "バター"
+      ]
+     },
+     {
+      "dish": "れんこんのバター醤油焼き",
+      "n": 3,
+      "title": "蒸し焼き",
+      "kind": "wait",
+      "tag": "simmer",
+      "minutes": 2,
+      "start": 6,
+      "heat": {
+       "equipment": "gas-r",
+       "level": "弱火"
+      },
+      "text": "水 大さじ2を加えて蓋をし、弱火で2分蒸し焼きにする。",
+      "cue": "水気がほぼなくなり、れんこんに竹串が通る。",
+      "caution": null,
+      "timer": 120,
+      "kid": null,
+      "ingredients": [
+       "水"
+      ]
+     },
+     {
+      "dish": "れんこんのバター醤油焼き",
+      "n": 4,
+      "title": "取り分けと味付け",
+      "kind": "heat",
+      "tag": "season",
+      "minutes": 1,
+      "start": 8,
+      "heat": {
+       "equipment": "gas-r",
+       "level": "中火"
+      },
+      "text": "子どもの分を先にボウルに取る。残りに醤油小さじ1を回しかけ、強めの中火で10秒絡める。",
+      "cue": "醤油が焦げた香りがして、れんこんにつやが出る。",
+      "caution": null,
+      "timer": null,
+      "kid": "子どもの分はそのまま。冷まして4等分に刻む。",
+      "ingredients": [
+       "醤油"
+      ]
+     },
+     {
+      "dish": "れんこんのバター醤油焼き",
+      "n": 5,
+      "title": "盛り付け",
+      "kind": "serve",
+      "tag": "serve",
+      "minutes": 1,
+      "start": 9,
+      "heat": null,
+      "text": "器に盛り、白ごまをふる。",
+      "cue": "焼き色と白ごまが見える。",
+      "caution": null,
+      "timer": null,
+      "kid": null,
+      "ingredients": [
+       "白ごま"
+      ]
+     }
+    ],
+    "cleanup": {
+     "dishwasher": [],
+     "hand": [
+      "fp26"
+     ],
+     "note": null
+    },
+    "photo": null,
+    "stats": {
+     "cooked": 0,
+     "r_avg": null,
+     "f_avg": null,
+     "last": null
+    },
+    "detail": "full",
+    "together": [
+     "r-20261025-reitou-hotate-to-jagaimo-no-milk-chowder"
+    ],
+    "memo": []
+   }
+  ],
+  "model": "claude-code",
+  "prompt_version": 10,
+  "tokens": {
+   "input": 0,
+   "output": 0,
+   "cache_read": 0,
+   "cache_write": 0
+  },
+  "cost_usd": 0.0,
+  "seconds": 0
+ },
+ "finished": "2026-10-25T16:00:30+09:00"
 }
