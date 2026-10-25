@@ -15,10 +15,644 @@
  ],
  "exclude": [],
  "note": "",
- "mode": "pick",
+ "mode": "auto",
  "parent": "req-20261025-1609-5p2y",
  "alternative": 0,
- "status": "pending",
+ "status": "done",
  "error": null,
- "result": null
+ "result": {
+  "feasible": true,
+  "infeasible_reason": null,
+  "nearest_options": [],
+  "alternatives": [
+   {
+    "title": "冷凍ホタテとじゃがいものクリーム煮",
+    "minutes": 35,
+    "why": "牛乳・バター・小麦粉で作れて、ホタテの旨みが出る。ほかの案とは主材料も調理法も違う。",
+    "kind": "new"
+   },
+   {
+    "title": "豚こま切れ肉とれんこんの甘辛炒め",
+    "minutes": 20,
+    "why": "れんこんを食感よく炒めて、白ごはんが進む。短時間で作れる。",
+    "kind": "new"
+   }
+  ],
+  "recipe_id": "r-20261025-gyusuji-to-jagaimo-no-shio-butter-nikomi",
+  "recipe": {
+   "id": "r-20261025-gyusuji-to-jagaimo-no-shio-butter-nikomi",
+   "title": "牛すじとじゃがいもの塩バター煮込み",
+   "version": 1,
+   "supersedes": null,
+   "status": "draft",
+   "created": "2026-10-25",
+   "request": "req-20261025-1611-480v",
+   "generated_by": {
+    "model": "claude-code",
+    "prompt_version": 10
+   },
+   "type": "recipe_detail",
+   "servings": {
+    "adults": 2,
+    "kids": 1
+   },
+   "time": {
+    "budget": 0,
+    "planned": 156,
+    "active": 40,
+    "raw_estimate": 150,
+    "speed_factor": 1.04
+   },
+   "image_text": "とろりと透明感のある牛すじと、角が少し丸くなった黄金色のじゃがいもが、淡い塩味の煮汁に浮かぶ。仕上げのバターが表面でとけ、にんじんの橙色が彩りを添える。",
+   "dishes": [
+    {
+     "name": "牛すじとじゃがいもの塩バター煮込み",
+     "role": "main"
+    }
+   ],
+   "equipment": [
+    "kettle",
+    "pot20",
+    "gas-l",
+    "bowl-l"
+   ],
+   "ingredients": [
+    {
+     "name": "牛すじ",
+     "qty": 300,
+     "unit": "g",
+     "grams": 300,
+     "pantry": "牛すじ",
+     "for": "牛すじとじゃがいもの塩バター煮込み",
+     "substitute": null,
+     "use_up": true
+    },
+    {
+     "name": "じゃがいも",
+     "qty": 4,
+     "unit": "個",
+     "grams": 600,
+     "pantry": "じゃがいも",
+     "for": "牛すじとじゃがいもの塩バター煮込み",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "にんじん",
+     "qty": 1,
+     "unit": "本",
+     "grams": 150,
+     "pantry": "にんじん",
+     "for": "牛すじとじゃがいもの塩バター煮込み",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "水",
+     "qty": 800,
+     "unit": "ml",
+     "grams": 800,
+     "pantry": null,
+     "for": "牛すじとじゃがいもの塩バター煮込み",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "酒",
+     "qty": 2,
+     "unit": "大さじ",
+     "grams": 30,
+     "pantry": "酒",
+     "for": "牛すじとじゃがいもの塩バター煮込み",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "塩",
+     "qty": 0.5,
+     "unit": "小さじ",
+     "grams": 3,
+     "pantry": "塩",
+     "for": "牛すじとじゃがいもの塩バター煮込み",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "バター",
+     "qty": 20,
+     "unit": "g",
+     "grams": 20,
+     "pantry": "バター",
+     "for": "牛すじとじゃがいもの塩バター煮込み",
+     "substitute": null,
+     "use_up": false
+    }
+   ],
+   "tags": [
+    "煮込み",
+    "牛すじ",
+    "じゃがいも",
+    "塩バター",
+    "時間あり",
+    "子ども取り分け"
+   ],
+   "salt": {
+    "total_g": 3.3,
+    "adult_per_serving_g": 1.65,
+    "kid_g": 0
+   },
+   "kid": {
+    "rule": "separate",
+    "cut": "味付け前に取り分け、牛すじは皮・脂・筋を外して 1cm 以下に刻み、じゃがいもとにんじんは 1cm 角（じゃがいもは持てるスティック状でも可）",
+    "note": "塩とバターを入れる前の、無味の煮汁ごと取り分けて冷ましてから出す。牛すじは柔らかく煮えているので歯ぐきでつぶれる固さ。煮汁は少量なら一緒にかけてよい。"
+   },
+   "keep": {
+    "fridge_days": 2,
+    "freezer": true,
+    "reheat": "鍋に水 大さじ 2 を足して弱火で、煮汁が湯気を立てるまで温め直す。冷凍するならじゃがいもを軽くつぶしてから（食感が落ちる）。子どもの分は 1 日以内で、中まで湯気が立つまで再加熱する。"
+   },
+   "timeline": [
+    {
+     "minute": 0,
+     "lane": "hands",
+     "text": "ケトルで湯を沸かし始める。牛すじを流水で洗う"
+    },
+    {
+     "minute": 5,
+     "lane": "gas-l",
+     "text": "鍋に牛すじとケトルの湯を入れ、中火で 10 分下茹で"
+    },
+    {
+     "minute": 5,
+     "lane": "hands",
+     "text": "ザルとボウルを用意し、下茹で中は待つ（ケトルでもう一度湯を沸かしておく）"
+    },
+    {
+     "minute": 15,
+     "lane": "hands",
+     "text": "牛すじをザルにあけて流水で洗い、鍋も洗う。4cm 角に切る"
+    },
+    {
+     "minute": 20,
+     "lane": "gas-l",
+     "text": "鍋に牛すじ・水 800ml（ケトルの湯）・酒を入れ強火→沸いたら弱火で 90 分煮る"
+    },
+    {
+     "minute": 95,
+     "lane": "hands",
+     "text": "じゃがいもとにんじんを乱切りにする"
+    },
+    {
+     "minute": 110,
+     "lane": "gas-l",
+     "text": "じゃがいもとにんじんを加え、弱火〜中火で 25 分煮る"
+    },
+    {
+     "minute": 135,
+     "lane": "hands",
+     "text": "子どもの分を取り分ける（味付け前）"
+    },
+    {
+     "minute": 138,
+     "lane": "gas-l",
+     "text": "塩・バターを入れて中火で 3 分、煮汁をなじませる"
+    },
+    {
+     "minute": 143,
+     "lane": "hands",
+     "text": "盛り付け・配膳（子どもの分は冷ましておく）"
+    },
+    {
+     "minute": 150,
+     "lane": "hands",
+     "text": "完成"
+    }
+   ],
+   "steps": [
+    {
+     "dish": "牛すじとじゃがいもの塩バター煮込み",
+     "n": 1,
+     "title": "湯を沸かして牛すじを洗う",
+     "kind": "prep",
+     "tag": "cut",
+     "minutes": 5,
+     "start": 0,
+     "heat": null,
+     "text": "電気ケトルに水 1L を入れて沸かし始める。牛すじ 300g をボウルに入れ、流水で表面の汚れと血をさっと洗い流す。",
+     "cue": "水が濁らなくなり、牛すじの表面のぬめりが取れた",
+     "caution": null,
+     "timer": null,
+     "kid": null,
+     "ingredients": [
+      "牛すじ"
+     ]
+    },
+    {
+     "dish": "牛すじとじゃがいもの塩バター煮込み",
+     "n": 2,
+     "title": "牛すじを下茹でする",
+     "kind": "heat",
+     "tag": "boil",
+     "minutes": 10,
+     "start": 5,
+     "heat": {
+      "equipment": "gas-l",
+      "level": "中火"
+     },
+     "text": "鍋（pot20）に牛すじとケトルの湯を入れ、ガスコンロ左の中火で 10 分茹でる。アクが出たら取る。",
+     "cue": "表面が白っぽくなり、アクと脂が浮いてくる",
+     "caution": "沸騰したら吹きこぼれないよう火を中火に保つ",
+     "timer": 600,
+     "kid": null,
+     "ingredients": [
+      "牛すじ"
+     ]
+    },
+    {
+     "dish": "牛すじとじゃがいもの塩バター煮込み",
+     "n": 3,
+     "title": "洗って切る",
+     "kind": "prep",
+     "tag": "cut",
+     "minutes": 5,
+     "start": 15,
+     "heat": null,
+     "text": "牛すじをザルにあけて流水でアクと脂を洗い流す。鍋も洗う。牛すじを 4cm 角に切る。ケトルでもう一度湯を沸かしておく。",
+     "cue": "牛すじが白っぽくぷりっとして、洗った水が透明になった",
+     "caution": null,
+     "timer": null,
+     "kid": null,
+     "ingredients": [
+      "牛すじ"
+     ]
+    },
+    {
+     "dish": "牛すじとじゃがいもの塩バター煮込み",
+     "n": 4,
+     "title": "弱火でじっくり煮る",
+     "kind": "wait",
+     "tag": "simmer",
+     "minutes": 90,
+     "start": 20,
+     "heat": {
+      "equipment": "gas-l",
+      "level": "弱火"
+     },
+     "text": "鍋に牛すじ、ケトルの湯 800ml、酒 大さじ 2 を入れ、強火で沸かす。沸いたらアクを取り、弱火にして蓋を少しずらして 90 分煮る。水が減りすぎたら水 100ml を足す。",
+     "cue": "牛すじを竹串か箸でつまむと、ほろっとほぐれるくらい柔らかい。まだ固ければ 15 分追加",
+     "caution": "弱火のまま、ぐらぐら沸かさない（固くなる・煮汁が減る）",
+     "timer": 5400,
+     "kid": null,
+     "ingredients": [
+      "牛すじ",
+      "水",
+      "酒"
+     ]
+    },
+    {
+     "dish": "牛すじとじゃがいもの塩バター煮込み",
+     "n": 5,
+     "title": "野菜を切る",
+     "kind": "prep",
+     "tag": "cut",
+     "minutes": 8,
+     "start": 95,
+     "heat": null,
+     "text": "煮込みの待ち時間に、じゃがいも 4 個の皮をむいて 3cm の乱切りに、にんじん 1 本も皮をむいて 3cm の乱切りにする。じゃがいもは水にさらさない。",
+     "cue": "大きさがそろっている（火の通りがそろう）",
+     "caution": null,
+     "timer": null,
+     "kid": null,
+     "ingredients": [
+      "じゃがいも",
+      "にんじん"
+     ]
+    },
+    {
+     "dish": "牛すじとじゃがいもの塩バター煮込み",
+     "n": 6,
+     "title": "野菜を加えて煮る",
+     "kind": "heat",
+     "tag": "simmer",
+     "minutes": 25,
+     "start": 110,
+     "heat": {
+      "equipment": "gas-l",
+      "level": "弱火"
+     },
+     "text": "じゃがいもとにんじんを鍋に加え、弱火〜中火（ふつふつする程度）で蓋をして 25 分煮る。途中で一度底から返す。",
+     "cue": "じゃがいもに竹串がすっと通り、角が少し丸くなった",
+     "caution": null,
+     "timer": 1500,
+     "kid": null,
+     "ingredients": [
+      "じゃがいも",
+      "にんじん"
+     ]
+    },
+    {
+     "dish": "牛すじとじゃがいもの塩バター煮込み",
+     "n": 7,
+     "title": "子どもの分を取り分ける",
+     "kind": "prep",
+     "tag": "kid",
+     "minutes": 3,
+     "start": 135,
+     "heat": null,
+     "text": "火を止める。味付けの前に、牛すじ・じゃがいも・にんじんを子ども用の器に煮汁ごと少量取り分ける。牛すじは皮・脂・筋を外して 1cm 以下に刻み、野菜は 1cm 角にして冷ます。",
+     "cue": "取り分けた物に塩やバターが入っていない。触れるくらいに冷めている",
+     "caution": "子どもの分に塩とバターを入れない",
+     "timer": null,
+     "kid": "牛すじは歯ぐきでつぶれる柔らかさを確認。熱いうちは出さず、冷ましてから",
+     "ingredients": [
+      "牛すじ",
+      "じゃがいも",
+      "にんじん"
+     ]
+    },
+    {
+     "dish": "牛すじとじゃがいもの塩バター煮込み",
+     "n": 8,
+     "title": "塩バターで味を決める",
+     "kind": "heat",
+     "tag": "season",
+     "minutes": 3,
+     "start": 138,
+     "heat": {
+      "equipment": "gas-l",
+      "level": "中火"
+     },
+     "text": "鍋に塩 小さじ 1/2 とバター 20g を加え、中火で 3 分、ときどきゆすりながら煮汁をなじませる。味見して薄ければ塩を少量足す（家の方針は控えめ）。",
+     "cue": "バターがとけて煮汁につやが出て、湯気にバターの香りが立つ。牛すじは中まで柔らかい",
+     "caution": null,
+     "timer": null,
+     "kid": null,
+     "ingredients": [
+      "塩",
+      "バター"
+     ]
+    },
+    {
+     "dish": "牛すじとじゃがいもの塩バター煮込み",
+     "n": 9,
+     "title": "盛り付けて配膳",
+     "kind": "serve",
+     "tag": "serve",
+     "minutes": 5,
+     "start": 143,
+     "heat": null,
+     "text": "器に盛り、煮汁をかける。副菜と一緒に配膳する。",
+     "cue": "器の中で煮汁が透明に澄み、バターが小さな油の輪になって浮いている",
+     "caution": null,
+     "timer": null,
+     "kid": null,
+     "ingredients": []
+    }
+   ],
+   "cleanup": {
+    "dishwasher": [
+     "bowl-l"
+    ],
+    "hand": [
+     "pot20"
+    ],
+    "note": "鍋は粗熱が取れてから、煮汁をキッチンペーパーで拭いて洗う"
+   },
+   "photo": null,
+   "stats": {
+    "cooked": 0,
+    "r_avg": null,
+    "f_avg": null,
+    "last": null
+   },
+   "detail": "full",
+   "together": [
+    "r-20261025-seseri-to-eringi-no-grill-shioyaki"
+   ],
+   "memo": []
+  },
+  "side_recipe_ids": [
+   "r-20261025-seseri-to-eringi-no-grill-shioyaki"
+  ],
+  "side_recipes": [
+   {
+    "id": "r-20261025-seseri-to-eringi-no-grill-shioyaki",
+    "title": "せせりとエリンギのグリル塩焼き",
+    "version": 1,
+    "supersedes": null,
+    "status": "draft",
+    "created": "2026-10-25",
+    "request": "req-20261025-1611-480v",
+    "generated_by": {
+     "model": "claude-code",
+     "prompt_version": 10
+    },
+    "type": "recipe_detail",
+    "servings": {
+     "adults": 2,
+     "kids": 1
+    },
+    "time": {
+     "budget": 0,
+     "planned": 11,
+     "active": 6,
+     "raw_estimate": 10,
+     "speed_factor": 1.04
+    },
+    "image_text": "皮目がこんがり焼き色のせせりと、縁が茶色く香ばしいエリンギ。表面に塩の粒がきらりと光り、焼き汁がしっとり残る。",
+    "dishes": [
+     {
+      "name": "せせりとエリンギのグリル塩焼き",
+      "role": "side"
+     }
+    ],
+    "equipment": [
+     "grill"
+    ],
+    "ingredients": [
+     {
+      "name": "せせり",
+      "qty": 200,
+      "unit": "g",
+      "grams": 200,
+      "pantry": "せせり",
+      "for": "せせりとエリンギのグリル塩焼き",
+      "substitute": null,
+      "use_up": true
+     },
+     {
+      "name": "エリンギ",
+      "qty": 2,
+      "unit": "本",
+      "grams": 100,
+      "pantry": "エリンギ",
+      "for": "せせりとエリンギのグリル塩焼き",
+      "substitute": null,
+      "use_up": false
+     },
+     {
+      "name": "塩",
+      "qty": 0.25,
+      "unit": "小さじ",
+      "grams": 1.5,
+      "pantry": "塩",
+      "for": "せせりとエリンギのグリル塩焼き",
+      "substitute": null,
+      "use_up": false
+     },
+     {
+      "name": "こしょう",
+      "qty": 0.5,
+      "unit": "小さじ",
+      "grams": 1,
+      "pantry": "こしょう",
+      "for": "せせりとエリンギのグリル塩焼き",
+      "substitute": null,
+      "use_up": false
+     }
+    ],
+    "tags": [
+     "グリル",
+     "せせり",
+     "副菜",
+     "10分"
+    ],
+    "salt": {
+     "total_g": 1.5,
+     "adult_per_serving_g": 0.75,
+     "kid_g": 0
+    },
+    "kid": {
+     "rule": "separate",
+     "cut": "塩をふる前に、せせり 40g とエリンギ 1/2 本を取り分け、せせりは 5mm 角ほどに刻んでから、エリンギは 1cm 角にする",
+     "note": "子どもの分は塩なしで同じグリルに並べ、中まで火を通す。冷ましてから出す。せせりは噛み切りにくいので細かく刻む。"
+    },
+    "keep": {
+     "fridge_days": 2,
+     "freezer": false,
+     "reheat": "トースターで 3 分温める。子どもの分は 1 日以内に、中まで湯気が立つまで再加熱する。"
+    },
+    "timeline": [
+     {
+      "minute": 0,
+      "lane": "grill",
+      "text": "グリルを予熱（2 分）"
+     },
+     {
+      "minute": 0,
+      "lane": "hands",
+      "text": "せせりを一口大に、エリンギを縦に裂く。子どもの分を取り分ける"
+     },
+     {
+      "minute": 2,
+      "lane": "hands",
+      "text": "大人の分に塩をふり、子どもの分と一緒にグリルの網に並べる"
+     },
+     {
+      "minute": 3,
+      "lane": "grill",
+      "text": "両面焼きで 7 分焼く"
+     },
+     {
+      "minute": 10,
+      "lane": "hands",
+      "text": "盛り付け・こしょう"
+     }
+    ],
+    "steps": [
+     {
+      "dish": "せせりとエリンギのグリル塩焼き",
+      "n": 1,
+      "title": "グリルを予熱して切る",
+      "kind": "prep",
+      "tag": "cut",
+      "minutes": 2,
+      "start": 0,
+      "heat": {
+       "equipment": "grill",
+       "level": "予熱 2 分"
+      },
+      "text": "魚焼きグリルを 2 分予熱する。せせり 200g を 3cm の一口大に切り、エリンギ 2 本を縦に手で裂く。子どもの分としてせせり 40g とエリンギ 1/2 本を別の皿に取り分ける。",
+      "cue": "グリルが温まり、庫内から熱気が出ている。せせりの水気をキッチンペーパーで拭いた",
+      "caution": null,
+      "timer": null,
+      "kid": "子どもの分は塩をふらない。取り分けた皿は別にしておく",
+      "ingredients": [
+       "せせり",
+       "エリンギ"
+      ]
+     },
+     {
+      "dish": "せせりとエリンギのグリル塩焼き",
+      "n": 2,
+      "title": "塩をふってグリルで焼く",
+      "kind": "wait",
+      "tag": "sear",
+      "minutes": 7,
+      "start": 3,
+      "heat": {
+       "equipment": "grill",
+       "level": "両面焼き"
+      },
+      "text": "大人の分のせせりとエリンギに塩 小さじ 1/4 をふり、子どもの分と一緒にグリルの網に重ならないように並べて、両面焼きで 7 分焼く（返さない）。",
+      "cue": "せせりの表面にこんがり焼き色がつき、脂が泡立つ。切って中に赤みが無く、肉汁が透明",
+      "caution": "子どもの分も中まで火が通るまで焼く。焼き色が足りなければ 1 分ずつ追加",
+      "timer": 420,
+      "kid": "子どもの分は焼けたら刻み、冷ましてから",
+      "ingredients": [
+       "塩"
+      ]
+     },
+     {
+      "dish": "せせりとエリンギのグリル塩焼き",
+      "n": 3,
+      "title": "盛り付ける",
+      "kind": "serve",
+      "tag": "serve",
+      "minutes": 1,
+      "start": 10,
+      "heat": null,
+      "text": "大人の分を皿に盛り、こしょうを少々ふる。",
+      "cue": "せせりの脂が皿でつやつや光っている",
+      "caution": null,
+      "timer": null,
+      "kid": null,
+      "ingredients": [
+       "こしょう"
+      ]
+     }
+    ],
+    "cleanup": {
+     "dishwasher": [],
+     "hand": [
+      "grill"
+     ],
+     "note": "使った日はグリルの受け皿を洗う"
+    },
+    "photo": null,
+    "stats": {
+     "cooked": 0,
+     "r_avg": null,
+     "f_avg": null,
+     "last": null
+    },
+    "detail": "full",
+    "together": [
+     "r-20261025-gyusuji-to-jagaimo-no-shio-butter-nikomi"
+    ],
+    "memo": []
+   }
+  ],
+  "model": "claude-code",
+  "prompt_version": 10,
+  "tokens": {
+   "input": 0,
+   "output": 0,
+   "cache_read": 0,
+   "cache_write": 0
+  },
+  "cost_usd": 0.0,
+  "seconds": 0
+ },
+ "finished": "2026-10-25T16:12:58+09:00"
 }
