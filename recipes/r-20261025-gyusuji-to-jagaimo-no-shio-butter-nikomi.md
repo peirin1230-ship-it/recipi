@@ -1,10 +1,10 @@
 ---
-listed: "2026-10-25T16:14:04+09:00"
+listed: "2026-10-25T20:27:23+09:00"
 id: r-20261025-gyusuji-to-jagaimo-no-shio-butter-nikomi
 title: 牛すじとじゃがいもの塩バター煮込み
 version: 1
 supersedes: null
-status: draft
+status: tried
 created: '2026-10-25'
 request: req-20261025-1611-480v
 generated_by: {model: claude-code, prompt_version: 10}
@@ -261,4 +261,4 @@ together: [r-20261025-seseri-to-eringi-no-grill-shioyaki]
 - 鍋は粗熱が取れてから、煮汁をキッチンペーパーで拭いて洗う
 
 ## 作ったときのメモ
-
+- 2026-10-25 ・ 252 分（見込み 156）・ R 75 ・ F 5 ・ そのまま ・ 📷 20261025-1.jpg
