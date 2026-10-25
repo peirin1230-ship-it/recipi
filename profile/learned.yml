@@ -23,9 +23,9 @@ kid:
   eats_well: [子ども取り分け, 炊き込みご飯, 米, 仕込み, 炊飯器, かぼちゃ, しらす, チョッパー, soup, milk, egg, quick]
   refuses: []
   works_if: []
-equipment_notes: [レンジだとにんじんが固く残るので、フライパンで炒める]
-recipe_notes: []
-notes_log_id: o8pbv4xouyp9
+equipment_notes: [レンジだとにんじんが固く残るので、フライパンで炒める, 低温調理の焼き芋風は甘みが弱く硬めに出る。温度と時間を長めに]
+recipe_notes: [焼き芋風のさつまいもは、甘みが足りないと感じる声が続く。糖が出る温度帯をゆっくり通す]
+notes_log_id: ff6v39hc0ep4
 standards: []
 needs_revision: []
 revised: []
