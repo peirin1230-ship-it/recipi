@@ -1,0 +1,21 @@
+{
+ "id": "req-20261025-1558-ig2m",
+ "ts": "2026-10-25T15:58:45+09:00",
+ "type": "recipe_detail",
+ "time_budget": 0,
+ "servings": {
+  "adults": 2,
+  "kids": 1
+ },
+ "dishes": "main+side",
+ "mood": [],
+ "use_up": [],
+ "exclude": [],
+ "note": "",
+ "mode": "pick",
+ "parent": "req-20261025-1556-63d2",
+ "alternative": 1,
+ "status": "pending",
+ "error": null,
+ "result": null
+}
