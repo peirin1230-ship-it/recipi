@@ -1,4 +1,5 @@
 ---
+listed: "2026-10-25T16:13:47+09:00"
 id: r-20261025-seseri-to-eringi-no-grill-shioyaki
 title: せせりとエリンギのグリル塩焼き
 version: 1
