@@ -3,7 +3,7 @@ id: r-20261018-satsumaimo-no-teion-chori-yakiimo-fu-but-v2
 title: さつまいもの低温調理 焼き芋風 バター塩昆布
 version: 2
 supersedes: r-20261018-satsumaimo-no-teion-chori-yakiimo-fu-but
-status: draft
+status: tried
 created: '2026-10-24'
 request: req-20261024-0852-bcpa
 generated_by: {model: claude-code, prompt_version: 1}
@@ -217,4 +217,4 @@ changes:
 - 品種の目安（紅はるか・シルクスイートなどのねっとり系）を手順に書いた — 甘さと柔らかさは品種で大きく変わる。買うときに選べるように
 
 ## 作ったときのメモ
-
+- 2026-10-25 ・ 252 分（見込み 209）・ R 92 ・ F 4 ・ そのまま ・ 📷 20261025-1.jpg
