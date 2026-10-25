@@ -1,4 +1,5 @@
 ---
+listed: "2026-10-25T16:14:04+09:00"
 id: r-20261025-gyusuji-to-jagaimo-no-shio-butter-nikomi
 title: 牛すじとじゃがいもの塩バター煮込み
 version: 1
