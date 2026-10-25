@@ -1,4 +1,5 @@
 ---
+listed: "2026-10-25T16:08:47+09:00"
 id: r-20261025-butakoma-eringi-shogayaki-fu
 title: 豚こま切れ肉とエリンギのしょうが焼き風
 version: 1
