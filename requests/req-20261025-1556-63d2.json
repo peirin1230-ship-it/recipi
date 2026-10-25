@@ -13,7 +13,44 @@
  "exclude": [],
  "note": "",
  "mode": "pick",
- "status": "pending",
+ "status": "done",
  "error": null,
- "result": null
+ "result": {
+  "feasible": true,
+  "infeasible_reason": null,
+  "nearest_options": [],
+  "alternatives": [
+   {
+    "title": "豚こま切れ肉と玉ねぎの水餃子",
+    "minutes": 40,
+    "why": "餃子の皮を使い切れて、チョッパーで具が早く作れる。子どもの分は小さく包んで中まで茹でる。",
+    "kind": "new"
+   },
+   {
+    "title": "ハツと玉ねぎのしょうが炒め",
+    "minutes": 25,
+    "why": "ハツは下味と片栗粉で柔らかく仕上げる炒め物。しょうがと酢で塩分を抑える。",
+    "kind": "new"
+   },
+   {
+    "title": "冷凍ホタテとじゃがいものミルクチャウダー",
+    "minutes": 35,
+    "why": "ホタテのうまみを牛乳で煮る汁物。じゃがいもと玉ねぎで子どもも食べやすい。",
+    "kind": "new"
+   }
+  ],
+  "recipe_id": null,
+  "recipe": null,
+  "model": "claude-code",
+  "prompt_version": 10,
+  "tokens": {
+   "input": 0,
+   "output": 0,
+   "cache_read": 0,
+   "cache_write": 0
+  },
+  "cost_usd": 0.0,
+  "seconds": 0
+ },
+ "finished": "2026-10-25T15:57:44+09:00"
 }
