@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-25T16:05:05+09:00",
+ "updated": "2026-10-25T20:26:56+09:00",
  "items": [
   {
    "id": "pxqdj5",
@@ -54,20 +54,6 @@
    "id": "pr485z",
    "name": "バナナ",
    "loc": "pantry",
-   "added": "2026-10-18",
-   "src": "kaji-quest"
-  },
-  {
-   "id": "ptazhn",
-   "name": "エリンギ",
-   "loc": "fridge",
-   "added": "2026-10-18",
-   "src": "kaji-quest"
-  },
-  {
-   "id": "ptfgfj",
-   "name": "せせり",
-   "loc": "fridge",
    "added": "2026-10-18",
    "src": "kaji-quest"
   },
