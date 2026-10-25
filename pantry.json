@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-24T11:28:54+09:00",
+ "updated": "2026-10-25T15:59:39+09:00",
  "items": [
   {
    "id": "pxqdj5",
@@ -167,6 +167,13 @@
    "name": "冷凍ホタテ",
    "loc": "fridge",
    "added": "2026-10-24",
+   "src": "manual"
+  },
+  {
+   "id": "p95nxh",
+   "name": "牛すじ",
+   "loc": "fridge",
+   "added": "2026-10-25",
    "src": "manual"
   }
  ],
