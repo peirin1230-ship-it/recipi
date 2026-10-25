@@ -1,4 +1,5 @@
 ---
+listed: "2026-10-25T16:01:33+09:00"
 id: r-20261025-reitou-hotate-to-jagaimo-no-milk-chowder
 title: 冷凍ホタテとじゃがいものミルクチャウダー
 version: 1
