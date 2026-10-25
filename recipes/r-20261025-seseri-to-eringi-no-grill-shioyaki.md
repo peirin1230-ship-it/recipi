@@ -1,10 +1,10 @@
 ---
-listed: "2026-10-25T16:13:47+09:00"
+listed: "2026-10-25T20:26:54+09:00"
 id: r-20261025-seseri-to-eringi-no-grill-shioyaki
 title: せせりとエリンギのグリル塩焼き
 version: 1
 supersedes: null
-status: draft
+status: tried
 created: '2026-10-25'
 request: req-20261025-1611-480v
 generated_by: {model: claude-code, prompt_version: 10}
@@ -139,4 +139,4 @@ together: [r-20261025-gyusuji-to-jagaimo-no-shio-butter-nikomi]
 - 使った日はグリルの受け皿を洗う
 
 ## 作ったときのメモ
-
+- 2026-10-25 ・ 252 分（見込み 11）・ R 60 ・ F 4 ・ そのまま
