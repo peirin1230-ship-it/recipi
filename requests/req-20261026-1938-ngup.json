@@ -1,0 +1,27 @@
+{
+ "id": "req-20261026-1938-ngup",
+ "ts": "2026-10-26T19:38:40+09:00",
+ "type": "recipe_detail",
+ "time_budget": 0,
+ "servings": {
+  "adults": 2,
+  "kids": 1
+ },
+ "dishes": "main+side",
+ "mood": [],
+ "use_up": [
+  "うずらの卵",
+  "ぎんなん",
+  "しらす",
+  "れんこん",
+  "かぼちゃ"
+ ],
+ "exclude": [],
+ "note": "",
+ "mode": "pick",
+ "parent": "req-20261026-1929-bmoj",
+ "alternative": 1,
+ "status": "pending",
+ "error": null,
+ "result": null
+}
