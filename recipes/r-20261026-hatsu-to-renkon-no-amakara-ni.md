@@ -4,7 +4,7 @@ id: r-20261026-hatsu-to-renkon-no-amakara-ni
 title: ハツとれんこんの甘辛煮
 version: 1
 supersedes: null
-status: draft
+status: tried
 created: '2026-10-26'
 request: req-20261026-1945-x34a
 generated_by: {model: claude-code, prompt_version: 10}
@@ -224,4 +224,4 @@ together: [r-20261026-uzura-to-ginnan-no-shiobata-itame]
 - ハツを切ったまな板と包丁は、使ったらすぐ湯で洗う
 
 ## 作ったときのメモ
-
+- 2026-10-26 ・ 123 分（見込み 48）・ R 45 ・ F 2 ・ そのまま ・ 分量 ×1.5 ・ 気づき: ハツの下処理に時間がかかる。ハツのこりっとした食感がなくなっている ・ 📷 20261026-1.jpg
