@@ -1,4 +1,5 @@
 ---
+listed: "2026-10-26T19:40:54+09:00"
 id: r-20261026-kabocha-no-teiondyouri-potage-shirasu-zo
 title: かぼちゃの低温調理ポタージュ しらす添え
 version: 1
