@@ -1,0 +1,24 @@
+{
+ "id": "req-20261026-1945-x34a",
+ "ts": "2026-10-26T19:45:16+09:00",
+ "type": "recipe_detail",
+ "time_budget": 0,
+ "servings": {
+  "adults": 2,
+  "kids": 1
+ },
+ "dishes": "main+side",
+ "mood": [],
+ "use_up": [
+  "うずらの卵",
+  "ぎんなん"
+ ],
+ "exclude": [],
+ "note": "",
+ "mode": "pick",
+ "parent": "req-20261026-1943-ipay",
+ "alternative": 2,
+ "status": "pending",
+ "error": null,
+ "result": null
+}
