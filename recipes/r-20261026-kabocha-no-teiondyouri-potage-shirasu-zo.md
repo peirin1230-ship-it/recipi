@@ -4,7 +4,7 @@ id: r-20261026-kabocha-no-teiondyouri-potage-shirasu-zo
 title: かぼちゃの低温調理ポタージュ しらす添え
 version: 1
 supersedes: null
-status: draft
+status: tried
 created: '2026-10-26'
 request: req-20261026-1938-r4hu
 generated_by: {model: claude-code, prompt_version: 10}
@@ -246,4 +246,4 @@ together: [r-20261026-renkon-to-uzura-no-tamago-no-butter-shio]
 - ミキサーは使ったらすぐ水を入れて回すと洗いやすい。低温調理器は湯が冷めてから外して拭く。
 
 ## 作ったときのメモ
-
+- 2026-10-26 ・ 123 分（見込み 104）・ R 93 ・ F 5 ・ そのまま ・ 分量 ×0.5 ・ 📷 20261026-1.jpg
