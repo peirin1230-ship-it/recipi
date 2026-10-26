@@ -15,10 +15,609 @@
  ],
  "exclude": [],
  "note": "",
- "mode": "pick",
+ "mode": "auto",
  "parent": "req-20261026-1943-ipay",
  "alternative": 2,
- "status": "pending",
+ "status": "done",
  "error": null,
- "result": null
+ "result": {
+  "feasible": true,
+  "infeasible_reason": null,
+  "nearest_options": [],
+  "alternatives": [
+   {
+    "title": "豚こま切れ肉とにんじんの炊き込みご飯",
+    "minutes": 70,
+    "why": "炊飯器で主材料も調理法も変わり、炊き込みご飯は家族の好み",
+    "kind": "new"
+   },
+   {
+    "title": "冷凍ホタテとかぼちゃのミルクスープ",
+    "minutes": 30,
+    "why": "ホタテとかぼちゃを牛乳で煮るスープ。スープは好評で子どもも食べやすい",
+    "kind": "new"
+   }
+  ],
+  "recipe_id": "r-20261026-hatsu-to-renkon-no-amakara-ni",
+  "recipe": {
+   "id": "r-20261026-hatsu-to-renkon-no-amakara-ni",
+   "title": "ハツとれんこんの甘辛煮",
+   "version": 1,
+   "supersedes": null,
+   "status": "draft",
+   "created": "2026-10-26",
+   "request": "req-20261026-1945-x34a",
+   "generated_by": {
+    "model": "claude-code",
+    "prompt_version": 10
+   },
+   "type": "recipe_detail",
+   "servings": {
+    "adults": 2,
+    "kids": 1
+   },
+   "time": {
+    "budget": 0,
+    "planned": 48,
+    "active": 26,
+    "raw_estimate": 41,
+    "speed_factor": 1.12
+   },
+   "image_text": "照りのある濃い茶色に、れんこんの白い穴がのぞく甘辛煮。ごまの白とごま油の香りが上に散る。",
+   "dishes": [
+    {
+     "name": "ハツとれんこんの甘辛煮",
+     "role": "main"
+    }
+   ],
+   "equipment": [
+    "pot20",
+    "kettle"
+   ],
+   "ingredients": [
+    {
+     "name": "ハツ",
+     "qty": 200,
+     "unit": "g",
+     "grams": 200,
+     "pantry": "ハツ",
+     "for": "ハツとれんこんの甘辛煮",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "れんこん",
+     "qty": 1,
+     "unit": "節",
+     "grams": 250,
+     "pantry": "れんこん",
+     "for": "ハツとれんこんの甘辛煮",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "酢",
+     "qty": 1,
+     "unit": "小さじ",
+     "grams": 5,
+     "pantry": null,
+     "for": "ハツとれんこんの甘辛煮",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "酒",
+     "qty": 2,
+     "unit": "大さじ",
+     "grams": 30,
+     "pantry": null,
+     "for": "ハツとれんこんの甘辛煮",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "醤油",
+     "qty": 1,
+     "unit": "大さじ",
+     "grams": 18,
+     "pantry": null,
+     "for": "ハツとれんこんの甘辛煮",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "みりん",
+     "qty": 1.5,
+     "unit": "大さじ",
+     "grams": 27,
+     "pantry": null,
+     "for": "ハツとれんこんの甘辛煮",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "砂糖",
+     "qty": 2,
+     "unit": "小さじ",
+     "grams": 6,
+     "pantry": null,
+     "for": "ハツとれんこんの甘辛煮",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "ごま油",
+     "qty": 1,
+     "unit": "小さじ",
+     "grams": 4,
+     "pantry": null,
+     "for": "ハツとれんこんの甘辛煮",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "白ごま",
+     "qty": 1,
+     "unit": "小さじ",
+     "grams": 3,
+     "pantry": null,
+     "for": "ハツとれんこんの甘辛煮",
+     "substitute": null,
+     "use_up": false
+    }
+   ],
+   "tags": [
+    "煮物",
+    "内臓肉",
+    "れんこん",
+    "仕込みなし"
+   ],
+   "salt": {
+    "total_g": 3.2,
+    "adult_per_serving_g": 1.6,
+    "kid_g": 0.1
+   },
+   "kid": {
+    "rule": "separate",
+    "cut": "ハツは5mm角に、れんこんは5mm厚のいちょう切りを1cm角以下に刻む",
+    "note": "下煮の段階（醤油の前）で取り分け、酒と水だけで柔らかく煮た物。冷ましてから出す。手づかみ用にれんこんは小さいスティックでも"
+   },
+   "keep": {
+    "fridge_days": 2,
+    "freezer": false,
+    "reheat": "湯気が立つまで。レンジ600Wで1人分1分30秒、途中で混ぜる。子どもの分は1日以内"
+   },
+   "timeline": [
+    {
+     "minute": 0,
+     "lane": "hands",
+     "text": "ケトルで湯を沸かし始める。ハツの血のかたまり・脂・筋を除いて1cm幅に切る"
+    },
+    {
+     "minute": 6,
+     "lane": "gas-l",
+     "text": "沸いた湯にハツを入れ弱火2分、火を止めて蓋で5分（余熱で柔らかく）"
+    },
+    {
+     "minute": 6,
+     "lane": "hands",
+     "text": "れんこんの皮をむき5mm厚のいちょう切り、酢水にさらす"
+    },
+    {
+     "minute": 13,
+     "lane": "gas-l",
+     "text": "ハツをザルに上げて洗い、鍋に酒・水・れんこんと戻して弱火で下煮"
+    },
+    {
+     "minute": 13,
+     "lane": "gas-r",
+     "text": "副菜: ぎんなんを割る、うずらの卵をゆでる、炒める"
+    },
+    {
+     "minute": 23,
+     "lane": "hands",
+     "text": "子どもの分を取り分けて小さく切る"
+    },
+    {
+     "minute": 25,
+     "lane": "gas-l",
+     "text": "醤油・みりん・砂糖を入れて中火→弱火で煮詰める"
+    },
+    {
+     "minute": 37,
+     "lane": "hands",
+     "text": "ごま油・白ごまで仕上げ、盛り付け・配膳"
+    }
+   ],
+   "steps": [
+    {
+     "dish": "ハツとれんこんの甘辛煮",
+     "n": 1,
+     "title": "ハツの下処理",
+     "kind": "prep",
+     "tag": "cut",
+     "minutes": 6,
+     "start": 0,
+     "heat": null,
+     "text": "電気ケトルで湯 1L を沸かし始める。ハツは半分に切って血のかたまり・白い筋・脂を包丁で除き、1cm 幅に切る。水で軽く洗う。",
+     "cue": "ハツの切り口に黒っぽい血が残っていない",
+     "caution": null,
+     "timer": null,
+     "kid": "子ども用に 1/4 量は 5mm 角に刻む（このあと取り分ける）",
+     "ingredients": [
+      "ハツ"
+     ]
+    },
+    {
+     "dish": "ハツとれんこんの甘辛煮",
+     "n": 2,
+     "title": "ハツを下ゆでして臭みを抜く",
+     "kind": "wait",
+     "tag": "boil",
+     "minutes": 7,
+     "start": 6,
+     "heat": {
+      "equipment": "gas-l",
+      "level": "弱火"
+     },
+     "text": "鍋 pot20 にケトルの湯を入れ、酒 大さじ 1 を加えて中火で沸かす。ハツを入れ弱火で 2 分ゆでたら火を止め、蓋をして 5 分余熱で火を通す（強く煮ると固くぱさつく）。",
+     "cue": "ハツを切ると中まで灰色〜薄茶で赤みが無く、汁が透明",
+     "caution": "中心まで火を通す。赤みが残っていたら 1 分追加で温める",
+     "timer": 420,
+     "kid": null,
+     "ingredients": [
+      "ハツ",
+      "酒"
+     ]
+    },
+    {
+     "dish": "ハツとれんこんの甘辛煮",
+     "n": 3,
+     "title": "れんこんを切る",
+     "kind": "prep",
+     "tag": "cut",
+     "minutes": 6,
+     "start": 6,
+     "heat": null,
+     "text": "下ゆでの待ち時間に、れんこんの皮をピーラーでむき、5mm 厚のいちょう切りにして、酢 小さじ 1 を入れた水にさらす。",
+     "cue": "切り口が白く、水にさらしても変色しない",
+     "caution": null,
+     "timer": null,
+     "kid": null,
+     "ingredients": [
+      "れんこん",
+      "酢"
+     ]
+    },
+    {
+     "dish": "ハツとれんこんの甘辛煮",
+     "n": 4,
+     "title": "下煮（酒と水だけ）",
+     "kind": "heat",
+     "tag": "simmer",
+     "minutes": 10,
+     "start": 13,
+     "heat": {
+      "equipment": "gas-l",
+      "level": "弱火"
+     },
+     "text": "ハツをザルに上げて洗い、湯を捨てた鍋に戻す。水気を切ったれんこん、水 200ml、酒 大さじ 1 を加えて蓋をし、沸いたら弱火で 10 分煮る。",
+     "cue": "れんこんに竹串がすっと通る、アクが少し浮いたらすくう",
+     "caution": null,
+     "timer": 600,
+     "kid": null,
+     "ingredients": [
+      "ハツ",
+      "れんこん",
+      "酒"
+     ]
+    },
+    {
+     "dish": "ハツとれんこんの甘辛煮",
+     "n": 5,
+     "title": "子どもの分を取り分ける",
+     "kind": "prep",
+     "tag": "kid",
+     "minutes": 2,
+     "start": 23,
+     "heat": null,
+     "text": "味付け前に、ハツとれんこんを子ども用の器に煮汁ごとお玉 2 杯分取り分ける。ハツは 5mm 角、れんこんは 1cm 角以下に刻み、冷ます。",
+     "cue": "ハツの断面に赤みが無く、れんこんは指でつぶれるくらい柔らかい",
+     "caution": null,
+     "timer": null,
+     "kid": "手づかみ用にれんこんは小さい棒状でも。熱いうちは出さず、冷めたことを手の甲で確かめる",
+     "ingredients": []
+    },
+    {
+     "dish": "ハツとれんこんの甘辛煮",
+     "n": 6,
+     "title": "味付けして煮詰める",
+     "kind": "heat",
+     "tag": "simmer",
+     "minutes": 12,
+     "start": 25,
+     "heat": {
+      "equipment": "gas-l",
+      "level": "弱火"
+     },
+     "text": "残りに醤油 大さじ 1、みりん 大さじ 1.5、砂糖 小さじ 2 を加え、中火で 2 分、弱火で蓋を外して 10 分、ときどき混ぜながら煮汁が 1/4 になるまで煮詰める。",
+     "cue": "煮汁にとろみと照りが出て、鍋底を菜箸でなぞると跡が残る",
+     "caution": "砂糖で焦げやすい。煮汁が少なくなったら火を弱める",
+     "timer": null,
+     "kid": null,
+     "ingredients": [
+      "醤油",
+      "みりん",
+      "砂糖"
+     ]
+    },
+    {
+     "dish": "ハツとれんこんの甘辛煮",
+     "n": 7,
+     "title": "仕上げて盛る",
+     "kind": "serve",
+     "tag": "serve",
+     "minutes": 4,
+     "start": 37,
+     "heat": null,
+     "text": "ごま油 小さじ 1 を回しかけて全体を混ぜ、器に盛って白ごま 小さじ 1 を散らす。副菜と一緒に配膳する。",
+     "cue": "ごま油の香りが立ち、れんこんに照りがある",
+     "caution": null,
+     "timer": null,
+     "kid": "子どもの分は味付けの前の物をそのまま出す",
+     "ingredients": [
+      "ごま油",
+      "白ごま"
+     ]
+    }
+   ],
+   "cleanup": {
+    "dishwasher": [
+     "bowl-m"
+    ],
+    "hand": [
+     "pot20"
+    ],
+    "note": "ハツを切ったまな板と包丁は、使ったらすぐ湯で洗う"
+   },
+   "photo": null,
+   "stats": {
+    "cooked": 0,
+    "r_avg": null,
+    "f_avg": null,
+    "last": null
+   },
+   "detail": "full",
+   "together": [
+    "r-20261026-uzura-to-ginnan-no-shiobata-itame"
+   ],
+   "memo": []
+  },
+  "side_recipe_ids": [
+   "r-20261026-uzura-to-ginnan-no-shiobata-itame"
+  ],
+  "side_recipes": [
+   {
+    "id": "r-20261026-uzura-to-ginnan-no-shiobata-itame",
+    "title": "うずらの卵とぎんなんの塩バター炒め",
+    "version": 1,
+    "supersedes": null,
+    "status": "draft",
+    "created": "2026-10-26",
+    "request": "req-20261026-1945-x34a",
+    "generated_by": {
+     "model": "claude-code",
+     "prompt_version": 10
+    },
+    "type": "recipe_detail",
+    "servings": {
+     "adults": 2,
+     "kids": 1
+    },
+    "time": {
+     "budget": 0,
+     "planned": 12,
+     "active": 10,
+     "raw_estimate": 10,
+     "speed_factor": 1.12
+    },
+    "image_text": "黄色いバターをまとった、つやのあるうずらの卵と翡翠色のぎんなん。塩の粒が少しきらりと光る。",
+    "dishes": [
+     {
+      "name": "うずらの卵とぎんなんの塩バター炒め",
+      "role": "side"
+     }
+    ],
+    "equipment": [
+     "fp26",
+     "microwave"
+    ],
+    "ingredients": [
+     {
+      "name": "うずらの卵",
+      "qty": 8,
+      "unit": "個",
+      "grams": 80,
+      "pantry": "うずらの卵",
+      "for": "うずらの卵とぎんなんの塩バター炒め",
+      "substitute": null,
+      "use_up": true
+     },
+     {
+      "name": "ぎんなん",
+      "qty": 12,
+      "unit": "個",
+      "grams": 30,
+      "pantry": "ぎんなん",
+      "for": "うずらの卵とぎんなんの塩バター炒め",
+      "substitute": null,
+      "use_up": true
+     },
+     {
+      "name": "バター",
+      "qty": 10,
+      "unit": "g",
+      "grams": 10,
+      "pantry": null,
+      "for": "うずらの卵とぎんなんの塩バター炒め",
+      "substitute": null,
+      "use_up": false
+     },
+     {
+      "name": "塩",
+      "qty": 0.25,
+      "unit": "小さじ",
+      "grams": 1.5,
+      "pantry": null,
+      "for": "うずらの卵とぎんなんの塩バター炒め",
+      "substitute": null,
+      "use_up": false
+     }
+    ],
+    "tags": [
+     "副菜",
+     "炒め物",
+     "うずらの卵",
+     "ぎんなん"
+    ],
+    "salt": {
+     "total_g": 1.65,
+     "adult_per_serving_g": 0.8,
+     "kid_g": 0.0
+    },
+    "kid": {
+     "rule": "separate",
+     "cut": "うずらの卵は味付け前にゆでた物を 4 等分にする。ぎんなんは子どもには出さない",
+     "note": "ぎんなんは中毒の恐れがあるので幼児には出さない。卵は完全に固くゆでて 4 等分"
+    },
+    "keep": {
+     "fridge_days": 1,
+     "freezer": false,
+     "reheat": "食べる分だけレンジ600Wで30秒。卵は温めすぎない"
+    },
+    "timeline": [
+     {
+      "minute": 0,
+      "lane": "microwave",
+      "text": "ぎんなんをレンジで割って殻と薄皮を外す"
+     },
+     {
+      "minute": 3,
+      "lane": "gas-r",
+      "text": "うずらの卵を 4 分ゆでて殻をむく"
+     },
+     {
+      "minute": 7,
+      "lane": "gas-r",
+      "text": "バターでぎんなんと卵を炒め、塩で味付け"
+     },
+     {
+      "minute": 9,
+      "lane": "hands",
+      "text": "子どもの卵を 4 等分して取り分け"
+     }
+    ],
+    "steps": [
+     {
+      "dish": "うずらの卵とぎんなんの塩バター炒め",
+      "n": 1,
+      "title": "ぎんなんの殻を割る",
+      "kind": "prep",
+      "tag": "microwave",
+      "minutes": 3,
+      "start": 0,
+      "heat": {
+       "equipment": "microwave",
+       "level": "900W"
+      },
+      "text": "ぎんなんは殻付きなら封筒か紙袋に入れ、レンジ 900W で 30 秒（途中でポンと音がする）。割って殻と薄皮を外す。",
+      "cue": "殻が割れ、中が鮮やかな翡翠色",
+      "caution": "破裂するので、必ず袋に入れて口を折る。殻が割れていない物は 10 秒ずつ追加",
+      "timer": null,
+      "kid": "ぎんなんは子どもには出さない",
+      "ingredients": [
+       "ぎんなん"
+      ]
+     },
+     {
+      "dish": "うずらの卵とぎんなんの塩バター炒め",
+      "n": 2,
+      "title": "うずらの卵をゆでる",
+      "kind": "heat",
+      "tag": "boil",
+      "minutes": 4,
+      "start": 3,
+      "heat": {
+       "equipment": "gas-r",
+       "level": "中火"
+      },
+      "text": "fp26 に水 100ml を入れて沸かし、うずらの卵を入れて 4 分ゆでる（ときどき転がす）。冷水に取って殻をむく。",
+      "cue": "卵を割ると黄身まで固まっている",
+      "caution": "卵は中まで固くゆでる",
+      "timer": 240,
+      "kid": "子どもの卵は完全に固い物を 4 等分にして取り分ける",
+      "ingredients": [
+       "うずらの卵"
+      ]
+     },
+     {
+      "dish": "うずらの卵とぎんなんの塩バター炒め",
+      "n": 3,
+      "title": "バターで炒めて塩で整える",
+      "kind": "heat",
+      "tag": "stir-fry",
+      "minutes": 3,
+      "start": 7,
+      "heat": {
+       "equipment": "gas-r",
+       "level": "中火"
+      },
+      "text": "湯を捨てた fp26 にバター 10g を溶かし、ぎんなんと卵を 1 分半炒める。塩 小さじ 1/4 を振って全体にまぶし、器に盛る。",
+      "cue": "バターが泡立ち、卵に薄い焼き色が付く",
+      "caution": null,
+      "timer": null,
+      "kid": "子どもの卵は塩の前に取り分け済み",
+      "ingredients": [
+       "バター",
+       "塩",
+       "ぎんなん",
+       "うずらの卵"
+      ]
+     }
+    ],
+    "cleanup": {
+     "dishwasher": [
+      "bowl-m"
+     ],
+     "hand": [
+      "fp26"
+     ],
+     "note": null
+    },
+    "photo": null,
+    "stats": {
+     "cooked": 0,
+     "r_avg": null,
+     "f_avg": null,
+     "last": null
+    },
+    "detail": "full",
+    "together": [
+     "r-20261026-hatsu-to-renkon-no-amakara-ni"
+    ],
+    "memo": []
+   }
+  ],
+  "model": "claude-code",
+  "prompt_version": 10,
+  "tokens": {
+   "input": 0,
+   "output": 0,
+   "cache_read": 0,
+   "cache_write": 0
+  },
+  "cost_usd": 0.0,
+  "seconds": 0
+ },
+ "finished": "2026-10-26T19:47:13+09:00"
 }
