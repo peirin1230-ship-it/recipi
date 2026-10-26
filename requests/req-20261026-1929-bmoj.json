@@ -1,0 +1,25 @@
+{
+ "id": "req-20261026-1929-bmoj",
+ "ts": "2026-10-26T19:29:12+09:00",
+ "type": "dinner",
+ "time_budget": 0,
+ "servings": {
+  "adults": 2,
+  "kids": 1
+ },
+ "dishes": "main+side",
+ "mood": [],
+ "use_up": [
+  "うずらの卵",
+  "ぎんなん",
+  "しらす",
+  "れんこん",
+  "かぼちゃ"
+ ],
+ "exclude": [],
+ "note": "",
+ "mode": "pick",
+ "status": "pending",
+ "error": null,
+ "result": null
+}
