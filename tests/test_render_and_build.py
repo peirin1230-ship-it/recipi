@@ -48,3 +48,19 @@ def test_fmt_qty_fractions():
     assert render_recipe.fmt_qty(1.5) == "1と1/2" and render_recipe.fmt_qty(0.33) == "1/3" and render_recipe.fmt_qty(2.4) == "2.4"
     assert render_recipe.qty_text({"qty": 0.5, "unit": "本", "grams": 80}) == "1/2 本（80g）"
     assert render_recipe.qty_text({"qty": 1.5, "unit": "大さじ", "grams": 27}) == "大さじ 1と1/2（27g）"
+
+
+def test_build_skips_recipes_marked_not_listed(root, tmp_path):
+    """「一覧に追加」で一緒に作る物を断ると、ページが front matter に listed: false を書く。組み立てでは一覧に出さない。"""
+    src = common.path("recipes", "r-20261008-torimomo-teriyaki.md")
+    hidden = common.path("recipes", "r-20261008-hidden-side.md")
+    text = open(src, encoding="utf-8").read().replace("id: r-20261008-torimomo-teriyaki", "id: r-20261008-hidden-side", 1)
+    text = "---\nlisted: false\n" + text[len("---\n"):]
+    open(hidden, "w", encoding="utf-8").write(text)
+    try:
+        out = str(tmp_path / "site")
+        build_site.build(out)
+        ids = [r["id"] for r in json.load(open(os.path.join(out, "data", "recipes.json"), encoding="utf-8"))]
+        assert "r-20261008-torimomo-teriyaki" in ids and "r-20261008-hidden-side" not in ids
+    finally:
+        os.remove(hidden)

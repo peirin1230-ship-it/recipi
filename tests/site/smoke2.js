@@ -117,8 +117,19 @@ const PNG = Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAEklEQVR
   await page.evaluate(() => { const now = Date.now(); localStorage.setItem('recipi.cook.r-20261009-test', JSON.stringify({ start: now - 600000, done: { s0: now - 360000, s1: now - 120000 }, tl: {}, timers: {} })); });
   await page.click('[data-act="cook-open"]'); await page.waitForFunction(() => !document.querySelector('#cook').hidden);
   assert(await page.$$eval('#cook .ck-step.is-done', s => s.length) === 2, 'cook mode resumes saved progress (2 steps done)');
+  // 分量の倍率: ×2 で材料と工程ごとの量が倍、端末に残り、記録に scale が入る
+  assert(await page.$eval('#cook .ck-ing', e => e.textContent.includes('300 g') && e.textContent.includes('大さじ 1と1/2（27g）')), 'cook mode shows the original amounts at ×1');
+  await page.click('#cook [data-act="ck-scale-set"][data-v="2"]');
+  assert(await page.$eval('#cook .ck-ing', e => e.textContent.includes('600 g') && e.textContent.includes('大さじ 3（54g）') && e.textContent.includes('×2')) && await page.$eval('#cook', e => e.textContent.includes('手順の文の中の量')), '×2 doubles the ingredient list and notes that step text stays as written');
+  assert(await page.$$eval('#cook .ck-step .ing', els => els.some(x => x.textContent.includes('大さじ 3（54g）'))), '×2 also doubles the per-step amounts (醤油 大さじ 1と1/2 → 3)');
+  await page.click('#cook [data-act="ck-scale"][data-ri="0"][data-d="-1"]');
+  assert(await page.$eval('#cook .ck-scale b', e => e.textContent.trim() === '×1.5') && await page.$eval('#cook .ck-ing', e => e.textContent.includes('450 g') && e.textContent.includes('大さじ 2と1/4（41g）')), '− steps the scale down to ×1.5 with kitchen-friendly rounding');
+  await page.click('#cook [data-act="ck-scale-set"][data-v="2"]');
+  assert(await page.evaluate(() => JSON.parse(localStorage.getItem('recipi.cook.r-20261009-test')).scales[0] === 2), 'the scale is saved with the cook progress');
+  await page.$eval('#cook .ck-scale-row', e => e.scrollIntoView({ block: 'start' })); await page.waitForTimeout(150); await page.screenshot({ path: `${SHOTS}/cook-scale-375.png` });
   await page.click('[data-act="cook-finish"]'); await page.waitForFunction(() => document.querySelector('#rec-actual'));
   assert(await page.$eval('#rec-actual', e => e.textContent === '10'), 'actual minutes computed from start time (10)');
+  assert(await page.$eval('#record .rec-scale', e => e.textContent.includes('×2')), 'record card says it was cooked at ×2');
   assert(await page.$eval('#record .rec-kq', e => e.textContent.includes('昼ごはんを作る') && e.textContent.includes('完成 12:30')), 'record card says it will be recorded in kaji-quest as 昼ごはんを作る (finished 12:30)');
   const b6 = puts.length; await page.click('[data-act="rec-save"]');
   await page.waitForFunction(() => document.querySelector('#toast') && document.querySelector('#toast').textContent.includes('記録した')); await page.waitForTimeout(300);
@@ -126,6 +137,7 @@ const PNG = Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAEklEQVR
   { const kp = puts.slice(b6).filter(p => p.url.includes('/kaji-quest/contents/logs/2026/10.jsonl')); const kl = kp.length && JSON.parse(unb64(kp[0].body.content).trim().split('\n').pop());
     assert(kp.length === 1 && kl.task_id === 'lunch-cook' && kl.title === '昼ごはんを作る' && kl.slot === 'noon' && kl.area === 'cooking' && kl.date === '2026-10-13' && kl.ts.startsWith('2026-10-13T12:30') && kl.actual_minutes === 10 && kl.weight === 1.25 && kl.weighted_minutes === 12.5 && kp[0].body.message.includes('昼ごはんを作る'), `kaji-quest line is lunch by the finish time: ${JSON.stringify(kl)}`); }
   const lp6 = puts.slice(b6).find(p => p.path === 'logs/2026/10.jsonl' && !p.url.includes('/kaji-quest/')); const last6 = lp6 && JSON.parse(unb64(lp6.body.content).trim().split('\n').pop());
+  assert(last6 && last6.scale === 2, `record keeps the scale (×2): ${last6 && last6.scale}`);
   assert(last6 && last6.recipe_id === 'r-20261009-test' && last6.request_id && last6.step_minutes && last6.step_minutes.prep === 4 && last6.step_minutes.wait === 4 && Object.keys(last6.step_minutes).length === 2, `step_minutes per kind from check timestamps: ${last6 && JSON.stringify(last6.step_minutes)} request_id=${last6 && last6.request_id}`);
   assert(await page.evaluate(() => !localStorage.getItem('recipi.cook.r-20261009-test')), 'cook progress cleared after record');
   assert(errors.length === 0, `no console errors (flows)${errors.length ? ': ' + errors.join(' | ') : ''}`);

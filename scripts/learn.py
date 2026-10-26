@@ -187,6 +187,8 @@ class Learner:
         ratios = []
         per_kind: dict[str, list[float]] = {"prep": [], "heat": [], "serve": []}
         for e in self.logs:
+            if (e.get("scale") or 1) != 1:   # 分量を倍率で変えた回は時間が違うので、速度係数に使わない
+                continue
             meta = self.recipes.get(e.get("recipe_id") or "")
             raw = ((meta or {}).get("time") or {}).get("raw_estimate")
             act = e.get("actual_minutes")

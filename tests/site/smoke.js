@@ -273,6 +273,31 @@ async function setup(browser, viewport) {
       assert(await page.$('#recipe .together') === null && await page.$('#recipe [data-act="cook-together"]') === null, 'the deleted main is no longer offered under 一緒に作る');
       mock.extra = new Set(); await page.evaluate(() => localStorage.removeItem('recipi.current')); await page.reload({ waitUntil: 'networkidle' }); await page.waitForFunction(() => document.querySelector('#week .stat'));
     }
+    // 一覧に追加: 一緒に作る物も追加するか聞く。キャンセル → 主菜だけ追加し、副菜は listed: false（一覧に出さない）。OK → 両方
+    {
+      const mk = (id, title, role, together) => ({ ...newRecipe, id, title, dishes: [{ name: title, role }], together });
+      const am = mk('r-20261026-add-main', '追加テストの主菜', 'main', ['r-20261026-add-side']), as = mk('r-20261026-add-side', '追加テストの副菜', 'side', ['r-20261026-add-main']);
+      const reqOf = () => ({ id: 'req-20261026-0000-add', type: 'dinner', status: 'done', result: { feasible: true, recipe_id: am.id, recipe: am, side_recipes: [as], alternatives: [] } });
+      const ovBefore = await page.evaluate(() => localStorage.getItem('recipi.list'));   // 後のテストが使う一覧の上書き（テスト用の新しい一皿）を戻す
+      const open = async () => { await page.evaluate(([q, ov]) => { localStorage.setItem('recipi.current', JSON.stringify({ request: q })); if (ov) localStorage.setItem('recipi.list', ov); else localStorage.removeItem('recipi.list'); }, [reqOf(), ovBefore]); await page.reload({ waitUntil: 'networkidle' }); await page.waitForFunction(() => document.querySelector('#week .stat') && document.querySelector('#recipe .rc-title')); };
+      const body = p => Buffer.from(p.body.content, 'base64').toString('utf8');
+      mock.extra = new Set([am.id, as.id]); await open();
+      const m1 = []; page.once('dialog', d => { m1.push(d.message()); d.dismiss(); });
+      const b8 = puts.length; await page.click('#recipe [data-act="list-add"]');
+      await page.waitForFunction(() => document.querySelector('#toast') && document.querySelector('#toast').textContent.includes('一覧に入れた')); await page.waitForTimeout(300);
+      const p8 = puts.slice(b8).filter(p => p.url.includes('/contents/recipes/'));
+      const mainPut = p8.find(p => p.url.includes(am.id)), sidePut = p8.find(p => p.url.includes(as.id));
+      assert(m1.length === 1 && m1[0].includes('追加テストの副菜') && m1[0].includes('一覧に追加する？'), `一覧に追加 asks whether to add the dish made together: ${m1[0]}`);
+      assert(mainPut && /^---\nlisted: "\d{4}-/.test(body(mainPut)) && sidePut && /^---\nlisted: false\n/.test(body(sidePut)) && sidePut.body.message.startsWith('[skip ci]'), `cancel adds only the main; the side gets listed: false: ${sidePut && body(sidePut).slice(0, 30).replace(/\n/g, '|')}`);
+      assert(await page.$$eval('#list .lrow', r => r.map(x => x.textContent).join('')).then(t => t.includes('追加テストの主菜') && !t.includes('追加テストの副菜')), 'only the main shows in the list on this device');
+      await open();
+      const m2 = []; page.once('dialog', d => { m2.push(d.message()); d.accept(); });
+      const b9 = puts.length; await page.click('#recipe [data-act="list-add"]');
+      await page.waitForFunction(() => document.querySelector('#toast') && document.querySelector('#toast').textContent.includes('2 品を一覧に入れた')); await page.waitForTimeout(300);
+      const p9 = puts.slice(b9).filter(p => p.url.includes('/contents/recipes/'));
+      assert(p9.length === 2 && p9.every(p => /^---\nlisted: "\d{4}-/.test(body(p))), 'OK adds both the main and the side to the list');
+      mock.extra = new Set(); await page.evaluate(ov => { localStorage.removeItem('recipi.current'); if (ov) localStorage.setItem('recipi.list', ov); else localStorage.removeItem('recipi.list'); }, ovBefore); await page.reload({ waitUntil: 'networkidle' }); await page.waitForFunction(() => document.querySelector('#week .stat'));
+    }
     // 時間チップの「無制限」→ 考えてもらう: 注文は time_budget 0、自由入力は空のまま
     await page.click('#o-budget .chip[data-v="0"]');
     assert(await page.$eval('#o-budget .chip[data-v="0"]', c => c.classList.contains('is-on')) && await page.$eval('#o-free', i => i.value === ''), '無制限 chip selects and clears the free input');

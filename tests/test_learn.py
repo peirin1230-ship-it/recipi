@@ -139,3 +139,12 @@ def test_nightly_without_key_hands_orders_to_the_routine(root, monkeypatch, tmp_
     assert fire.startswith("fire=req-")
     ids = fire[len("fire="):].split()
     assert any(common.read_json(f"requests/{i}.json")["type"] == "learn_notes" for i in ids)
+
+
+def test_scaled_cooks_do_not_move_the_speed_factor(root):
+    """分量を ×2 にした回は時間が長くなるので、速度係数に使わない。"""
+    L = learn.Learner(common.load_config(), use_llm=False, mock=True)
+    before = L.speed_factor()["overall"]
+    add_log(30, actual_minutes=60, scale=2)
+    L2 = learn.Learner(common.load_config(), use_llm=False, mock=True)
+    assert L2.speed_factor()["overall"] == before

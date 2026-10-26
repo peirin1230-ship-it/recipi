@@ -347,6 +347,12 @@ details.tip .body { margin: 2px 0 4px; padding: 10px 12px; border-radius: 12px; 
 .ck-at b { font-size: 15px; color: var(--text); }
 .ck-at .sub { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
 .ck-note { margin: 0 0 8px; font-size: 12.5px; }
+.ck-scale-row { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 8px; margin: 4px 0 10px; }
+.ck-scale-row .chip { min-height: 38px; padding: 0 12px; }
+.ck-scale { display: inline-flex; align-items: center; gap: 4px; }
+.ck-scale .tiny-btn { min-width: 40px; min-height: 36px; }
+.ck-scale b { min-width: 44px; text-align: center; font-size: 15px; }
+.ck-set-row { flex-wrap: wrap; }
 .ck-step .hd { display: flex; align-items: flex-start; gap: 10px; }
 .ck-step .hd .t { flex: 1; font-size: 19px; font-weight: 800; line-height: 1.4; }
 .ck-step .hd .t small { display: block; font-size: 13px; color: var(--muted); font-weight: 600; }

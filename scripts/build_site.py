@@ -69,6 +69,8 @@ def load_recipes_for_site() -> list[dict]:
     recipes = common.load_recipes()
     out = []
     for rid, meta in recipes.items():
+        if meta.get("listed") is False:   # 一覧に出さない（「一覧に追加」のとき一緒に作る物を断った。ページが listed: false を書く）
+            continue
         errs = validate.validate_file(meta["_path"])
         if errs:
             common.fail(f"{meta['_path']}: " + "; ".join(errs))
