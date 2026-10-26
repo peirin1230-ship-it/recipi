@@ -96,7 +96,13 @@ const PNG = Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAEklEQVR
   const pp4 = puts.slice(b4p).find(p => p.path.startsWith('photos/')); const lp4 = puts.slice(b4p).find(p => p.path === 'logs/2026/10.jsonl'); const ll4 = lp4 && unb64(lp4.body.content).trim().split('\n').map(l => JSON.parse(l));
   assert(pp4 && pp4.path === 'photos/r-20261008-torimomo-teriyaki/20261006-1.jpg' && /^[A-Za-z0-9+/=]+$/.test(pp4.body.content) && pp4.body.message.startsWith('[skip ci] photo'), `photo PUT to photos/<recipe>/<ymd>-1.jpg with [skip ci]: ${pp4 && pp4.path}`);
   assert(ll4 && ll4.length === 2 && ll4[0].id === 'abcabcabcabc' && ll4[0].photo === 'photos/r-20261008-torimomo-teriyaki/20261006-1.jpg' && ll4[0].ratings.partner === 5 && ll4[1].photo === null, `log line rewritten in place with the photo path, ratings kept: ${ll4 && ll4[0].photo}`);
-  assert(await page.$eval('#week', e => e.textContent.includes('写真がない記録 1 件')), '写真がない記録 count updates');
+  assert(await page.$eval('#week', e => e.textContent.includes('写真がない記録 0 件')), '写真がない記録: once the dish has a photo, its other records without one are not listed (one photo per dish)');
+  // 写真がもうある料理を記録するときは、写真を求めない（「それでも撮る」で開ける）
+  await page.evaluate(() => { const o = document.querySelector('#rec-pick'); if (o) o.value = 'r-20261008-torimomo-teriyaki'; });
+  if (await page.$('#rec-pick')) { await page.click('[data-act="rec-start"]'); await page.waitForFunction(() => document.querySelector('#rec-actual'));
+    assert(await page.$eval('#record', e => e.textContent.includes('この料理の写真はもうある') && !!e.querySelector('.rec-photo-have details:not([open]) #rec-photo-cam')), 'record screen of a dish that has a photo says so and keeps the camera folded under それでも撮る');
+    await page.click('[data-act="rec-cancel"]'); }
+  else assert(false, 'record picker present');
   assert(await page.$$eval('#zukan .zk img', i => i.length) === 1 && await page.$eval('#zukan', e => e.textContent.includes('写真 1 枚')), 'zukan now shows the recipe with the photo added later');
   // 5) なくなった（在庫はあるかないかだけ。数・期限・捨てたは無い）
   assert(await page.$('#pantry [data-act="p-discard"]') === null && await page.$('#pantry [data-act="p-qty"]') === null && !(await page.$eval('#pantry', e => /期限|捨てた|少ない/.test(e.textContent))), 'pantry has no discard/qty controls and no expiry or low text');

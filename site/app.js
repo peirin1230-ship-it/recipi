@@ -157,6 +157,8 @@ function statsOf(r) {
   return { cooked: Math.max(+s.cooked || 0, ls.length), r_avg: rs.length ? Math.round(avg(rs)) : (isNum(s.r_avg) ? s.r_avg : null), f_avg: fs.length ? round1(avg(fs)) : (isNum(s.f_avg) ? s.f_avg : null), last: ls[ls.length - 1].date };
 }
 // 顔写真: finish ≥ 4 の中の最新を優先、無ければ最新（§8.4）
+// その料理の写真がもうあるか（前に作ったときの記録か、レシピの photo）。一度撮った料理は撮り直さない運用なので、写真を求めない
+function hasPhoto(rid) { if (!rid) return false; if (logsOf(rid).some(e => e.photo)) return true; const r = recipeById(rid); return !!(r && r.photo); }
 function photoOf(r) {
   const ls = logsOf(r.id).filter(e => e.photo); if (!ls.length) return r.photo || null;
   const good = ls.filter(e => (e.finish || 0) >= 4);
@@ -412,7 +414,8 @@ function renderRecipe() {
 function recipeBodyHTML(r, req, res) {
   const st = statsOf(r); const photo = photoOf(r); const view = detailViewOf(r); const t = r.time || {}; const sv = r.servings || {};
   const ls = logsOf(r.id).sort((a, b) => logKey(b).localeCompare(logKey(a)));
-  const memo = ls.length ? ls.map(e => esc(memoLine(e)) + (e.photo || !e.id ? '' : latePhotoHTML(e))) : (r.memo || []).map(esc);
+  const photoed = hasPhoto(r.id);   // 写真がもうある料理は「写真を足す」を出さない
+  const memo = ls.length ? ls.map(e => esc(memoLine(e)) + (e.photo || !e.id || photoed ? '' : latePhotoHTML(e))) : (r.memo || []).map(esc);
   let h = `<h3 class="rc-title">${esc(r.title)} ${statusBadge(r.status)}${r.version > 1 ? ` <span class="badge ind">v${r.version}</span>` : ''}</h3>
   ${photo ? `<img class="rc-photo" src="${esc(gh.rawUrl(photo))}" alt="${esc(r.title)}" loading="lazy">` : `<div class="ph">${ic('bowl')}<div>${esc(r.image_text || '完成イメージはまだ無い')}<br><span class="sub">作ると写真がここに入る</span></div></div>`}
   <div class="rc-meta"><span>${ic('clock')} <b>${t.planned ?? '—'}</b> 分 <span class="sub">／ ${t.budget === 0 ? '時間無制限' : `予算 ${t.budget ?? '—'} 分`}${isNum(t.active) ? `・手を動かす ${t.active} 分` : ''}</span></span><span>大人 ${sv.adults ?? '—'}・子 ${sv.kids ?? '—'}</span>${st.cooked ? `<span>作った ${st.cooked} 回${st.r_avg != null ? `・R ${st.r_avg}` : ''}${st.f_avg != null ? `・F ${st.f_avg}` : ''}</span>` : ''}</div>
@@ -651,7 +654,9 @@ function renderRecord() {
   }
   const r = rec.recipe; const dev = rec.fidelity === 'minor' || rec.fidelity === 'major';
   sec.innerHTML = head('camera', '記録', `${rec.queueTotal > 1 ? `（${rec.queueTotal - rec.queue.length}/${rec.queueTotal}）` : ''}${esc(r.title)}`) + `
-  <div class="rec-row full"><div class="v"><label class="ghost photo-btn">${ic('camera')}写真を撮る<input type="file" accept="image/*" capture="environment" id="rec-photo-cam"></label><label class="ghost photo-btn">${ic('image')}ライブラリ<input type="file" accept="image/*" id="rec-photo-lib"></label>${rec.photo ? `<button type="button" class="ghost tiny" data-act="rec-photo-clear">${ic('x')}消す</button>` : ''}</div>${rec.photo ? `<img class="rec-preview" src="${rec.photo.url}" alt="完成写真">` : ''}</div>
+  ${(() => { const btns = `<div class="v"><label class="ghost photo-btn">${ic('camera')}写真を撮る<input type="file" accept="image/*" capture="environment" id="rec-photo-cam"></label><label class="ghost photo-btn">${ic('image')}ライブラリ<input type="file" accept="image/*" id="rec-photo-lib"></label>${rec.photo ? `<button type="button" class="ghost tiny" data-act="rec-photo-clear">${ic('x')}消す</button>` : ''}</div>${rec.photo ? `<img class="rec-preview" src="${rec.photo.url}" alt="完成写真">` : ''}`;
+    // 前に作って写真がある料理は撮らなくてよい（前の写真を図鑑とレシピに使う）。撮りたいときだけ開く
+    return hasPhoto(rec.recipe.id) && !rec.photo ? `<div class="rec-row full rec-photo-have"><p class="note">${ic('image')}この料理の写真はもうある。前の写真を図鑑とレシピに使うので、撮らなくてよい</p><details><summary>それでも撮る</summary>${btns}</details></div>` : `<div class="rec-row full">${btns}</div>`; })()}
   <div class="rec-row"><div class="lb">${ic('clock')}時間</div><div class="v rec-time"><button type="button" class="tiny-btn" data-act="rec-time" data-d="-5">-5</button><button type="button" class="tiny-btn" data-act="rec-time" data-d="-1">-1</button><b id="rec-actual">${rec.actual}</b><span>分</span><button type="button" class="tiny-btn" data-act="rec-time" data-d="1">+1</button><button type="button" class="tiny-btn" data-act="rec-time" data-d="5">+5</button><span class="sub">見込み ${rec.planned ?? '—'} 分${rec.fromCook ? ' ・ 調理モードの実測' : ''}</span></div></div>
   <div class="rec-row"><div class="lb">${ic('list')}手順どおり？</div><div class="v">${['exact', 'minor', 'major'].map(f => `<button type="button" class="tiny-btn${rec.fidelity === f ? ' is-on' : ''}" data-act="rec-fid" data-v="${f}">${FID_JA[f]}</button>`).join('')}</div></div>
   <div class="rec-row full" id="rec-dev-row"${dev ? '' : ' hidden'}><input type="text" id="rec-dev" maxlength="140" placeholder="変えた点（1 行）" value="${esc(rec.deviation)}"></div>
@@ -1121,7 +1126,7 @@ function renderWeek() {
   const errMed = median(wk.filter(e => isNum(e.planned_minutes) && e.planned_minutes > 0 && isNum(e.actual_minutes)).map(e => Math.abs(e.actual_minutes - e.planned_minutes) / e.planned_minutes));
   const weeks = []; for (let i = 11; i >= 0; i--) { const a = addDays(mon, -7 * i), b = addDays(a, 6); const es = logs.filter(e => e.date >= a && e.date <= b); weeks.push({ a, n: es.length, f: avg(es.map(e => e.f_score).filter(isNum)), r: avg(es.map(e => e.r_score).filter(isNum)) }); }
   const later = logs.filter(e => e.ratings && (e.ratings.partner == null || e.ratings.kid == null) && validDate(e.date) && daysBetween(e.date, t) <= 30).sort((a, b) => logKey(b).localeCompare(logKey(a)));
-  const noPhoto = logs.filter(e => !e.photo && e.id && validDate(e.date) && daysBetween(e.date, t) <= 30).sort((a, b) => logKey(b).localeCompare(logKey(a)));
+  const noPhoto = logs.filter(e => !e.photo && e.id && validDate(e.date) && daysBetween(e.date, t) <= 30 && !hasPhoto(e.recipe_id)).sort((a, b) => logKey(b).localeCompare(logKey(a)));   // 写真がもうある料理は出さない
   const L = state.learned || {}; const budget = +((cfg().generation || {}).budget_usd_per_month) || 0; const digest = state.digests[0];
   const named = ids => (ids || []).map(id => { const r = recipeById(id); return r ? `<button type="button" class="ghost tiny" data-act="open-recipe" data-id="${esc(id)}">${esc(r.title)}</button>` : esc(id); }).join('、');
   let h = head('chart', '今週', `${jaShort(mon)}〜${jaShort(sun)}${state.liveError ? ' ・ 記録を読めていない' : ''}`) + `
@@ -1132,7 +1137,7 @@ function renderWeek() {
       : ed === 'kid' ? `<span class="seg">${['all', 'half', 'little', 'none', 'absent'].map(k => `<button type="button" class="tiny-btn" data-act="later-kid" data-log="${esc(e.id)}" data-date="${esc(e.date)}" data-v="${k}">${KID_JA[k]}</button>`).join('')}</span>`
       : need.map(f => `<button type="button" class="ghost small" data-act="later-edit" data-id="${esc(e.id)}" data-field="${f}">${f === 'partner' ? 'パートナー' : '子ども'}の評価を入れる</button>`).join('');
     return `<div class="later"><div class="t">${logTitleHTML(e)}<small>${jaDate(e.date)}</small></div><div class="ops">${ctl}</div></div>`; }).join('') : '<p class="empty">無し</p>'}
-  <h3 class="group">写真がない記録 ${noPhoto.length} 件</h3>${noPhoto.length ? `<p class="note">あとからでも足せる（30 日以内。古い物はレシピの「作ったときのメモ」から）</p>` + noPhoto.map(e => { const r = recipeById(e.recipe_id);
+  <h3 class="group">写真がない記録 ${noPhoto.length} 件</h3>${noPhoto.length ? `<p class="note">あとからでも足せる（30 日以内。古い物はレシピの「作ったときのメモ」から）。写真がもうある料理は出さない</p>` + noPhoto.map(e => { const r = recipeById(e.recipe_id);
     return `<div class="later"><div class="t">${logTitleHTML(e)}<small>${jaDate(e.date)}</small></div><div class="ops">${latePhotoHTML(e, 'small')}</div></div>`; }).join('') : '<p class="empty">無し</p>'}
   <h3 class="group">今月</h3><div class="kv"><b>API 費用</b><span>${state.cost == null ? '—' : `$${state.cost.toFixed(2)}`}${budget ? ` ／ 上限 $${budget}` : ''}</span></div>`;
   if ((L.standards || []).length || (L.needs_revision || []).length || (L.retired || []).length) h += `<h3 class="group">学習の結果${L.updated ? ` <span class="sub">${esc(String(L.updated))}</span>` : ''}</h3><div class="kv">${(L.standards || []).length ? `<b>定番</b><span>${named(L.standards)}</span>` : ''}${(L.needs_revision || []).length ? `<b>改訂待ち</b><span>${named(L.needs_revision)}</span>` : ''}${(L.retired || []).length ? `<b>封印</b><span>${named(L.retired)}</span>` : ''}</div>`;
