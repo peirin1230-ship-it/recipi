@@ -1,4 +1,5 @@
 ---
+listed: "2026-10-26T19:47:57+09:00"
 id: r-20261026-hatsu-to-renkon-no-amakara-ni
 title: ハツとれんこんの甘辛煮
 version: 1
