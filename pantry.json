@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-26T22:41:58+09:00",
+ "updated": "2026-10-26T22:43:25+09:00",
  "items": [
   {
    "id": "pxqdj5",
@@ -93,22 +93,8 @@
    "src": "kaji-quest"
   },
   {
-   "id": "p5yobz",
-   "name": "れんこん",
-   "loc": "fridge",
-   "added": "2026-10-24",
-   "src": "kaji-quest"
-  },
-  {
    "id": "pezv0p",
    "name": "餃子の皮",
-   "loc": "fridge",
-   "added": "2026-10-24",
-   "src": "kaji-quest"
-  },
-  {
-   "id": "pq7thz",
-   "name": "ハツ",
    "loc": "fridge",
    "added": "2026-10-24",
    "src": "kaji-quest"
