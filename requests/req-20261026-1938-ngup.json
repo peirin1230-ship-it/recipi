@@ -18,10 +18,701 @@
  ],
  "exclude": [],
  "note": "",
- "mode": "pick",
+ "mode": "auto",
  "parent": "req-20261026-1929-bmoj",
  "alternative": 1,
- "status": "pending",
+ "status": "done",
  "error": null,
- "result": null
+ "result": {
+  "feasible": true,
+  "infeasible_reason": null,
+  "nearest_options": [],
+  "alternatives": [
+   {
+    "title": "豚こまとにんじんのしりしり風卵とじ",
+    "minutes": 25,
+    "why": "スライサーでにんじんを千切りにして豚こまと卵でとじる。れんこん・しらす中心の本命とは主材料も調理法も別",
+    "kind": "new"
+   },
+   {
+    "title": "ホタテとコーンのクリーム煮うどん",
+    "minutes": 20,
+    "why": "冷凍ホタテと牛乳で一鍋にまとめる。冷凍うどんで主食も兼ねる",
+    "kind": "new"
+   }
+  ],
+  "recipe_id": "r-20261026-renkon-to-uzura-no-tamago-no-shirasu-iri",
+  "recipe": {
+   "id": "r-20261026-renkon-to-uzura-no-tamago-no-shirasu-iri",
+   "title": "れんこんとうずらの卵のしらす入りふわふわ焼き",
+   "version": 1,
+   "supersedes": null,
+   "status": "draft",
+   "created": "2026-10-26",
+   "request": "req-20261026-1938-ngup",
+   "generated_by": {
+    "model": "claude-code",
+    "prompt_version": 10
+   },
+   "type": "recipe_detail",
+   "servings": {
+    "adults": 2,
+    "kids": 1
+   },
+   "time": {
+    "budget": 0,
+    "planned": 41,
+    "active": 24,
+    "raw_estimate": 34,
+    "speed_factor": 1.12
+   },
+   "image_text": "きつね色に焼けた丸いれんこんのお焼きの上に、黄身がきれいに固まったうずらの卵の半割りが 2 つのっていて、しらすの白が点々と見える。たれの照りが表面につやを出し、ふんわり厚みのある焼き上がり。",
+   "dishes": [
+    {
+     "name": "れんこんとうずらの卵のしらす入りふわふわ焼き",
+     "role": "main"
+    }
+   ],
+   "equipment": [
+    "gas-r",
+    "fp26",
+    "gas-l",
+    "pot20",
+    "kettle",
+    "bowl-m"
+   ],
+   "ingredients": [
+    {
+     "name": "れんこん",
+     "qty": 1,
+     "unit": "節",
+     "grams": 250,
+     "pantry": "れんこん",
+     "for": "れんこんとうずらの卵のしらす入りふわふわ焼き",
+     "substitute": null,
+     "use_up": true
+    },
+    {
+     "name": "うずらの卵",
+     "qty": 6,
+     "unit": "個",
+     "grams": 60,
+     "pantry": "うずらの卵",
+     "for": "れんこんとうずらの卵のしらす入りふわふわ焼き",
+     "substitute": null,
+     "use_up": true
+    },
+    {
+     "name": "しらす",
+     "qty": 20,
+     "unit": "g",
+     "grams": 20,
+     "pantry": "しらす",
+     "for": "れんこんとうずらの卵のしらす入りふわふわ焼き",
+     "substitute": null,
+     "use_up": true
+    },
+    {
+     "name": "卵",
+     "qty": 1,
+     "unit": "個",
+     "grams": 50,
+     "pantry": "卵",
+     "for": "れんこんとうずらの卵のしらす入りふわふわ焼き",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "片栗粉",
+     "qty": 1,
+     "unit": "大さじ",
+     "grams": 9,
+     "pantry": "片栗粉",
+     "for": "れんこんとうずらの卵のしらす入りふわふわ焼き",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "サラダ油",
+     "qty": 1,
+     "unit": "大さじ",
+     "grams": 12,
+     "pantry": "サラダ油",
+     "for": "れんこんとうずらの卵のしらす入りふわふわ焼き",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "醤油",
+     "qty": 1,
+     "unit": "小さじ",
+     "grams": 6,
+     "pantry": "醤油",
+     "for": "れんこんとうずらの卵のしらす入りふわふわ焼き",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "みりん",
+     "qty": 1,
+     "unit": "小さじ",
+     "grams": 6,
+     "pantry": "みりん",
+     "for": "れんこんとうずらの卵のしらす入りふわふわ焼き",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "酢",
+     "qty": 1,
+     "unit": "小さじ",
+     "grams": 5,
+     "pantry": "酢",
+     "for": "れんこんとうずらの卵のしらす入りふわふわ焼き",
+     "substitute": null,
+     "use_up": false
+    }
+   ],
+   "tags": [
+    "れんこん",
+    "うずらの卵",
+    "しらす",
+    "子ども取り分け",
+    "チョッパー",
+    "フライパン"
+   ],
+   "salt": {
+    "total_g": 1.4,
+    "adult_per_serving_g": 0.7,
+    "kid_g": 0.2
+   },
+   "kid": {
+    "rule": "separate",
+    "cut": "子ども用は直径 5cm の小さめ 2 枚。うずらの卵は 4 等分にして埋める。焼けたら 1 枚を 4 つ割りにして手づかみできる大きさに",
+    "note": "たれは大人用だけ。子どもの分は味付け前に取り分けるので塩分はしらすの湯通し後の約 0.2g。うずらの卵は完全に固ゆでし、必ず 4 等分。熱いうちは出さず、2 分冷ましてから"
+   },
+   "keep": {
+    "fridge_days": 2,
+    "freezer": true,
+    "reheat": "冷蔵はフライパンの弱火で両面 2 分ずつ蓋をして中まで温める。冷凍は自然解凍してから同様に（湯気が立つまで）"
+   },
+   "timeline": [
+    {
+     "minute": 0,
+     "lane": "hands",
+     "text": "ケトルに水 0.8L を入れてスイッチ。れんこんの皮をむき 2cm 角に切る"
+    },
+    {
+     "minute": 5,
+     "lane": "gas-l",
+     "text": "鍋にケトルの湯 約 500ml、沸いたらうずらの卵 6 個を 4 分ゆでる"
+    },
+    {
+     "minute": 5,
+     "lane": "hands",
+     "text": "チョッパーでれんこんを粗いペーストにし、しらすをケトルの残り湯で湯通し"
+    },
+    {
+     "minute": 10,
+     "lane": "hands",
+     "text": "うずらの卵を冷水にとって殻をむき切る。ボウルでタネを混ぜる"
+    },
+    {
+     "minute": 16,
+     "lane": "gas-r",
+     "text": "フライパンを中火で予熱、油を引いてタネを落とし、卵をのせる"
+    },
+    {
+     "minute": 19,
+     "lane": "gas-r",
+     "text": "蓋をして弱火で 5 分（待つ間に副菜を始める）"
+    },
+    {
+     "minute": 24,
+     "lane": "gas-r",
+     "text": "返して蓋、弱火で 4 分"
+    },
+    {
+     "minute": 28,
+     "lane": "gas-r",
+     "text": "子ども用を取り出して冷まし、大人用にたれをからめる"
+    },
+    {
+     "minute": 31,
+     "lane": "hands",
+     "text": "盛り付ける"
+    },
+    {
+     "minute": 34,
+     "lane": "hands",
+     "text": "配膳"
+    }
+   ],
+   "steps": [
+    {
+     "dish": "れんこんとうずらの卵のしらす入りふわふわ焼き",
+     "n": 1,
+     "title": "湯を沸かし、れんこんを切る",
+     "kind": "prep",
+     "tag": "cut",
+     "minutes": 5,
+     "start": 0,
+     "heat": null,
+     "text": "電気ケトルに水 0.8L を入れてスイッチを入れる。れんこん 1 節の皮をピーラーでむき、2cm 角に切ってボウル（中）に入れる。",
+     "cue": "切り口が白くつやがあり、ケトルが沸いて切れる音がする",
+     "caution": "れんこんは切ったらすぐ次の工程へ（変色するので長く置かない）",
+     "timer": null,
+     "kid": null,
+     "ingredients": [
+      "れんこん"
+     ]
+    },
+    {
+     "dish": "れんこんとうずらの卵のしらす入りふわふわ焼き",
+     "n": 2,
+     "title": "うずらの卵を固ゆでにする",
+     "kind": "wait",
+     "tag": "boil",
+     "minutes": 5,
+     "start": 5,
+     "heat": {
+      "equipment": "gas-l",
+      "level": "中火"
+     },
+     "text": "鍋にケトルの湯 約 500ml を入れて中火にかけ、ふつふつしたらうずらの卵 6 個をお玉でそっと入れて 4 分ゆでる。残りの湯（約 300ml）は次の工程で使うので取っておく。",
+     "cue": "湯が小さな泡で静かに沸いている。4 分後に 1 個割ると黄身が粉っぽく固まっている",
+     "caution": "子どもに出すので半熟にしない。必ず完全に固める",
+     "timer": 240,
+     "kid": "子ども用の 2 個も同じ鍋でゆでる（完全に固める）",
+     "ingredients": [
+      "うずらの卵"
+     ]
+    },
+    {
+     "dish": "れんこんとうずらの卵のしらす入りふわふわ焼き",
+     "n": 3,
+     "title": "れんこんを刻み、しらすの塩を抜く",
+     "kind": "prep",
+     "tag": "cut",
+     "minutes": 5,
+     "start": 5,
+     "heat": null,
+     "text": "ゆでている間に、ぶんぶんチョッパーにれんこんを入れ、10 秒ずつ 3 回回して粒が少し残る粗いペーストにする（ボウルに戻す）。ザルにしらす 20g を入れ、ケトルの残り湯を回しかけて塩を抜き、水気をよく切る。",
+     "cue": "れんこんは米粒〜ごま粒大で、ところどころ粘りが出ている。しらすは白くふっくらして水が切れている",
+     "caution": null,
+     "timer": null,
+     "kid": "しらすは湯通しすると塩分が減るので子どもにも使える",
+     "ingredients": [
+      "れんこん",
+      "しらす"
+     ]
+    },
+    {
+     "dish": "れんこんとうずらの卵のしらす入りふわふわ焼き",
+     "n": 4,
+     "title": "卵の殻をむき、タネを混ぜる",
+     "kind": "prep",
+     "tag": "cut",
+     "minutes": 6,
+     "start": 10,
+     "heat": null,
+     "text": "うずらの卵を冷水にとり、殻をむく。大人用の 4 個は半分に、子ども用の 2 個は 4 等分に切る（丸いまま出さない）。ボウルのれんこんにしらす、卵 1 個、片栗粉 大さじ 1 を加え、ゴムべらかスプーンでよく混ぜる。",
+     "cue": "タネがぽってりまとまり、スプーンですくうとゆっくり落ちる",
+     "caution": null,
+     "timer": null,
+     "kid": "子ども用のうずらの卵は 4 等分",
+     "ingredients": [
+      "うずらの卵",
+      "卵",
+      "片栗粉",
+      "れんこん",
+      "しらす"
+     ]
+    },
+    {
+     "dish": "れんこんとうずらの卵のしらす入りふわふわ焼き",
+     "n": 5,
+     "title": "フライパンにタネを落とす",
+     "kind": "heat",
+     "tag": "sear",
+     "minutes": 3,
+     "start": 16,
+     "heat": {
+      "equipment": "gas-r",
+      "level": "中火"
+     },
+     "text": "フライパン（26cm）を中火で 1 分予熱し、サラダ油 大さじ 1 を引く。タネを大きいスプーンで 4 枚（直径 7cm、厚さ 1.5cm）、端に小さく 2 枚（直径 5cm、子ども用）落とす。大人用 4 枚には半割りのうずらの卵を 2 つずつ切り口を上にして押し込み、子ども用 2 枚には 4 等分した卵を 4 切れずつのせる。",
+     "cue": "タネを落とすとじゅっと小さく音がして、縁がすぐ白っぽく固まり始める",
+     "caution": "油がはねるので、タネは鍋肌に近い所からそっと滑らせる",
+     "timer": null,
+     "kid": null,
+     "ingredients": [
+      "サラダ油",
+      "うずらの卵"
+     ]
+    },
+    {
+     "dish": "れんこんとうずらの卵のしらす入りふわふわ焼き",
+     "n": 6,
+     "title": "蓋をして蒸し焼きにする",
+     "kind": "wait",
+     "tag": "wait",
+     "minutes": 5,
+     "start": 19,
+     "heat": {
+      "equipment": "gas-r",
+      "level": "弱火"
+     },
+     "text": "蓋をして弱火で 5 分、触らずに焼く。この間に副菜（かぼちゃとぎんなんの塩バター蒸し煮）を始める。",
+     "cue": "縁が乾いて固まり、下の面が薄いきつね色（そっと持ち上げて確認）",
+     "caution": null,
+     "timer": 300,
+     "kid": null,
+     "ingredients": []
+    },
+    {
+     "dish": "れんこんとうずらの卵のしらす入りふわふわ焼き",
+     "n": 7,
+     "title": "返して反対側を焼く",
+     "kind": "heat",
+     "tag": "sear",
+     "minutes": 4,
+     "start": 24,
+     "heat": {
+      "equipment": "gas-r",
+      "level": "弱火"
+     },
+     "text": "フライ返しで 1 枚ずつ返し、蓋をしてさらに弱火で 4 分焼く。子ども用 2 枚は小さいので 3 分で一度割って確認する。",
+     "cue": "両面がきつね色。中心を箸で押すとふんわり戻り、竹串（箸）を刺して抜いても生のタネが付かない",
+     "caution": null,
+     "timer": 240,
+     "kid": "子ども用は中心まで火が通ったことを必ず確認してから取り出す",
+     "ingredients": []
+    },
+    {
+     "dish": "れんこんとうずらの卵のしらす入りふわふわ焼き",
+     "n": 8,
+     "title": "子ども用を取り分け、大人用にたれをからめる",
+     "kind": "heat",
+     "tag": "season",
+     "minutes": 3,
+     "start": 28,
+     "heat": {
+      "equipment": "gas-r",
+      "level": "弱火"
+     },
+     "text": "子ども用 2 枚を先に取り出して皿に置き、冷ます（味付けなし）。小さなボウルに醤油 小さじ 1・みりん 小さじ 1・酢 小さじ 1 を混ぜ、フライパンの大人用に回し入れて弱火で 10 秒からめ、火を止める。",
+     "cue": "たれが泡立ってすぐに照りが出て、酢の香りが立つ",
+     "caution": null,
+     "timer": null,
+     "kid": "子ども用は配膳の 2 分前までに冷ます。触れる温度になったら 4 つ割りにして手づかみできる形に",
+     "ingredients": [
+      "醤油",
+      "みりん",
+      "酢"
+     ]
+    },
+    {
+     "dish": "れんこんとうずらの卵のしらす入りふわふわ焼き",
+     "n": 9,
+     "title": "盛り付けて配膳する",
+     "kind": "serve",
+     "tag": "serve",
+     "minutes": 3,
+     "start": 31,
+     "heat": null,
+     "text": "大人用 4 枚を 2 人分ずつ皿に盛り、フライパンに残ったたれをかける。子ども用は別の小皿に。副菜と一緒に食卓へ。",
+     "cue": "表面につやがあり、うずらの卵の黄身が切り口に見えている",
+     "caution": null,
+     "timer": null,
+     "kid": "子どもの小皿の温度を指で確認してから出す",
+     "ingredients": []
+    }
+   ],
+   "cleanup": {
+    "dishwasher": [
+     "bowl-m"
+    ],
+    "hand": [
+     "fp26",
+     "pot20"
+    ],
+    "note": "チョッパーの刃は指を切らないよう気を付けて洗う。フライパンは冷めてからやわらかいスポンジで"
+   },
+   "photo": null,
+   "stats": {
+    "cooked": 0,
+    "r_avg": null,
+    "f_avg": null,
+    "last": null
+   },
+   "detail": "full",
+   "together": [
+    "r-20261026-kabocha-to-ginnan-no-shio-butter-mushini"
+   ],
+   "memo": []
+  },
+  "side_recipe_ids": [
+   "r-20261026-kabocha-to-ginnan-no-shio-butter-mushini"
+  ],
+  "side_recipes": [
+   {
+    "id": "r-20261026-kabocha-to-ginnan-no-shio-butter-mushini",
+    "title": "かぼちゃとぎんなんの塩バター蒸し煮",
+    "version": 1,
+    "supersedes": null,
+    "status": "draft",
+    "created": "2026-10-26",
+    "request": "req-20261026-1938-ngup",
+    "generated_by": {
+     "model": "claude-code",
+     "prompt_version": 10
+    },
+    "type": "recipe_detail",
+    "servings": {
+     "adults": 2,
+     "kids": 1
+    },
+    "time": {
+     "budget": 0,
+     "planned": 18,
+     "active": 12,
+     "raw_estimate": 16,
+     "speed_factor": 1.12
+    },
+    "image_text": "つやのあるオレンジ色のかぼちゃに、バターの照りがかかり、ぎんなんの淡い翡翠色が点々と見える。湯気とバターの香りがふわっと立つ。",
+    "dishes": [
+     {
+      "name": "かぼちゃとぎんなんの塩バター蒸し煮",
+      "role": "side"
+     }
+    ],
+    "equipment": [
+     "gas-l",
+     "pot20"
+    ],
+    "ingredients": [
+     {
+      "name": "かぼちゃ",
+      "qty": 0.25,
+      "unit": "個",
+      "grams": 300,
+      "pantry": "かぼちゃ",
+      "for": "かぼちゃとぎんなんの塩バター蒸し煮",
+      "substitute": null,
+      "use_up": true
+     },
+     {
+      "name": "ぎんなん（むき身）",
+      "qty": 8,
+      "unit": "粒",
+      "grams": 16,
+      "pantry": "ぎんなん",
+      "for": "かぼちゃとぎんなんの塩バター蒸し煮",
+      "substitute": null,
+      "use_up": true
+     },
+     {
+      "name": "水",
+      "qty": 0.5,
+      "unit": "カップ",
+      "grams": 100,
+      "pantry": null,
+      "for": "かぼちゃとぎんなんの塩バター蒸し煮",
+      "substitute": null,
+      "use_up": false
+     },
+     {
+      "name": "砂糖",
+      "qty": 1,
+      "unit": "小さじ",
+      "grams": 3,
+      "pantry": "砂糖",
+      "for": "かぼちゃとぎんなんの塩バター蒸し煮",
+      "substitute": null,
+      "use_up": false
+     },
+     {
+      "name": "バター",
+      "qty": 10,
+      "unit": "g",
+      "grams": 10,
+      "pantry": "バター",
+      "for": "かぼちゃとぎんなんの塩バター蒸し煮",
+      "substitute": null,
+      "use_up": false
+     },
+     {
+      "name": "塩",
+      "qty": 0.25,
+      "unit": "小さじ",
+      "grams": 1.5,
+      "pantry": "塩",
+      "for": "かぼちゃとぎんなんの塩バター蒸し煮",
+      "substitute": null,
+      "use_up": false
+     }
+    ],
+    "tags": [
+     "かぼちゃ",
+     "ぎんなん",
+     "副菜",
+     "子ども取り分け"
+    ],
+    "salt": {
+     "total_g": 1.7,
+     "adult_per_serving_g": 0.8,
+     "kid_g": 0
+    },
+    "kid": {
+     "rule": "separate",
+     "cut": "子ども用はバター・塩・ぎんなんを入れる前に取り分け、スプーンで 1cm 角くらいにつぶす",
+     "note": "ぎんなんは子どもに食べさせない（中毒と窒息の恐れ）。味付け無しでかぼちゃの甘さだけ。熱いので冷ましてから"
+    },
+    "keep": {
+     "fridge_days": 2,
+     "freezer": false,
+     "reheat": "鍋に水 小さじ 1 を足して弱火で湯気が立つまで温める"
+    },
+    "timeline": [
+     {
+      "minute": 0,
+      "lane": "hands",
+      "text": "かぼちゃの種とわたを取り、1.5cm 角に切る（主菜が蓋をして焼いている間に）"
+     },
+     {
+      "minute": 4,
+      "lane": "gas-l",
+      "text": "鍋にかぼちゃ・水・砂糖、蓋をして中火→沸いたら弱火 7 分"
+     },
+     {
+      "minute": 11,
+      "lane": "gas-l",
+      "text": "子ども用を取り分け、バター・塩・ぎんなんを加えて 2 分からめる"
+     },
+     {
+      "minute": 14,
+      "lane": "hands",
+      "text": "盛り付ける"
+     },
+     {
+      "minute": 16,
+      "lane": "hands",
+      "text": "配膳"
+     }
+    ],
+    "steps": [
+     {
+      "dish": "かぼちゃとぎんなんの塩バター蒸し煮",
+      "n": 1,
+      "title": "かぼちゃを切る",
+      "kind": "prep",
+      "tag": "cut",
+      "minutes": 4,
+      "start": 0,
+      "heat": null,
+      "text": "かぼちゃ 1/4 個の種とわたをスプーンで取り、皮を所々むいて 1.5cm 角に切る。かたいので切り口を下にして安定させ、包丁を押し込むように切る。",
+      "cue": "大きさがそろい、どれも 1.5cm 角くらい",
+      "caution": "かぼちゃはかたい。滑らないようまな板に濡れ布巾を敷く",
+      "timer": null,
+      "kid": null,
+      "ingredients": [
+       "かぼちゃ"
+      ]
+     },
+     {
+      "dish": "かぼちゃとぎんなんの塩バター蒸し煮",
+      "n": 2,
+      "title": "蒸し煮にする",
+      "kind": "wait",
+      "tag": "simmer",
+      "minutes": 7,
+      "start": 4,
+      "heat": {
+       "equipment": "gas-l",
+       "level": "弱火"
+      },
+      "text": "鍋にかぼちゃ、水 1/2 カップ、砂糖 小さじ 1 を入れて蓋をし、中火にかける。沸いたら弱火にして 7 分蒸し煮にする。",
+      "cue": "鍋から湯気が出て、竹串がすっと通る。水分はほぼなくなりかけている",
+      "caution": "焦げ付きやすいので途中で 1 回、蓋を開けて水が残っているか確認",
+      "timer": 420,
+      "kid": null,
+      "ingredients": [
+       "かぼちゃ",
+       "砂糖"
+      ]
+     },
+     {
+      "dish": "かぼちゃとぎんなんの塩バター蒸し煮",
+      "n": 3,
+      "title": "子ども用を取り分け、バターと塩で仕上げる",
+      "kind": "heat",
+      "tag": "season",
+      "minutes": 3,
+      "start": 11,
+      "heat": {
+       "equipment": "gas-l",
+       "level": "弱火"
+      },
+      "text": "かぼちゃ約 3 切れ分を子ども用に取り分け、スプーンで 1cm 角にほぐす。鍋の大人用にバター 10g、塩 小さじ 1/4、ぎんなん 8 粒を加え、鍋を揺すりながら 2 分からめる。",
+      "cue": "バターが溶けて表面につやが出て、かぼちゃが少し崩れかけている",
+      "caution": null,
+      "timer": null,
+      "kid": "ぎんなんは子どもには入れない。取り分けたかぼちゃは味付けなしでよく冷ます",
+      "ingredients": [
+       "バター",
+       "塩",
+       "ぎんなん（むき身）"
+      ]
+     },
+     {
+      "dish": "かぼちゃとぎんなんの塩バター蒸し煮",
+      "n": 4,
+      "title": "盛り付ける",
+      "kind": "serve",
+      "tag": "serve",
+      "minutes": 2,
+      "start": 14,
+      "heat": null,
+      "text": "大人用を小鉢に 2 つ盛り、子ども用を小皿に盛る。主菜と一緒に出す。",
+      "cue": "バターの照りと湯気が立っている",
+      "caution": null,
+      "timer": null,
+      "kid": "触って熱くないことを確認してから出す",
+      "ingredients": []
+     }
+    ],
+    "cleanup": {
+     "dishwasher": [],
+     "hand": [
+      "pot20"
+     ],
+     "note": "バターが付いた鍋はぬるま湯ですぐ洗うと落ちやすい"
+    },
+    "photo": null,
+    "stats": {
+     "cooked": 0,
+     "r_avg": null,
+     "f_avg": null,
+     "last": null
+    },
+    "detail": "full",
+    "together": [
+     "r-20261026-renkon-to-uzura-no-tamago-no-shirasu-iri"
+    ],
+    "memo": []
+   }
+  ],
+  "model": "claude-code",
+  "prompt_version": 10,
+  "tokens": {
+   "input": 0,
+   "output": 0,
+   "cache_read": 0,
+   "cache_write": 0
+  },
+  "cost_usd": 0.0,
+  "seconds": 0
+ },
+ "finished": "2026-10-26T19:41:44+09:00"
 }
