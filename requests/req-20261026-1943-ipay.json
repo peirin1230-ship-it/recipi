@@ -16,7 +16,44 @@
  "exclude": [],
  "note": "",
  "mode": "pick",
- "status": "pending",
+ "status": "done",
  "error": null,
- "result": null
+ "result": {
+  "feasible": true,
+  "infeasible_reason": null,
+  "nearest_options": [],
+  "alternatives": [
+   {
+    "title": "冷凍ホタテとぎんなんの炊き込みご飯（うずらの卵添え）",
+    "minutes": 70,
+    "why": "ぎんなんとうずらの卵を使い切れて、炊飯器で放っておける。子どもの分はぎんなんを外して取り分け。",
+    "kind": "new"
+   },
+   {
+    "title": "うずらの卵の豚こま巻き 照り焼き",
+    "minutes": 25,
+    "why": "うずらの卵を豚こまで巻いて焼く。一口大で手づかみしやすく、子どもの分は味付け前に取り分けられる。",
+    "kind": "new"
+   },
+   {
+    "title": "ハツとれんこんの甘辛煮",
+    "minutes": 40,
+    "why": "ハツを下ゆでして臭みを抜き、れんこんと煮含める。まだ使っていない主材料と煮る調理法の組み合わせ。",
+    "kind": "new"
+   }
+  ],
+  "recipe_id": null,
+  "recipe": null,
+  "model": "claude-code",
+  "prompt_version": 10,
+  "tokens": {
+   "input": 0,
+   "output": 0,
+   "cache_read": 0,
+   "cache_write": 0
+  },
+  "cost_usd": 0.0,
+  "seconds": 0
+ },
+ "finished": "2026-10-26T19:44:30+09:00"
 }
