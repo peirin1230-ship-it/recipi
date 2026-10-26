@@ -19,7 +19,44 @@
  "exclude": [],
  "note": "",
  "mode": "pick",
- "status": "pending",
+ "status": "done",
  "error": null,
- "result": null
+ "result": {
+  "feasible": true,
+  "infeasible_reason": null,
+  "nearest_options": [],
+  "alternatives": [
+   {
+    "title": "かぼちゃの低温調理ポタージュ しらす添え",
+    "minutes": 80,
+    "why": "かぼちゃを 85℃ で 1 時間やわらかくしてミキサーへ。低温調理器とミキサーを活かし、牛乳で子どもも食べやすい。",
+    "kind": "new"
+   },
+   {
+    "title": "れんこんとうずらの卵のしらす入りふわふわ焼き",
+    "minutes": 35,
+    "why": "すりおろしたれんこんにしらすを混ぜてフライパンで焼く。うずらの卵は半分に切って完全に固め、れんこんとしらすを一度に使い切れる。",
+    "kind": "new"
+   },
+   {
+    "title": "れんこんと豚こまの焼き餃子",
+    "minutes": 45,
+    "why": "餃子の皮とチョッパーで刻んだれんこんを使い、水餃子とは違う焼き餃子にする。れんこんの食感が出て、子どもの分は小さく包んで取り分けられる。",
+    "kind": "new"
+   }
+  ],
+  "recipe_id": null,
+  "recipe": null,
+  "model": "claude-code",
+  "prompt_version": 10,
+  "tokens": {
+   "input": 0,
+   "output": 0,
+   "cache_read": 0,
+   "cache_write": 0
+  },
+  "cost_usd": 0.0,
+  "seconds": 0
+ },
+ "finished": "2026-10-26T19:30:12+09:00"
 }
