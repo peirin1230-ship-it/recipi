@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-26T19:28:52+09:00",
+ "updated": "2026-10-26T22:41:58+09:00",
  "items": [
   {
    "id": "pxqdj5",
@@ -58,13 +58,6 @@
    "src": "kaji-quest"
   },
   {
-   "id": "pzfa5b",
-   "name": "かぼちゃ",
-   "loc": "fridge",
-   "added": "2026-10-18",
-   "src": "manual"
-  },
-  {
    "id": "p4vctj",
    "name": "冷凍うどん",
    "loc": "freezer",
@@ -95,13 +88,6 @@
   {
    "id": "pv3fc0",
    "name": "にんじん",
-   "loc": "fridge",
-   "added": "2026-10-24",
-   "src": "kaji-quest"
-  },
-  {
-   "id": "pvdwus",
-   "name": "しらす",
    "loc": "fridge",
    "added": "2026-10-24",
    "src": "kaji-quest"
