@@ -29,8 +29,8 @@ kid:
   refuses: []
   works_if: []
 equipment_notes: [レンジだとにんじんが固く残るので、フライパンで炒める, 低温調理の焼き芋風は甘みが弱く硬めに出る。温度と時間を長めに]
-recipe_notes: [焼き芋風のさつまいもは、甘みが足りないと感じる声が続く。糖が出る温度帯をゆっくり通す]
-notes_log_id: ff6v39hc0ep4
+recipe_notes: [焼き芋風のさつまいもは甘みが足りない声が続く。糖が出る温度帯をゆっくり通す]
+notes_log_id: o11vw1b0dhj3
 standards: [r-20261013-suihanki-de-tsukureru-ryori-kabocha-to-s]
 needs_revision: []
 revised: []

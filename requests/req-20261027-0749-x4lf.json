@@ -3,8 +3,28 @@
  "ts": "2026-10-27T07:49:51+09:00",
  "type": "learn_notes",
  "by": "nightly",
- "status": "pending",
+ "status": "done",
  "error": null,
- "result": null,
- "through_log_id": "o11vw1b0dhj3"
+ "result": {
+  "equipment_notes": [
+   "レンジだとにんじんが固く残るので、フライパンで炒める",
+   "低温調理の焼き芋風は甘みが弱く硬めに出る。温度と時間を長めに"
+  ],
+  "recipe_notes": [
+   "焼き芋風のさつまいもは甘みが足りない声が続く。糖が出る温度帯をゆっくり通す"
+  ],
+  "kid_works_if": [],
+  "model": "claude-code",
+  "prompt_version": 1,
+  "tokens": {
+   "input": 0,
+   "output": 0,
+   "cache_read": 0,
+   "cache_write": 0
+  },
+  "cost_usd": 0.0,
+  "seconds": 0
+ },
+ "through_log_id": "o11vw1b0dhj3",
+ "finished": "2026-10-27T07:50:13+09:00"
 }
