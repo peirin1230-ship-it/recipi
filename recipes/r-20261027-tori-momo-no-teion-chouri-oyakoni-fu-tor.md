@@ -1,4 +1,5 @@
 ---
+listed: "2026-10-27T19:00:59+09:00"
 id: r-20261027-tori-momo-no-teion-chouri-oyakoni-fu-tor
 title: 鶏もも肉の低温調理 親子煮風とろ卵とじ
 version: 1
