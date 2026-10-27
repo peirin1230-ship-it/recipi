@@ -1,4 +1,5 @@
 ---
+listed: "2026-10-27T19:01:02+09:00"
 id: r-20261027-hotate-no-milk-soup
 title: ホタテのミルクスープ
 version: 1
