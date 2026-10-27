@@ -1,0 +1,24 @@
+{
+ "id": "req-20261027-1857-zfdd",
+ "ts": "2026-10-27T18:57:11+09:00",
+ "type": "recipe_detail",
+ "time_budget": 0,
+ "servings": {
+  "adults": 2,
+  "kids": 1
+ },
+ "dishes": "main+side",
+ "mood": [],
+ "use_up": [
+  "鶏もも肉",
+  "冷凍ホタテ"
+ ],
+ "exclude": [],
+ "note": "",
+ "mode": "pick",
+ "parent": "req-20261027-1855-xxbf",
+ "alternative": 2,
+ "status": "pending",
+ "error": null,
+ "result": null
+}
