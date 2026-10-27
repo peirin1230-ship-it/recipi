@@ -15,10 +15,794 @@
  ],
  "exclude": [],
  "note": "",
- "mode": "pick",
+ "mode": "auto",
  "parent": "req-20261027-1855-xxbf",
  "alternative": 2,
- "status": "pending",
+ "status": "done",
  "error": null,
- "result": null
+ "result": {
+  "feasible": true,
+  "infeasible_reason": null,
+  "nearest_options": [],
+  "alternatives": [
+   {
+    "title": "ツナと豆腐のとろみ卵スープうどん",
+    "minutes": 20,
+    "why": "冷凍うどんで 20 分。豆腐とツナ缶の在庫を使い、レンジ中心で軽い。",
+    "kind": "standard"
+   },
+   {
+    "title": "餃子の皮でホタテとコーンのミルクグラタン",
+    "minutes": 35,
+    "why": "トースターを使う初めての調理法。ホタテの別の使い方で、餃子の皮を重ねる。",
+    "kind": "new"
+   }
+  ],
+  "recipe_id": "r-20261027-tori-momo-no-teion-chouri-oyakoni-fu-tor",
+  "recipe": {
+   "id": "r-20261027-tori-momo-no-teion-chouri-oyakoni-fu-tor",
+   "title": "鶏もも肉の低温調理 親子煮風とろ卵とじ",
+   "version": 1,
+   "supersedes": null,
+   "status": "draft",
+   "created": "2026-10-27",
+   "request": "req-20261027-1857-zfdd",
+   "generated_by": {
+    "model": "claude-code",
+    "prompt_version": 10
+   },
+   "type": "recipe_detail",
+   "servings": {
+    "adults": 2,
+    "kids": 1
+   },
+   "time": {
+    "budget": 0,
+    "planned": 157,
+    "active": 45,
+    "raw_estimate": 150,
+    "speed_factor": 1.12
+   },
+   "image_text": "とろりと半熟に固まった卵が、しっとり淡いピンクの鶏もも肉のそぎ切りを包み、湯気の立つご飯にかかっている。にんじんの赤橙が彩りに差し、だしの照りが光る。",
+   "dishes": [
+    {
+     "name": "鶏もも肉の低温調理 親子煮風とろ卵とじ",
+     "role": "main"
+    }
+   ],
+   "equipment": [
+    "sous-vide",
+    "gas-r",
+    "microwave",
+    "rice-cooker",
+    "kettle",
+    "bowl-l",
+    "fp26"
+   ],
+   "ingredients": [
+    {
+     "name": "鶏もも肉",
+     "qty": 1,
+     "unit": "枚",
+     "grams": 300,
+     "pantry": "鶏もも肉",
+     "for": "鶏もも肉の低温調理 親子煮風とろ卵とじ",
+     "substitute": null,
+     "use_up": true
+    },
+    {
+     "name": "卵",
+     "qty": 4,
+     "unit": "個",
+     "grams": 200,
+     "pantry": "卵",
+     "for": "鶏もも肉の低温調理 親子煮風とろ卵とじ",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "にんじん",
+     "qty": 0.5,
+     "unit": "本",
+     "grams": 75,
+     "pantry": "にんじん",
+     "for": "鶏もも肉の低温調理 親子煮風とろ卵とじ",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "米",
+     "qty": 1.5,
+     "unit": "合",
+     "grams": 225,
+     "pantry": "米",
+     "for": "鶏もも肉の低温調理 親子煮風とろ卵とじ",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "塩",
+     "qty": 0.25,
+     "unit": "小さじ",
+     "grams": 1.5,
+     "pantry": "塩",
+     "for": "鶏もも肉の低温調理 親子煮風とろ卵とじ",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "酒",
+     "qty": 2,
+     "unit": "大さじ",
+     "grams": 30,
+     "pantry": "酒",
+     "for": "鶏もも肉の低温調理 親子煮風とろ卵とじ",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "醤油",
+     "qty": 0.83,
+     "unit": "大さじ",
+     "grams": 15,
+     "pantry": "醤油",
+     "for": "鶏もも肉の低温調理 親子煮風とろ卵とじ",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "みりん",
+     "qty": 1,
+     "unit": "大さじ",
+     "grams": 18,
+     "pantry": "みりん",
+     "for": "鶏もも肉の低温調理 親子煮風とろ卵とじ",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "だしパック",
+     "qty": 1,
+     "unit": "袋",
+     "grams": null,
+     "pantry": "だしパック",
+     "for": "鶏もも肉の低温調理 親子煮風とろ卵とじ",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "水",
+     "qty": 1,
+     "unit": "カップ",
+     "grams": 200,
+     "pantry": null,
+     "for": "鶏もも肉の低温調理 親子煮風とろ卵とじ",
+     "substitute": null,
+     "use_up": false
+    }
+   ],
+   "tags": [
+    "低温調理",
+    "丼",
+    "時間無制限",
+    "子ども取り分け",
+    "使い切り"
+   ],
+   "salt": {
+    "total_g": 3.7,
+    "adult_per_serving_g": 1.65,
+    "kid_g": 0.4
+   },
+   "kid": {
+    "rule": "separate",
+    "cut": "鶏肉は 1cm 以下（5mm 角）、卵は完全に固める。低温調理の肉は使わず、別に中心まで加熱",
+    "note": "子どもの分は鶏肉の生を取り分けてレンジで中心まで加熱し、卵はそぼろ状に完全に固める。醤油は小さじ1/2だけ。冷ましてから出す"
+   },
+   "keep": {
+    "fridge_days": 1,
+    "freezer": false,
+    "reheat": "卵とじは作りたてが最良。残りは冷蔵 1 日、湯気が立つまで 600W で温め直す（卵は固くなる）"
+   },
+   "timeline": [
+    {
+     "minute": 0,
+     "lane": "hands",
+     "text": "鶏もも肉の下ごしらえ（子ども分 75g を冷蔵へ）"
+    },
+    {
+     "minute": 6,
+     "lane": "sous-vide",
+     "text": "ケトルの湯＋水で 65℃ に設定"
+    },
+    {
+     "minute": 10,
+     "lane": "sous-vide",
+     "text": "袋を沈める（2 時間、〜130 分）"
+    },
+    {
+     "minute": 75,
+     "lane": "hands",
+     "text": "米を研ぐ"
+    },
+    {
+     "minute": 80,
+     "lane": "hands",
+     "text": "炊飯器 通常炊飯（〜140 分）"
+    },
+    {
+     "minute": 116,
+     "lane": "hands",
+     "text": "ホタテを水に浸けて解凍（副菜）"
+    },
+    {
+     "minute": 120,
+     "lane": "hands",
+     "text": "にんじんを切る・卵を溶く"
+    },
+    {
+     "minute": 126,
+     "lane": "hands",
+     "text": "ホタテとにんじんを切る（副菜）"
+    },
+    {
+     "minute": 130,
+     "lane": "hands",
+     "text": "鶏肉を取り出して切る"
+    },
+    {
+     "minute": 131,
+     "lane": "gas-l",
+     "text": "スープ（副菜）を煮る"
+    },
+    {
+     "minute": 134,
+     "lane": "gas-r",
+     "text": "だし煮汁を作りにんじんを煮る"
+    },
+    {
+     "minute": 139,
+     "lane": "microwave",
+     "text": "子ども分の鶏肉・卵をレンジで加熱"
+    },
+    {
+     "minute": 140,
+     "lane": "gas-r",
+     "text": "大人の鶏肉を温め、卵でとじる"
+    },
+    {
+     "minute": 144,
+     "lane": "hands",
+     "text": "ご飯に盛って配膳"
+    }
+   ],
+   "steps": [
+    {
+     "dish": "鶏もも肉の低温調理 親子煮風とろ卵とじ",
+     "n": 1,
+     "title": "鶏もも肉を下ごしらえする",
+     "kind": "prep",
+     "tag": "marinate",
+     "minutes": 6,
+     "start": 0,
+     "heat": null,
+     "text": "鶏もも肉の余分な脂と筋を取り、厚さ 2cm にそろうよう開く。300g を大人用 225g と子ども用 75g に切り分け、子ども用は冷蔵庫へ。大人用に塩 小さじ 1/4 と酒 大さじ 1 を揉み込み、耐熱の袋（湯せん可）に平らに入れて空気を抜く。",
+     "cue": "袋の中で肉が平らで、厚さ 2cm 以内。袋が肉に密着している",
+     "caution": null,
+     "timer": null,
+     "kid": null,
+     "ingredients": [
+      "鶏もも肉",
+      "塩",
+      "酒"
+     ]
+    },
+    {
+     "dish": "鶏もも肉の低温調理 親子煮風とろ卵とじ",
+     "n": 2,
+     "title": "低温調理器の湯を 65℃ にする",
+     "kind": "heat",
+     "tag": "wait",
+     "minutes": 4,
+     "start": 6,
+     "heat": {
+      "equipment": "sous-vide",
+      "level": "65℃"
+     },
+     "text": "低温調理器の容器に電気ケトルで沸かした湯 1.0L を入れ、水を足して 65℃ に設定する。湯が 65℃ に届くまで待つ。",
+     "cue": "表示が 65℃ で安定する",
+     "caution": null,
+     "timer": null,
+     "kid": null,
+     "ingredients": []
+    },
+    {
+     "dish": "鶏もも肉の低温調理 親子煮風とろ卵とじ",
+     "n": 3,
+     "title": "袋ごと 65℃ で 2 時間低温調理する",
+     "kind": "wait",
+     "tag": "wait",
+     "minutes": 120,
+     "start": 10,
+     "heat": {
+      "equipment": "sous-vide",
+      "level": "65℃"
+     },
+     "text": "湯が 65℃ に届いたら袋を沈める。そのまま 2 時間（120 分）放っておく。この間に他の家事、米の準備を進める。",
+     "cue": "湯が 65℃ のまま安定、袋が湯に沈んでいる",
+     "caution": "65℃ 2 時間以上を守る。厚さが 3cm を超えるなら時間を足す",
+     "timer": 7200,
+     "kid": "子ども分の生の鶏肉は入れない（別加熱）",
+     "ingredients": []
+    },
+    {
+     "dish": "鶏もも肉の低温調理 親子煮風とろ卵とじ",
+     "n": 4,
+     "title": "米を研ぐ",
+     "kind": "prep",
+     "tag": "rice",
+     "minutes": 5,
+     "start": 75,
+     "heat": null,
+     "text": "米 1.5 合を研いで炊飯器の内釜に入れ、1.5 合の目盛まで水を入れる。",
+     "cue": "水が澄む手前。目盛に水位が合う",
+     "caution": null,
+     "timer": null,
+     "kid": null,
+     "ingredients": [
+      "米"
+     ]
+    },
+    {
+     "dish": "鶏もも肉の低温調理 親子煮風とろ卵とじ",
+     "n": 5,
+     "title": "炊飯する（通常 60 分）",
+     "kind": "wait",
+     "tag": "rice",
+     "minutes": 60,
+     "start": 80,
+     "heat": null,
+     "text": "炊飯器を通常炊飯にして押す。炊き上がりは 140 分ごろ。",
+     "cue": "炊飯ランプが点き、炊き上がる",
+     "caution": null,
+     "timer": 3600,
+     "kid": null,
+     "ingredients": []
+    },
+    {
+     "dish": "鶏もも肉の低温調理 親子煮風とろ卵とじ",
+     "n": 6,
+     "title": "にんじんを切り、卵を溶く",
+     "kind": "prep",
+     "tag": "cut",
+     "minutes": 6,
+     "start": 120,
+     "heat": null,
+     "text": "にんじん 1/2 本を長さ 4cm、厚さ 2mm の短冊に切る。卵 3 個（大人用）をボウルに割りほぐし、箸で白身を切る。卵 1 個（子ども用）は別のボウルに割りほぐす。",
+     "cue": "卵液に白身の塊がなく、にんじんが 2mm の薄さにそろう",
+     "caution": null,
+     "timer": null,
+     "kid": "子ども用の卵は別ボウルに分けておく",
+     "ingredients": [
+      "にんじん",
+      "卵"
+     ]
+    },
+    {
+     "dish": "鶏もも肉の低温調理 親子煮風とろ卵とじ",
+     "n": 7,
+     "title": "鶏肉を取り出して切る",
+     "kind": "prep",
+     "tag": "cut",
+     "minutes": 4,
+     "start": 130,
+     "heat": null,
+     "text": "袋から肉を取り出し、出た汁を小さな器に取っておく。大人用の肉を繊維を断つようにそぎ切り 1cm 厚にする。冷蔵庫の子ども用 75g は 5mm 角に切る。",
+     "cue": "切り口が淡いピンクでしっとり、肉汁が透明",
+     "caution": "低温調理の肉は大人用だけ。子どもには使わない",
+     "timer": null,
+     "kid": "子ども用の生の鶏肉は 5mm 角にして別の器へ。まな板と包丁は切ったあとすぐ洗う",
+     "ingredients": [
+      "鶏もも肉"
+     ]
+    },
+    {
+     "dish": "鶏もも肉の低温調理 親子煮風とろ卵とじ",
+     "n": 8,
+     "title": "だしの煮汁を作り、にんじんを煮る",
+     "kind": "heat",
+     "tag": "simmer",
+     "minutes": 6,
+     "start": 134,
+     "heat": {
+      "equipment": "gas-r",
+      "level": "中火"
+     },
+     "text": "フライパン（fp26）に水 150ml とだしパックを入れて中火で沸かし、沸いたら弱火 1 分でだしパックを取り出す。子ども用に 50ml を水に別取りしてボウル（大）へ。醤油 大さじ 2/3、みりん 大さじ 1、酒 大さじ 1、取っておいた袋の汁を加え、にんじんを入れて中火で 2 分煮る。",
+     "cue": "にんじんが透き通ってしんなりし、煮汁がふつふつ泡立つ",
+     "caution": null,
+     "timer": null,
+     "kid": "子ども用の煮汁 50ml は醤油を入れる前に取り分ける",
+     "ingredients": [
+      "水",
+      "だしパック",
+      "醤油",
+      "みりん",
+      "酒",
+      "にんじん"
+     ]
+    },
+    {
+     "dish": "鶏もも肉の低温調理 親子煮風とろ卵とじ",
+     "n": 9,
+     "title": "子ども用の鶏肉と卵をレンジで加熱する",
+     "kind": "heat",
+     "tag": "microwave",
+     "minutes": 4,
+     "start": 139,
+     "heat": {
+      "equipment": "microwave",
+      "level": "900W"
+     },
+     "text": "ボウル（大）の子ども用だし 50ml に 5mm 角の鶏肉 75g と醤油 小さじ 1/2 を入れ、ふんわりラップで 900W 1 分。取り出して混ぜ、さらに 30 秒。鶏肉を 1 つ割って中心まで白いか確かめる。溶き卵 1 個を回し入れ、900W 30 秒→混ぜて→20 秒でそぼろ状に完全に固める。",
+     "cue": "鶏肉の中心が白く、汁が透明。卵が固まって液が残っていない",
+     "caution": "レンジはムラが出る。必ず途中で混ぜ、中心を確かめる",
+     "timer": null,
+     "kid": "冷ましてから出す。熱いまま出さない",
+     "ingredients": [
+      "鶏もも肉",
+      "醤油",
+      "卵"
+     ]
+    },
+    {
+     "dish": "鶏もも肉の低温調理 親子煮風とろ卵とじ",
+     "n": 10,
+     "title": "大人用の鶏肉を温め、卵でとじる",
+     "kind": "heat",
+     "tag": "simmer",
+     "minutes": 4,
+     "start": 140,
+     "heat": {
+      "equipment": "gas-r",
+      "level": "中火"
+     },
+     "text": "フライパンの煮汁にそぎ切りの鶏肉を並べて 1 分温める（もう加熱済みなので煮込みすぎない）。溶き卵 3 個の 2/3 を回し入れて蓋をし、30 秒。残りを縁から流し、火を止めて蓋をして余熱 30 秒。",
+     "cue": "卵の縁が固まり、中央はとろりと半熟。鶏肉は 65℃ でしっとり",
+     "caution": null,
+     "timer": null,
+     "kid": null,
+     "ingredients": [
+      "鶏もも肉",
+      "卵"
+     ]
+    },
+    {
+     "dish": "鶏もも肉の低温調理 親子煮風とろ卵とじ",
+     "n": 11,
+     "title": "盛り付ける",
+     "kind": "serve",
+     "tag": "serve",
+     "minutes": 5,
+     "start": 144,
+     "heat": null,
+     "text": "どんぶりに炊きたてのご飯をよそい、親子煮の具を卵ごとのせて煮汁をかける。子ども用はご飯を小盛りにして、冷ました鶏肉と卵をのせる。スープ（副菜）も盛る。",
+     "cue": "卵がとろりと艶があり、湯気が立つ",
+     "caution": null,
+     "timer": null,
+     "kid": "子ども用は人肌まで冷めているか手の甲で確かめる",
+     "ingredients": [
+      "米"
+     ]
+    }
+   ],
+   "cleanup": {
+    "dishwasher": [
+     "bowl-l",
+     "bowl-m"
+    ],
+    "hand": [
+     "fp26",
+     "rice-cooker"
+    ],
+    "note": "低温調理の袋は捨て、容器の湯は冷めてから流す。生の鶏肉に触れたまな板・包丁はすぐ洗う"
+   },
+   "photo": null,
+   "stats": {
+    "cooked": 0,
+    "r_avg": null,
+    "f_avg": null,
+    "last": null
+   },
+   "detail": "full",
+   "together": [
+    "r-20261027-hotate-no-milk-soup"
+   ],
+   "memo": []
+  },
+  "side_recipe_ids": [
+   "r-20261027-hotate-no-milk-soup"
+  ],
+  "side_recipes": [
+   {
+    "id": "r-20261027-hotate-no-milk-soup",
+    "title": "ホタテのミルクスープ",
+    "version": 1,
+    "supersedes": null,
+    "status": "draft",
+    "created": "2026-10-27",
+    "request": "req-20261027-1857-zfdd",
+    "generated_by": {
+     "model": "claude-code",
+     "prompt_version": 10
+    },
+    "type": "recipe_detail",
+    "servings": {
+     "adults": 2,
+     "kids": 1
+    },
+    "time": {
+     "budget": 0,
+     "planned": 176,
+     "active": 15,
+     "raw_estimate": 150,
+     "speed_factor": 1.12
+    },
+    "image_text": "乳白色のスープに、ほんのり赤橙のにんじんとコーンの黄色、ぷっくりしたホタテが浮かぶ。湯気がやさしく立つ。",
+    "dishes": [
+     {
+      "name": "ホタテのミルクスープ",
+      "role": "side"
+     }
+    ],
+    "equipment": [
+     "pot20",
+     "gas-l",
+     "bowl-m"
+    ],
+    "ingredients": [
+     {
+      "name": "冷凍ホタテ",
+      "qty": 100,
+      "unit": "g",
+      "grams": 100,
+      "pantry": "冷凍ホタテ",
+      "for": "ホタテのミルクスープ",
+      "substitute": null,
+      "use_up": true
+     },
+     {
+      "name": "にんじん",
+      "qty": 0.5,
+      "unit": "本",
+      "grams": 75,
+      "pantry": "にんじん",
+      "for": "ホタテのミルクスープ",
+      "substitute": null,
+      "use_up": false
+     },
+     {
+      "name": "牛乳",
+      "qty": 1.5,
+      "unit": "カップ",
+      "grams": 300,
+      "pantry": "牛乳",
+      "for": "ホタテのミルクスープ",
+      "substitute": null,
+      "use_up": false
+     },
+     {
+      "name": "コーン缶",
+      "qty": 3,
+      "unit": "大さじ",
+      "grams": 45,
+      "pantry": "コーン缶",
+      "for": "ホタテのミルクスープ",
+      "substitute": null,
+      "use_up": false
+     },
+     {
+      "name": "水",
+      "qty": 0.5,
+      "unit": "カップ",
+      "grams": 100,
+      "pantry": null,
+      "for": "ホタテのミルクスープ",
+      "substitute": null,
+      "use_up": false
+     },
+     {
+      "name": "塩",
+      "qty": 0.25,
+      "unit": "小さじ",
+      "grams": 1.5,
+      "pantry": "塩",
+      "for": "ホタテのミルクスープ",
+      "substitute": null,
+      "use_up": false
+     }
+    ],
+    "tags": [
+     "副菜",
+     "スープ",
+     "子ども取り分け",
+     "使い切り"
+    ],
+    "salt": {
+     "total_g": 1.5,
+     "adult_per_serving_g": 0.75,
+     "kid_g": 0.1
+    },
+    "kid": {
+     "rule": "separate",
+     "cut": "ホタテは 5mm 角、にんじんは薄く切って柔らかく煮る",
+     "note": "塩を入れる前にお玉で子どもの分を取り分ける。ホタテは完全に火が通ってから刻む。冷ましてから出す"
+    },
+    "keep": {
+     "fridge_days": 1,
+     "freezer": false,
+     "reheat": "鍋で弱火で温め直す（沸騰させない）。温めたら 1 日以内に食べ切る"
+    },
+    "timeline": [
+     {
+      "minute": 116,
+      "lane": "hands",
+      "text": "ホタテを水に浸けて解凍"
+     },
+     {
+      "minute": 126,
+      "lane": "hands",
+      "text": "ホタテ・にんじんを切る"
+     },
+     {
+      "minute": 131,
+      "lane": "gas-l",
+      "text": "にんじんを煮てから牛乳を加え温める"
+     },
+     {
+      "minute": 139,
+      "lane": "gas-l",
+      "text": "子どもの分を取り分けて、塩で味を調える"
+     },
+     {
+      "minute": 144,
+      "lane": "hands",
+      "text": "盛り付ける"
+     }
+    ],
+    "steps": [
+     {
+      "dish": "ホタテのミルクスープ",
+      "n": 1,
+      "title": "冷凍ホタテを解凍する",
+      "kind": "prep",
+      "tag": "cut",
+      "minutes": 3,
+      "start": 116,
+      "heat": null,
+      "text": "ボウル（中）に水 カップ 1 を張り、冷凍ホタテ 100g を入れて 10 分おく（主菜の待ち時間）。",
+      "cue": "指で押すとほぼ柔らかく、凍った芯が残らない",
+      "caution": null,
+      "timer": null,
+      "kid": null,
+      "ingredients": [
+       "冷凍ホタテ"
+      ]
+     },
+     {
+      "dish": "ホタテのミルクスープ",
+      "n": 2,
+      "title": "ホタテとにんじんを切る",
+      "kind": "prep",
+      "tag": "cut",
+      "minutes": 5,
+      "start": 126,
+      "heat": null,
+      "text": "解凍したホタテを水気を拭いて 1cm 角に切る。にんじん 1/2 本は薄いいちょう切りにする。",
+      "cue": "ホタテの断面が白く、にんじんが 2mm の薄さにそろう",
+      "caution": null,
+      "timer": null,
+      "kid": null,
+      "ingredients": [
+       "冷凍ホタテ",
+       "にんじん"
+      ]
+     },
+     {
+      "dish": "ホタテのミルクスープ",
+      "n": 3,
+      "title": "にんじんを煮て、牛乳・ホタテを加える",
+      "kind": "heat",
+      "tag": "simmer",
+      "minutes": 10,
+      "start": 131,
+      "heat": {
+       "equipment": "gas-l",
+       "level": "弱火"
+      },
+      "text": "鍋（pot20）に水 カップ 1/2 とにんじんを入れて中火で 4 分、柔らかくなったら牛乳 カップ 1.5・コーン 大さじ 3・ホタテを加え、弱火で 4 分温める（沸騰させない）。",
+      "cue": "にんじんが指でつぶれるほど柔らかく、ホタテが白く縮んで固まる",
+      "caution": "沸騰させると牛乳が膜を張って吹きこぼれる",
+      "timer": null,
+      "kid": null,
+      "ingredients": [
+       "水",
+       "にんじん",
+       "牛乳",
+       "コーン缶",
+       "冷凍ホタテ"
+      ]
+     },
+     {
+      "dish": "ホタテのミルクスープ",
+      "n": 4,
+      "title": "子どもの分を取り分け、味を調える",
+      "kind": "heat",
+      "tag": "season",
+      "minutes": 3,
+      "start": 139,
+      "heat": {
+       "equipment": "gas-l",
+       "level": "弱火"
+      },
+      "text": "塩を入れる前に、お玉 1 杯（ホタテ 3 切れ・にんじん・牛乳）をボウル（中）に取り分け、ホタテを 5mm 角にほぐす。鍋に塩 小さじ 1/4 を加えて混ぜ、1 分温める。",
+      "cue": "塩がなじみ、湯気が立つ。ホタテの中心まで白い",
+      "caution": null,
+      "timer": null,
+      "kid": "取り分けた分は冷ましてから出す",
+      "ingredients": [
+       "塩"
+      ]
+     },
+     {
+      "dish": "ホタテのミルクスープ",
+      "n": 5,
+      "title": "盛り付ける",
+      "kind": "serve",
+      "tag": "serve",
+      "minutes": 3,
+      "start": 144,
+      "heat": null,
+      "text": "スープを椀によそう。",
+      "cue": "湯気が立ち、コーンの黄色が見える",
+      "caution": null,
+      "timer": null,
+      "kid": null,
+      "ingredients": []
+     }
+    ],
+    "cleanup": {
+     "dishwasher": [
+      "bowl-m"
+     ],
+     "hand": [
+      "pot20"
+     ],
+     "note": null
+    },
+    "photo": null,
+    "stats": {
+     "cooked": 0,
+     "r_avg": null,
+     "f_avg": null,
+     "last": null
+    },
+    "detail": "full",
+    "together": [
+     "r-20261027-tori-momo-no-teion-chouri-oyakoni-fu-tor"
+    ],
+    "memo": []
+   }
+  ],
+  "model": "claude-code",
+  "prompt_version": 10,
+  "tokens": {
+   "input": 0,
+   "output": 0,
+   "cache_read": 0,
+   "cache_write": 0
+  },
+  "cost_usd": 0.0,
+  "seconds": 0
+ },
+ "finished": "2026-10-27T18:59:42+09:00"
 }
