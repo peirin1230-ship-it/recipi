@@ -16,7 +16,44 @@
  "exclude": [],
  "note": "",
  "mode": "pick",
- "status": "pending",
+ "status": "done",
  "error": null,
- "result": null
+ "result": {
+  "feasible": true,
+  "infeasible_reason": null,
+  "nearest_options": [],
+  "alternatives": [
+   {
+    "title": "鶏もも肉の低温調理 皮パリ焼き 塩昆布バターだれ",
+    "minutes": 150,
+    "why": "鶏もも肉を65℃で2時間しっとり仕上げ、皮目をフライパンで焼く。ホタテはバターソテーの添えで使い切り。",
+    "kind": "new"
+   },
+   {
+    "title": "鶏もも肉と冷凍ホタテの茶碗蒸し ぎんなん入り",
+    "minutes": 45,
+    "why": "蒸し料理は一覧に無く、鶏ももとホタテを一度に使い切れる。卵は完全に固めるので子どもも食べやすい。",
+    "kind": "new"
+   },
+   {
+    "title": "鶏もも肉とホタテのミルク味噌うどん鍋",
+    "minutes": 35,
+    "why": "冷凍うどん・牛乳・にんじんで鍋仕立て。子どもは味付け前に取り分けられる。",
+    "kind": "new"
+   }
+  ],
+  "recipe_id": null,
+  "recipe": null,
+  "model": "claude-code",
+  "prompt_version": 10,
+  "tokens": {
+   "input": 0,
+   "output": 0,
+   "cache_read": 0,
+   "cache_write": 0
+  },
+  "cost_usd": 0.0,
+  "seconds": 0
+ },
+ "finished": "2026-10-27T18:54:58+09:00"
 }
