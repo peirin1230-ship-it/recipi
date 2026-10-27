@@ -16,7 +16,44 @@
  "exclude": [],
  "note": "",
  "mode": "pick",
- "status": "pending",
+ "status": "done",
  "error": null,
- "result": null
+ "result": {
+  "feasible": true,
+  "infeasible_reason": null,
+  "nearest_options": [],
+  "alternatives": [
+   {
+    "title": "鶏もも肉のヨーグルト漬け 魚焼きグリル焼き にんじんの塩昆布ナムル添え",
+    "minutes": 50,
+    "why": "鶏もも肉を使い切れる。ヨーグルトでしっとり、グリルで皮目がパリッと。副菜はにんじんをスライサーで細切りにして塩昆布で和える。",
+    "kind": "new"
+   },
+   {
+    "title": "鶏もも肉と冷凍ホタテの焼き餃子 ごま酢だれ",
+    "minutes": 60,
+    "why": "鶏もも肉とホタテを両方使い切れる。チョッパーで刻んで餃子の皮で包み、子どもは小さく包んで手づかみ向き。副菜はにんじんのしりしり風。",
+    "kind": "new"
+   },
+   {
+    "title": "鶏もも肉の低温調理 親子煮風とろ卵とじ ホタテのだし添え",
+    "minutes": 150,
+    "why": "鶏もも肉を65℃で低温調理してやわらかく、卵とじで仕上げる。時間無制限向き。ホタテは副菜のミルクスープに使い切る。",
+    "kind": "new"
+   }
+  ],
+  "recipe_id": null,
+  "recipe": null,
+  "model": "claude-code",
+  "prompt_version": 10,
+  "tokens": {
+   "input": 0,
+   "output": 0,
+   "cache_read": 0,
+   "cache_write": 0
+  },
+  "cost_usd": 0.0,
+  "seconds": 0
+ },
+ "finished": "2026-10-27T18:56:36+09:00"
 }
