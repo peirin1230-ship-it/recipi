@@ -3,8 +3,40 @@
  "ts": "2026-11-02T01:59:07+09:00",
  "type": "digest",
  "by": "weekly",
- "status": "pending",
+ "status": "done",
  "error": null,
- "result": null,
- "week": "2026-W45"
+ "result": {
+  "week": "2026-W45",
+  "proposals": [
+   {
+    "title": "鶏ももと卵の親子うどん",
+    "minutes": 20,
+    "why": "冷凍うどんと鶏ももで、洗い物が少なく平日向き"
+   },
+   {
+    "title": "ホタテとコーンのミルクワンタンスープ",
+    "minutes": 20,
+    "why": "餃子の皮と牛乳を使い、子どもが好きな汁物にできる"
+   },
+   {
+    "title": "鶏ももの低温調理 コーンミルク煮",
+    "minutes": 90,
+    "why": "休日に低温調理器でしっとり仕上げ、にんじんも一緒に"
+   }
+  ],
+  "shopping": [],
+  "comment": "来週は牛乳と卵を使い切る日を作ってみる",
+  "model": "claude-code",
+  "prompt_version": 1,
+  "tokens": {
+   "input": 0,
+   "output": 0,
+   "cache_read": 0,
+   "cache_write": 0
+  },
+  "cost_usd": 0.0,
+  "seconds": 1
+ },
+ "week": "2026-W45",
+ "finished": "2026-11-02T01:59:35+09:00"
 }
