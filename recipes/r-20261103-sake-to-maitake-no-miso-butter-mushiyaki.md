@@ -1,4 +1,5 @@
 ---
+listed: "2026-11-03T17:37:33+09:00"
 id: r-20261103-sake-to-maitake-no-miso-butter-mushiyaki
 title: 鮭とまいたけの味噌バター蒸し焼き
 version: 1
