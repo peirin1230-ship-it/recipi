@@ -1,4 +1,5 @@
 ---
+listed: "2026-11-03T17:59:12+09:00"
 id: r-20261103-ebi-to-hakusai-no-yaki-gyoza
 title: エビと白菜の焼き餃子
 version: 1
