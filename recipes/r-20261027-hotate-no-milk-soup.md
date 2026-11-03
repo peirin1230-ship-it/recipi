@@ -4,7 +4,7 @@ id: r-20261027-hotate-no-milk-soup
 title: ホタテのミルクスープ
 version: 1
 supersedes: null
-status: draft
+status: tried
 created: '2026-10-27'
 request: req-20261027-1857-zfdd
 generated_by: {model: claude-code, prompt_version: 10}
@@ -174,4 +174,4 @@ together: [r-20261027-tori-momo-no-teion-chouri-oyakoni-fu-tor]
 - 手洗い: 鍋
 
 ## 作ったときのメモ
-
+- 2026-11-03 ・ 107 分（見込み 176）・ R 74 ・ F 3.7 ・ 少し変えた: 味付けに鶏ガラをいれた ・ 分量 ×2.5 ・ 📷 20261103-1.jpg
