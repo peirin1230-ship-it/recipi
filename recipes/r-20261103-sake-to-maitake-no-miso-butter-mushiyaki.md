@@ -1,5 +1,5 @@
 ---
-listed: "2026-11-03T17:37:33+09:00"
+listed: '2026-11-03T17:37:33+09:00'
 id: r-20261103-sake-to-maitake-no-miso-butter-mushiyaki
 title: 鮭とまいたけの味噌バター蒸し焼き
 version: 1
@@ -142,8 +142,8 @@ cleanup:
   dishwasher: [bowl-m]
   hand: [fp26]
   note: たれが焦げ付いたらぬるま湯に浸す
-photo: null
-stats: {cooked: 0, r_avg: null, f_avg: null, last: null}
+photo: photos/r-20261103-sake-to-maitake-no-miso-butter-mushiyaki/20261103-1.jpg
+stats: {cooked: 1, r_avg: 60, f_avg: 3.7, last: '2026-11-03'}
 detail: full
 together: [r-20261103-hakusai-to-ninjin-no-tuna-shiokombu-mush]
 ---
@@ -229,4 +229,5 @@ together: [r-20261103-hakusai-to-ninjin-no-tuna-shiokombu-mush]
 - たれが焦げ付いたらぬるま湯に浸す
 
 ## 作ったときのメモ
+
 - 2026-11-03 ・ 107 分（見込み 26）・ R 60 ・ F 3.7 ・ そのまま ・ 📷 20261103-1.jpg

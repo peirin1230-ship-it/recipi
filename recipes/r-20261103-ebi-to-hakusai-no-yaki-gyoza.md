@@ -1,5 +1,5 @@
 ---
-listed: "2026-11-03T17:59:12+09:00"
+listed: '2026-11-03T17:59:12+09:00'
 id: r-20261103-ebi-to-hakusai-no-yaki-gyoza
 title: エビと白菜の焼き餃子
 version: 1
@@ -175,8 +175,8 @@ cleanup:
   dishwasher: [bowl-l, bowl-m]
   hand: [fp26]
   note: チョッパーの刃は手洗い
-photo: null
-stats: {cooked: 0, r_avg: null, f_avg: null, last: null}
+photo: photos/r-20261103-ebi-to-hakusai-no-yaki-gyoza/20261103-1.jpg
+stats: {cooked: 1, r_avg: 78, f_avg: 4.7, last: '2026-11-03'}
 detail: full
 together: [r-20261103-ninjin-to-tsuna-no-shirishiri-tamago-ita]
 ---
@@ -269,4 +269,5 @@ together: [r-20261103-ninjin-to-tsuna-no-shirishiri-tamago-ita]
 - チョッパーの刃は手洗い
 
 ## 作ったときのメモ
+
 - 2026-11-03 ・ 107 分（見込み 69）・ R 78 ・ F 4.7 ・ そのまま ・ 気づき: 餃子を包むのとひっくり返すのが難しかった。コツが欲しい ・ 📷 20261103-1.jpg

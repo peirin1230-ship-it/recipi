@@ -1,5 +1,5 @@
 ---
-listed: "2026-10-27T19:01:02+09:00"
+listed: '2026-10-27T19:01:02+09:00'
 id: r-20261027-hotate-no-milk-soup
 title: ホタテのミルクスープ
 version: 1
@@ -107,8 +107,8 @@ cleanup:
   dishwasher: [bowl-m]
   hand: [pot20]
   note: null
-photo: null
-stats: {cooked: 0, r_avg: null, f_avg: null, last: null}
+photo: photos/r-20261027-hotate-no-milk-soup/20261103-1.jpg
+stats: {cooked: 1, r_avg: 74, f_avg: 3.7, last: '2026-11-03'}
 detail: full
 together: [r-20261027-tori-momo-no-teion-chouri-oyakoni-fu-tor]
 ---
@@ -174,4 +174,5 @@ together: [r-20261027-tori-momo-no-teion-chouri-oyakoni-fu-tor]
 - 手洗い: 鍋
 
 ## 作ったときのメモ
+
 - 2026-11-03 ・ 107 分（見込み 176）・ R 74 ・ F 3.7 ・ 少し変えた: 味付けに鶏ガラをいれた ・ 分量 ×2.5 ・ 📷 20261103-1.jpg

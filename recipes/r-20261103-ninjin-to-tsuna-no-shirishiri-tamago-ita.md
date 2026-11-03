@@ -1,5 +1,5 @@
 ---
-listed: "2026-11-03T17:59:14+09:00"
+listed: '2026-11-03T17:59:14+09:00'
 id: r-20261103-ninjin-to-tsuna-no-shirishiri-tamago-ita
 title: にんじんとツナのしりしり卵炒め
 version: 1
@@ -106,8 +106,8 @@ cleanup:
   dishwasher: [bowl-m]
   hand: [pot20]
   note: null
-photo: null
-stats: {cooked: 0, r_avg: null, f_avg: null, last: null}
+photo: photos/r-20261103-ninjin-to-tsuna-no-shirishiri-tamago-ita/20261103-1.jpg
+stats: {cooked: 1, r_avg: 60, f_avg: 5.0, last: '2026-11-03'}
 detail: full
 together: [r-20261103-ebi-to-hakusai-no-yaki-gyoza]
 ---
@@ -172,4 +172,5 @@ together: [r-20261103-ebi-to-hakusai-no-yaki-gyoza]
 - 手洗い: 鍋
 
 ## 作ったときのメモ
+
 - 2026-11-03 ・ 107 分（見込み 15）・ R 60 ・ F 5 ・ そのまま ・ 分量 ×2 ・ 📷 20261103-1.jpg
