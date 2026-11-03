@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-03T17:30:14+09:00",
+ "updated": "2026-11-03T17:46:32+09:00",
  "items": [
   {
    "id": "pxqdj5",
@@ -175,6 +175,13 @@
    "loc": "fridge",
    "added": "2026-11-03",
    "src": "kaji-quest"
+  },
+  {
+   "id": "phe6w6",
+   "name": "大豆水煮",
+   "loc": "pantry",
+   "added": "2026-11-03",
+   "src": "manual"
   }
  ],
  "staples": {
