@@ -3,7 +3,146 @@
  "ts": "2026-11-03T09:21:46+09:00",
  "type": "suggest_items",
  "note": "",
- "status": "pending",
+ "status": "done",
  "error": null,
- "result": null
+ "result": {
+  "items": [
+   {
+    "name": "白菜",
+    "qty": "1/4 個",
+    "reason": "旬で、豆腐・ホタテ・卵と合わせて主菜の土台になる",
+    "enables": [
+     "白菜と豆腐の卵とじ煮",
+     "白菜とホタテのとろみ煮"
+    ],
+    "priority": "main",
+    "known": true
+   },
+   {
+    "name": "鶏むね肉",
+    "qty": "1 枚",
+    "reason": "低温調理器でしっとり仕上げ、平日の主菜が 2 回分組める",
+    "enables": [
+     "鶏むね肉の低温調理 塩昆布和え",
+     "親子丼風"
+    ],
+    "priority": "main",
+    "known": true
+   },
+   {
+    "name": "鮭",
+    "qty": "2 切れ",
+    "reason": "魚焼きグリルで焼くだけの主菜。子どもの分は骨を取って取り分けられる",
+    "enables": [
+     "鮭のグリル 塩焼き",
+     "鮭と豆腐のみそ汁"
+    ],
+    "priority": "main",
+    "known": true
+   },
+   {
+    "name": "豚こま切れ肉",
+    "qty": "250g",
+    "reason": "白菜・豆腐・うどんと合わせて 25 分の主菜が作れる",
+    "enables": [
+     "豚こまと白菜の煮込みうどん"
+    ],
+    "priority": "main",
+    "known": true
+   },
+   {
+    "name": "長ねぎ",
+    "qty": "2 本",
+    "reason": "鮭の塩焼きの薬味や、うどん・汁物の香りづけに",
+    "enables": [
+     "ねぎ塩だれの豆腐ステーキ"
+    ],
+    "priority": "new",
+    "known": true
+   },
+   {
+    "name": "厚揚げ",
+    "qty": "1 枚",
+    "reason": "グリルかトースターで焼いて、白菜や卵と炒め煮にする主菜に使う",
+    "enables": [
+     "厚揚げと白菜の中華風炒め煮"
+    ],
+    "priority": "new",
+    "known": true
+   },
+   {
+    "name": "大根",
+    "qty": "1/2 本",
+    "reason": "スライサーで細切りにして、ツナ入りの大根しりしりを作るのに要る",
+    "enables": [
+     "大根とツナの卵しりしり"
+    ],
+    "priority": "new",
+    "known": true
+   },
+   {
+    "name": "ごぼう",
+    "qty": "1 本",
+    "reason": "スライサーで細切りにしてきんぴら風の混ぜご飯を作るのに要る",
+    "enables": [
+     "ごぼうとツナの混ぜご飯"
+    ],
+    "priority": "new",
+    "known": true
+   },
+   {
+    "name": "ブロッコリー",
+    "qty": "1 株",
+    "reason": "子どもが手づかみしやすく、ツナ・卵・しらすと相性がよい",
+    "enables": [
+     "ブロッコリーと卵のチーズ焼き"
+    ],
+    "priority": "kid",
+    "known": true
+   },
+   {
+    "name": "しらす",
+    "qty": "1 パック",
+    "reason": "学習結果で子どもがよく食べ、塩分少なめの味つけに使える",
+    "enables": [
+     "しらすと豆腐の卵焼き"
+    ],
+    "priority": "kid",
+    "known": true
+   },
+   {
+    "name": "さつまいも",
+    "qty": "2 本",
+    "reason": "旬。ミキサーのポタージュや蒸し煮にでき、子どもが食べやすい",
+    "enables": [
+     "さつまいもと牛乳のポタージュ"
+    ],
+    "priority": "season",
+    "known": true
+   },
+   {
+    "name": "鶏がらスープの素",
+    "qty": null,
+    "reason": "切らすと汁物・とろみ煮の味が決まらない常備品",
+    "enables": [
+     "白菜とホタテのとろみ煮"
+    ],
+    "priority": "stock",
+    "known": true
+   }
+  ],
+  "note": "白菜と鶏むね・鮭があれば、手持ちの豆腐・卵・ホタテと合わせて平日の主菜が組める",
+  "feasible": true,
+  "model": "claude-code",
+  "prompt_version": 2,
+  "tokens": {
+   "input": 0,
+   "output": 0,
+   "cache_read": 0,
+   "cache_write": 0
+  },
+  "cost_usd": 0.0,
+  "seconds": 0
+ },
+ "finished": "2026-11-03T09:22:25+09:00"
 }
