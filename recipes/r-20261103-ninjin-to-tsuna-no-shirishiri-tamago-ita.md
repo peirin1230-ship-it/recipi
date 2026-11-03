@@ -1,4 +1,5 @@
 ---
+listed: "2026-11-03T17:59:14+09:00"
 id: r-20261103-ninjin-to-tsuna-no-shirishiri-tamago-ita
 title: にんじんとツナのしりしり卵炒め
 version: 1
