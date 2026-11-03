@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-03T19:52:04+09:00",
+ "updated": "2026-11-03T19:52:41+09:00",
  "items": [
   {
    "id": "pxqdj5",
@@ -128,22 +128,8 @@
    "src": "kaji-quest"
   },
   {
-   "id": "papzqi",
-   "name": "まいたけ",
-   "loc": "fridge",
-   "added": "2026-11-03",
-   "src": "kaji-quest"
-  },
-  {
    "id": "p6kjha",
    "name": "バナメイエビ",
-   "loc": "fridge",
-   "added": "2026-11-03",
-   "src": "kaji-quest"
-  },
-  {
-   "id": "phrspz",
-   "name": "鮭",
    "loc": "fridge",
    "added": "2026-11-03",
    "src": "kaji-quest"
