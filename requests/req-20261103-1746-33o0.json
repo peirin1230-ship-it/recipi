@@ -13,7 +13,726 @@
  "exclude": [],
  "note": "",
  "mode": "auto",
- "status": "pending",
+ "status": "done",
  "error": null,
- "result": null
+ "result": {
+  "feasible": true,
+  "infeasible_reason": null,
+  "nearest_options": [],
+  "alternatives": [
+   {
+    "title": "鮭とブロッコリーのクリームうどん",
+    "minutes": 35,
+    "why": "鮭と冷凍うどん、ブロッコリーで牛乳を使った優しい一品。鍋ひとつ。",
+    "kind": "new"
+   },
+   {
+    "title": "いわしつみれとコーンの味噌豆乳風ミルクスープ",
+    "minutes": 25,
+    "why": "いわしつみれと牛乳・味噌のスープ。子どもも飲みやすい。",
+    "kind": "new"
+   }
+  ],
+  "recipe_id": "r-20261103-ebi-to-hakusai-no-yaki-gyoza",
+  "recipe": {
+   "id": "r-20261103-ebi-to-hakusai-no-yaki-gyoza",
+   "title": "エビと白菜の焼き餃子",
+   "version": 1,
+   "supersedes": null,
+   "status": "draft",
+   "created": "2026-11-03",
+   "request": "req-20261103-1746-33o0",
+   "generated_by": {
+    "model": "claude-code",
+    "prompt_version": 10
+   },
+   "type": "dinner",
+   "servings": {
+    "adults": 2,
+    "kids": 1
+   },
+   "time": {
+    "budget": 0,
+    "planned": 69,
+    "active": 45,
+    "raw_estimate": 53,
+    "speed_factor": 1.12
+   },
+   "image_text": "羽根は付けず、底がきつね色にこんがり焼けた餃子が丸く並ぶ。中のエビのピンクと白菜の白がほんのり透け、ごま油の香りが立つ。",
+   "dishes": [
+    {
+     "name": "エビと白菜の焼き餃子",
+     "role": "main"
+    }
+   ],
+   "equipment": [
+    "fp26",
+    "gas-r"
+   ],
+   "ingredients": [
+    {
+     "name": "バナメイエビ",
+     "qty": 8,
+     "unit": "尾",
+     "grams": 160,
+     "pantry": "バナメイエビ",
+     "for": "エビと白菜の焼き餃子",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "白菜",
+     "qty": 0.125,
+     "unit": "株",
+     "grams": 250,
+     "pantry": "白菜 1/",
+     "for": "エビと白菜の焼き餃子",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "餃子の皮",
+     "qty": 24,
+     "unit": "枚",
+     "grams": null,
+     "pantry": "餃子の皮",
+     "for": "エビと白菜の焼き餃子",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "酒",
+     "qty": 1,
+     "unit": "小さじ",
+     "grams": 5,
+     "pantry": null,
+     "for": "エビと白菜の焼き餃子",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "片栗粉",
+     "qty": 1,
+     "unit": "小さじ",
+     "grams": 3,
+     "pantry": null,
+     "for": "エビと白菜の焼き餃子",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "ごま油",
+     "qty": 2,
+     "unit": "小さじ",
+     "grams": 8,
+     "pantry": null,
+     "for": "エビと白菜の焼き餃子",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "塩",
+     "qty": 0.2,
+     "unit": "小さじ",
+     "grams": 1.2,
+     "pantry": null,
+     "for": "エビと白菜の焼き餃子",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "サラダ油",
+     "qty": 2,
+     "unit": "小さじ",
+     "grams": 8,
+     "pantry": null,
+     "for": "エビと白菜の焼き餃子",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "水",
+     "qty": 4,
+     "unit": "大さじ",
+     "grams": 60,
+     "pantry": null,
+     "for": "エビと白菜の焼き餃子",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "酢",
+     "qty": 1,
+     "unit": "大さじ",
+     "grams": 15,
+     "pantry": null,
+     "for": "エビと白菜の焼き餃子",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "醤油",
+     "qty": 1,
+     "unit": "小さじ",
+     "grams": 6,
+     "pantry": null,
+     "for": "エビと白菜の焼き餃子",
+     "substitute": null,
+     "use_up": false
+    }
+   ],
+   "tags": [
+    "餃子",
+    "焼く",
+    "エビ",
+    "白菜",
+    "チョッパー",
+    "手づかみ"
+   ],
+   "salt": {
+    "total_g": 2.1,
+    "adult_per_serving_g": 1.1,
+    "kid_g": 0.1
+   },
+   "kid": {
+    "rule": "separate",
+    "cut": "子どもの 6 個は味付け前の具で包む。焼いたら半分に切り、1cm 角程度にして冷ます",
+    "note": "塩・たれなし。エビと白菜の甘みだけ。皮が口に張り付くので小さく切る。手づかみで。"
+   },
+   "keep": {
+    "fridge_days": 2,
+    "freezer": true,
+    "reheat": "フライパンに油少々と水 大さじ1 を入れ蓋をして蒸し焼き。中心まで湯気が立つまで"
+   },
+   "timeline": [
+    {
+     "minute": 0,
+     "lane": "hands",
+     "text": "エビの殻・背わたを取る"
+    },
+    {
+     "minute": 6,
+     "lane": "hands",
+     "text": "白菜をチョッパーで刻んで水気を絞る"
+    },
+    {
+     "minute": 11,
+     "lane": "hands",
+     "text": "エビを刻み、具を混ぜて子ども分を取り分け、大人分に塩"
+    },
+    {
+     "minute": 16,
+     "lane": "hands",
+     "text": "餃子の皮 24 枚に包む"
+    },
+    {
+     "minute": 30,
+     "lane": "gas-r",
+     "text": "1 回目 12 個を焼く（中火 → 蒸し焼き）"
+    },
+    {
+     "minute": 33,
+     "lane": "gas-r",
+     "text": "蓋をして蒸す（4 分）"
+    },
+    {
+     "minute": 33,
+     "lane": "hands",
+     "text": "にんじんとツナのしりしり卵炒め（副菜）を作り始める"
+    },
+    {
+     "minute": 37,
+     "lane": "gas-r",
+     "text": "蓋を取り水分を飛ばし、皿に取る"
+    },
+    {
+     "minute": 40,
+     "lane": "gas-r",
+     "text": "2 回目 12 個（子ども 6 個を含む）を同様に焼く"
+    },
+    {
+     "minute": 50,
+     "lane": "hands",
+     "text": "盛り付け・子ども分を切って冷ます"
+    }
+   ],
+   "steps": [
+    {
+     "dish": "エビと白菜の焼き餃子",
+     "n": 1,
+     "title": "エビの下ごしらえ",
+     "kind": "prep",
+     "tag": "cut",
+     "minutes": 6,
+     "start": 0,
+     "heat": null,
+     "text": "バナメイエビ 8 尾の殻をむき、背に包丁を入れて背わたを取る。酒 小さじ 1 をふってキッチンペーパーで水気を拭く。",
+     "cue": "背わたが取れ、表面がさらっとしている",
+     "caution": "エビは中まで火を通すので、生のまま子どもに出さない",
+     "timer": null,
+     "kid": null,
+     "ingredients": [
+      "バナメイエビ",
+      "酒"
+     ]
+    },
+    {
+     "dish": "エビと白菜の焼き餃子",
+     "n": 2,
+     "title": "白菜を刻んで水気を絞る",
+     "kind": "prep",
+     "tag": "cut",
+     "minutes": 5,
+     "start": 6,
+     "heat": null,
+     "text": "白菜 1/8 株（約 250g）をざく切りにして、ぶんぶんチョッパーで米粒大に刻む（数回に分ける）。ザルにあけ、手で押して水気をしっかり絞る。",
+     "cue": "握ると水がほとんど出なくなる",
+     "caution": null,
+     "timer": null,
+     "kid": null,
+     "ingredients": [
+      "白菜"
+     ]
+    },
+    {
+     "dish": "エビと白菜の焼き餃子",
+     "n": 3,
+     "title": "具を混ぜて子ども分を取り分ける",
+     "kind": "prep",
+     "tag": "season",
+     "minutes": 5,
+     "start": 11,
+     "heat": null,
+     "text": "エビをチョッパーで 3〜4 回パルスして粗く刻む（ペースト状にしない）。ボウルに白菜・エビ・片栗粉 小さじ 1・ごま油 小さじ 1 を入れて練る。1/4 量を別の小さいボウルに取り分けて子ども用にする。大人用の残りに塩 小さじ 1/5 を加えて粘りが出るまで混ぜる。",
+     "cue": "大人用は具に粘りが出てまとまる。子ども用は塩なし",
+     "caution": null,
+     "timer": null,
+     "kid": "子ども用の具（約 1/4）は塩を入れる前に取り分けておく",
+     "ingredients": [
+      "片栗粉",
+      "ごま油",
+      "塩"
+     ]
+    },
+    {
+     "dish": "エビと白菜の焼き餃子",
+     "n": 4,
+     "title": "包む",
+     "kind": "prep",
+     "tag": null,
+     "minutes": 14,
+     "start": 16,
+     "heat": null,
+     "text": "餃子の皮の中央に具を小さじ 1 弱ずつのせ、縁に水をつけて半分に折り、ひだを寄せて閉じる。子ども用の具で 6 個、大人用で 18 個を作る。バットかまな板に重ならないよう並べる。",
+     "cue": "口がしっかり閉じ、具がはみ出していない",
+     "caution": null,
+     "timer": null,
+     "kid": "子ども用の 6 個は大人用と見分けがつくよう端に寄せる",
+     "ingredients": [
+      "餃子の皮"
+     ]
+    },
+    {
+     "dish": "エビと白菜の焼き餃子",
+     "n": 5,
+     "title": "1 回目を焼く",
+     "kind": "heat",
+     "tag": "sear",
+     "minutes": 3,
+     "start": 30,
+     "heat": {
+      "equipment": "fp26",
+      "level": "中火"
+     },
+     "text": "フライパン fp26 を中火で 1 分予熱し、サラダ油 小さじ 1 を引く。大人用 12 個を並べて 2 分焼き、底に焼き色がついたら水 大さじ 2 を入れてすぐ蓋をする。",
+     "cue": "底がきつね色、水を入れると勢いよくはねる音",
+     "caution": "水を入れるときははねるので蓋を盾にする",
+     "timer": null,
+     "kid": null,
+     "ingredients": [
+      "サラダ油",
+      "水"
+     ]
+    },
+    {
+     "dish": "エビと白菜の焼き餃子",
+     "n": 6,
+     "title": "蒸し焼き",
+     "kind": "wait",
+     "tag": "wait",
+     "minutes": 4,
+     "start": 33,
+     "heat": {
+      "equipment": "fp26",
+      "level": "弱火"
+     },
+     "text": "火を弱火にして蓋をしたまま 4 分蒸し焼きにする。この間に副菜を作り始める。",
+     "cue": "蓋の内側が曇り、パチパチ音が静かになる",
+     "caution": null,
+     "timer": 240,
+     "kid": null,
+     "ingredients": []
+    },
+    {
+     "dish": "エビと白菜の焼き餃子",
+     "n": 7,
+     "title": "水分を飛ばして取り出す",
+     "kind": "heat",
+     "tag": "sear",
+     "minutes": 3,
+     "start": 37,
+     "heat": {
+      "equipment": "fp26",
+      "level": "中火"
+     },
+     "text": "蓋を取り、中火にして水分を飛ばす。ごま油 小さじ 1/2 を回しかけ、皮がパリッとしたらフライ返しで皿に取る。",
+     "cue": "水の音がしなくなり底がカリッとしている。皮が透き通り、切ると中心が白い",
+     "caution": null,
+     "timer": null,
+     "kid": null,
+     "ingredients": [
+      "ごま油"
+     ]
+    },
+    {
+     "dish": "エビと白菜の焼き餃子",
+     "n": 8,
+     "title": "2 回目を焼く",
+     "kind": "heat",
+     "tag": "sear",
+     "minutes": 10,
+     "start": 40,
+     "heat": {
+      "equipment": "fp26",
+      "level": "中火"
+     },
+     "text": "フライパンの底を拭き、サラダ油 小さじ 1 を引いて、残り 12 個（大人用 6 個・子ども用 6 個）を並べる。手順 5〜7 と同じ要領（中火 2 分 → 水 大さじ 2 で蓋・弱火 4 分 → 蓋を取って水分を飛ばす）で焼き、ごま油 小さじ 1/2 を回す。",
+     "cue": "皮が透き通り、切ると中心まで白く火が通っている",
+     "caution": null,
+     "timer": null,
+     "kid": "子ども用 6 個は半分に切って中まで火が通ったか確認し、1cm 角ほどに切って皿で冷ます（配膳の 2 分前）",
+     "ingredients": [
+      "サラダ油",
+      "水",
+      "ごま油"
+     ]
+    },
+    {
+     "dish": "エビと白菜の焼き餃子",
+     "n": 9,
+     "title": "盛り付け",
+     "kind": "serve",
+     "tag": "serve",
+     "minutes": 3,
+     "start": 50,
+     "heat": null,
+     "text": "大人用 18 個を皿に盛り、酢 大さじ 1 と醤油 小さじ 1 を混ぜたたれを小皿に添える。子ども用は、たれなしで冷ましたものを出す。",
+     "cue": "皿の餃子の底面が上に向くよう並べ、湯気が立っている",
+     "caution": null,
+     "timer": null,
+     "kid": "子ども用はたれなし。熱くないことを手の甲で確認",
+     "ingredients": [
+      "酢",
+      "醤油"
+     ]
+    }
+   ],
+   "cleanup": {
+    "dishwasher": [
+     "bowl-l",
+     "bowl-m"
+    ],
+    "hand": [
+     "fp26"
+    ],
+    "note": "チョッパーの刃は手洗い"
+   },
+   "photo": null,
+   "stats": {
+    "cooked": 0,
+    "r_avg": null,
+    "f_avg": null,
+    "last": null
+   },
+   "detail": "full",
+   "together": [
+    "r-20261103-ninjin-to-tsuna-no-shirishiri-tamago-ita"
+   ],
+   "memo": []
+  },
+  "side_recipe_ids": [
+   "r-20261103-ninjin-to-tsuna-no-shirishiri-tamago-ita"
+  ],
+  "side_recipes": [
+   {
+    "id": "r-20261103-ninjin-to-tsuna-no-shirishiri-tamago-ita",
+    "title": "にんじんとツナのしりしり卵炒め",
+    "version": 1,
+    "supersedes": null,
+    "status": "draft",
+    "created": "2026-11-03",
+    "request": "req-20261103-1746-33o0",
+    "generated_by": {
+     "model": "claude-code",
+     "prompt_version": 10
+    },
+    "type": "dinner",
+    "servings": {
+     "adults": 2,
+     "kids": 1
+    },
+    "time": {
+     "budget": 0,
+     "planned": 15,
+     "active": 13,
+     "raw_estimate": 13,
+     "speed_factor": 1.12
+    },
+    "image_text": "細く切ったにんじんの橙色にふわふわの黄色い卵とツナがからみ、白ごまが散る。ごま油の香ばしい香りがする。",
+    "dishes": [
+     {
+      "name": "にんじんとツナのしりしり卵炒め",
+      "role": "side"
+     }
+    ],
+    "equipment": [
+     "pot20",
+     "gas-l"
+    ],
+    "ingredients": [
+     {
+      "name": "にんじん",
+      "qty": 1,
+      "unit": "本",
+      "grams": 150,
+      "pantry": "にんじん",
+      "for": "にんじんとツナのしりしり卵炒め",
+      "substitute": null,
+      "use_up": false
+     },
+     {
+      "name": "ツナ缶",
+      "qty": 1,
+      "unit": "缶",
+      "grams": 70,
+      "pantry": "ツナ缶",
+      "for": "にんじんとツナのしりしり卵炒め",
+      "substitute": null,
+      "use_up": false
+     },
+     {
+      "name": "卵",
+      "qty": 2,
+      "unit": "個",
+      "grams": 100,
+      "pantry": "卵",
+      "for": "にんじんとツナのしりしり卵炒め",
+      "substitute": null,
+      "use_up": false
+     },
+     {
+      "name": "ごま油",
+      "qty": 1,
+      "unit": "小さじ",
+      "grams": 4,
+      "pantry": null,
+      "for": "にんじんとツナのしりしり卵炒め",
+      "substitute": null,
+      "use_up": false
+     },
+     {
+      "name": "醤油",
+      "qty": 1,
+      "unit": "小さじ",
+      "grams": 6,
+      "pantry": null,
+      "for": "にんじんとツナのしりしり卵炒め",
+      "substitute": null,
+      "use_up": false
+     }
+    ],
+    "tags": [
+     "炒め物",
+     "にんじん",
+     "ツナ",
+     "卵",
+     "スライサー",
+     "副菜"
+    ],
+    "salt": {
+     "total_g": 1.4,
+     "adult_per_serving_g": 0.7,
+     "kid_g": 0.2
+    },
+    "kid": {
+     "rule": "separate",
+     "cut": "にんじんは 1.2mm の細切りを 3cm に切りそろえる。炒めて柔らかくした物を取り分ける",
+     "note": "子ども分は醤油の前に 1/4 量を取り分け、卵を足して完全に固める。"
+    },
+    "keep": {
+     "fridge_days": 2,
+     "freezer": false,
+     "reheat": "レンジを使わずフライパンで少量の水と温め直す。湯気が立つまで"
+    },
+    "timeline": [
+     {
+      "minute": 0,
+      "lane": "hands",
+      "text": "スライサーでにんじんを細切り、卵を溶く、ツナの汁を切る"
+     },
+     {
+      "minute": 4,
+      "lane": "gas-l",
+      "text": "鍋でにんじんを炒め、ツナを加える"
+     },
+     {
+      "minute": 7,
+      "lane": "gas-l",
+      "text": "子ども分を取り分け、大人分に醤油と卵"
+     },
+     {
+      "minute": 10,
+      "lane": "gas-l",
+      "text": "子ども分に卵を足して固める"
+     },
+     {
+      "minute": 12,
+      "lane": "hands",
+      "text": "盛り付け"
+     }
+    ],
+    "steps": [
+     {
+      "dish": "にんじんとツナのしりしり卵炒め",
+      "n": 1,
+      "title": "下ごしらえ",
+      "kind": "prep",
+      "tag": "cut",
+      "minutes": 4,
+      "start": 0,
+      "heat": null,
+      "text": "にんじん 1 本をスライサー（1.2mm 細切り）で削り、最後の 2cm は包丁で細切りにする。長いものは半分に切りそろえる。卵 2 個を溶き、そのうち 1/4 量を小さなボウルに分ける。ツナ缶は汁を切る。",
+      "cue": "にんじんが 1.2mm の糸状にそろっている",
+      "caution": "スライサーは指を切りやすい。最後の 2cm は必ず包丁で",
+      "timer": null,
+      "kid": null,
+      "ingredients": [
+       "にんじん",
+       "卵",
+       "ツナ缶"
+      ]
+     },
+     {
+      "dish": "にんじんとツナのしりしり卵炒め",
+      "n": 2,
+      "title": "にんじんとツナを炒める",
+      "kind": "heat",
+      "tag": "stir-fry",
+      "minutes": 3,
+      "start": 4,
+      "heat": {
+       "equipment": "pot20",
+       "level": "中火"
+      },
+      "text": "鍋 pot20 を中火にかけ、ごま油 小さじ 1 を入れる。にんじんを 2 分炒め、しんなりしたらツナを加えてさっと混ぜる。",
+      "cue": "にんじんがしんなりして油が全体に回り、ツナがほぐれている",
+      "caution": null,
+      "timer": null,
+      "kid": null,
+      "ingredients": [
+       "ごま油"
+      ]
+     },
+     {
+      "dish": "にんじんとツナのしりしり卵炒め",
+      "n": 3,
+      "title": "取り分けて卵を加える",
+      "kind": "heat",
+      "tag": "stir-fry",
+      "minutes": 3,
+      "start": 7,
+      "heat": {
+       "equipment": "pot20",
+       "level": "中火"
+      },
+      "text": "火を止めて、鍋から 1/4 量を子ども用に別の皿へ取る。残りに醤油 小さじ 1 を回し入れ、中火にして、溶き卵（3/4 量）を流し入れて大きく混ぜ、卵がぽろぽろに固まったら皿に取る。",
+      "cue": "卵が固まって水分が残らず、ぽろぽろの状態",
+      "caution": null,
+      "timer": null,
+      "kid": "子ども用は醤油なし。取り分けた後で小さい卵 1/4 量をからめて固める",
+      "ingredients": [
+       "醤油"
+      ]
+     },
+     {
+      "dish": "にんじんとツナのしりしり卵炒め",
+      "n": 4,
+      "title": "子ども分を仕上げる",
+      "kind": "heat",
+      "tag": "kid",
+      "minutes": 2,
+      "start": 10,
+      "heat": {
+       "equipment": "pot20",
+       "level": "弱火"
+      },
+      "text": "同じ鍋を弱火にし、子ども用のにんじん・ツナと分けておいた溶き卵 1/4 量を入れ、混ぜながら完全に固める。皿に取って冷ます。",
+      "cue": "卵がほろほろに固まって汁気が残らない",
+      "caution": null,
+      "timer": null,
+      "kid": "熱いので冷ましてから。にんじんは 3cm 以下",
+      "ingredients": []
+     },
+     {
+      "dish": "にんじんとツナのしりしり卵炒め",
+      "n": 5,
+      "title": "盛り付け",
+      "kind": "serve",
+      "tag": "serve",
+      "minutes": 1,
+      "start": 12,
+      "heat": null,
+      "text": "小鉢に盛る。子ども用は別の小皿に。",
+      "cue": "湯気が立ち色がきれい",
+      "caution": null,
+      "timer": null,
+      "kid": null,
+      "ingredients": []
+     }
+    ],
+    "cleanup": {
+     "dishwasher": [
+      "bowl-m"
+     ],
+     "hand": [
+      "pot20"
+     ],
+     "note": null
+    },
+    "photo": null,
+    "stats": {
+     "cooked": 0,
+     "r_avg": null,
+     "f_avg": null,
+     "last": null
+    },
+    "detail": "full",
+    "together": [
+     "r-20261103-ebi-to-hakusai-no-yaki-gyoza"
+    ],
+    "memo": []
+   }
+  ],
+  "model": "claude-code",
+  "prompt_version": 10,
+  "tokens": {
+   "input": 0,
+   "output": 0,
+   "cache_read": 0,
+   "cache_write": 0
+  },
+  "cost_usd": 0.0,
+  "seconds": 0
+ },
+ "finished": "2026-11-03T17:48:57+09:00"
 }
