@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-03T19:52:41+09:00",
+ "updated": "2026-11-03T19:53:36+09:00",
  "items": [
   {
    "id": "pxqdj5",
@@ -63,13 +63,6 @@
    "loc": "fridge",
    "added": "2026-10-24",
    "src": "manual"
-  },
-  {
-   "id": "pezv0p",
-   "name": "餃子の皮",
-   "loc": "fridge",
-   "added": "2026-10-24",
-   "src": "kaji-quest"
   },
   {
    "id": "p4araw",
