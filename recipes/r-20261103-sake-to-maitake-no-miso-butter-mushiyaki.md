@@ -4,7 +4,7 @@ id: r-20261103-sake-to-maitake-no-miso-butter-mushiyaki
 title: 鮭とまいたけの味噌バター蒸し焼き
 version: 1
 supersedes: null
-status: draft
+status: tried
 created: '2026-11-03'
 request: req-20261103-1730-gomi
 generated_by: {model: claude-code, prompt_version: 10}
@@ -229,4 +229,4 @@ together: [r-20261103-hakusai-to-ninjin-no-tuna-shiokombu-mush]
 - たれが焦げ付いたらぬるま湯に浸す
 
 ## 作ったときのメモ
-
+- 2026-11-03 ・ 107 分（見込み 26）・ R 60 ・ F 3.7 ・ そのまま ・ 📷 20261103-1.jpg
