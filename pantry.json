@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-03T09:18:12+09:00",
+ "updated": "2026-11-03T09:18:22+09:00",
  "items": [
   {
    "id": "pxqdj5",
@@ -70,13 +70,6 @@
    "loc": "fridge",
    "added": "2026-10-24",
    "src": "manual"
-  },
-  {
-   "id": "pv3fc0",
-   "name": "にんじん",
-   "loc": "fridge",
-   "added": "2026-10-24",
-   "src": "kaji-quest"
   },
   {
    "id": "pezv0p",
