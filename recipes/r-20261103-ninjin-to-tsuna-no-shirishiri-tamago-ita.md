@@ -4,7 +4,7 @@ id: r-20261103-ninjin-to-tsuna-no-shirishiri-tamago-ita
 title: にんじんとツナのしりしり卵炒め
 version: 1
 supersedes: null
-status: draft
+status: tried
 created: '2026-11-03'
 request: req-20261103-1746-33o0
 generated_by: {model: claude-code, prompt_version: 10}
@@ -172,4 +172,4 @@ together: [r-20261103-ebi-to-hakusai-no-yaki-gyoza]
 - 手洗い: 鍋
 
 ## 作ったときのメモ
-
+- 2026-11-03 ・ 107 分（見込み 15）・ R 60 ・ F 5 ・ そのまま ・ 分量 ×2 ・ 📷 20261103-1.jpg
