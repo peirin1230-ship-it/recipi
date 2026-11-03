@@ -1,4 +1,5 @@
 ---
+listed: "2026-11-03T17:37:36+09:00"
 id: r-20261103-hakusai-to-ninjin-no-tuna-shiokombu-mush
 title: 白菜とにんじんのツナ塩昆布蒸し煮
 version: 1
