@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-03T19:53:36+09:00",
+ "updated": "2026-11-03T19:53:58+09:00",
  "items": [
   {
    "id": "pxqdj5",
@@ -20,13 +20,6 @@
    "name": "ヨーグルト",
    "loc": "fridge",
    "added": "2026-10-28",
-   "src": "manual"
-  },
-  {
-   "id": "p19gqx",
-   "name": "ツナ缶",
-   "loc": "pantry",
-   "added": "2026-10-09",
    "src": "manual"
   },
   {
