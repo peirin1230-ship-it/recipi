@@ -1,25 +1,25 @@
 {
- "updated": "2026-11-03T09:18:25+09:00",
+ "updated": "2026-11-03T17:30:14+09:00",
  "items": [
   {
    "id": "pxqdj5",
    "name": "卵",
    "loc": "fridge",
-   "added": "2026-10-14",
+   "added": "2026-11-02",
    "src": "manual"
   },
   {
    "id": "p1qnvb",
    "name": "牛乳",
    "loc": "fridge",
-   "added": "2026-10-14",
+   "added": "2026-11-02",
    "src": "manual"
   },
   {
    "id": "pw63nn",
    "name": "ヨーグルト",
    "loc": "fridge",
-   "added": "2026-10-14",
+   "added": "2026-10-28",
    "src": "manual"
   },
   {
@@ -40,7 +40,7 @@
    "id": "pgs9zq",
    "name": "コーン缶",
    "loc": "pantry",
-   "added": "2026-10-14",
+   "added": "2026-10-28",
    "src": "kaji-quest"
   },
   {
@@ -77,6 +77,104 @@
    "loc": "fridge",
    "added": "2026-10-24",
    "src": "manual"
+  },
+  {
+   "id": "p4araw",
+   "name": "納豆",
+   "loc": "fridge",
+   "added": "2026-10-28",
+   "src": "kaji-quest"
+  },
+  {
+   "id": "peyksd",
+   "name": "うずらの卵",
+   "loc": "fridge",
+   "added": "2026-11-03",
+   "src": "kaji-quest"
+  },
+  {
+   "id": "pn755c",
+   "name": "白菜 1/",
+   "loc": "fridge",
+   "added": "2026-11-03",
+   "src": "kaji-quest"
+  },
+  {
+   "id": "pb5jp3",
+   "name": "ブロッコリー",
+   "loc": "fridge",
+   "added": "2026-11-03",
+   "src": "kaji-quest"
+  },
+  {
+   "id": "p4tfq7",
+   "name": "しらす",
+   "loc": "fridge",
+   "added": "2026-11-03",
+   "src": "kaji-quest"
+  },
+  {
+   "id": "pkdn1l",
+   "name": "にんじん",
+   "loc": "fridge",
+   "added": "2026-11-03",
+   "src": "kaji-quest"
+  },
+  {
+   "id": "pfroor",
+   "name": "かまぼこ",
+   "loc": "fridge",
+   "added": "2026-11-03",
+   "src": "kaji-quest"
+  },
+  {
+   "id": "p4qrw5",
+   "name": "なす",
+   "loc": "fridge",
+   "added": "2026-11-03",
+   "src": "kaji-quest"
+  },
+  {
+   "id": "phvcob",
+   "name": "かぼちゃ",
+   "loc": "fridge",
+   "added": "2026-11-03",
+   "src": "kaji-quest"
+  },
+  {
+   "id": "papzqi",
+   "name": "まいたけ",
+   "loc": "fridge",
+   "added": "2026-11-03",
+   "src": "kaji-quest"
+  },
+  {
+   "id": "p6kjha",
+   "name": "バナメイエビ",
+   "loc": "fridge",
+   "added": "2026-11-03",
+   "src": "kaji-quest"
+  },
+  {
+   "id": "phrspz",
+   "name": "鮭",
+   "loc": "fridge",
+   "added": "2026-11-03",
+   "src": "kaji-quest"
+  },
+  {
+   "id": "pad1ya",
+   "name": "じゃがいも",
+   "loc": "pantry",
+   "added": "2026-11-03",
+   "src": "kaji-quest"
+  },
+  {
+   "id": "p22bvu",
+   "name": "いわしつみれ",
+   "loc": "fridge",
+   "added": "2026-11-03",
+   "src": "kaji-quest"
   }
  ],
  "staples": {
@@ -135,6 +233,9 @@
   "mvf2e3ocwctv",
   "mvf8e7cid80k",
   "mvhwp8xiv3ej",
-  "mvlq7mkep218"
+  "mvlq7mkep218",
+  "mvz7ar9g780n",
+  "mw0ffwwdd3fp",
+  "mvrzldc6uss0"
  ]
 }
