@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-03T17:46:32+09:00",
+ "updated": "2026-11-03T19:52:04+09:00",
  "items": [
   {
    "id": "pxqdj5",
@@ -72,13 +72,6 @@
    "src": "kaji-quest"
   },
   {
-   "id": "ps3i2o",
-   "name": "冷凍ホタテ",
-   "loc": "fridge",
-   "added": "2026-10-24",
-   "src": "manual"
-  },
-  {
    "id": "p4araw",
    "name": "納豆",
    "loc": "fridge",
@@ -109,13 +102,6 @@
   {
    "id": "p4tfq7",
    "name": "しらす",
-   "loc": "fridge",
-   "added": "2026-11-03",
-   "src": "kaji-quest"
-  },
-  {
-   "id": "pkdn1l",
-   "name": "にんじん",
    "loc": "fridge",
    "added": "2026-11-03",
    "src": "kaji-quest"
