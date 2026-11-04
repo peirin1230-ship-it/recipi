@@ -15,7 +15,614 @@
  "exclude": [],
  "note": "",
  "mode": "auto",
- "status": "pending",
+ "status": "done",
  "error": null,
- "result": null
+ "result": {
+  "feasible": true,
+  "infeasible_reason": null,
+  "nearest_options": [],
+  "alternatives": [
+   {
+    "title": "いわしつみれとかぼちゃの味噌豆乳グラタン風（トースター）",
+    "minutes": 40,
+    "why": "トースターの焼き目で食感を変える。主材料が同じでも調理法が違う",
+    "kind": "new"
+   },
+   {
+    "title": "白菜とかまぼこの卵とじ丼",
+    "minutes": 20,
+    "why": "卵とご飯で子どもも食べやすい定番寄りの一品",
+    "kind": "new"
+   }
+  ],
+  "recipe_id": "r-20261104-iwashi-tsumire-to-hakusai-no-dashi-ni",
+  "recipe": {
+   "id": "r-20261104-iwashi-tsumire-to-hakusai-no-dashi-ni",
+   "title": "いわしつみれと白菜のだし煮",
+   "version": 1,
+   "supersedes": null,
+   "status": "draft",
+   "created": "2026-11-04",
+   "request": "req-20261104-2332-r3eq",
+   "generated_by": {
+    "model": "claude-code",
+    "prompt_version": 10
+   },
+   "type": "prep",
+   "servings": {
+    "adults": 2,
+    "kids": 1
+   },
+   "time": {
+    "budget": 0,
+    "planned": 52,
+    "active": 24,
+    "raw_estimate": 44,
+    "speed_factor": 1.15
+   },
+   "image_text": "だし色に染まった白菜の上に、まるいいわしつみれがごろごろとのり、ほくほくのじゃがいもが添う。表面に塩昆布のつやと小ねぎ代わりの細かい昆布が散る。",
+   "dishes": [
+    {
+     "name": "いわしつみれと白菜のだし煮",
+     "role": "main"
+    }
+   ],
+   "equipment": [
+    "pot20",
+    "gas-l",
+    "kettle",
+    "bowl-m"
+   ],
+   "ingredients": [
+    {
+     "name": "いわしつみれ",
+     "qty": 8,
+     "unit": "個",
+     "grams": 240,
+     "pantry": "いわしつみれ",
+     "for": "いわしつみれと白菜のだし煮",
+     "substitute": null,
+     "use_up": true
+    },
+    {
+     "name": "白菜 1/",
+     "qty": 0.25,
+     "unit": "株",
+     "grams": null,
+     "pantry": "白菜 1/",
+     "for": "いわしつみれと白菜のだし煮",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "じゃがいも",
+     "qty": 2,
+     "unit": "個",
+     "grams": 300,
+     "pantry": "じゃがいも",
+     "for": "いわしつみれと白菜のだし煮",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "だしパック",
+     "qty": 1,
+     "unit": "袋",
+     "grams": 8,
+     "pantry": null,
+     "for": "いわしつみれと白菜のだし煮",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "水",
+     "qty": 400,
+     "unit": "ml",
+     "grams": 400,
+     "pantry": null,
+     "for": "いわしつみれと白菜のだし煮",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "酒",
+     "qty": 1,
+     "unit": "大さじ",
+     "grams": 15,
+     "pantry": null,
+     "for": "いわしつみれと白菜のだし煮",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "みりん",
+     "qty": 1,
+     "unit": "大さじ",
+     "grams": 18,
+     "pantry": null,
+     "for": "いわしつみれと白菜のだし煮",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "醤油",
+     "qty": 1,
+     "unit": "小さじ",
+     "grams": 6,
+     "pantry": null,
+     "for": "いわしつみれと白菜のだし煮",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "塩昆布",
+     "qty": 5,
+     "unit": "g",
+     "grams": 5,
+     "pantry": "塩昆布",
+     "for": "いわしつみれと白菜のだし煮",
+     "substitute": null,
+     "use_up": false
+    }
+   ],
+   "tags": [
+    "いわしつみれ",
+    "白菜",
+    "煮物",
+    "だし",
+    "仕込み",
+    "子ども取り分け",
+    "前日仕込み"
+   ],
+   "salt": {
+    "total_g": 2.4,
+    "adult_per_serving_g": 1.0,
+    "kid_g": 0.6
+   },
+   "kid": {
+    "rule": "separate",
+    "cut": "じゃがいもと白菜は1cm角に刻む。つみれは1cm以下に崩す",
+    "note": "塩昆布と醤油を入れる前、だしで煮えた段階で取り分ける。つみれ自体の塩気で十分。粗熱を取ってから出す"
+   },
+   "keep": {
+    "fridge_days": 2,
+    "freezer": false,
+    "reheat": "鍋に移し弱火で煮汁ごと温め、湯気が立つまで。または耐熱ボウルにラップで600W 2分、途中で混ぜる"
+   },
+   "timeline": [
+    {
+     "minute": 0,
+     "lane": "hands",
+     "text": "電気ケトルで湯を沸かす（鍋用）"
+    },
+    {
+     "minute": 0,
+     "lane": "hands",
+     "text": "じゃがいもを皮をむいて3cm角、白菜を4cmざく切りにする"
+    },
+    {
+     "minute": 8,
+     "lane": "gas-l",
+     "text": "鍋にだしパック・水・じゃがいも・酒を入れ中火にかける"
+    },
+    {
+     "minute": 14,
+     "lane": "gas-l",
+     "text": "沸いたら弱火。白菜とつみれを加えて蓋をして煮る"
+    },
+    {
+     "minute": 15,
+     "lane": "hands",
+     "text": "（待ち時間）副菜を作る"
+    },
+    {
+     "minute": 28,
+     "lane": "gas-l",
+     "text": "子どもの分を取り分け、みりん・醤油・塩昆布を加えて5分煮る"
+    },
+    {
+     "minute": 36,
+     "lane": "hands",
+     "text": "粗熱を取り、保存容器に移して冷蔵"
+    }
+   ],
+   "steps": [
+    {
+     "dish": "いわしつみれと白菜のだし煮",
+     "n": 1,
+     "title": "切る",
+     "kind": "prep",
+     "tag": "cut",
+     "minutes": 8,
+     "start": 0,
+     "heat": null,
+     "text": "じゃがいも 2個の皮をむき3cm角に切って水にさらす。白菜 1/4株を4cmのざく切りにする。ケトルで湯を沸かしておく。",
+     "cue": "じゃがいもの切り口がそろっている",
+     "caution": null,
+     "timer": null,
+     "kid": null,
+     "ingredients": [
+      "じゃがいも",
+      "白菜 1/"
+     ]
+    },
+    {
+     "dish": "いわしつみれと白菜のだし煮",
+     "n": 2,
+     "title": "じゃがいもを煮る",
+     "kind": "heat",
+     "tag": "boil",
+     "minutes": 6,
+     "start": 8,
+     "heat": {
+      "equipment": "gas-l",
+      "level": "中火"
+     },
+     "text": "鍋20cmにだしパック 1袋、湯（ケトルの湯）400ml、酒 大さじ1、水気を切ったじゃがいもを入れ中火にかける。",
+     "cue": "ふつふつと小さな泡が立つ",
+     "caution": "だしパックは沸く前に取り出す",
+     "timer": null,
+     "kid": null,
+     "ingredients": [
+      "だしパック",
+      "水",
+      "酒",
+      "じゃがいも"
+     ]
+    },
+    {
+     "dish": "いわしつみれと白菜のだし煮",
+     "n": 3,
+     "title": "白菜とつみれを煮る",
+     "kind": "wait",
+     "tag": "simmer",
+     "minutes": 14,
+     "start": 14,
+     "heat": {
+      "equipment": "gas-l",
+      "level": "弱火"
+     },
+     "text": "だしパックを取り出し、白菜とつみれ 8個を加えて蓋をし、弱火で煮る。つみれは中心まで火を通す。",
+     "cue": "つみれが浮いて、割ると中まで白く熱い。白菜がしんなりする",
+     "caution": "つみれは中心まで火を通す",
+     "timer": 840,
+     "kid": "煮えた段階でじゃがいも・白菜・つみれを取り分ける",
+     "ingredients": [
+      "いわしつみれ",
+      "白菜 1/"
+     ]
+    },
+    {
+     "dish": "いわしつみれと白菜のだし煮",
+     "n": 4,
+     "title": "子どもの分を取り分ける",
+     "kind": "prep",
+     "tag": "kid",
+     "minutes": 3,
+     "start": 28,
+     "heat": null,
+     "text": "味付け前に、じゃがいも・白菜・つみれ1個と煮汁少々を別の器へ。1cm角以下に刻み、つみれは崩す。",
+     "cue": "箸で簡単につぶれる固さ",
+     "caution": null,
+     "timer": null,
+     "kid": "冷ましてから出す。味付けはしない",
+     "ingredients": [
+      "いわしつみれ",
+      "じゃがいも",
+      "白菜 1/"
+     ]
+    },
+    {
+     "dish": "いわしつみれと白菜のだし煮",
+     "n": 5,
+     "title": "味を付ける",
+     "kind": "heat",
+     "tag": "simmer",
+     "minutes": 5,
+     "start": 31,
+     "heat": {
+      "equipment": "gas-l",
+      "level": "弱火"
+     },
+     "text": "残りにみりん 大さじ1、醤油 小さじ1、塩昆布 5gを加え、蓋なしで5分煮る。",
+     "cue": "煮汁が少しとろみを帯び、塩昆布が柔らかくなる",
+     "caution": null,
+     "timer": null,
+     "kid": null,
+     "ingredients": [
+      "みりん",
+      "醤油",
+      "塩昆布"
+     ]
+    },
+    {
+     "dish": "いわしつみれと白菜のだし煮",
+     "n": 6,
+     "title": "冷まして保存",
+     "kind": "serve",
+     "tag": "cleanup",
+     "minutes": 8,
+     "start": 36,
+     "heat": null,
+     "text": "火を止め、30分以内に粗熱を取って保存容器へ移し冷蔵する。翌日は鍋で温め直すだけ。",
+     "cue": "容器の底まで冷たい",
+     "caution": "鍋のまま常温に置かない",
+     "timer": null,
+     "kid": null,
+     "ingredients": []
+    }
+   ],
+   "cleanup": {
+    "dishwasher": [
+     "bowl-m"
+    ],
+    "hand": [
+     "pot20"
+    ],
+    "note": "鍋は手洗い"
+   },
+   "photo": null,
+   "stats": {
+    "cooked": 0,
+    "r_avg": null,
+    "f_avg": null,
+    "last": null
+   },
+   "detail": "full",
+   "together": [
+    "r-20261104-daizu-to-corn-no-shiokonbu-marinade"
+   ],
+   "memo": []
+  },
+  "side_recipe_ids": [
+   "r-20261104-daizu-to-corn-no-shiokonbu-marinade"
+  ],
+  "side_recipes": [
+   {
+    "id": "r-20261104-daizu-to-corn-no-shiokonbu-marinade",
+    "title": "大豆とコーンの塩昆布マリネ",
+    "version": 1,
+    "supersedes": null,
+    "status": "draft",
+    "created": "2026-11-04",
+    "request": "req-20261104-2332-r3eq",
+    "generated_by": {
+     "model": "claude-code",
+     "prompt_version": 10
+    },
+    "type": "prep",
+    "servings": {
+     "adults": 2,
+     "kids": 1
+    },
+    "time": {
+     "budget": 0,
+     "planned": 12,
+     "active": 9,
+     "raw_estimate": 9,
+     "speed_factor": 1.15
+    },
+    "image_text": "黄色いコーンとふっくらした大豆が、つやのあるオリーブオイルと塩昆布で和えられている。白い小鉢に盛る。",
+    "dishes": [
+     {
+      "name": "大豆とコーンの塩昆布マリネ",
+      "role": "side"
+     }
+    ],
+    "equipment": [
+     "bowl-m",
+     "microwave"
+    ],
+    "ingredients": [
+     {
+      "name": "大豆水煮",
+      "qty": 1,
+      "unit": "袋",
+      "grams": 100,
+      "pantry": "大豆水煮",
+      "for": "大豆とコーンの塩昆布マリネ",
+      "substitute": null,
+      "use_up": false
+     },
+     {
+      "name": "コーン缶",
+      "qty": 0.5,
+      "unit": "缶",
+      "grams": 60,
+      "pantry": "コーン缶",
+      "for": "大豆とコーンの塩昆布マリネ",
+      "substitute": null,
+      "use_up": false
+     },
+     {
+      "name": "塩昆布",
+      "qty": 5,
+      "unit": "g",
+      "grams": 5,
+      "pantry": "塩昆布",
+      "for": "大豆とコーンの塩昆布マリネ",
+      "substitute": null,
+      "use_up": false
+     },
+     {
+      "name": "酢",
+      "qty": 1,
+      "unit": "小さじ",
+      "grams": 5,
+      "pantry": null,
+      "for": "大豆とコーンの塩昆布マリネ",
+      "substitute": null,
+      "use_up": false
+     },
+     {
+      "name": "オリーブオイル",
+      "qty": 1,
+      "unit": "小さじ",
+      "grams": 4,
+      "pantry": null,
+      "for": "大豆とコーンの塩昆布マリネ",
+      "substitute": null,
+      "use_up": false
+     }
+    ],
+    "tags": [
+     "大豆",
+     "コーン",
+     "マリネ",
+     "副菜",
+     "仕込み",
+     "子ども取り分け"
+    ],
+    "salt": {
+     "total_g": 0.6,
+     "adult_per_serving_g": 0.3,
+     "kid_g": 0.0
+    },
+    "kid": {
+     "rule": "separate",
+     "cut": "大豆はフォークで半分につぶし、コーンは粗く刻む",
+     "note": "和える前に取り分ける。味付けなし。大豆は丸ごと出さない（窒息）"
+    },
+    "keep": {
+     "fridge_days": 2,
+     "freezer": false,
+     "reheat": "冷たいままでよい"
+    },
+    "timeline": [
+     {
+      "minute": 0,
+      "lane": "hands",
+      "text": "大豆とコーンの水気を切る"
+     },
+     {
+      "minute": 2,
+      "lane": "microwave",
+      "text": "コーンを耐熱ボウルで900W 40秒温める"
+     },
+     {
+      "minute": 4,
+      "lane": "hands",
+      "text": "子どもの分を取り分ける"
+     },
+     {
+      "minute": 6,
+      "lane": "hands",
+      "text": "酢・オイル・塩昆布で和えて冷蔵"
+     }
+    ],
+    "steps": [
+     {
+      "dish": "大豆とコーンの塩昆布マリネ",
+      "n": 1,
+      "title": "水気を切る",
+      "kind": "prep",
+      "tag": "cut",
+      "minutes": 2,
+      "start": 0,
+      "heat": null,
+      "text": "大豆水煮 1袋とコーン缶 1/2缶をザルにあけ、水気を切る。",
+      "cue": "水が落ちきる",
+      "caution": null,
+      "timer": null,
+      "kid": null,
+      "ingredients": [
+       "大豆水煮",
+       "コーン缶"
+      ]
+     },
+     {
+      "dish": "大豆とコーンの塩昆布マリネ",
+      "n": 2,
+      "title": "コーンを温める",
+      "kind": "heat",
+      "tag": "microwave",
+      "minutes": 2,
+      "start": 2,
+      "heat": {
+       "equipment": "microwave",
+       "level": "900W"
+      },
+      "text": "耐熱ボウルに大豆とコーンを入れ、ラップをして900Wで40秒。",
+      "cue": "触ると少し温かい",
+      "caution": null,
+      "timer": null,
+      "kid": null,
+      "ingredients": [
+       "大豆水煮",
+       "コーン缶"
+      ]
+     },
+     {
+      "dish": "大豆とコーンの塩昆布マリネ",
+      "n": 3,
+      "title": "取り分ける",
+      "kind": "prep",
+      "tag": "kid",
+      "minutes": 2,
+      "start": 4,
+      "heat": null,
+      "text": "子どもの分を小皿に取り、大豆をフォークでつぶす。",
+      "cue": "大豆が半分に割れている",
+      "caution": null,
+      "timer": null,
+      "kid": "味付けなし。冷ましてから出す",
+      "ingredients": [
+       "大豆水煮",
+       "コーン缶"
+      ]
+     },
+     {
+      "dish": "大豆とコーンの塩昆布マリネ",
+      "n": 4,
+      "title": "和える",
+      "kind": "serve",
+      "tag": "season",
+      "minutes": 3,
+      "start": 6,
+      "heat": null,
+      "text": "残りに酢 小さじ1、オリーブオイル 小さじ1、塩昆布 5gを加えて和え、冷蔵庫で味をなじませる。",
+      "cue": "塩昆布がしんなりして全体になじむ",
+      "caution": null,
+      "timer": null,
+      "kid": null,
+      "ingredients": [
+       "酢",
+       "オリーブオイル",
+       "塩昆布"
+      ]
+     }
+    ],
+    "cleanup": {
+     "dishwasher": [
+      "bowl-m"
+     ],
+     "hand": [],
+     "note": null
+    },
+    "photo": null,
+    "stats": {
+     "cooked": 0,
+     "r_avg": null,
+     "f_avg": null,
+     "last": null
+    },
+    "detail": "full",
+    "together": [
+     "r-20261104-iwashi-tsumire-to-hakusai-no-dashi-ni"
+    ],
+    "memo": []
+   }
+  ],
+  "model": "claude-code",
+  "prompt_version": 10,
+  "tokens": {
+   "input": 0,
+   "output": 0,
+   "cache_read": 0,
+   "cache_write": 0
+  },
+  "cost_usd": 0.0,
+  "seconds": 0
+ },
+ "finished": "2026-11-04T23:33:24+09:00"
 }
