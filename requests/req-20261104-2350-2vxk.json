@@ -15,7 +15,629 @@
  "exclude": [],
  "note": "",
  "mode": "auto",
- "status": "pending",
+ "status": "done",
  "error": null,
- "result": null
+ "result": {
+  "feasible": true,
+  "infeasible_reason": null,
+  "nearest_options": [],
+  "alternatives": [
+   {
+    "title": "かぼちゃとしらすの炊飯器ごはん",
+    "minutes": 100,
+    "why": "炊飯器にお任せ。子どもがよく食べる定番の組み立て。",
+    "kind": "new"
+   },
+   {
+    "title": "いわしつみれとじゃがいもの低温調理ミルクポタージュ",
+    "minutes": 100,
+    "why": "じゃがいもを 85℃ で柔らかくしてミキサーで。汁物の仕込みに。",
+    "kind": "new"
+   }
+  ],
+  "recipe_id": "r-20261104-butakata-rosu-no-teion-chouri-shiokonbu-",
+  "recipe": {
+   "id": "r-20261104-butakata-rosu-no-teion-chouri-shiokonbu-",
+   "title": "豚肩ロースの低温調理 塩昆布ごま酢だれ",
+   "version": 1,
+   "supersedes": null,
+   "status": "draft",
+   "created": "2026-11-04",
+   "request": "req-20261104-2350-2vxk",
+   "generated_by": {
+    "model": "claude-code",
+    "prompt_version": 10
+   },
+   "type": "prep",
+   "servings": {
+    "adults": 2,
+    "kids": 1
+   },
+   "time": {
+    "budget": 0,
+    "planned": 200,
+    "active": 40,
+    "raw_estimate": 182,
+    "speed_factor": 1.15
+   },
+   "image_text": "薄いピンクがかった肩ロースが断面しっとりと光り、5mm にそぎ切りして重なる。塩昆布とごまを散らしたごま酢だれがかかり、白いご飯が添う。",
+   "dishes": [
+    {
+     "name": "豚肩ロースの低温調理 塩昆布ごま酢だれ",
+     "role": "main"
+    }
+   ],
+   "equipment": [
+    "sous-vide",
+    "pot20",
+    "fp26",
+    "bowl-m",
+    "kettle"
+   ],
+   "ingredients": [
+    {
+     "name": "豚肩ロース肉",
+     "qty": 350,
+     "unit": "g",
+     "grams": 350,
+     "pantry": "豚肩ロース肉",
+     "for": "豚肩ロースの低温調理 塩昆布ごま酢だれ",
+     "substitute": null,
+     "use_up": true
+    },
+    {
+     "name": "塩",
+     "qty": 1,
+     "unit": "小さじ",
+     "grams": 2,
+     "pantry": "塩",
+     "for": "豚肩ロースの低温調理 塩昆布ごま酢だれ",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "砂糖",
+     "qty": 0.5,
+     "unit": "小さじ",
+     "grams": 1.5,
+     "pantry": "砂糖",
+     "for": "豚肩ロースの低温調理 塩昆布ごま酢だれ",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "酒",
+     "qty": 1,
+     "unit": "大さじ",
+     "grams": 15,
+     "pantry": "酒",
+     "for": "豚肩ロースの低温調理 塩昆布ごま酢だれ",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "塩昆布",
+     "qty": 5,
+     "unit": "g",
+     "grams": 5,
+     "pantry": "塩昆布",
+     "for": "豚肩ロースの低温調理 塩昆布ごま酢だれ",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "醤油",
+     "qty": 1,
+     "unit": "小さじ",
+     "grams": 6,
+     "pantry": "醤油",
+     "for": "豚肩ロースの低温調理 塩昆布ごま酢だれ",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "酢",
+     "qty": 2,
+     "unit": "小さじ",
+     "grams": 10,
+     "pantry": "酢",
+     "for": "豚肩ロースの低温調理 塩昆布ごま酢だれ",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "ごま油",
+     "qty": 1,
+     "unit": "小さじ",
+     "grams": 4,
+     "pantry": "ごま油",
+     "for": "豚肩ロースの低温調理 塩昆布ごま酢だれ",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "白ごま",
+     "qty": 1,
+     "unit": "小さじ",
+     "grams": 3,
+     "pantry": "白ごま",
+     "for": "豚肩ロースの低温調理 塩昆布ごま酢だれ",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "サラダ油",
+     "qty": 0.5,
+     "unit": "小さじ",
+     "grams": 2,
+     "pantry": "サラダ油",
+     "for": "豚肩ロースの低温調理 塩昆布ごま酢だれ",
+     "substitute": null,
+     "use_up": false
+    }
+   ],
+   "tags": [
+    "低温調理",
+    "仕込み",
+    "豚肉",
+    "冷蔵2日",
+    "子ども取り分け"
+   ],
+   "salt": {
+    "total_g": 3.2,
+    "adult_per_serving_g": 1.5,
+    "kid_g": 0.4
+   },
+   "kid": {
+    "rule": "低温調理(63℃)の肉は子どもに出さない。大人用を切る前に、取り分けた1切れを当日フライパンで中心まで焼き直す。たれはかけない。",
+    "cut": "1cm 角に刻む（1-2y。手づかみ用は 1cm × 3cm の棒状）",
+    "note": "下味の塩は 0.4g 分だけ。たれ無しでそのまま食べさせる。熱いので冷ましてから。"
+   },
+   "keep": {
+    "fridge_days": 2,
+    "freezer": false,
+    "reheat": "切らずに袋ごと冷蔵。当日は常温に15分置き、フライパンで表面を焼いて中心が冷たくなければ切る。子どもの分は必ず中心まで加熱（蓋をして弱火で 2 分）。"
+   },
+   "timeline": [
+    {
+     "minute": 0,
+     "lane": "hands",
+     "text": "肉を 2 切れにして筋を切り、塩・砂糖・酒を揉む。10 分置く"
+    },
+    {
+     "minute": 0,
+     "lane": "sous-vide",
+     "text": "ケトルの湯を入れて 63℃ に設定"
+    },
+    {
+     "minute": 10,
+     "lane": "hands",
+     "text": "肉を耐熱袋に入れ空気を抜いて密閉"
+    },
+    {
+     "minute": 12,
+     "lane": "sous-vide",
+     "text": "63℃ に届いたら袋ごと沈める（2 時間 30 分）"
+    },
+    {
+     "minute": 15,
+     "lane": "hands",
+     "text": "副菜（白菜とコーンの塩昆布ごま油和え）を作る"
+    },
+    {
+     "minute": 162,
+     "lane": "sous-vide",
+     "text": "取り出して氷水に 15 分つけ急冷"
+    },
+    {
+     "minute": 180,
+     "lane": "hands",
+     "text": "冷蔵庫へ（30 分以内）。たれを混ぜて別容器へ"
+    }
+   ],
+   "steps": [
+    {
+     "dish": "豚肩ロースの低温調理 塩昆布ごま酢だれ",
+     "n": 1,
+     "title": "肉の下味（ブライン）",
+     "kind": "prep",
+     "tag": "marinate",
+     "minutes": 8,
+     "start": 0,
+     "heat": null,
+     "text": "豚肩ロース肉 350g を厚さ 2.5cm、2 切れに整え、脂と赤身の境の筋を数カ所包丁で切る。ボウル（中）で塩 小さじ1、砂糖 小さじ1/2、酒 大さじ1 を揉み込み、10 分置く。",
+     "cue": "肉の表面が少ししっとりして、酒が肉になじむ。",
+     "caution": "厚さは 3cm を超えない。厚い所は包丁で開いて 2.5cm にそろえる。",
+     "timer": null,
+     "kid": null,
+     "ingredients": [
+      "豚肩ロース肉",
+      "塩",
+      "砂糖",
+      "酒"
+     ]
+    },
+    {
+     "dish": "豚肩ロースの低温調理 塩昆布ごま酢だれ",
+     "n": 2,
+     "title": "湯を63℃にする",
+     "kind": "heat",
+     "tag": "boil",
+     "minutes": 3,
+     "start": 0,
+     "heat": {
+      "equipment": "sous-vide",
+      "level": "63℃"
+     },
+     "text": "鍋（20cm）に電気ケトルで沸かした湯 約 1L と水を入れて 60℃ ほどにし、低温調理器を 63℃ に設定する。",
+     "cue": "63℃ の表示で安定する。",
+     "caution": null,
+     "timer": null,
+     "kid": null,
+     "ingredients": []
+    },
+    {
+     "dish": "豚肩ロースの低温調理 塩昆布ごま酢だれ",
+     "n": 3,
+     "title": "袋詰め",
+     "kind": "prep",
+     "tag": "season",
+     "minutes": 3,
+     "start": 10,
+     "heat": null,
+     "text": "肉を耐熱の袋（湯せん可）に重ならないよう並べ、酒ごと入れて、水に沈めながら空気を抜いて密閉する。",
+     "cue": "袋がぴったり肉に張りつき、浮かない。",
+     "caution": null,
+     "timer": null,
+     "kid": null,
+     "ingredients": []
+    },
+    {
+     "dish": "豚肩ロースの低温調理 塩昆布ごま酢だれ",
+     "n": 4,
+     "title": "低温調理 2時間30分",
+     "kind": "wait",
+     "tag": "wait",
+     "minutes": 150,
+     "start": 12,
+     "heat": {
+      "equipment": "sous-vide",
+      "level": "63℃"
+     },
+     "text": "63℃ に届いたら袋を沈め、2 時間 30 分そのまま。この間に副菜を作り、ほかの家事をする。",
+     "cue": "湯が 63℃ のまま、袋が湯に沈んでいる。",
+     "caution": "2 時間未満で出さない（63℃ の豚は 2 時間以上が必要）。",
+     "timer": 9000,
+     "kid": null,
+     "ingredients": []
+    },
+    {
+     "dish": "豚肩ロースの低温調理 塩昆布ごま酢だれ",
+     "n": 5,
+     "title": "急冷して保存",
+     "kind": "prep",
+     "tag": "cleanup",
+     "minutes": 18,
+     "start": 162,
+     "heat": null,
+     "text": "袋のまま氷水（ボウル大）に 15 分つけて急冷し、水気を拭いて冷蔵庫へ。30 分以内に入れる。たれ（塩昆布 5g・醤油 小さじ1・酢 小さじ2・ごま油 小さじ1・白ごま 小さじ1）を混ぜて別容器に。",
+     "cue": "袋が冷たい。肉の中心が触って冷たい。",
+     "caution": null,
+     "timer": 900,
+     "kid": null,
+     "ingredients": [
+      "塩昆布",
+      "醤油",
+      "酢",
+      "ごま油",
+      "白ごま"
+     ]
+    },
+    {
+     "dish": "豚肩ロースの低温調理 塩昆布ごま酢だれ",
+     "n": 6,
+     "title": "【当日】焼き目をつけて切る",
+     "kind": "heat",
+     "tag": "sear",
+     "minutes": 8,
+     "start": null,
+     "heat": {
+      "equipment": "gas-r",
+      "level": "中火"
+     },
+     "text": "袋から出して水気を拭き、先に子どもの分を端から 1 切れ（約 50g）取り分ける。フライパンにサラダ油 小さじ1/2 を中火で熱し、大人の肉の両面を各 1 分、軽く焼き色をつける。5mm にそぎ切りにし、たれをかける。",
+     "cue": "表面にうっすら焼き色。切り口がしっとりピンクがかった薄茶で、肉汁が透明。",
+     "caution": "切る前に必ず取り分ける。",
+     "timer": null,
+     "kid": "取り分けた肉は 1cm 角に切り、フライパン（弱火・蓋）で 2 分、中心まで白くなるまで焼き直す。たれはかけない。冷ましてから出す。",
+     "ingredients": [
+      "サラダ油"
+     ]
+    },
+    {
+     "dish": "豚肩ロースの低温調理 塩昆布ごま酢だれ",
+     "n": 7,
+     "title": "【当日】盛る",
+     "kind": "serve",
+     "tag": "serve",
+     "minutes": 2,
+     "start": null,
+     "heat": null,
+     "text": "皿に切り身を並べ、たれを回しかけ、ご飯と副菜を添える。",
+     "cue": "皿に切り身が重なり、たれが全体に回る。",
+     "caution": null,
+     "timer": null,
+     "kid": null,
+     "ingredients": []
+    }
+   ],
+   "cleanup": {
+    "dishwasher": [
+     "bowl-m",
+     "bowl-l"
+    ],
+    "hand": [
+     "fp26",
+     "pot20"
+    ],
+    "note": "低温調理器は湯を捨てて拭く。袋は捨てる。"
+   },
+   "photo": null,
+   "stats": {
+    "cooked": 0,
+    "r_avg": null,
+    "f_avg": null,
+    "last": null
+   },
+   "detail": "full",
+   "together": [
+    "r-20261104-hakusai-to-kon-no-shiokonbu-gomaabura-ae"
+   ],
+   "memo": []
+  },
+  "side_recipe_ids": [
+   "r-20261104-hakusai-to-kon-no-shiokonbu-gomaabura-ae"
+  ],
+  "side_recipes": [
+   {
+    "id": "r-20261104-hakusai-to-kon-no-shiokonbu-gomaabura-ae",
+    "title": "白菜とコーンの塩昆布ごま油和え",
+    "version": 1,
+    "supersedes": null,
+    "status": "draft",
+    "created": "2026-11-04",
+    "request": "req-20261104-2350-2vxk",
+    "generated_by": {
+     "model": "claude-code",
+     "prompt_version": 10
+    },
+    "type": "prep",
+    "servings": {
+     "adults": 2,
+     "kids": 1
+    },
+    "time": {
+     "budget": 0,
+     "planned": 15,
+     "active": 10,
+     "raw_estimate": 11,
+     "speed_factor": 1.15
+    },
+    "image_text": "しんなりした白菜の淡い緑と黄色いコーンが混ざり、塩昆布の黒とごまが散る。ごま油の香りで艶がある。",
+    "dishes": [
+     {
+      "name": "白菜とコーンの塩昆布ごま油和え",
+      "role": "side"
+     }
+    ],
+    "equipment": [
+     "pot20",
+     "kettle",
+     "bowl-m"
+    ],
+    "ingredients": [
+     {
+      "name": "白菜 1/",
+      "qty": 0.125,
+      "unit": "株",
+      "grams": 250,
+      "pantry": "白菜 1/",
+      "for": "白菜とコーンの塩昆布ごま油和え",
+      "substitute": null,
+      "use_up": false
+     },
+     {
+      "name": "コーン缶",
+      "qty": 3,
+      "unit": "大さじ",
+      "grams": 30,
+      "pantry": "コーン缶",
+      "for": "白菜とコーンの塩昆布ごま油和え",
+      "substitute": null,
+      "use_up": false
+     },
+     {
+      "name": "塩昆布",
+      "qty": 5,
+      "unit": "g",
+      "grams": 5,
+      "pantry": "塩昆布",
+      "for": "白菜とコーンの塩昆布ごま油和え",
+      "substitute": null,
+      "use_up": false
+     },
+     {
+      "name": "ごま油",
+      "qty": 1,
+      "unit": "小さじ",
+      "grams": 4,
+      "pantry": "ごま油",
+      "for": "白菜とコーンの塩昆布ごま油和え",
+      "substitute": null,
+      "use_up": false
+     },
+     {
+      "name": "醤油",
+      "qty": 0.5,
+      "unit": "小さじ",
+      "grams": 3,
+      "pantry": "醤油",
+      "for": "白菜とコーンの塩昆布ごま油和え",
+      "substitute": null,
+      "use_up": false
+     }
+    ],
+    "tags": [
+     "副菜",
+     "仕込み",
+     "野菜"
+    ],
+    "salt": {
+     "total_g": 1.0,
+     "adult_per_serving_g": 0.4,
+     "kid_g": 0.0
+    },
+    "kid": {
+     "rule": "味付け前に取り分ける。",
+     "cut": "白菜は 5mm 角に刻む。コーンは刻む（チョッパーで数秒）。",
+     "note": "味付け無しで出す。"
+    },
+    "keep": {
+     "fridge_days": 2,
+     "freezer": false,
+     "reheat": "冷たいままでよい。水が出たら軽く絞る。"
+    },
+    "timeline": [
+     {
+      "minute": 0,
+      "lane": "hands",
+      "text": "白菜を 2cm 幅に切り、鍋に入れてケトルの湯を注ぐ"
+     },
+     {
+      "minute": 3,
+      "lane": "hands",
+      "text": "ザルにあげて冷水で冷まし、絞る"
+     },
+     {
+      "minute": 6,
+      "lane": "hands",
+      "text": "子どもの分を取り分け、残りを調味料で和える"
+     },
+     {
+      "minute": 9,
+      "lane": "hands",
+      "text": "容器に入れて冷蔵"
+     }
+    ],
+    "steps": [
+     {
+      "dish": "白菜とコーンの塩昆布ごま油和え",
+      "n": 1,
+      "title": "白菜をゆでる",
+      "kind": "heat",
+      "tag": "boil",
+      "minutes": 4,
+      "start": 0,
+      "heat": {
+       "equipment": "kettle",
+       "level": "沸騰した湯"
+      },
+      "text": "白菜 1/8 株を 2cm 幅に切って鍋（20cm）に入れ、ケトルで沸かした湯を注ぐ。2 分置いてザルにあげる。",
+      "cue": "白菜の白い所が半透明で、しんなりする。",
+      "caution": "熱湯に注意。",
+      "timer": 120,
+      "kid": null,
+      "ingredients": [
+       "白菜 1/"
+      ]
+     },
+     {
+      "dish": "白菜とコーンの塩昆布ごま油和え",
+      "n": 2,
+      "title": "冷まして絞る",
+      "kind": "prep",
+      "tag": "cut",
+      "minutes": 3,
+      "start": 4,
+      "heat": null,
+      "text": "ザルのまま冷水をかけて冷まし、両手でぎゅっと絞る。",
+      "cue": "水気がほとんど出なくなる。",
+      "caution": null,
+      "timer": null,
+      "kid": null,
+      "ingredients": []
+     },
+     {
+      "dish": "白菜とコーンの塩昆布ごま油和え",
+      "n": 3,
+      "title": "取り分けて和える",
+      "kind": "prep",
+      "tag": "season",
+      "minutes": 3,
+      "start": 7,
+      "heat": null,
+      "text": "子どもの分（約 1/4）を 5mm に刻み、コーン 大さじ1 と混ぜて別にする。残りをボウルでコーン 大さじ2、塩昆布 5g、ごま油 小さじ1、醤油 小さじ1/2 で和える。",
+      "cue": "塩昆布がなじみ、白菜に艶が出る。",
+      "caution": null,
+      "timer": null,
+      "kid": "味付け前に取り分ける。刻んだ白菜とコーンのみで出す。",
+      "ingredients": [
+       "コーン缶",
+       "塩昆布",
+       "ごま油",
+       "醤油"
+      ]
+     },
+     {
+      "dish": "白菜とコーンの塩昆布ごま油和え",
+      "n": 4,
+      "title": "保存",
+      "kind": "serve",
+      "tag": "cleanup",
+      "minutes": 2,
+      "start": 10,
+      "heat": null,
+      "text": "保存容器に入れて冷蔵庫へ。",
+      "cue": "容器の底に水が溜まらない。",
+      "caution": null,
+      "timer": null,
+      "kid": null,
+      "ingredients": []
+     }
+    ],
+    "cleanup": {
+     "dishwasher": [
+      "bowl-m"
+     ],
+     "hand": [
+      "pot20"
+     ],
+     "note": null
+    },
+    "photo": null,
+    "stats": {
+     "cooked": 0,
+     "r_avg": null,
+     "f_avg": null,
+     "last": null
+    },
+    "detail": "full",
+    "together": [
+     "r-20261104-butakata-rosu-no-teion-chouri-shiokonbu-"
+    ],
+    "memo": []
+   }
+  ],
+  "model": "claude-code",
+  "prompt_version": 10,
+  "tokens": {
+   "input": 0,
+   "output": 0,
+   "cache_read": 0,
+   "cache_write": 0
+  },
+  "cost_usd": 0.0,
+  "seconds": 0
+ },
+ "finished": "2026-11-04T23:52:27+09:00"
 }
