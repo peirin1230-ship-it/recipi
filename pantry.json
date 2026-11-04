@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-03T19:53:58+09:00",
+ "updated": "2026-11-04T23:50:17+09:00",
  "items": [
   {
    "id": "pxqdj5",
@@ -139,6 +139,13 @@
    "name": "大豆水煮",
    "loc": "pantry",
    "added": "2026-11-03",
+   "src": "manual"
+  },
+  {
+   "id": "p70xpr",
+   "name": "豚肩ロース肉",
+   "loc": "fridge",
+   "added": "2026-11-04",
    "src": "manual"
   }
  ],
