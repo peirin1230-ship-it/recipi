@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-05T19:41:39+09:00",
+ "updated": "2026-11-05T19:41:42+09:00",
  "items": [
   {
    "id": "pxqdj5",
@@ -67,13 +67,6 @@
   {
    "id": "peyksd",
    "name": "うずらの卵",
-   "loc": "fridge",
-   "added": "2026-11-03",
-   "src": "kaji-quest"
-  },
-  {
-   "id": "pn755c",
-   "name": "白菜 1/",
    "loc": "fridge",
    "added": "2026-11-03",
    "src": "kaji-quest"
