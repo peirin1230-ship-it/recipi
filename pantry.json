@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-04T23:50:17+09:00",
+ "updated": "2026-11-05T19:41:33+09:00",
  "items": [
   {
    "id": "pxqdj5",
@@ -81,13 +81,6 @@
   {
    "id": "pb5jp3",
    "name": "ブロッコリー",
-   "loc": "fridge",
-   "added": "2026-11-03",
-   "src": "kaji-quest"
-  },
-  {
-   "id": "p4tfq7",
-   "name": "しらす",
    "loc": "fridge",
    "added": "2026-11-03",
    "src": "kaji-quest"
