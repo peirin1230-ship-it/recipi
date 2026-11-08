@@ -31,8 +31,8 @@ kid:
   refuses: []
   works_if: []
 equipment_notes: [レンジだとにんじんが固く残るので、フライパンで炒める, 低温調理の焼き芋風は硬めで甘みが弱い。温度と時間を長めに]
-recipe_notes: [焼き芋風のさつまいもは甘みが足りない声が続く。糖が出る温度帯をゆっくり通す]
-notes_log_id: ijqkqxx6szg9
+recipe_notes: [焼き芋風のさつまいもは甘みが足りない声が続く。糖が出る温度帯をゆっくり通す, 包む・返す・蒸す・豆腐を扱う工程は崩れやすい。コツと手当てを工程に書く]
+notes_log_id: rxz88nmvbqod
 standards: [r-20261009-kamaboko-to-tamago-no-milk-soup, r-20261013-suihanki-de-tsukureru-ryori-kabocha-to-s]
 needs_revision: []
 revised: []
