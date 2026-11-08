@@ -1,4 +1,5 @@
 ---
+listed: false
 id: r-20261108-kabocha-to-iwashi-tsumire-no-misoni
 title: かぼちゃといわしつみれの味噌煮
 version: 1
