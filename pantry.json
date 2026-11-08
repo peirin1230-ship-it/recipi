@@ -1,13 +1,6 @@
 {
- "updated": "2026-11-05T19:41:49+09:00",
+ "updated": "2026-11-08T18:17:25+09:00",
  "items": [
-  {
-   "id": "pxqdj5",
-   "name": "卵",
-   "loc": "fridge",
-   "added": "2026-11-02",
-   "src": "manual"
-  },
   {
    "id": "p1qnvb",
    "name": "牛乳",
@@ -72,13 +65,6 @@
    "src": "kaji-quest"
   },
   {
-   "id": "pb5jp3",
-   "name": "ブロッコリー",
-   "loc": "fridge",
-   "added": "2026-11-03",
-   "src": "kaji-quest"
-  },
-  {
    "id": "pfroor",
    "name": "かまぼこ",
    "loc": "fridge",
@@ -96,13 +82,6 @@
    "id": "pad1ya",
    "name": "じゃがいも",
    "loc": "pantry",
-   "added": "2026-11-03",
-   "src": "kaji-quest"
-  },
-  {
-   "id": "p22bvu",
-   "name": "いわしつみれ",
-   "loc": "fridge",
    "added": "2026-11-03",
    "src": "kaji-quest"
   },
