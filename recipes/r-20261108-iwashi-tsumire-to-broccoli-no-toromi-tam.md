@@ -1,5 +1,5 @@
 ---
-listed: "2026-11-08T18:17:22+09:00"
+listed: '2026-11-08T18:17:22+09:00'
 id: r-20261108-iwashi-tsumire-to-broccoli-no-toromi-tam
 title: いわしつみれとブロッコリーのとろみ卵とじ
 version: 1
@@ -111,8 +111,8 @@ cleanup:
   dishwasher: [bowl-m]
   hand: [fp26]
   note: 使った道具は待ち時間に洗う
-photo: null
-stats: {cooked: 0, r_avg: null, f_avg: null, last: null}
+photo: photos/r-20261108-iwashi-tsumire-to-broccoli-no-toromi-tam/20261108-1.jpg
+stats: {cooked: 1, r_avg: 45, f_avg: 3.0, last: '2026-11-08'}
 detail: full
 together: [r-20261108-jagaimo-no-shiokonbu-butter-mushini]
 ---
@@ -185,4 +185,5 @@ together: [r-20261108-jagaimo-no-shiokonbu-butter-mushini]
 - 使った道具は待ち時間に洗う
 
 ## 作ったときのメモ
+
 - 2026-11-08 ・ 63 分（見込み 31）・ R 45 ・ F 3 ・ そのまま ・ 気づき: 片栗粉入れすぎた ・ 📷 20261108-1.jpg

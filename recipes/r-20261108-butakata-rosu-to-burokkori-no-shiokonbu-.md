@@ -1,5 +1,5 @@
 ---
-listed: "2026-11-08T18:17:52+09:00"
+listed: '2026-11-08T18:17:52+09:00'
 id: r-20261108-butakata-rosu-to-burokkori-no-shiokonbu-
 title: 豚肩ロースとブロッコリーの塩昆布炒め
 version: 1
@@ -128,8 +128,8 @@ cleanup:
   dishwasher: [bowl-m]
   hand: [fp26]
   note: フライパンは冷めてから洗う
-photo: null
-stats: {cooked: 0, r_avg: null, f_avg: null, last: null}
+photo: photos/r-20261108-butakata-rosu-to-burokkori-no-shiokonbu-/20261108-1.jpg
+stats: {cooked: 1, r_avg: 60, f_avg: 5.0, last: '2026-11-08'}
 detail: full
 together: [r-20261108-kabocha-to-iwashi-tsumire-no-misoni]
 ---
@@ -204,4 +204,5 @@ together: [r-20261108-kabocha-to-iwashi-tsumire-no-misoni]
 - フライパンは冷めてから洗う
 
 ## 作ったときのメモ
+
 - 2026-11-08 ・ 63 分（見込み 28）・ R 60 ・ F 5 ・ そのまま ・ 📷 20261108-1.jpg

@@ -1,50 +1,52 @@
 # profile/learned.yml — nightly-learn（scripts/learn.py）が logs/ から生成する。手で直さない（直すなら profile/overrides.yml）。
-updated: '2026-11-04'
+updated: '2026-11-09'
 window_days: 90
-n_logs: 23
-last_log_id: j5fq9g8z0edw
-speed_factor: {overall: 1.15, prep: 1.63, heat: 1.05, serve: 1.07}
+n_logs: 26
+last_log_id: yes476bkwpz8
+speed_factor: {overall: 1.25, prep: 1.66, heat: 0.86, serve: 0.89}
 likes:
+- {key: milk, score: 0.84, n: 3}
+- {key: pot-one, score: 0.84, n: 3}
+- {key: 牛乳, score: 0.73, n: 5}
 - {key: チョッパー, score: 0.73, n: 4}
 - {key: 炊飯器, score: 0.71, n: 3}
 - {key: しらす, score: 0.71, n: 3}
-- {key: 牛乳, score: 0.67, n: 4}
+- {key: soup, score: 0.64, n: 5}
 - {key: かぼちゃ, score: 0.56, n: 5}
-- {key: soup, score: 0.55, n: 4}
-- {key: 卵, score: 0.55, n: 4}
+- {key: egg, score: 0.55, n: 4}
 - {key: 炊き込みご飯, score: 0.5, n: 4}
 - {key: 米, score: 0.5, n: 4}
 - {key: にんじん, score: 0.49, n: 3}
-- {key: quick, score: 0.4, n: 3}
+- {key: quick, score: 0.48, n: 6}
+- {key: 卵, score: 0.48, n: 6}
 - {key: 低温調理, score: 0.4, n: 3}
-- {key: 子ども取り分け, score: 0.39, n: 11}
 dislikes:
 - {key: 作り置き, score: -0.4, n: 3}
 - {key: 仕込み, score: -0.27, n: 3}
 partner:
-  likes: [炊飯器, しらす, 炊き込みご飯, 米, チョッパー, milk, egg, pot-one]
+  likes: [炊飯器, しらす, milk, egg, pot-one, 牛乳, 炊き込みご飯, 米]
   dislikes: [なす, 豆腐, レンジ, 野菜]
 kid:
-  eats_well: [子ども取り分け, 炊き込みご飯, 米, かぼちゃ, チョッパー, 牛乳, 炊飯器, しらす, soup, 卵, 副菜, 仕込み]
+  eats_well: [子ども取り分け, 牛乳, 炊き込みご飯, 米, かぼちゃ, チョッパー, soup, 卵, 炊飯器, しらす, milk, egg]
   refuses: []
   works_if: []
 equipment_notes: [レンジだとにんじんが固く残るので、フライパンで炒める, 低温調理の焼き芋風は硬めで甘みが弱い。温度と時間を長めに]
 recipe_notes: [焼き芋風のさつまいもは甘みが足りない声が続く。糖が出る温度帯をゆっくり通す]
 notes_log_id: ijqkqxx6szg9
-standards: [r-20261013-suihanki-de-tsukureru-ryori-kabocha-to-s]
+standards: [r-20261009-kamaboko-to-tamago-no-milk-soup, r-20261013-suihanki-de-tsukureru-ryori-kabocha-to-s]
 needs_revision: []
 revised: []
 retired: []
 quality:
 - week: 2026-W41
-  generated: 8
+  generated: 6
   cooked: 3
   f_avg: 2.93
   r_avg: 70
   time_err_median: 0.29
   new_ratio: 1.0
-  adoption: 0.38
-  prompt_versions: {'3': 2, '6': 1, '4': 1, '2': 1, '1': 2, '5': 1}
+  adoption: 0.5
+  prompt_versions: {'3': 2, '5': 1, '4': 1, '2': 1, '6': 1}
 - week: 2026-W42
   generated: 7
   cooked: 5
@@ -73,11 +75,11 @@ quality:
   adoption: null
   prompt_versions: {}
 - week: 2026-W45
-  generated: 2
-  cooked: 4
-  f_avg: 4.28
-  r_avg: 68
-  time_err_median: 1.83
-  new_ratio: 1.0
-  adoption: 2.0
-  prompt_versions: {'10': 2}
+  generated: 8
+  cooked: 7
+  f_avg: 4.3
+  r_avg: 62
+  time_err_median: 1.25
+  new_ratio: 0.86
+  adoption: 0.88
+  prompt_versions: {'10': 8}
