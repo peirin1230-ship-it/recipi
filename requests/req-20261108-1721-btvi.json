@@ -1,0 +1,24 @@
+{
+ "id": "req-20261108-1721-btvi",
+ "ts": "2026-11-08T17:21:27+09:00",
+ "type": "prep",
+ "time_budget": 0,
+ "servings": {
+  "adults": 2,
+  "kids": 1
+ },
+ "dishes": "main+side",
+ "mood": [],
+ "use_up": [
+  "なす",
+  "ブロッコリー",
+  "かぼちゃ",
+  "いわしつみれ"
+ ],
+ "exclude": [],
+ "note": "",
+ "mode": "auto",
+ "status": "pending",
+ "error": null,
+ "result": null
+}
