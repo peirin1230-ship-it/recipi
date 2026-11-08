@@ -18,7 +18,748 @@
  "exclude": [],
  "note": "",
  "mode": "auto",
- "status": "pending",
+ "status": "done",
  "error": null,
- "result": null
+ "result": {
+  "feasible": true,
+  "infeasible_reason": null,
+  "nearest_options": [],
+  "alternatives": [
+   {
+    "title": "豚肩ロースとブロッコリーの塩昆布炒め",
+    "minutes": 25,
+    "why": "豚肉を炒めて塩昆布の旨みで少ない塩でも満足感が出る。",
+    "kind": "new"
+   },
+   {
+    "title": "じゃがいもとコーンのミルク煮 うずらの卵入り",
+    "minutes": 30,
+    "why": "牛乳で煮る洋風で、子どもが手づかみしやすくやさしい味。",
+    "kind": "new"
+   }
+  ],
+  "recipe_id": "r-20261108-iwashi-tsumire-to-nasu-kabocha-no-teriya",
+  "recipe": {
+   "id": "r-20261108-iwashi-tsumire-to-nasu-kabocha-no-teriya",
+   "title": "いわしつみれとなす・かぼちゃの照り焼き",
+   "version": 1,
+   "supersedes": null,
+   "status": "draft",
+   "created": "2026-11-08",
+   "request": "req-20261108-1724-hdgm",
+   "generated_by": {
+    "model": "claude-code",
+    "prompt_version": 10
+   },
+   "type": "dinner",
+   "servings": {
+    "adults": 2,
+    "kids": 1
+   },
+   "time": {
+    "budget": 45,
+    "planned": 27,
+    "active": 20,
+    "raw_estimate": 22,
+    "speed_factor": 1.15
+   },
+   "image_text": "つやのある濃い照りをまとった、こんがり焼き色のかぼちゃとなす、ふっくらしたいわしつみれが大皿に盛られている。仕上げの酢の香りがほんのり立つ。",
+   "dishes": [
+    {
+     "name": "いわしつみれとなす・かぼちゃの照り焼き",
+     "role": "いわしつみれとなす・かぼちゃの照り焼き"
+    }
+   ],
+   "equipment": [
+    "fp26",
+    "bowl-m"
+   ],
+   "ingredients": [
+    {
+     "name": "いわしつみれ",
+     "qty": 1,
+     "unit": "パック",
+     "grams": 160,
+     "pantry": "いわしつみれ",
+     "for": "いわしつみれとなす・かぼちゃの照り焼き",
+     "substitute": null,
+     "use_up": true
+    },
+    {
+     "name": "かぼちゃ",
+     "qty": 0.25,
+     "unit": "個",
+     "grams": 300,
+     "pantry": "かぼちゃ",
+     "for": "いわしつみれとなす・かぼちゃの照り焼き",
+     "substitute": null,
+     "use_up": true
+    },
+    {
+     "name": "なす",
+     "qty": 2,
+     "unit": "本",
+     "grams": 160,
+     "pantry": "なす",
+     "for": "いわしつみれとなす・かぼちゃの照り焼き",
+     "substitute": null,
+     "use_up": true
+    },
+    {
+     "name": "サラダ油",
+     "qty": 1.5,
+     "unit": "大さじ",
+     "grams": 18,
+     "pantry": "サラダ油",
+     "for": "いわしつみれとなす・かぼちゃの照り焼き",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "水",
+     "qty": 3,
+     "unit": "大さじ",
+     "grams": 45,
+     "pantry": null,
+     "for": "いわしつみれとなす・かぼちゃの照り焼き",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "醤油",
+     "qty": 1.5,
+     "unit": "小さじ",
+     "grams": 9,
+     "pantry": "醤油",
+     "for": "いわしつみれとなす・かぼちゃの照り焼き",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "みりん",
+     "qty": 2,
+     "unit": "大さじ",
+     "grams": 36,
+     "pantry": "みりん",
+     "for": "いわしつみれとなす・かぼちゃの照り焼き",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "酒",
+     "qty": 1,
+     "unit": "大さじ",
+     "grams": 15,
+     "pantry": "酒",
+     "for": "いわしつみれとなす・かぼちゃの照り焼き",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "砂糖",
+     "qty": 1,
+     "unit": "小さじ",
+     "grams": 3,
+     "pantry": "砂糖",
+     "for": "いわしつみれとなす・かぼちゃの照り焼き",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "酢",
+     "qty": 1,
+     "unit": "小さじ",
+     "grams": 5,
+     "pantry": "酢",
+     "for": "いわしつみれとなす・かぼちゃの照り焼き",
+     "substitute": null,
+     "use_up": false
+    }
+   ],
+   "tags": [
+    "quick",
+    "フライパン",
+    "魚",
+    "野菜たっぷり",
+    "子ども取り分け"
+   ],
+   "salt": {
+    "total_g": 3.2,
+    "adult_per_serving_g": 1.5,
+    "kid_g": 0.4
+   },
+   "kid": {
+    "rule": "separate",
+    "cut": "かぼちゃ・なすは 1cm 角、つみれは 4 等分（1cm 角）",
+    "note": "たれを入れる前に取り分け、皿に広げて冷ましてから出す。かぼちゃは手づかみしやすい棒状にしてもよい。つみれに小骨が残っていないか指でつぶして確認。"
+   },
+   "keep": {
+    "fridge_days": 2,
+    "freezer": false,
+    "reheat": "レンジ 600W で 1 人分 1 分 30 秒。湯気が立つまで。途中で混ぜ、水 小さじ 1 を足すと乾かない"
+   },
+   "timeline": [
+    {
+     "minute": 0,
+     "lane": "hands",
+     "text": "かぼちゃの種を取り、1.5cm 厚の一口大に切る"
+    },
+    {
+     "minute": 4,
+     "lane": "gas-r",
+     "text": "フライパンに油 大さじ 1、かぼちゃを皮を下にして並べ中火で焼く"
+    },
+    {
+     "minute": 6,
+     "lane": "gas-r",
+     "text": "水 大さじ 3 を入れ蓋、弱火で蒸し焼き（放置）"
+    },
+    {
+     "minute": 6,
+     "lane": "hands",
+     "text": "なすを乱切りにし、たれを混ぜる"
+    },
+    {
+     "minute": 10,
+     "lane": "hands",
+     "text": "（副菜）ブロッコリーを切る"
+    },
+    {
+     "minute": 12,
+     "lane": "gas-r",
+     "text": "蓋を外し、なす・つみれ・油 大さじ 1/2 を加えて中火で炒める"
+    },
+    {
+     "minute": 16,
+     "lane": "hands",
+     "text": "たれの前に子どもの分を取り分けて冷ます"
+    },
+    {
+     "minute": 17,
+     "lane": "gas-r",
+     "text": "たれを回し入れ、煮からめて照りを出す"
+    },
+    {
+     "minute": 19,
+     "lane": "gas-r",
+     "text": "火を止め酢を回しかける"
+    },
+    {
+     "minute": 19,
+     "lane": "hands",
+     "text": "盛り付け・配膳"
+    }
+   ],
+   "steps": [
+    {
+     "dish": "いわしつみれとなす・かぼちゃの照り焼き",
+     "n": 1,
+     "title": "かぼちゃを切る",
+     "kind": "prep",
+     "tag": "cut",
+     "minutes": 4,
+     "start": 0,
+     "heat": null,
+     "text": "かぼちゃの種とワタをスプーンで取り、皮付きのまま 1.5cm 厚の一口大に切る。",
+     "cue": "切り口がそろい、厚みが同じ。",
+     "caution": "かたいので安定する面を下にして切る。",
+     "timer": null,
+     "kid": null,
+     "ingredients": [
+      "かぼちゃ"
+     ]
+    },
+    {
+     "dish": "いわしつみれとなす・かぼちゃの照り焼き",
+     "n": 2,
+     "title": "かぼちゃを焼く",
+     "kind": "heat",
+     "tag": "sear",
+     "minutes": 2,
+     "start": 4,
+     "heat": {
+      "equipment": "fp26",
+      "level": "中火"
+     },
+     "text": "フライパン（fp26）に油 大さじ 1 を入れて中火で 30 秒温め、かぼちゃを皮を下にして重ならないよう並べ、動かさず 2 分焼く。",
+     "cue": "底が薄いきつね色に色づく。",
+     "caution": "油がはねるので水気を拭いてから入れる。",
+     "timer": null,
+     "kid": null,
+     "ingredients": [
+      "サラダ油",
+      "かぼちゃ"
+     ]
+    },
+    {
+     "dish": "いわしつみれとなす・かぼちゃの照り焼き",
+     "n": 3,
+     "title": "蒸し焼きにする",
+     "kind": "wait",
+     "tag": "wait",
+     "minutes": 6,
+     "start": 6,
+     "heat": {
+      "equipment": "fp26",
+      "level": "弱火"
+     },
+     "text": "水 大さじ 3 を回し入れ、すぐ蓋をして弱火で 6 分蒸し焼きにする。この間に次の工程（なす・たれ・副菜）を進める。",
+     "cue": "竹串がすっと通り、水分がほぼなくなる。",
+     "caution": null,
+     "timer": 360,
+     "kid": null,
+     "ingredients": [
+      "水"
+     ]
+    },
+    {
+     "dish": "いわしつみれとなす・かぼちゃの照り焼き",
+     "n": 4,
+     "title": "なすを切り、たれを混ぜる",
+     "kind": "prep",
+     "tag": "cut",
+     "minutes": 4,
+     "start": 6,
+     "heat": null,
+     "text": "なすを 2cm の乱切りにする。ボウル（bowl-m）に醤油 小さじ 1.5・みりん 大さじ 2・酒 大さじ 1・砂糖 小さじ 1 を混ぜておく。",
+     "cue": "なすが同じ大きさ。砂糖が溶けている。",
+     "caution": "なすは切ったらすぐ使う（変色するので水にさらさなくてよい）。",
+     "timer": null,
+     "kid": null,
+     "ingredients": [
+      "なす",
+      "醤油",
+      "みりん",
+      "酒",
+      "砂糖"
+     ]
+    },
+    {
+     "dish": "いわしつみれとなす・かぼちゃの照り焼き",
+     "n": 5,
+     "title": "なすとつみれを炒める",
+     "kind": "heat",
+     "tag": "stir-fry",
+     "minutes": 4,
+     "start": 12,
+     "heat": {
+      "equipment": "fp26",
+      "level": "中火"
+     },
+     "text": "蓋を外して中火にし、油 大さじ 1/2 を足す。なすといわしつみれ（大きければ半分に）を加え、時々返しながら 4 分炒める。",
+     "cue": "なすがしんなりして透け、つみれの切り口まで温まって湯気が立つ。",
+     "caution": "つみれは中まで温める。",
+     "timer": null,
+     "kid": null,
+     "ingredients": [
+      "なす",
+      "いわしつみれ",
+      "サラダ油"
+     ]
+    },
+    {
+     "dish": "いわしつみれとなす・かぼちゃの照り焼き",
+     "n": 6,
+     "title": "子どもの分を取り分ける",
+     "kind": "prep",
+     "tag": "kid",
+     "minutes": 1,
+     "start": 16,
+     "heat": null,
+     "text": "たれを入れる前に、かぼちゃ・なす・つみれを子ども用の皿に 1/3 ほど取り分け、1cm 角に切って広げて冷ます。",
+     "cue": "手で触れるくらいまで冷め、味付け前のまま。",
+     "caution": null,
+     "timer": null,
+     "kid": "味付け前の分を 1cm 角に。つみれは 4 等分で小骨を確認。冷ましてから出す。",
+     "ingredients": []
+    },
+    {
+     "dish": "いわしつみれとなす・かぼちゃの照り焼き",
+     "n": 7,
+     "title": "煮からめる",
+     "kind": "heat",
+     "tag": "simmer",
+     "minutes": 2,
+     "start": 17,
+     "heat": {
+      "equipment": "fp26",
+      "level": "中火"
+     },
+     "text": "残りに合わせたたれを回し入れ、中火で 2 分、全体を返しながら煮からめる。",
+     "cue": "汁気が少なくなり、表面にとろっとした照りが出る。",
+     "caution": "糖分が焦げやすいので焦げ付く前に火を止める。",
+     "timer": null,
+     "kid": null,
+     "ingredients": [
+      "醤油",
+      "みりん",
+      "酒",
+      "砂糖"
+     ]
+    },
+    {
+     "dish": "いわしつみれとなす・かぼちゃの照り焼き",
+     "n": 8,
+     "title": "仕上げて盛る",
+     "kind": "serve",
+     "tag": "serve",
+     "minutes": 3,
+     "start": 19,
+     "heat": null,
+     "text": "火を止めて酢 小さじ 1 を回しかけ、大皿に盛って配膳する。",
+     "cue": "酢の香りが立ち、照りが保たれている。",
+     "caution": null,
+     "timer": null,
+     "kid": "冷ました子どもの分を取り皿に出す。",
+     "ingredients": [
+      "酢"
+     ]
+    }
+   ],
+   "cleanup": {
+    "dishwasher": [
+     "bowl-m"
+    ],
+    "hand": [
+     "fp26"
+    ],
+    "note": "フライパンは粗熱が取れてから洗う"
+   },
+   "photo": null,
+   "stats": {
+    "cooked": 0,
+    "r_avg": null,
+    "f_avg": null,
+    "last": null
+   },
+   "detail": "full",
+   "together": [
+    "r-20261108-broccoli-corn-shiokonbu-goma-ae"
+   ],
+   "memo": []
+  },
+  "side_recipe_ids": [
+   "r-20261108-broccoli-corn-shiokonbu-goma-ae"
+  ],
+  "side_recipes": [
+   {
+    "id": "r-20261108-broccoli-corn-shiokonbu-goma-ae",
+    "title": "ブロッコリーとコーンの塩昆布ごま和え",
+    "version": 1,
+    "supersedes": null,
+    "status": "draft",
+    "created": "2026-11-08",
+    "request": "req-20261108-1724-hdgm",
+    "generated_by": {
+     "model": "claude-code",
+     "prompt_version": 10
+    },
+    "type": "dinner",
+    "servings": {
+     "adults": 2,
+     "kids": 1
+    },
+    "time": {
+     "budget": 45,
+     "planned": 29,
+     "active": 11,
+     "raw_estimate": 21,
+     "speed_factor": 1.15
+    },
+    "image_text": "鮮やかな緑のブロッコリーと黄色いコーンに白ごまが散り、塩昆布がからんだ小鉢。ごま油の香りが立つ。",
+    "dishes": [
+     {
+      "name": "ブロッコリーとコーンの塩昆布ごま和え",
+      "role": "side"
+     }
+    ],
+    "equipment": [
+     "kettle",
+     "pot20",
+     "bowl-m"
+    ],
+    "ingredients": [
+     {
+      "name": "ブロッコリー",
+      "qty": 1,
+      "unit": "株",
+      "grams": 250,
+      "pantry": "ブロッコリー",
+      "for": "ブロッコリーとコーンの塩昆布ごま和え",
+      "substitute": null,
+      "use_up": true
+     },
+     {
+      "name": "コーン缶",
+      "qty": 0.5,
+      "unit": "缶",
+      "grams": 60,
+      "pantry": "コーン缶",
+      "for": "ブロッコリーとコーンの塩昆布ごま和え",
+      "substitute": null,
+      "use_up": false
+     },
+     {
+      "name": "湯",
+      "qty": 600,
+      "unit": "ml",
+      "grams": 600,
+      "pantry": null,
+      "for": "ブロッコリーとコーンの塩昆布ごま和え",
+      "substitute": null,
+      "use_up": false
+     },
+     {
+      "name": "塩昆布",
+      "qty": 1,
+      "unit": "大さじ",
+      "grams": 5,
+      "pantry": "塩昆布",
+      "for": "ブロッコリーとコーンの塩昆布ごま和え",
+      "substitute": null,
+      "use_up": false
+     },
+     {
+      "name": "ごま油",
+      "qty": 1,
+      "unit": "小さじ",
+      "grams": 4,
+      "pantry": "ごま油",
+      "for": "ブロッコリーとコーンの塩昆布ごま和え",
+      "substitute": null,
+      "use_up": false
+     },
+     {
+      "name": "白ごま",
+      "qty": 1,
+      "unit": "小さじ",
+      "grams": 3,
+      "pantry": "白ごま",
+      "for": "ブロッコリーとコーンの塩昆布ごま和え",
+      "substitute": null,
+      "use_up": false
+     }
+    ],
+    "tags": [
+     "quick",
+     "副菜",
+     "野菜たっぷり",
+     "子ども取り分け"
+    ],
+    "salt": {
+     "total_g": 0.7,
+     "adult_per_serving_g": 0.3,
+     "kid_g": 0.0
+    },
+    "kid": {
+     "rule": "separate",
+     "cut": "ブロッコリーは 5mm〜1cm、コーンは包丁で粗く刻む",
+     "note": "和える前に取り分ける。ブロッコリーは 3 分しっかりゆでてやわらかく。"
+    },
+    "keep": {
+     "fridge_days": 2,
+     "freezer": false,
+     "reheat": "冷たいままで食べる。水気が出たら軽く切る"
+    },
+    "timeline": [
+     {
+      "minute": 0,
+      "lane": "hands",
+      "text": "ケトルに水 600ml を入れて沸かす（自動で切れる）"
+     },
+     {
+      "minute": 10,
+      "lane": "hands",
+      "text": "ブロッコリーを小房に分け、コーンの汁を切る"
+     },
+     {
+      "minute": 12,
+      "lane": "gas-l",
+      "text": "鍋に湯を注いで沸かし直し、ブロッコリーを 3 分ゆでる"
+     },
+     {
+      "minute": 17,
+      "lane": "hands",
+      "text": "ザルに上げて冷水で冷まし水気を切る"
+     },
+     {
+      "minute": 18,
+      "lane": "hands",
+      "text": "子どもの分を取り分けて刻む"
+     },
+     {
+      "minute": 19,
+      "lane": "hands",
+      "text": "大人の分を塩昆布・ごま油・白ごまで和える"
+     },
+     {
+      "minute": 20,
+      "lane": "hands",
+      "text": "盛り付け"
+     }
+    ],
+    "steps": [
+     {
+      "dish": "ブロッコリーとコーンの塩昆布ごま和え",
+      "n": 1,
+      "title": "ケトルで湯を沸かす",
+      "kind": "prep",
+      "tag": null,
+      "minutes": 1,
+      "start": 0,
+      "heat": null,
+      "text": "電気ケトルに水 600ml を入れてスイッチを入れる。かぼちゃを切っている間に沸く。",
+      "cue": "スイッチが自動で切れ、湯気が出る。",
+      "caution": null,
+      "timer": null,
+      "kid": null,
+      "ingredients": [
+       "湯"
+      ]
+     },
+     {
+      "dish": "ブロッコリーとコーンの塩昆布ごま和え",
+      "n": 2,
+      "title": "ブロッコリーを切る",
+      "kind": "prep",
+      "tag": "cut",
+      "minutes": 2,
+      "start": 10,
+      "heat": null,
+      "text": "ブロッコリーを小房に分け、茎は皮を厚くむいて薄切りにする。コーンは缶の汁を切る。",
+      "cue": "房の大きさがそろっている。",
+      "caution": null,
+      "timer": null,
+      "kid": null,
+      "ingredients": [
+       "ブロッコリー",
+       "コーン缶"
+      ]
+     },
+     {
+      "dish": "ブロッコリーとコーンの塩昆布ごま和え",
+      "n": 3,
+      "title": "ゆでる",
+      "kind": "heat",
+      "tag": "boil",
+      "minutes": 4,
+      "start": 12,
+      "heat": {
+       "equipment": "pot20",
+       "level": "強火"
+      },
+      "text": "鍋（pot20）にケトルの湯を注いで強火で沸かし直し、沸いたらブロッコリーを入れて中火で 3 分ゆでる。",
+      "cue": "茎に竹串がすっと通り、色が鮮やかな緑。",
+      "caution": "湯が熱いのでザルで上げるときはシンクの奥で。",
+      "timer": null,
+      "kid": null,
+      "ingredients": [
+       "ブロッコリー",
+       "湯"
+      ]
+     },
+     {
+      "dish": "ブロッコリーとコーンの塩昆布ごま和え",
+      "n": 4,
+      "title": "冷まして水気を切る",
+      "kind": "prep",
+      "tag": null,
+      "minutes": 1,
+      "start": 17,
+      "heat": null,
+      "text": "ザルに上げて冷水にさっとくぐらせ、キッチンペーパーで水気をよく切る。",
+      "cue": "房を持つとほんのり温かいくらいで水が垂れない。",
+      "caution": null,
+      "timer": null,
+      "kid": null,
+      "ingredients": []
+     },
+     {
+      "dish": "ブロッコリーとコーンの塩昆布ごま和え",
+      "n": 5,
+      "title": "子どもの分を取り分ける",
+      "kind": "prep",
+      "tag": "kid",
+      "minutes": 1,
+      "start": 18,
+      "heat": null,
+      "text": "和える前に子どもの分（1/3）を別皿に取り、ブロッコリーを 5mm〜1cm、コーンを粗く刻む。",
+      "cue": "指で押すとつぶれるやわらかさ。",
+      "caution": null,
+      "timer": null,
+      "kid": "味付け前の分を小さく刻み、冷ましてから出す。",
+      "ingredients": []
+     },
+     {
+      "dish": "ブロッコリーとコーンの塩昆布ごま和え",
+      "n": 6,
+      "title": "和える",
+      "kind": "prep",
+      "tag": "season",
+      "minutes": 1,
+      "start": 19,
+      "heat": null,
+      "text": "ボウル（bowl-m）に残りのブロッコリーとコーン、塩昆布 大さじ 1、ごま油 小さじ 1、白ごま 小さじ 1 を入れて混ぜる。",
+      "cue": "塩昆布が全体にからみ、ごまの香りが立つ。",
+      "caution": null,
+      "timer": null,
+      "kid": null,
+      "ingredients": [
+       "塩昆布",
+       "ごま油",
+       "白ごま"
+      ]
+     },
+     {
+      "dish": "ブロッコリーとコーンの塩昆布ごま和え",
+      "n": 7,
+      "title": "盛る",
+      "kind": "serve",
+      "tag": "serve",
+      "minutes": 1,
+      "start": 20,
+      "heat": null,
+      "text": "小鉢に盛って配膳する。",
+      "cue": "彩りよく盛れている。",
+      "caution": null,
+      "timer": null,
+      "kid": null,
+      "ingredients": []
+     }
+    ],
+    "cleanup": {
+     "dishwasher": [
+      "bowl-m"
+     ],
+     "hand": [
+      "pot20"
+     ],
+     "note": null
+    },
+    "photo": null,
+    "stats": {
+     "cooked": 0,
+     "r_avg": null,
+     "f_avg": null,
+     "last": null
+    },
+    "detail": "full",
+    "together": [
+     "r-20261108-iwashi-tsumire-to-nasu-kabocha-no-teriya"
+    ],
+    "memo": []
+   }
+  ],
+  "model": "claude-code",
+  "prompt_version": 10,
+  "tokens": {
+   "input": 0,
+   "output": 0,
+   "cache_read": 0,
+   "cache_write": 0
+  },
+  "cost_usd": 0.0,
+  "seconds": 0
+ },
+ "finished": "2026-11-08T17:26:17+09:00"
 }
