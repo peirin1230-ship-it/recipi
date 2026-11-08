@@ -1,4 +1,5 @@
 ---
+listed: "2026-11-08T17:31:47+09:00"
 id: r-20261108-iwashi-tsumire-to-broccoli-no-toromi-tam
 title: いわしつみれとブロッコリーのとろみ卵とじ
 version: 1
