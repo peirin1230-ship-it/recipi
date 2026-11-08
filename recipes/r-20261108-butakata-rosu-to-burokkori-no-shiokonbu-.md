@@ -1,4 +1,5 @@
 ---
+listed: "2026-11-08T17:29:07+09:00"
 id: r-20261108-butakata-rosu-to-burokkori-no-shiokonbu-
 title: 豚肩ロースとブロッコリーの塩昆布炒め
 version: 1
