@@ -1,0 +1,26 @@
+{
+ "id": "req-20261108-1726-nusx",
+ "ts": "2026-11-08T17:26:51+09:00",
+ "type": "recipe_detail",
+ "time_budget": 45,
+ "servings": {
+  "adults": 2,
+  "kids": 1
+ },
+ "dishes": "main+side",
+ "mood": [],
+ "use_up": [
+  "なす",
+  "ブロッコリー",
+  "かぼちゃ",
+  "いわしつみれ"
+ ],
+ "exclude": [],
+ "note": "",
+ "mode": "auto",
+ "parent": "req-20261108-1724-hdgm",
+ "alternative": 0,
+ "status": "pending",
+ "error": null,
+ "result": null
+}
