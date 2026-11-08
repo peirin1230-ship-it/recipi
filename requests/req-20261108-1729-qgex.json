@@ -15,7 +15,584 @@
  "exclude": [],
  "note": "",
  "mode": "auto",
- "status": "pending",
+ "status": "done",
  "error": null,
- "result": null
+ "result": {
+  "feasible": true,
+  "infeasible_reason": null,
+  "nearest_options": [],
+  "alternatives": [
+   {
+    "title": "豚肩ロース肉と大豆のそぼろ丼風",
+    "minutes": 25,
+    "why": "豚肩ロースと大豆水煮を細かく炒めて甘辛に。炒めるのは最近無い組み合わせ",
+    "kind": "new"
+   },
+   {
+    "title": "納豆と卵のもちもち焼きうどん",
+    "minutes": 20,
+    "why": "冷凍うどんと納豆で在庫をそのまま使える、さっと炒める一皿",
+    "kind": "new"
+   }
+  ],
+  "recipe_id": "r-20261108-iwashi-tsumire-to-broccoli-no-toromi-tam",
+  "recipe": {
+   "id": "r-20261108-iwashi-tsumire-to-broccoli-no-toromi-tam",
+   "title": "いわしつみれとブロッコリーのとろみ卵とじ",
+   "version": 1,
+   "supersedes": null,
+   "status": "draft",
+   "created": "2026-11-08",
+   "request": "req-20261108-1729-qgex",
+   "generated_by": {
+    "model": "claude-code",
+    "prompt_version": 10
+   },
+   "type": "dinner",
+   "servings": {
+    "adults": 2,
+    "kids": 1
+   },
+   "time": {
+    "budget": 45,
+    "planned": 31,
+    "active": 14,
+    "raw_estimate": 26,
+    "speed_factor": 1.15
+   },
+   "image_text": "とろりと透明感のあるあんの中に、ふんわり固まった黄色い卵と緑のブロッコリー、薄茶のつみれが浮かぶ。湯気の立つ一皿。",
+   "dishes": [
+    {
+     "name": "いわしつみれとブロッコリーのとろみ卵とじ",
+     "role": "main"
+    }
+   ],
+   "equipment": [
+    "fp26"
+   ],
+   "ingredients": [
+    {
+     "name": "いわしつみれ",
+     "qty": 1,
+     "unit": "パック",
+     "grams": 200,
+     "pantry": "いわしつみれ",
+     "for": "いわしつみれとブロッコリーのとろみ卵とじ",
+     "substitute": null,
+     "use_up": true
+    },
+    {
+     "name": "ブロッコリー",
+     "qty": 0.5,
+     "unit": "株",
+     "grams": 150,
+     "pantry": "ブロッコリー",
+     "for": "いわしつみれとブロッコリーのとろみ卵とじ",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "卵",
+     "qty": 2,
+     "unit": "個",
+     "grams": 100,
+     "pantry": "卵",
+     "for": "いわしつみれとブロッコリーのとろみ卵とじ",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "水",
+     "qty": 150,
+     "unit": "ml",
+     "grams": 150,
+     "pantry": null,
+     "for": "いわしつみれとブロッコリーのとろみ卵とじ",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "酒",
+     "qty": 1,
+     "unit": "大さじ",
+     "grams": 15,
+     "pantry": "酒",
+     "for": "いわしつみれとブロッコリーのとろみ卵とじ",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "みりん",
+     "qty": 1,
+     "unit": "大さじ",
+     "grams": 18,
+     "pantry": "みりん",
+     "for": "いわしつみれとブロッコリーのとろみ卵とじ",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "醤油",
+     "qty": 1,
+     "unit": "小さじ",
+     "grams": 6,
+     "pantry": "醤油",
+     "for": "いわしつみれとブロッコリーのとろみ卵とじ",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "片栗粉",
+     "qty": 2,
+     "unit": "小さじ",
+     "grams": 6,
+     "pantry": "片栗粉",
+     "for": "いわしつみれとブロッコリーのとろみ卵とじ",
+     "substitute": null,
+     "use_up": false
+    }
+   ],
+   "tags": [
+    "fish",
+    "egg",
+    "simmer",
+    "quick",
+    "kid-share"
+   ],
+   "salt": {
+    "total_g": 2.1,
+    "adult_per_serving_g": 1.0,
+    "kid_g": 0.4
+   },
+   "kid": {
+    "rule": "separate",
+    "cut": "つみれは1cm角、ブロッコリーの穂先は5mm角に刻む。卵は完全に固まった所だけ",
+    "note": "醤油を入れる前に取り分ける。熱いので冷ましてから出す"
+   },
+   "keep": {
+    "fridge_days": 1,
+    "freezer": false,
+    "reheat": "鍋に少量の水を足して弱火で湯気が立つまで温める"
+   },
+   "timeline": [
+    {
+     "minute": 5,
+     "lane": "hands",
+     "text": "ブロッコリーを小房に切る・卵を溶く・片栗粉を水で溶く"
+    },
+    {
+     "minute": 10,
+     "lane": "gas-r",
+     "text": "フライパンに水・酒・みりん・ブロッコリーを入れて蓋、中火で蒸し煮"
+    },
+    {
+     "minute": 13,
+     "lane": "gas-r",
+     "text": "つみれを加えて2〜3分煮る。水溶き片栗粉でとろみ"
+    },
+    {
+     "minute": 17,
+     "lane": "gas-r",
+     "text": "溶き卵を回し入れ蓋、弱火で2分"
+    },
+    {
+     "minute": 19,
+     "lane": "hands",
+     "text": "火を止め、子どもの分を取り分けて冷ます"
+    },
+    {
+     "minute": 21,
+     "lane": "gas-r",
+     "text": "大人の分に醤油をかけ混ぜて盛り付け・配膳"
+    },
+    {
+     "minute": 24,
+     "lane": "hands",
+     "text": "盛り付け・配膳（副菜と一緒に）"
+    }
+   ],
+   "steps": [
+    {
+     "dish": "いわしつみれとブロッコリーのとろみ卵とじ",
+     "n": 1,
+     "title": "下ごしらえ",
+     "kind": "prep",
+     "tag": "cut",
+     "minutes": 5,
+     "start": 5,
+     "heat": null,
+     "text": "ブロッコリー半株を小房に分ける（大きければ縦半分）。卵2個をボウル（中）で溶く。片栗粉小さじ2を水大さじ1で溶く。",
+     "cue": "小房が3cm以内にそろっている",
+     "caution": null,
+     "timer": null,
+     "kid": null,
+     "ingredients": [
+      "ブロッコリー",
+      "卵",
+      "片栗粉"
+     ]
+    },
+    {
+     "dish": "いわしつみれとブロッコリーのとろみ卵とじ",
+     "n": 2,
+     "title": "ブロッコリーを蒸し煮",
+     "kind": "heat",
+     "tag": "simmer",
+     "minutes": 3,
+     "start": 10,
+     "heat": {
+      "equipment": "gas-r",
+      "level": "中火"
+     },
+     "text": "フライパン26cmに水150ml・酒大さじ1・みりん大さじ1を入れて中火にかけ、沸いたらブロッコリーを入れて蓋をする。",
+     "cue": "ブロッコリーの緑が鮮やかになり、軸に竹串がすっと通る",
+     "caution": null,
+     "timer": null,
+     "kid": null,
+     "ingredients": [
+      "水",
+      "酒",
+      "みりん",
+      "ブロッコリー"
+     ]
+    },
+    {
+     "dish": "いわしつみれとブロッコリーのとろみ卵とじ",
+     "n": 3,
+     "title": "つみれを煮てとろみを付ける",
+     "kind": "heat",
+     "tag": "simmer",
+     "minutes": 4,
+     "start": 13,
+     "heat": {
+      "equipment": "gas-r",
+      "level": "中火"
+     },
+     "text": "いわしつみれ1パックを入れ、蓋をして2〜3分煮る。火を弱火にして水溶き片栗粉を回し入れ、混ぜてとろみを付ける。",
+     "cue": "つみれの中心まで熱く、割ると白く、汁が透き通ってとろりとする",
+     "caution": "水溶き片栗粉は入れる前によく混ぜ直す",
+     "timer": null,
+     "kid": null,
+     "ingredients": [
+      "いわしつみれ",
+      "片栗粉"
+     ]
+    },
+    {
+     "dish": "いわしつみれとブロッコリーのとろみ卵とじ",
+     "n": 4,
+     "title": "卵を回し入れる",
+     "kind": "heat",
+     "tag": "simmer",
+     "minutes": 2,
+     "start": 17,
+     "heat": {
+      "equipment": "gas-r",
+      "level": "弱火"
+     },
+     "text": "溶き卵を円を描くように回し入れ、触らずに蓋をして2分。",
+     "cue": "卵の表面まで白く固まり、ぷるぷると透けない（中まで火が通った目安）",
+     "caution": null,
+     "timer": 120,
+     "kid": null,
+     "ingredients": [
+      "卵"
+     ]
+    },
+    {
+     "dish": "いわしつみれとブロッコリーのとろみ卵とじ",
+     "n": 5,
+     "title": "取り分けて盛り付け",
+     "kind": "serve",
+     "tag": "serve",
+     "minutes": 5,
+     "start": 19,
+     "heat": null,
+     "text": "火を止める。子どもの分（つみれ・ブロッコリー・卵）を醤油を入れる前に取り出し、つみれは1cm角、穂先は5mm角に刻んで冷ます。残りに醤油小さじ1を回しかけて混ぜ、器に盛る。",
+     "cue": "子どもの分を指で触れてぬるい。大人の分は湯気が立つ",
+     "caution": null,
+     "timer": null,
+     "kid": "醤油を入れる前に取り分け、刻んでよく冷ましてからスプーンで出す",
+     "ingredients": [
+      "醤油"
+     ]
+    }
+   ],
+   "cleanup": {
+    "dishwasher": [
+     "bowl-m"
+    ],
+    "hand": [
+     "fp26"
+    ],
+    "note": "使った道具は待ち時間に洗う"
+   },
+   "photo": null,
+   "stats": {
+    "cooked": 0,
+    "r_avg": null,
+    "f_avg": null,
+    "last": null
+   },
+   "detail": "full",
+   "together": [
+    "r-20261108-jagaimo-no-shiokonbu-butter-mushini"
+   ],
+   "memo": []
+  },
+  "side_recipe_ids": [
+   "r-20261108-jagaimo-no-shiokonbu-butter-mushini"
+  ],
+  "side_recipes": [
+   {
+    "id": "r-20261108-jagaimo-no-shiokonbu-butter-mushini",
+    "title": "じゃがいもの塩昆布バター蒸し煮",
+    "version": 1,
+    "supersedes": null,
+    "status": "draft",
+    "created": "2026-11-08",
+    "request": "req-20261108-1729-qgex",
+    "generated_by": {
+     "model": "claude-code",
+     "prompt_version": 10
+    },
+    "type": "dinner",
+    "servings": {
+     "adults": 2,
+     "kids": 1
+    },
+    "time": {
+     "budget": 45,
+     "planned": 21,
+     "active": 8,
+     "raw_estimate": 18,
+     "speed_factor": 1.15
+    },
+    "image_text": "ほくほくに割れたじゃがいもに、バターの照りと塩昆布の黒が絡む。湯気とバターの香りが立つ。",
+    "dishes": [
+     {
+      "name": "じゃがいもの塩昆布バター蒸し煮",
+      "role": "side"
+     }
+    ],
+    "equipment": [
+     "pot20"
+    ],
+    "ingredients": [
+     {
+      "name": "じゃがいも",
+      "qty": 3,
+      "unit": "個",
+      "grams": 450,
+      "pantry": "じゃがいも",
+      "for": "じゃがいもの塩昆布バター蒸し煮",
+      "substitute": null,
+      "use_up": false
+     },
+     {
+      "name": "水",
+      "qty": 3,
+      "unit": "大さじ",
+      "grams": 45,
+      "pantry": null,
+      "for": "じゃがいもの塩昆布バター蒸し煮",
+      "substitute": null,
+      "use_up": false
+     },
+     {
+      "name": "酒",
+      "qty": 1,
+      "unit": "大さじ",
+      "grams": 15,
+      "pantry": "酒",
+      "for": "じゃがいもの塩昆布バター蒸し煮",
+      "substitute": null,
+      "use_up": false
+     },
+     {
+      "name": "塩昆布",
+      "qty": 1,
+      "unit": "大さじ",
+      "grams": 10,
+      "pantry": "塩昆布",
+      "for": "じゃがいもの塩昆布バター蒸し煮",
+      "substitute": null,
+      "use_up": false
+     },
+     {
+      "name": "バター",
+      "qty": 10,
+      "unit": "g",
+      "grams": 10,
+      "pantry": "バター",
+      "for": "じゃがいもの塩昆布バター蒸し煮",
+      "substitute": null,
+      "use_up": false
+     }
+    ],
+    "tags": [
+     "potato",
+     "steam",
+     "side",
+     "kid-share"
+    ],
+    "salt": {
+     "total_g": 1.2,
+     "adult_per_serving_g": 0.6,
+     "kid_g": 0.1
+    },
+    "kid": {
+     "rule": "separate",
+     "cut": "蒸し上がりを取り分け、1cm角にくずす",
+     "note": "塩昆布とバターを入れる前に取り分ける。冷ましてから手づかみで出す"
+    },
+    "keep": {
+     "fridge_days": 2,
+     "freezer": false,
+     "reheat": "耐熱皿にラップをして600W 1分30秒、途中で混ぜて湯気が立つまで"
+    },
+    "timeline": [
+     {
+      "minute": 0,
+      "lane": "hands",
+      "text": "じゃがいもの皮をむき、2cm角に切る"
+     },
+     {
+      "minute": 4,
+      "lane": "gas-l",
+      "text": "鍋にじゃがいも・水・酒を入れて蓋、中火"
+     },
+     {
+      "minute": 5,
+      "lane": "gas-l",
+      "text": "弱火にして11分蒸し煮（この間に主菜の下ごしらえ）"
+     },
+     {
+      "minute": 16,
+      "lane": "gas-l",
+      "text": "子どもの分を取り分け、塩昆布とバターを混ぜる"
+     },
+     {
+      "minute": 18,
+      "lane": "hands",
+      "text": "蓋をして保温、主菜と一緒に盛り付け"
+     }
+    ],
+    "steps": [
+     {
+      "dish": "じゃがいもの塩昆布バター蒸し煮",
+      "n": 1,
+      "title": "じゃがいもを切る",
+      "kind": "prep",
+      "tag": "cut",
+      "minutes": 4,
+      "start": 0,
+      "heat": null,
+      "text": "じゃがいも3個の皮をピーラーでむき、2cm角に切る。",
+      "cue": "角がそろい、水っぽくない",
+      "caution": null,
+      "timer": null,
+      "kid": null,
+      "ingredients": [
+       "じゃがいも"
+      ]
+     },
+     {
+      "dish": "じゃがいもの塩昆布バター蒸し煮",
+      "n": 2,
+      "title": "蒸し煮を始める",
+      "kind": "heat",
+      "tag": "simmer",
+      "minutes": 1,
+      "start": 4,
+      "heat": {
+       "equipment": "gas-l",
+       "level": "中火"
+      },
+      "text": "鍋20cmにじゃがいも・水大さじ3・酒大さじ1を入れ、蓋をして中火にかける。蒸気が出たら弱火にする。",
+      "cue": "蓋の縁から蒸気が出る",
+      "caution": null,
+      "timer": null,
+      "kid": null,
+      "ingredients": [
+       "じゃがいも",
+       "水",
+       "酒"
+      ]
+     },
+     {
+      "dish": "じゃがいもの塩昆布バター蒸し煮",
+      "n": 3,
+      "title": "蒸し煮にする",
+      "kind": "wait",
+      "tag": "wait",
+      "minutes": 11,
+      "start": 5,
+      "heat": {
+       "equipment": "gas-l",
+       "level": "弱火"
+      },
+      "text": "弱火で11分、途中で1回だけ鍋をゆすって焦げ付きを防ぐ。この間に主菜の下ごしらえをする。",
+      "cue": "竹串がすっと通り、角がほろっと崩れる",
+      "caution": "水が足りなければ大さじ1ずつ足す",
+      "timer": 660,
+      "kid": null,
+      "ingredients": []
+     },
+     {
+      "dish": "じゃがいもの塩昆布バター蒸し煮",
+      "n": 4,
+      "title": "取り分けて味を付ける",
+      "kind": "heat",
+      "tag": "season",
+      "minutes": 2,
+      "start": 16,
+      "heat": {
+       "equipment": "gas-l",
+       "level": "弱火"
+      },
+      "text": "火を止め、子どもの分を取り分ける。残りに塩昆布大さじ1とバター10gを加えて全体を混ぜ、蓋をして保温する。",
+      "cue": "バターが溶けてつやが出て、塩昆布が全体に絡む",
+      "caution": null,
+      "timer": null,
+      "kid": "塩昆布とバターを入れる前に取り出し、1cm角にくずして冷ます",
+      "ingredients": [
+       "塩昆布",
+       "バター"
+      ]
+     }
+    ],
+    "cleanup": {
+     "dishwasher": [],
+     "hand": [
+      "pot20"
+     ],
+     "note": null
+    },
+    "photo": null,
+    "stats": {
+     "cooked": 0,
+     "r_avg": null,
+     "f_avg": null,
+     "last": null
+    },
+    "detail": "full",
+    "together": [
+     "r-20261108-iwashi-tsumire-to-broccoli-no-toromi-tam"
+    ],
+    "memo": []
+   }
+  ],
+  "model": "claude-code",
+  "prompt_version": 10,
+  "tokens": {
+   "input": 0,
+   "output": 0,
+   "cache_read": 0,
+   "cache_write": 0
+  },
+  "cost_usd": 0.0,
+  "seconds": 0
+ },
+ "finished": "2026-11-08T17:31:02+09:00"
 }
