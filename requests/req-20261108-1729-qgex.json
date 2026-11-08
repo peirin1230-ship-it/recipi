@@ -1,0 +1,21 @@
+{
+ "id": "req-20261108-1729-qgex",
+ "ts": "2026-11-08T17:29:19+09:00",
+ "type": "dinner",
+ "time_budget": 45,
+ "servings": {
+  "adults": 2,
+  "kids": 1
+ },
+ "dishes": "main+side",
+ "mood": [],
+ "use_up": [
+  "いわしつみれ"
+ ],
+ "exclude": [],
+ "note": "",
+ "mode": "auto",
+ "status": "pending",
+ "error": null,
+ "result": null
+}
