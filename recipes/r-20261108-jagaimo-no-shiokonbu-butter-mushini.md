@@ -1,4 +1,5 @@
 ---
+listed: false
 id: r-20261108-jagaimo-no-shiokonbu-butter-mushini
 title: じゃがいもの塩昆布バター蒸し煮
 version: 1
