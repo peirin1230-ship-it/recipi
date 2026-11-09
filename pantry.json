@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-10T01:03:26+09:00",
+ "updated": "2026-11-10T01:03:52+09:00",
  "items": [
   {
    "id": "p1qnvb",
@@ -13,13 +13,6 @@
    "name": "ヨーグルト",
    "loc": "fridge",
    "added": "2026-10-28",
-   "src": "manual"
-  },
-  {
-   "id": "pnt7dl",
-   "name": "塩昆布",
-   "loc": "pantry",
-   "added": "2026-10-08",
    "src": "manual"
   },
   {
@@ -60,13 +53,6 @@
   {
    "id": "pfroor",
    "name": "かまぼこ",
-   "loc": "fridge",
-   "added": "2026-11-03",
-   "src": "kaji-quest"
-  },
-  {
-   "id": "phvcob",
-   "name": "かぼちゃ",
    "loc": "fridge",
    "added": "2026-11-03",
    "src": "kaji-quest"
