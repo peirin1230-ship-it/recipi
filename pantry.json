@@ -91,6 +91,13 @@
    "loc": "fridge",
    "added": "2026-11-05",
    "src": "manual"
+  },
+  {
+   "id": "psalm1",
+   "name": "鮭",
+   "loc": "fridge",
+   "added": "2026-11-09",
+   "src": "manual"
   }
  ],
  "staples": {
