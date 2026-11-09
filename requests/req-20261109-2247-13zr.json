@@ -1,0 +1,20 @@
+{
+ "id": "req-20261109-2247-13zr",
+ "ts": "2026-11-09T22:47:13+09:00",
+ "type": "prep",
+ "time_budget": 0,
+ "servings": {
+  "adults": 2,
+  "kids": 1
+ },
+ "dishes": "main",
+ "mood": [],
+ "use_up": [],
+ "exclude": [],
+ "note": "銀鮭使ってください",
+ "mode": "auto",
+ "dish": "炊き込みご飯",
+ "status": "pending",
+ "error": null,
+ "result": null
+}
