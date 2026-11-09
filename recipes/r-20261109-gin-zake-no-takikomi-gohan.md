@@ -4,7 +4,7 @@ id: r-20261109-gin-zake-no-takikomi-gohan
 title: 銀鮭の炊き込みご飯
 version: 1
 supersedes: null
-status: draft
+status: tried
 created: '2026-11-09'
 request: req-20261109-2247-13zr
 generated_by: {model: claude-code, prompt_version: 10}
@@ -292,4 +292,4 @@ detail: full
 - グリルの受け皿を洗う
 
 ## 作ったときのメモ
-
+- 2026-11-10 ・ 99 分（見込み 180）・ R 82 ・ F 4 ・ そのまま ・ 分量 ×0.75 ・ 📷 20261110-1.jpg
