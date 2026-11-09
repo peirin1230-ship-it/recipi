@@ -13,7 +13,541 @@
  "exclude": [],
  "note": "銀鮭を使って",
  "mode": "auto",
- "status": "pending",
+ "status": "done",
  "error": null,
- "result": null
+ "result": {
+  "feasible": true,
+  "infeasible_reason": null,
+  "nearest_options": [],
+  "alternatives": [
+   {
+    "title": "かまぼこと大豆の味噌煮込みうどん",
+    "minutes": 20,
+    "why": "冷凍うどんで早く、鍋一つで済む",
+    "kind": "new"
+   },
+   {
+    "title": "じゃがいもと大豆のトースター味噌グラタン",
+    "minutes": 30,
+    "why": "じゃがいも×トースター焼きで主材料も調理法も変わる",
+    "kind": "new"
+   }
+  ],
+  "recipe_id": "r-20261109-gin-zake-no-miso-yogurt-zuke-grill-yaki",
+  "recipe": {
+   "id": "r-20261109-gin-zake-no-miso-yogurt-zuke-grill-yaki",
+   "title": "銀鮭の味噌ヨーグルト漬け グリル焼き",
+   "version": 1,
+   "supersedes": null,
+   "status": "draft",
+   "created": "2026-11-09",
+   "request": "req-20261109-2239-asn5",
+   "generated_by": {
+    "model": "claude-code",
+    "prompt_version": 10
+   },
+   "type": "prep",
+   "servings": {
+    "adults": 2,
+    "kids": 1
+   },
+   "time": {
+    "budget": 0,
+    "planned": 830,
+    "active": 24,
+    "raw_estimate": 506,
+    "speed_factor": 1.25
+   },
+   "image_text": "こんがり焼き色の付いた銀鮭の切り身が皿に乗り、皮目が香ばしく光っている。ほぐした取り分けの鮭が小皿に添えられる。",
+   "dishes": [
+    {
+     "name": "銀鮭の味噌ヨーグルト漬け グリル焼き",
+     "role": "main"
+    }
+   ],
+   "equipment": [
+    "grill",
+    "bowl-m"
+   ],
+   "ingredients": [
+    {
+     "name": "銀鮭",
+     "qty": 2.5,
+     "unit": "切れ",
+     "grams": 200,
+     "pantry": "鮭",
+     "for": "銀鮭の味噌ヨーグルト漬け グリル焼き",
+     "substitute": "生鮭・甘塩でない切り身",
+     "use_up": false
+    },
+    {
+     "name": "味噌",
+     "qty": 1,
+     "unit": "大さじ",
+     "grams": 18,
+     "pantry": "味噌",
+     "for": "銀鮭の味噌ヨーグルト漬け グリル焼き",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "ヨーグルト",
+     "qty": 3,
+     "unit": "大さじ",
+     "grams": 45,
+     "pantry": "ヨーグルト",
+     "for": "銀鮭の味噌ヨーグルト漬け グリル焼き",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "みりん",
+     "qty": 1,
+     "unit": "大さじ",
+     "grams": 18,
+     "pantry": "みりん",
+     "for": "銀鮭の味噌ヨーグルト漬け グリル焼き",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "酒",
+     "qty": 1,
+     "unit": "小さじ",
+     "grams": 5,
+     "pantry": "酒",
+     "for": "銀鮭の味噌ヨーグルト漬け グリル焼き",
+     "substitute": null,
+     "use_up": false
+    }
+   ],
+   "tags": [
+    "仕込み",
+    "魚",
+    "グリル",
+    "作り置き"
+   ],
+   "salt": {
+    "total_g": 2.3,
+    "adult_per_serving_g": 1.1,
+    "kid_g": 0.1
+   },
+   "kid": {
+    "rule": "separate",
+    "cut": "鮭 1/2 切れを味付け前に取り分け、焼いたあと皮と骨を外して 1cm 以下にほぐす",
+    "note": "子どもの分は味噌を入れず、ヨーグルトだけで漬ける。中まで白くなるまで焼き、冷ましてから出す"
+   },
+   "keep": {
+    "fridge_days": 2,
+    "freezer": true,
+    "reheat": "漬けた状態で冷蔵 2 日まで。冷凍は漬けたまま 3 週間、冷蔵庫で解凍して焼く。焼いた後は 600W ではなくグリルで 2 分温める"
+   },
+   "timeline": [
+    {
+     "minute": 0,
+     "lane": "hands",
+     "text": "銀鮭の水気を拭き、半分の1切れ分を子ども用に取り分ける"
+    },
+    {
+     "minute": 4,
+     "lane": "hands",
+     "text": "子ども分をヨーグルトで、大人分を味噌ヨーグルトだれで袋に漬ける"
+    },
+    {
+     "minute": 10,
+     "lane": "hands",
+     "text": "冷蔵庫へ入れて一晩（8〜24時間）"
+    },
+    {
+     "minute": 490,
+     "lane": "grill",
+     "text": "（翌日）グリルを予熱 2 分、たれを拭った鮭を並べる"
+    },
+    {
+     "minute": 492,
+     "lane": "grill",
+     "text": "両面焼きで 7 分（返さない）"
+    },
+    {
+     "minute": 499,
+     "lane": "hands",
+     "text": "子ども分の皮と骨を外してほぐし、冷ます"
+    },
+    {
+     "minute": 503,
+     "lane": "hands",
+     "text": "盛り付けて配膳"
+    }
+   ],
+   "steps": [
+    {
+     "dish": "銀鮭の味噌ヨーグルト漬け グリル焼き",
+     "n": 1,
+     "title": "水気を拭いて取り分ける",
+     "kind": "prep",
+     "tag": "cut",
+     "minutes": 4,
+     "start": 0,
+     "heat": null,
+     "text": "銀鮭 2.5 切れの水気をキッチンペーパー代わりにラップ越しに押さえて拭く（塩は振らない）。1 切れを半分に切り、半切れ 1 つを子ども用に取り分ける。",
+     "cue": "表面にぬめりや水が残らず、さらっとしている。",
+     "caution": "骨が残りやすい。指で腹側をなぞって確かめる",
+     "timer": null,
+     "kid": "子ども用は半切れ。この時点で味付けはしない",
+     "ingredients": [
+      "銀鮭"
+     ]
+    },
+    {
+     "dish": "銀鮭の味噌ヨーグルト漬け グリル焼き",
+     "n": 2,
+     "title": "漬け床を作って漬ける",
+     "kind": "prep",
+     "tag": "marinate",
+     "minutes": 6,
+     "start": 4,
+     "heat": null,
+     "text": "ボウル（中）に味噌 大さじ 1、ヨーグルト 大さじ 2、みりん 大さじ 1、酒 小さじ 1 を混ぜ、大人用の鮭 2 切れを入れて袋へ移し、空気を抜いて口を閉じる。子ども用の半切れは別の袋にヨーグルト 大さじ 1 だけで漬ける。",
+     "cue": "たれが切り身全体にからみ、袋の空気が抜けている。",
+     "caution": null,
+     "timer": null,
+     "kid": "子ども用は味噌を入れない（塩分を足さない）",
+     "ingredients": [
+      "味噌",
+      "ヨーグルト",
+      "みりん",
+      "酒"
+     ]
+    },
+    {
+     "dish": "銀鮭の味噌ヨーグルト漬け グリル焼き",
+     "n": 3,
+     "title": "冷蔵庫で寝かせる",
+     "kind": "prep",
+     "tag": "wait",
+     "minutes": 480,
+     "start": 10,
+     "heat": null,
+     "text": "冷蔵庫に入れ、8〜24 時間漬ける。途中で触らなくてよい。",
+     "cue": "切り身がしっとりして、たれがなじんでいる。",
+     "caution": "漬けるのは最大 2 日まで",
+     "timer": null,
+     "kid": null,
+     "ingredients": []
+    },
+    {
+     "dish": "銀鮭の味噌ヨーグルト漬け グリル焼き",
+     "n": 4,
+     "title": "（翌日）たれを拭ってグリルで焼く",
+     "kind": "heat",
+     "tag": "sear",
+     "minutes": 10,
+     "start": 490,
+     "heat": {
+      "equipment": "grill",
+      "level": "両面焼き・予熱 2 分"
+     },
+     "text": "グリルを予熱 2 分。大人用の鮭は表面の味噌だれをキッチンペーパー代わりのラップで軽く拭い、皮目を下に並べる。両面焼きなので返さず 7 分焼く。子ども用の半切れも同じグリルで 6 分焼く。",
+     "cue": "表面に薄い焼き色が付き、身を押すと中まで白くほぐれ、赤みが残らない。",
+     "caution": "味噌は焦げやすい。5 分で焼き色が濃くなったら様子を見る",
+     "timer": 420,
+     "kid": "子ども用は中まで白くなるまで確実に焼く",
+     "ingredients": [
+      "銀鮭"
+     ]
+    },
+    {
+     "dish": "銀鮭の味噌ヨーグルト漬け グリル焼き",
+     "n": 5,
+     "title": "子どもの分をほぐす",
+     "kind": "prep",
+     "tag": "kid",
+     "minutes": 4,
+     "start": 499,
+     "heat": null,
+     "text": "子ども用の鮭の皮と骨を外し、1cm 以下にほぐして皿で冷ます。",
+     "cue": "湯気が収まり、手で触れるくらいに冷めている。",
+     "caution": "骨を必ず取る",
+     "timer": null,
+     "kid": "熱いまま出さない。ご飯に混ぜても食べやすい",
+     "ingredients": [
+      "銀鮭"
+     ]
+    },
+    {
+     "dish": "銀鮭の味噌ヨーグルト漬け グリル焼き",
+     "n": 6,
+     "title": "盛り付ける",
+     "kind": "serve",
+     "tag": "serve",
+     "minutes": 3,
+     "start": 503,
+     "heat": null,
+     "text": "大人用の鮭を皿に盛り、副菜を添える。",
+     "cue": "皮目に焼き色が付き、身から透明な汁が出ている。",
+     "caution": null,
+     "timer": null,
+     "kid": null,
+     "ingredients": []
+    }
+   ],
+   "cleanup": {
+    "dishwasher": [
+     "bowl-m"
+    ],
+    "hand": [
+     "grill"
+    ],
+    "note": "グリルの受け皿は使った日に洗う"
+   },
+   "photo": null,
+   "stats": {
+    "cooked": 0,
+    "r_avg": null,
+    "f_avg": null,
+    "last": null
+   },
+   "detail": "full",
+   "together": [
+    "r-20261109-daizu-to-kamaboko-no-goma-zu-ae"
+   ],
+   "memo": []
+  },
+  "side_recipe_ids": [
+   "r-20261109-daizu-to-kamaboko-no-goma-zu-ae"
+  ],
+  "side_recipes": [
+   {
+    "id": "r-20261109-daizu-to-kamaboko-no-goma-zu-ae",
+    "title": "大豆とかまぼこのごま酢和え",
+    "version": 1,
+    "supersedes": null,
+    "status": "draft",
+    "created": "2026-11-09",
+    "request": "req-20261109-2239-asn5",
+    "generated_by": {
+     "model": "claude-code",
+     "prompt_version": 10
+    },
+    "type": "prep",
+    "servings": {
+     "adults": 2,
+     "kids": 1
+    },
+    "time": {
+     "budget": 0,
+     "planned": 15,
+     "active": 9,
+     "raw_estimate": 9,
+     "speed_factor": 1.25
+    },
+    "image_text": "白いかまぼこと大豆に、ごまが散った和え物。小鉢に入って、ほんのり酢の香りがする。",
+    "dishes": [
+     {
+      "name": "大豆とかまぼこのごま酢和え",
+      "role": "side"
+     }
+    ],
+    "equipment": [
+     "bowl-m"
+    ],
+    "ingredients": [
+     {
+      "name": "大豆水煮",
+      "qty": 0.5,
+      "unit": "パック",
+      "grams": 60,
+      "pantry": "大豆水煮",
+      "for": "大豆とかまぼこのごま酢和え",
+      "substitute": null,
+      "use_up": false
+     },
+     {
+      "name": "かまぼこ",
+      "qty": 0.5,
+      "unit": "本",
+      "grams": 50,
+      "pantry": "かまぼこ",
+      "for": "大豆とかまぼこのごま酢和え",
+      "substitute": null,
+      "use_up": false
+     },
+     {
+      "name": "酢",
+      "qty": 1,
+      "unit": "小さじ",
+      "grams": 5,
+      "pantry": "酢",
+      "for": "大豆とかまぼこのごま酢和え",
+      "substitute": null,
+      "use_up": false
+     },
+     {
+      "name": "醤油",
+      "qty": 1,
+      "unit": "小さじ",
+      "grams": 6,
+      "pantry": "醤油",
+      "for": "大豆とかまぼこのごま酢和え",
+      "substitute": null,
+      "use_up": false
+     },
+     {
+      "name": "ごま油",
+      "qty": 1,
+      "unit": "小さじ",
+      "grams": 4,
+      "pantry": "ごま油",
+      "for": "大豆とかまぼこのごま酢和え",
+      "substitute": null,
+      "use_up": false
+     },
+     {
+      "name": "白ごま",
+      "qty": 1,
+      "unit": "小さじ",
+      "grams": 3,
+      "pantry": "白ごま",
+      "for": "大豆とかまぼこのごま酢和え",
+      "substitute": null,
+      "use_up": false
+     }
+    ],
+    "tags": [
+     "大豆とかまぼこのごま酢和え",
+     "和え物"
+    ],
+    "salt": {
+     "total_g": 1.4,
+     "adult_per_serving_g": 0.7,
+     "kid_g": 0.1
+    },
+    "kid": {
+     "rule": "separate",
+     "cut": "大豆は包丁の腹でつぶして 5mm に、かまぼこは 5mm 角に刻む",
+     "note": "和える前に取り分け、酢とごま油だけで和える（醤油なし）"
+    },
+    "keep": {
+     "fridge_days": 2,
+     "freezer": false,
+     "reheat": "冷蔵のまま食べる。水分が出たら軽く切る"
+    },
+    "timeline": [
+     {
+      "minute": 0,
+      "lane": "hands",
+      "text": "大豆の水気を切り、かまぼこを 5mm 角に切る"
+     },
+     {
+      "minute": 4,
+      "lane": "hands",
+      "text": "子ども分を取り分け、酢とごま油で和える"
+     },
+     {
+      "minute": 6,
+      "lane": "hands",
+      "text": "大人分を醤油・酢・ごま油・ごまで和える"
+     },
+     {
+      "minute": 9,
+      "lane": "hands",
+      "text": "盛り付け"
+     }
+    ],
+    "steps": [
+     {
+      "dish": "大豆とかまぼこのごま酢和え",
+      "n": 1,
+      "title": "切る",
+      "kind": "prep",
+      "tag": "cut",
+      "minutes": 4,
+      "start": 0,
+      "heat": null,
+      "text": "大豆水煮 1/2 パックをザルで水気を切る。かまぼこ 1/2 本を 5mm 角に切る。",
+      "cue": "大豆の水気が切れ、かまぼこが同じ大きさにそろっている。",
+      "caution": null,
+      "timer": null,
+      "kid": null,
+      "ingredients": [
+       "大豆水煮",
+       "かまぼこ"
+      ]
+     },
+     {
+      "dish": "大豆とかまぼこのごま酢和え",
+      "n": 2,
+      "title": "子どもの分を取り分ける",
+      "kind": "prep",
+      "tag": "kid",
+      "minutes": 2,
+      "start": 4,
+      "heat": null,
+      "text": "大豆とかまぼこの 1/4 ずつを取り分け、大豆は包丁の腹でつぶす。酢 小さじ 1/2 とごま油 小さじ 1/4 で和える。",
+      "cue": "大豆が粒を残さずつぶれている。",
+      "caution": null,
+      "timer": null,
+      "kid": "大豆は丸のままだと窒息しやすいので必ずつぶす",
+      "ingredients": [
+       "大豆水煮",
+       "かまぼこ",
+       "酢",
+       "ごま油"
+      ]
+     },
+     {
+      "dish": "大豆とかまぼこのごま酢和え",
+      "n": 3,
+      "title": "和えて盛る",
+      "kind": "prep",
+      "tag": "season",
+      "minutes": 3,
+      "start": 6,
+      "heat": null,
+      "text": "ボウル（中）で残りを醤油 小さじ 1、酢 小さじ 1/2、ごま油 小さじ 3/4、白ごま 小さじ 1 と和えて小鉢に盛る。",
+      "cue": "全体に衣がなじみ、ごまが散っている。",
+      "caution": null,
+      "timer": null,
+      "kid": null,
+      "ingredients": [
+       "醤油",
+       "酢",
+       "ごま油",
+       "白ごま"
+      ]
+     }
+    ],
+    "cleanup": {
+     "dishwasher": [
+      "bowl-m"
+     ],
+     "hand": [],
+     "note": null
+    },
+    "photo": null,
+    "stats": {
+     "cooked": 0,
+     "r_avg": null,
+     "f_avg": null,
+     "last": null
+    },
+    "detail": "full",
+    "together": [
+     "r-20261109-gin-zake-no-miso-yogurt-zuke-grill-yaki"
+    ],
+    "memo": []
+   }
+  ],
+  "model": "claude-code",
+  "prompt_version": 10,
+  "tokens": {
+   "input": 0,
+   "output": 0,
+   "cache_read": 0,
+   "cache_write": 0
+  },
+  "cost_usd": 0.0,
+  "seconds": 0
+ },
+ "finished": "2026-11-09T22:42:11+09:00"
 }
