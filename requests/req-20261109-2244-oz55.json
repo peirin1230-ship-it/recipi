@@ -1,0 +1,20 @@
+{
+ "id": "req-20261109-2244-oz55",
+ "ts": "2026-11-09T22:44:07+09:00",
+ "type": "prep",
+ "time_budget": 0,
+ "servings": {
+  "adults": 2,
+  "kids": 1
+ },
+ "dishes": "main",
+ "mood": [],
+ "use_up": [],
+ "exclude": [],
+ "note": "",
+ "mode": "auto",
+ "dish": "銀鮭を使ったレシピのみ",
+ "status": "pending",
+ "error": null,
+ "result": null
+}
