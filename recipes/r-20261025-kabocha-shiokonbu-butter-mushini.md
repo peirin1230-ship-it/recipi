@@ -3,7 +3,7 @@ id: r-20261025-kabocha-shiokonbu-butter-mushini
 title: かぼちゃの塩昆布バター蒸し煮
 version: 1
 supersedes: null
-status: draft
+status: tried
 created: '2026-10-25'
 request: req-20261025-1606-9ni8
 generated_by: {model: claude-code, prompt_version: 10}
@@ -139,4 +139,4 @@ together: [r-20261025-butakoma-eringi-shogayaki-fu]
 - 鍋は粗熱が取れてから洗う。
 
 ## 作ったときのメモ
-
+- 2026-11-10 ・ 99 分（見込み 13）・ R 53 ・ F 4 ・ そのまま ・ 📷 20261110-1.jpg
