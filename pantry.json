@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-08T18:18:12+09:00",
+ "updated": "2026-11-10T01:03:26+09:00",
  "items": [
   {
    "id": "p1qnvb",
@@ -90,13 +90,6 @@
    "name": "なす",
    "loc": "fridge",
    "added": "2026-11-05",
-   "src": "manual"
-  },
-  {
-   "id": "psalm1",
-   "name": "鮭",
-   "loc": "fridge",
-   "added": "2026-11-09",
    "src": "manual"
   }
  ],
