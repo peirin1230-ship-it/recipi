@@ -15,7 +15,735 @@
  "exclude": [],
  "note": "",
  "mode": "auto",
- "status": "pending",
+ "status": "done",
  "error": null,
- "result": null
+ "result": {
+  "feasible": true,
+  "infeasible_reason": null,
+  "nearest_options": [],
+  "alternatives": [
+   {
+    "title": "納豆とうずらの卵の冷凍うどん 味噌ヨーグルトだれ",
+    "minutes": 15,
+    "why": "主材料も調理法も変え、ゆでて和えるだけの冷たい麺で仕込み不要。",
+    "kind": "new"
+   },
+   {
+    "title": "かぼちゃとかまぼこの塩昆布トースター焼き",
+    "minutes": 20,
+    "why": "かぼちゃを使う焼き物に変えて、トースターで香ばしく。",
+    "kind": "new"
+   }
+  ],
+  "recipe_id": "r-20261110-sake-to-jagaimo-no-milk-gratin",
+  "recipe": {
+   "id": "r-20261110-sake-to-jagaimo-no-milk-gratin",
+   "title": "鮭とじゃがいものミルクグラタン",
+   "version": 1,
+   "supersedes": null,
+   "status": "draft",
+   "created": "2026-11-10",
+   "request": "req-20261110-0008-lxvp",
+   "generated_by": {
+    "model": "claude-code",
+    "prompt_version": 10
+   },
+   "type": "prep",
+   "servings": {
+    "adults": 2,
+    "kids": 1
+   },
+   "time": {
+    "budget": 0,
+    "planned": 41,
+    "active": 22,
+    "raw_estimate": 33,
+    "speed_factor": 1.25
+   },
+   "image_text": "こんがり色づいたミルクソースの下に、鮭の薄ピンクとじゃがいも、半分に切ったうずらの卵の黄色がのぞく。ふちはふつふつと泡立ち、塩昆布の黒がアクセントになる。",
+   "dishes": [
+    {
+     "name": "鮭とじゃがいものミルクグラタン",
+     "role": "main"
+    }
+   ],
+   "equipment": [
+    "gas-l",
+    "gas-r",
+    "pot20",
+    "fp26",
+    "toaster",
+    "bowl-m"
+   ],
+   "ingredients": [
+    {
+     "name": "鮭",
+     "qty": 2,
+     "unit": "切れ",
+     "grams": 160,
+     "pantry": "鮭",
+     "for": "鮭とじゃがいものミルクグラタン",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "じゃがいも",
+     "qty": 2,
+     "unit": "個",
+     "grams": 300,
+     "pantry": "じゃがいも",
+     "for": "鮭とじゃがいものミルクグラタン",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "うずらの卵",
+     "qty": 8,
+     "unit": "個",
+     "grams": 80,
+     "pantry": "うずらの卵",
+     "for": "鮭とじゃがいものミルクグラタン",
+     "substitute": null,
+     "use_up": true
+    },
+    {
+     "name": "牛乳",
+     "qty": 300,
+     "unit": "ml",
+     "grams": 310,
+     "pantry": "牛乳",
+     "for": "鮭とじゃがいものミルクグラタン",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "バター",
+     "qty": 20,
+     "unit": "g",
+     "grams": 20,
+     "pantry": "バター",
+     "for": "鮭とじゃがいものミルクグラタン",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "小麦粉",
+     "qty": 2,
+     "unit": "大さじ",
+     "grams": 18,
+     "pantry": "小麦粉",
+     "for": "鮭とじゃがいものミルクグラタン",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "塩昆布",
+     "qty": 1,
+     "unit": "大さじ",
+     "grams": 4,
+     "pantry": "塩昆布",
+     "for": "鮭とじゃがいものミルクグラタン",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "塩",
+     "qty": 0.25,
+     "unit": "小さじ",
+     "grams": 1.5,
+     "pantry": "塩",
+     "for": "鮭とじゃがいものミルクグラタン",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "こしょう",
+     "qty": 1,
+     "unit": "ふり",
+     "grams": 0.1,
+     "pantry": "こしょう",
+     "for": "鮭とじゃがいものミルクグラタン",
+     "substitute": null,
+     "use_up": false
+    }
+   ],
+   "tags": [
+    "仕込み",
+    "翌日焼くだけ",
+    "トースター",
+    "ミルク",
+    "鮭"
+   ],
+   "salt": {
+    "total_g": 2.6,
+    "adult_per_serving_g": 1.3,
+    "kid_g": 0.1
+   },
+   "kid": {
+    "rule": "separate",
+    "cut": "鮭は皮と骨を外して1cm以下にほぐす。じゃがいもは1cm角、うずらの卵は4等分。",
+    "note": "塩・塩昆布を入れる前のソースを取り分ける。焼いたあとは十分に冷まして出す。"
+   },
+   "keep": {
+    "fridge_days": 2,
+    "freezer": false,
+    "reheat": "冷蔵庫から出してそのままトースター1000Wで約15分。中心まで湯気が立つこと。"
+   },
+   "timeline": [
+    {
+     "minute": 0,
+     "lane": "hands",
+     "text": "電気ケトルで湯を沸かし始める。じゃがいも5mm輪切り、鮭を3cm角に切る"
+    },
+    {
+     "minute": 6,
+     "lane": "gas-l",
+     "text": "鍋にじゃがいもとうずらの卵、湯で6分ゆでる"
+    },
+    {
+     "minute": 6,
+     "lane": "hands",
+     "text": "小麦粉を量り、塩昆布を刻む"
+    },
+    {
+     "minute": 8,
+     "lane": "gas-r",
+     "text": "バターと小麦粉を炒め、牛乳でのばしてホワイトソースを作る"
+    },
+    {
+     "minute": 12,
+     "lane": "hands",
+     "text": "じゃがいもと卵をざるにあげ、卵を冷水でむく。耐熱皿に並べる"
+    },
+    {
+     "minute": 16,
+     "lane": "gas-r",
+     "text": "ソースに鮭を入れ、蓋をして弱火で蒸し煮"
+    },
+    {
+     "minute": 20,
+     "lane": "hands",
+     "text": "子どもの分を取り分け、残りに塩・塩昆布・こしょうで味付け"
+    },
+    {
+     "minute": 22,
+     "lane": "hands",
+     "text": "皿に流し入れてバターをのせ、組み立てる"
+    },
+    {
+     "minute": 26,
+     "lane": "hands",
+     "text": "粗熱を取る（皿洗いも）"
+    },
+    {
+     "minute": 33,
+     "lane": "hands",
+     "text": "ラップをして冷蔵庫へ（ここまでが仕込み。翌日はトースターで焼くだけ）"
+    }
+   ],
+   "steps": [
+    {
+     "dish": "鮭とじゃがいものミルクグラタン",
+     "n": 1,
+     "title": "下ごしらえ",
+     "kind": "prep",
+     "tag": "cut",
+     "minutes": 6,
+     "start": 0,
+     "heat": null,
+     "text": "電気ケトルに水を入れて沸かし始める。じゃがいも2個は皮をむき、5mmの輪切りにする。鮭2切れは皮と骨を取り、3cm角に切る。",
+     "cue": "じゃがいもの厚みがそろい、鮭に骨と皮が残っていない。",
+     "caution": null,
+     "timer": null,
+     "kid": null,
+     "ingredients": [
+      "じゃがいも",
+      "鮭"
+     ]
+    },
+    {
+     "dish": "鮭とじゃがいものミルクグラタン",
+     "n": 2,
+     "title": "じゃがいもとうずらの卵をゆでる",
+     "kind": "wait",
+     "tag": "boil",
+     "minutes": 6,
+     "start": 6,
+     "heat": {
+      "equipment": "gas-l",
+      "level": "中火"
+     },
+     "text": "鍋(pot20)にケトルの湯を600ml入れ、中火で沸かす。じゃがいもとうずらの卵8個を入れ、6分ゆでる。",
+     "cue": "じゃがいもに竹串がすっと通り、卵が中まで固まっている。",
+     "caution": null,
+     "timer": 360,
+     "kid": "卵は子どもの分も必ず固ゆで（6分）にする。",
+     "ingredients": [
+      "じゃがいも",
+      "うずらの卵"
+     ]
+    },
+    {
+     "dish": "鮭とじゃがいものミルクグラタン",
+     "n": 3,
+     "title": "粉と塩昆布を準備",
+     "kind": "prep",
+     "tag": "cut",
+     "minutes": 2,
+     "start": 6,
+     "heat": null,
+     "text": "ゆでている間に、小麦粉 大さじ2(18g)を量り、塩昆布 大さじ1(4g)を細かく刻む。",
+     "cue": "塩昆布が米粒大になっている。",
+     "caution": null,
+     "timer": null,
+     "kid": null,
+     "ingredients": [
+      "小麦粉",
+      "塩昆布"
+     ]
+    },
+    {
+     "dish": "鮭とじゃがいものミルクグラタン",
+     "n": 4,
+     "title": "ホワイトソースを作る",
+     "kind": "heat",
+     "tag": "simmer",
+     "minutes": 5,
+     "start": 8,
+     "heat": {
+      "equipment": "gas-r",
+      "level": "中火"
+     },
+     "text": "フライパン(fp26)にバター15gを入れ中火で溶かし、小麦粉を加えて1分炒める。牛乳300mlを3回に分け、そのつど木べら(菜箸)で混ぜてのばす。とろみがつくまで混ぜる。",
+     "cue": "木べらでなぞると跡が残り、スープよりやや濃いとろみ。",
+     "caution": null,
+     "timer": null,
+     "kid": null,
+     "ingredients": [
+      "バター",
+      "小麦粉",
+      "牛乳"
+     ]
+    },
+    {
+     "dish": "鮭とじゃがいものミルクグラタン",
+     "n": 5,
+     "title": "皿に具を並べる",
+     "kind": "prep",
+     "tag": "cut",
+     "minutes": 4,
+     "start": 12,
+     "heat": null,
+     "text": "じゃがいもと卵をざるにあげる。卵は冷水で冷やして殻をむく。小さい耐熱皿(大人用)にじゃがいもを並べ、卵6個を半分に切って置く。子ども用の小皿にじゃがいも数枚を1cm角に切り、卵2個を4等分して置く。",
+     "cue": "卵がつるんとむけ、皿に具が並んだ。",
+     "caution": null,
+     "timer": null,
+     "kid": "卵は丸ごと出さず必ず4等分。",
+     "ingredients": [
+      "じゃがいも",
+      "うずらの卵"
+     ]
+    },
+    {
+     "dish": "鮭とじゃがいものミルクグラタン",
+     "n": 6,
+     "title": "鮭を蒸し煮",
+     "kind": "heat",
+     "tag": "simmer",
+     "minutes": 4,
+     "start": 16,
+     "heat": {
+      "equipment": "gas-r",
+      "level": "弱火"
+     },
+     "text": "ソースに鮭を入れ、蓋をして弱火で4分蒸し煮にする。途中で一度混ぜる。",
+     "cue": "鮭の中心まで白く(赤みが無く)なり、ほぐすと身が透明でない。",
+     "caution": null,
+     "timer": 240,
+     "kid": "鮭の中心まで白くなってから取り分ける。",
+     "ingredients": [
+      "鮭"
+     ]
+    },
+    {
+     "dish": "鮭とじゃがいものミルクグラタン",
+     "n": 7,
+     "title": "取り分けて味付け",
+     "kind": "prep",
+     "tag": "season",
+     "minutes": 2,
+     "start": 20,
+     "heat": null,
+     "text": "火を止める。子ども用に鮭1/2切れ分と、ソースをお玉1杯取り出す(皮・骨なし、1cm以下にほぐす)。残りに塩 小さじ1/4、刻んだ塩昆布、こしょうを加えて混ぜる。",
+     "cue": "大人用ソースは塩昆布の風味がしてほんのり塩味。",
+     "caution": null,
+     "timer": null,
+     "kid": "子どもの分は味付け前に取り分けた。塩昆布は入れない。",
+     "ingredients": [
+      "塩",
+      "塩昆布",
+      "こしょう"
+     ]
+    },
+    {
+     "dish": "鮭とじゃがいものミルクグラタン",
+     "n": 8,
+     "title": "組み立てる",
+     "kind": "prep",
+     "tag": "serve",
+     "minutes": 4,
+     "start": 22,
+     "heat": null,
+     "text": "大人用の皿にソースと鮭を流し入れ、バター5gを小さくちぎってのせる。子ども用の小皿にも取り分けたソースと鮭を入れる。",
+     "cue": "具がソースに浸っている。",
+     "caution": null,
+     "timer": null,
+     "kid": null,
+     "ingredients": [
+      "バター"
+     ]
+    },
+    {
+     "dish": "鮭とじゃがいものミルクグラタン",
+     "n": 9,
+     "title": "冷ます",
+     "kind": "prep",
+     "tag": "cleanup",
+     "minutes": 7,
+     "start": 26,
+     "heat": null,
+     "text": "粗熱を取る。調理器具は作りながら洗って片付ける。30分以内に冷蔵庫へ。",
+     "cue": "皿の底に触れて温かさが残らない程度。",
+     "caution": null,
+     "timer": null,
+     "kid": null,
+     "ingredients": []
+    },
+    {
+     "dish": "鮭とじゃがいものミルクグラタン",
+     "n": 10,
+     "title": "【翌日】焼く",
+     "kind": "heat",
+     "tag": "season",
+     "minutes": 15,
+     "start": null,
+     "heat": null,
+     "text": "冷蔵庫から出し、ラップを外してトースター(1000W)に入れる。約15分焼く(焦げそうならアルミホイルをかぶせる)。子ども用の小皿は10分で取り出す。",
+     "cue": "ふちがふつふつと泡立ち、表面にうっすら焼き色。中心まで湯気が立つ。",
+     "caution": null,
+     "timer": 900,
+     "kid": "子どもの分は焼いたあとスプーンで混ぜ、十分に冷ましてから。",
+     "ingredients": []
+    }
+   ],
+   "cleanup": {
+    "dishwasher": [
+     "bowl-m"
+    ],
+    "hand": [
+     "fp26",
+     "pot20"
+    ],
+    "note": "トースターの受け皿は焼いた日に拭く。"
+   },
+   "photo": null,
+   "stats": {
+    "cooked": 0,
+    "r_avg": null,
+    "f_avg": null,
+    "last": null
+   },
+   "detail": "full",
+   "together": [
+    "r-20261110-kabocha-to-daizu-no-miso-yogurt-salad"
+   ],
+   "memo": []
+  },
+  "side_recipe_ids": [
+   "r-20261110-kabocha-to-daizu-no-miso-yogurt-salad"
+  ],
+  "side_recipes": [
+   {
+    "id": "r-20261110-kabocha-to-daizu-no-miso-yogurt-salad",
+    "title": "かぼちゃと大豆の味噌ヨーグルトサラダ",
+    "version": 1,
+    "supersedes": null,
+    "status": "draft",
+    "created": "2026-11-10",
+    "request": "req-20261110-0008-lxvp",
+    "generated_by": {
+     "model": "claude-code",
+     "prompt_version": 10
+    },
+    "type": "prep",
+    "servings": {
+     "adults": 2,
+     "kids": 1
+    },
+    "time": {
+     "budget": 0,
+     "planned": 87,
+     "active": 17,
+     "raw_estimate": 77,
+     "speed_factor": 1.25
+    },
+    "image_text": "85℃でほくほくに仕上がったかぼちゃの黄色に、大豆のベージュがまざる。味噌ヨーグルトのやさしい白がかかり、黒こしょうをひとふり。",
+    "dishes": [
+     {
+      "name": "かぼちゃと大豆の味噌ヨーグルトサラダ",
+      "role": "side"
+     }
+    ],
+    "equipment": [
+     "sous-vide",
+     "bowl-m"
+    ],
+    "ingredients": [
+     {
+      "name": "かぼちゃ",
+      "qty": 0.25,
+      "unit": "個",
+      "grams": 300,
+      "pantry": "かぼちゃ",
+      "for": "かぼちゃと大豆の味噌ヨーグルトサラダ",
+      "substitute": null,
+      "use_up": false
+     },
+     {
+      "name": "大豆水煮",
+      "qty": 0.5,
+      "unit": "パック",
+      "grams": 100,
+      "pantry": "大豆水煮",
+      "for": "かぼちゃと大豆の味噌ヨーグルトサラダ",
+      "substitute": null,
+      "use_up": false
+     },
+     {
+      "name": "バター",
+      "qty": 10,
+      "unit": "g",
+      "grams": 10,
+      "pantry": "バター",
+      "for": "かぼちゃと大豆の味噌ヨーグルトサラダ",
+      "substitute": null,
+      "use_up": false
+     },
+     {
+      "name": "ヨーグルト",
+      "qty": 3,
+      "unit": "大さじ",
+      "grams": 45,
+      "pantry": "ヨーグルト",
+      "for": "かぼちゃと大豆の味噌ヨーグルトサラダ",
+      "substitute": null,
+      "use_up": false
+     },
+     {
+      "name": "味噌",
+      "qty": 1,
+      "unit": "小さじ",
+      "grams": 6,
+      "pantry": "味噌",
+      "for": "かぼちゃと大豆の味噌ヨーグルトサラダ",
+      "substitute": null,
+      "use_up": false
+     },
+     {
+      "name": "こしょう",
+      "qty": 1,
+      "unit": "ふり",
+      "grams": 0.1,
+      "pantry": "こしょう",
+      "for": "かぼちゃと大豆の味噌ヨーグルトサラダ",
+      "substitute": null,
+      "use_up": false
+     }
+    ],
+    "tags": [
+     "低温調理",
+     "仕込み",
+     "副菜",
+     "ヨーグルト"
+    ],
+    "salt": {
+     "total_g": 0.9,
+     "adult_per_serving_g": 0.5,
+     "kid_g": 0.1
+    },
+    "kid": {
+     "rule": "separate",
+     "cut": "かぼちゃは1cm角につぶす。大豆は丸のままにせずチョッパーでつぶす。",
+     "note": "味噌を入れる前に取り分ける。"
+    },
+    "keep": {
+     "fridge_days": 2,
+     "freezer": false,
+     "reheat": "冷たいまま。出す前に軽く混ぜる。"
+    },
+    "timeline": [
+     {
+      "minute": 0,
+      "lane": "sous-vide",
+      "text": "低温調理器を85℃にセット、ケトルの湯を入れて温め始める"
+     },
+     {
+      "minute": 0,
+      "lane": "hands",
+      "text": "かぼちゃを2cm角に切り、バターと袋に入れて空気を抜く"
+     },
+     {
+      "minute": 8,
+      "lane": "sous-vide",
+      "text": "湯が85℃になったら袋を沈める(1時間)"
+     },
+     {
+      "minute": 8,
+      "lane": "hands",
+      "text": "大豆を水切り。ヨーグルトと味噌をまぜる"
+     },
+     {
+      "minute": 68,
+      "lane": "hands",
+      "text": "袋を取り出し、子どもの分を取り分けてからあえる"
+     },
+     {
+      "minute": 74,
+      "lane": "hands",
+      "text": "冷まして冷蔵庫へ"
+     }
+    ],
+    "steps": [
+     {
+      "dish": "かぼちゃと大豆の味噌ヨーグルトサラダ",
+      "n": 1,
+      "title": "かぼちゃを袋に入れる",
+      "kind": "prep",
+      "tag": "cut",
+      "minutes": 6,
+      "start": 0,
+      "heat": null,
+      "text": "低温調理器を85℃にセットしケトルの湯を入れる。かぼちゃ1/4個は種とわたを取り、2cm角に切る。耐熱の袋(湯せん可)にバター10gとかぼちゃを入れ、空気を抜いて口を閉じる。",
+      "cue": "かぼちゃが重ならず1層に並び、袋が閉じている。",
+      "caution": null,
+      "timer": null,
+      "kid": null,
+      "ingredients": [
+       "かぼちゃ",
+       "バター"
+      ]
+     },
+     {
+      "dish": "かぼちゃと大豆の味噌ヨーグルトサラダ",
+      "n": 2,
+      "title": "85℃で1時間",
+      "kind": "wait",
+      "tag": "wait",
+      "minutes": 60,
+      "start": 8,
+      "heat": {
+       "equipment": "sous-vide",
+       "level": "85℃"
+      },
+      "text": "湯が85℃になったら袋を沈め、1時間(60分)そのまま。",
+      "cue": "竹串がすっと通り、角が崩れず中まで均一にやわらかい。",
+      "caution": "袋は湯に完全に沈める。",
+      "timer": 3600,
+      "kid": null,
+      "ingredients": [
+       "かぼちゃ"
+      ]
+     },
+     {
+      "dish": "かぼちゃと大豆の味噌ヨーグルトサラダ",
+      "n": 3,
+      "title": "ソースを準備",
+      "kind": "prep",
+      "tag": "season",
+      "minutes": 5,
+      "start": 8,
+      "heat": null,
+      "text": "待っている間に、大豆水煮1/2パックをザルにあげて水を切る。ボウルにヨーグルト大さじ3と味噌小さじ1を混ぜる。",
+      "cue": "味噌のかたまりが無く、なめらか。",
+      "caution": null,
+      "timer": null,
+      "kid": null,
+      "ingredients": [
+       "大豆水煮",
+       "ヨーグルト",
+       "味噌"
+      ]
+     },
+     {
+      "dish": "かぼちゃと大豆の味噌ヨーグルトサラダ",
+      "n": 4,
+      "title": "取り分けてあえる",
+      "kind": "prep",
+      "tag": "season",
+      "minutes": 6,
+      "start": 68,
+      "heat": null,
+      "text": "袋を取り出して軽く冷ます。子ども用にかぼちゃ1/5と大豆をチョッパーに入れ、ヨーグルト大さじ1を足して粗くつぶす(味噌なし)。残りのかぼちゃをフォークで半分ほどつぶし、大豆と味噌ヨーグルトであえる。こしょうをひとふり。",
+      "cue": "かぼちゃがほろっと崩れ、ソースが全体にからむ。",
+      "caution": null,
+      "timer": null,
+      "kid": "子ども用は1cm以下のやわらかさ。丸い大豆は必ずつぶす。",
+      "ingredients": [
+       "かぼちゃ",
+       "大豆水煮",
+       "ヨーグルト",
+       "味噌",
+       "こしょう"
+      ]
+     },
+     {
+      "dish": "かぼちゃと大豆の味噌ヨーグルトサラダ",
+      "n": 5,
+      "title": "冷まして保存",
+      "kind": "serve",
+      "tag": "serve",
+      "minutes": 3,
+      "start": 74,
+      "heat": null,
+      "text": "ボウルごと冷まし、ラップをして冷蔵庫へ。翌日は混ぜてそのまま出す。",
+      "cue": "湯気が出ず冷たい。",
+      "caution": null,
+      "timer": null,
+      "kid": null,
+      "ingredients": []
+     }
+    ],
+    "cleanup": {
+     "dishwasher": [
+      "bowl-m"
+     ],
+     "hand": [],
+     "note": null
+    },
+    "photo": null,
+    "stats": {
+     "cooked": 0,
+     "r_avg": null,
+     "f_avg": null,
+     "last": null
+    },
+    "detail": "full",
+    "together": [
+     "r-20261110-sake-to-jagaimo-no-milk-gratin"
+    ],
+    "memo": []
+   }
+  ],
+  "model": "claude-code",
+  "prompt_version": 10,
+  "tokens": {
+   "input": 0,
+   "output": 0,
+   "cache_read": 0,
+   "cache_write": 0
+  },
+  "cost_usd": 0.0,
+  "seconds": 0
+ },
+ "finished": "2026-11-10T00:11:07+09:00"
 }
