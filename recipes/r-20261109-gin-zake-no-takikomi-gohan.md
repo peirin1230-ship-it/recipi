@@ -1,4 +1,5 @@
 ---
+listed: "2026-11-09T22:50:18+09:00"
 id: r-20261109-gin-zake-no-takikomi-gohan
 title: 銀鮭の炊き込みご飯
 version: 1
