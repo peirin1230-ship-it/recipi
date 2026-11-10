@@ -1,5 +1,5 @@
 ---
-listed: "2026-11-09T22:50:18+09:00"
+listed: '2026-11-09T22:50:18+09:00'
 id: r-20261109-gin-zake-no-takikomi-gohan
 title: 銀鮭の炊き込みご飯
 version: 1
@@ -199,8 +199,8 @@ cleanup:
   dishwasher: [bowl-l]
   hand: [rice-cooker, grill]
   note: グリルの受け皿を洗う
-photo: null
-stats: {cooked: 0, r_avg: null, f_avg: null, last: null}
+photo: photos/r-20261109-gin-zake-no-takikomi-gohan/20261110-1.jpg
+stats: {cooked: 1, r_avg: 82, f_avg: 4.0, last: '2026-11-10'}
 detail: full
 ---
 
@@ -292,4 +292,5 @@ detail: full
 - グリルの受け皿を洗う
 
 ## 作ったときのメモ
+
 - 2026-11-10 ・ 99 分（見込み 180）・ R 82 ・ F 4 ・ そのまま ・ 分量 ×0.75 ・ 📷 20261110-1.jpg

@@ -76,8 +76,8 @@ cleanup:
   dishwasher: []
   hand: [pot20]
   note: 鍋は粗熱が取れてから洗う。
-photo: null
-stats: {cooked: 0, r_avg: null, f_avg: null, last: null}
+photo: photos/r-20261025-kabocha-shiokonbu-butter-mushini/20261110-1.jpg
+stats: {cooked: 1, r_avg: 53, f_avg: 4.0, last: '2026-11-10'}
 detail: full
 together: [r-20261025-butakoma-eringi-shogayaki-fu]
 ---
@@ -139,4 +139,5 @@ together: [r-20261025-butakoma-eringi-shogayaki-fu]
 - 鍋は粗熱が取れてから洗う。
 
 ## 作ったときのメモ
+
 - 2026-11-10 ・ 99 分（見込み 13）・ R 53 ・ F 4 ・ そのまま ・ 📷 20261110-1.jpg
