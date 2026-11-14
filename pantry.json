@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-10T01:03:52+09:00",
+ "updated": "2026-11-14T17:53:39+09:00",
  "items": [
   {
    "id": "p1qnvb",
@@ -44,13 +44,6 @@
    "src": "kaji-quest"
   },
   {
-   "id": "peyksd",
-   "name": "うずらの卵",
-   "loc": "fridge",
-   "added": "2026-11-03",
-   "src": "kaji-quest"
-  },
-  {
    "id": "pfroor",
    "name": "かまぼこ",
    "loc": "fridge",
@@ -63,13 +56,6 @@
    "loc": "pantry",
    "added": "2026-11-03",
    "src": "kaji-quest"
-  },
-  {
-   "id": "phe6w6",
-   "name": "大豆水煮",
-   "loc": "pantry",
-   "added": "2026-11-03",
-   "src": "manual"
   },
   {
    "id": "p9sdic",
