@@ -1,0 +1,1 @@
+{"members":[{"role":"me","portion":1.0},{"role":"partner","portion":0.9,"dislikes":[],"notes":""},{"role":"kid","portion":0.4,"age_band":"1-2y","texture":"soft","notes":"手づかみで食べたがる"}],"allergies":[],"avoid":["レバー"],"seasoning":{"salt":"light","spicy":"none","kid_rule":"separate"},"meals":{"dinner_default":{"adults":2,"kids":1,"dishes":"main+side"},"partner_late_days":[]}}
