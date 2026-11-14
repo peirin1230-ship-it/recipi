@@ -1,9 +1,10 @@
 ---
+listed: "2026-11-14T17:53:36+09:00"
 id: r-20261114-uzura-no-tamago-to-daizu-no-wafu-tomato-
 title: うずらの卵と大豆の和風トマトケチャップ煮
 version: 1
 supersedes: null
-status: draft
+status: tried
 created: '2026-11-14'
 request: req-20261114-1732-4cgi
 generated_by: {model: claude-code, prompt_version: 10}
@@ -242,4 +243,4 @@ together: [r-20261114-jagaimo-no-hosogiri-okaka-itame]
 - 殻は煮ている間に捨てる。ケチャップは鍋に付くと落ちにくいので、盛ったらすぐ湯を張っておく
 
 ## 作ったときのメモ
-
+- 2026-11-14 ・ 17 分（見込み 43）・ R 68 ・ F 4.5 ・ そのまま ・ 📷 20261114-1.jpg
