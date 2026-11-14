@@ -1,0 +1,23 @@
+{
+ "id": "req-20261114-1732-4cgi",
+ "ts": "2026-11-14T17:32:56+09:00",
+ "type": "recipe_detail",
+ "time_budget": 0,
+ "servings": {
+  "adults": 2,
+  "kids": 1
+ },
+ "dishes": "main+side",
+ "mood": [],
+ "use_up": [
+  "うずらの卵"
+ ],
+ "exclude": [],
+ "note": "",
+ "mode": "auto",
+ "parent": "req-20261114-1729-cx9x",
+ "alternative": 1,
+ "status": "pending",
+ "error": null,
+ "result": null
+}
