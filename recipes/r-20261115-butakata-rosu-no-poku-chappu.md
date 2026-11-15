@@ -1,4 +1,5 @@
 ---
+listed: "2026-11-15T17:53:36+09:00"
 id: r-20261115-butakata-rosu-no-poku-chappu
 title: 豚肩ロースのポークチャップ
 version: 1
