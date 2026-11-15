@@ -4,7 +4,7 @@ id: r-20261115-sasami-no-teion-chori-jagaimo-no-milk-ma
 title: ささみの低温調理 じゃがいもの85℃ミルクマッシュ添え
 version: 1
 supersedes: null
-status: draft
+status: tried
 created: '2026-11-15'
 request: req-20261115-1852-oq1w
 generated_by: {model: claude-code, prompt_version: 10}
@@ -328,4 +328,4 @@ together: [r-20261115-horenso-to-kamaboko-no-okaka-ae]
 - ぶんぶんチョッパーの容器と刃・計量スプーン・包丁・まな板は手洗い。使った袋は捨てる。低温調理器は湯を捨てて本体を拭いて乾かす
 
 ## 作ったときのメモ
-
+- 2026-11-15 ・ 141 分（見込み 208）・ R 62 ・ F 4.3 ・ かなり変えた: じゃがいもは足りなかったのでまた次回。BBQ風プルドチキンにした。 ・ 分量 ×4 ・ 📷 20261115-1.jpg
