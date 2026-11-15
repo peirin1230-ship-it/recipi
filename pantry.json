@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-15T17:47:17+09:00",
+ "updated": "2026-11-15T17:47:26+09:00",
  "items": [
   {
    "id": "p1qnvb",
@@ -95,6 +95,13 @@
   {
    "id": "pdwqjn",
    "name": "豚こま切れ肉",
+   "loc": "fridge",
+   "added": "2026-11-15",
+   "src": "manual"
+  },
+  {
+   "id": "pirbsc",
+   "name": "豚ひき肉",
    "loc": "fridge",
    "added": "2026-11-15",
    "src": "manual"
