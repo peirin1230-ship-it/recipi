@@ -1,10 +1,10 @@
 ---
-listed: "2026-11-15T17:58:15+09:00"
+listed: "2026-11-15T18:38:45+09:00"
 id: r-20261115-iwashi-tsumire-to-ninjin-no-amazu-an
 title: いわしつみれとにんじんの甘酢あん
 version: 1
 supersedes: null
-status: draft
+status: tried
 created: '2026-11-15'
 request: req-20261115-1754-ppqa
 generated_by: {model: claude-code, prompt_version: 10}
@@ -211,4 +211,4 @@ together: [r-20261115-horenso-to-kamaboko-no-okaka-dashi-bitas]
 - 包丁・まな板・計量スプーンは食洗機、スライサーの刃とフライ返しは手洗い（ブラシで）。蒸し焼きの待ちの間にまな板を洗う
 
 ## 作ったときのメモ
-
+- 2026-11-15 ・ 40 分（見込み 31）・ R 81 ・ F 3.3 ・ そのまま ・ 📷 20261115-1.jpg
