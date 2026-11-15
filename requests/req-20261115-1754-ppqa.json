@@ -1,0 +1,22 @@
+{
+ "id": "req-20261115-1754-ppqa",
+ "ts": "2026-11-15T17:54:15+09:00",
+ "type": "dinner",
+ "time_budget": 0,
+ "servings": {
+  "adults": 2,
+  "kids": 1
+ },
+ "dishes": "main+side",
+ "mood": [],
+ "use_up": [
+  "いわしつみれ",
+  "にんじん"
+ ],
+ "exclude": [],
+ "note": "副菜",
+ "mode": "auto",
+ "status": "pending",
+ "error": null,
+ "result": null
+}
