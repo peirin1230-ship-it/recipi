@@ -1,4 +1,5 @@
 ---
+listed: "2026-11-15T18:55:46+09:00"
 id: r-20261115-sasami-no-teion-chori-jagaimo-no-milk-ma
 title: ささみの低温調理 じゃがいもの85℃ミルクマッシュ添え
 version: 1
