@@ -1,4 +1,5 @@
 ---
+listed: false
 id: r-20261115-horenso-to-ninjin-no-goma-okaka-ae
 title: ほうれん草とにんじんのごまおかか和え
 version: 1
