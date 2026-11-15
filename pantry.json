@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-15T17:47:03+09:00",
+ "updated": "2026-11-15T17:47:08+09:00",
  "items": [
   {
    "id": "p1qnvb",
@@ -81,6 +81,13 @@
   {
    "id": "pgmfkp",
    "name": "ささみ",
+   "loc": "fridge",
+   "added": "2026-11-15",
+   "src": "manual"
+  },
+  {
+   "id": "pydai1",
+   "name": "牛すじ",
    "loc": "fridge",
    "added": "2026-11-15",
    "src": "manual"
