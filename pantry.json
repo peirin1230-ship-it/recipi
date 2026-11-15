@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-15T17:47:33+09:00",
+ "updated": "2026-11-15T17:47:45+09:00",
  "items": [
   {
    "id": "p1qnvb",
@@ -109,6 +109,13 @@
   {
    "id": "pf5oae",
    "name": "いわしつみれ",
+   "loc": "fridge",
+   "added": "2026-11-15",
+   "src": "manual"
+  },
+  {
+   "id": "pxc5b3",
+   "name": "調理済みうずら",
    "loc": "fridge",
    "added": "2026-11-15",
    "src": "manual"
