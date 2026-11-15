@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-15T17:47:08+09:00",
+ "updated": "2026-11-15T17:47:17+09:00",
  "items": [
   {
    "id": "p1qnvb",
@@ -88,6 +88,13 @@
   {
    "id": "pydai1",
    "name": "牛すじ",
+   "loc": "fridge",
+   "added": "2026-11-15",
+   "src": "manual"
+  },
+  {
+   "id": "pdwqjn",
+   "name": "豚こま切れ肉",
    "loc": "fridge",
    "added": "2026-11-15",
    "src": "manual"
