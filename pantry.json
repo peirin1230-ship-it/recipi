@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-15T17:48:08+09:00",
+ "updated": "2026-11-15T17:51:40+09:00",
  "items": [
   {
    "id": "p1qnvb",
@@ -145,6 +145,13 @@
    "id": "p2a7t6",
    "name": "ほうれん草",
    "loc": "fridge",
+   "added": "2026-11-15",
+   "src": "manual"
+  },
+  {
+   "id": "p98pox",
+   "name": "大豆水煮",
+   "loc": "pantry",
    "added": "2026-11-15",
    "src": "manual"
   }
