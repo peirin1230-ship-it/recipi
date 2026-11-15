@@ -17,7 +17,796 @@
  "mode": "auto",
  "parent": "req-20261115-1848-hbmx",
  "alternative": 0,
- "status": "pending",
+ "status": "done",
  "error": null,
- "result": null
+ "result": {
+  "feasible": true,
+  "infeasible_reason": null,
+  "nearest_options": [],
+  "alternatives": [
+   {
+    "title": "かまぼこと卵のミルクスープ",
+    "minutes": 20,
+    "why": "定番で家族の評価が高く、牛乳好きに合う",
+    "kind": "standard"
+   },
+   {
+    "title": "豚ひき肉とじゃがいものチョッパーそぼろ煮",
+    "minutes": 30,
+    "why": "ひき肉×煮物で最近に無い組み合わせ、子どもも手づかみしやすい",
+    "kind": "new"
+   }
+  ],
+  "recipe_id": "r-20261115-sasami-no-teion-chori-jagaimo-no-milk-ma",
+  "recipe": {
+   "id": "r-20261115-sasami-no-teion-chori-jagaimo-no-milk-ma",
+   "title": "ささみの低温調理 じゃがいもの85℃ミルクマッシュ添え",
+   "version": 1,
+   "supersedes": null,
+   "status": "draft",
+   "created": "2026-11-15",
+   "request": "req-20261115-1852-oq1w",
+   "generated_by": {
+    "model": "claude-code",
+    "prompt_version": 10
+   },
+   "type": "recipe_detail",
+   "servings": {
+    "adults": 2,
+    "kids": 1
+   },
+   "time": {
+    "budget": 0,
+    "planned": 208,
+    "active": 40,
+    "raw_estimate": 188,
+    "speed_factor": 1.23
+   },
+   "image_text": "しっとり白いささみのそぎ切りに、ごま油と酢の香るたれと白ごまをかけ、横にバターの照りがあるなめらかな淡い黄色のマッシュをこんもり盛る。マッシュの上に牛乳で伸ばしたつやが光る。",
+   "dishes": [
+    {
+     "name": "ささみの低温調理 じゃがいもの85℃ミルクマッシュ添え",
+     "role": "main"
+    }
+   ],
+   "equipment": [
+    "sous-vide",
+    "pot20",
+    "kettle",
+    "fp26",
+    "bowl-l",
+    "bowl-m"
+   ],
+   "ingredients": [
+    {
+     "name": "ささみ",
+     "qty": 4,
+     "unit": "本",
+     "grams": 200,
+     "pantry": "ささみ",
+     "for": "ささみの低温調理 じゃがいもの85℃ミルクマッシュ添え",
+     "substitute": null,
+     "use_up": true
+    },
+    {
+     "name": "塩（下味）",
+     "qty": 0.2,
+     "unit": "小さじ",
+     "grams": 1.2,
+     "pantry": "塩",
+     "for": "ささみの低温調理 じゃがいもの85℃ミルクマッシュ添え",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "砂糖",
+     "qty": 0.33,
+     "unit": "小さじ",
+     "grams": 1,
+     "pantry": "砂糖",
+     "for": "ささみの低温調理 じゃがいもの85℃ミルクマッシュ添え",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "じゃがいも",
+     "qty": 3,
+     "unit": "個",
+     "grams": 450,
+     "pantry": "じゃがいも",
+     "for": "ささみの低温調理 じゃがいもの85℃ミルクマッシュ添え",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "牛乳",
+     "qty": 6,
+     "unit": "大さじ",
+     "grams": 90,
+     "pantry": "牛乳",
+     "for": "ささみの低温調理 じゃがいもの85℃ミルクマッシュ添え",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "バター",
+     "qty": 10,
+     "unit": "g",
+     "grams": 10,
+     "pantry": "バター",
+     "for": "ささみの低温調理 じゃがいもの85℃ミルクマッシュ添え",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "塩（マッシュ）",
+     "qty": 0.1,
+     "unit": "小さじ",
+     "grams": 0.6,
+     "pantry": "塩",
+     "for": "ささみの低温調理 じゃがいもの85℃ミルクマッシュ添え",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "醤油",
+     "qty": 1,
+     "unit": "小さじ",
+     "grams": 6,
+     "pantry": "醤油",
+     "for": "ささみの低温調理 じゃがいもの85℃ミルクマッシュ添え",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "酢",
+     "qty": 1,
+     "unit": "小さじ",
+     "grams": 5,
+     "pantry": "酢",
+     "for": "ささみの低温調理 じゃがいもの85℃ミルクマッシュ添え",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "ごま油",
+     "qty": 1,
+     "unit": "小さじ",
+     "grams": 4,
+     "pantry": "ごま油",
+     "for": "ささみの低温調理 じゃがいもの85℃ミルクマッシュ添え",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "白ごま",
+     "qty": 1,
+     "unit": "小さじ",
+     "grams": 3,
+     "pantry": "白ごま",
+     "for": "ささみの低温調理 じゃがいもの85℃ミルクマッシュ添え",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "サラダ油",
+     "qty": 0.5,
+     "unit": "小さじ",
+     "grams": 2,
+     "pantry": "サラダ油",
+     "for": "ささみの低温調理 じゃがいもの85℃ミルクマッシュ添え",
+     "substitute": null,
+     "use_up": false
+    }
+   ],
+   "tags": [
+    "低温調理",
+    "sous-vide",
+    "しっとり",
+    "牛乳",
+    "チョッパー",
+    "子ども取り分け",
+    "時間無制限"
+   ],
+   "salt": {
+    "total_g": 2.9,
+    "adult_per_serving_g": 1.3,
+    "kid_g": 0.3
+   },
+   "kid": {
+    "rule": "separate",
+    "cut": "ささみは 1 本をフライパンで中心まで焼いてから 1cm 以下にほぐす。マッシュは塩とたれの前に取り分け、手づかみできるよう小さく丸めてもよい",
+    "note": "63℃ のささみは大人向け。子どもの 1 本は取り出したあとフライパンで中心まで火を通す（切って中が白く透明な汁）。たれはかけない。冷ましてから出す"
+   },
+   "keep": {
+    "fridge_days": 2,
+    "freezer": false,
+    "reheat": "ささみは冷たいまま薄切りで食べるか、600W 40 秒で温める（子どもの分は湯気が立つまで）。マッシュは牛乳 小さじ 1 を足して 600W 1 分、途中で混ぜる"
+   },
+   "timeline": [
+    {
+     "minute": 0,
+     "lane": "hands",
+     "text": "電気ケトルで湯 1L を沸かす。鍋（pot20）に水 1.5L を張り低温調理器を付け 63℃ に設定"
+    },
+    {
+     "minute": 3,
+     "lane": "sous-vide",
+     "text": "ケトルの湯を鍋に足して 63℃ まで温め始める"
+    },
+    {
+     "minute": 3,
+     "lane": "hands",
+     "text": "ささみの筋を取り、塩・砂糖をもみ込んで袋へ（ブライン）"
+    },
+    {
+     "minute": 18,
+     "lane": "sous-vide",
+     "text": "63℃ に届いたらささみの袋を沈める（1 時間 30 分）"
+    },
+    {
+     "minute": 20,
+     "lane": "hands",
+     "text": "じゃがいもの皮をむき 2cm 角に切り、水にさらす。袋に牛乳・バターと入れる"
+    },
+    {
+     "minute": 30,
+     "lane": "hands",
+     "text": "たれ（醤油・酢・ごま油）を混ぜる。使った道具を洗う"
+    },
+    {
+     "minute": 108,
+     "lane": "sous-vide",
+     "text": "ささみを取り出し、袋ごと休ませる。ケトルで湯を沸かす"
+    },
+    {
+     "minute": 110,
+     "lane": "sous-vide",
+     "text": "ケトルの湯を足して 85℃ に上げる"
+    },
+    {
+     "minute": 110,
+     "lane": "gas-r",
+     "text": "子どもの分のささみ 1 本をフライパンで中心まで焼く"
+    },
+    {
+     "minute": 120,
+     "lane": "sous-vide",
+     "text": "85℃ に届いたらじゃがいもの袋を沈める（1 時間）"
+    },
+    {
+     "minute": 125,
+     "lane": "hands",
+     "text": "大人のささみをそぎ切りにして冷蔵。待ち時間に副菜を作る"
+    },
+    {
+     "minute": 180,
+     "lane": "hands",
+     "text": "じゃがいもを取り出し、チョッパーでマッシュ。子どもの分を先に取り分けて塩"
+    },
+    {
+     "minute": 184,
+     "lane": "hands",
+     "text": "盛り付け、たれと白ごまをかけて配膳"
+    },
+    {
+     "minute": 188,
+     "lane": "hands",
+     "text": "配膳完了"
+    }
+   ],
+   "steps": [
+    {
+     "dish": "ささみの低温調理 じゃがいもの85℃ミルクマッシュ添え",
+     "n": 1,
+     "title": "湯を沸かして低温調理器をセット",
+     "kind": "prep",
+     "tag": "boil",
+     "minutes": 3,
+     "start": 0,
+     "heat": null,
+     "text": "電気ケトルで湯 1L を沸かす。鍋（pot20）に水 1.5L を張って低温調理器を付け、63℃ に設定。ケトルの湯が沸いたら鍋に足す（湯と水で約 60℃ からになり、温まるのが早い）",
+     "cue": "低温調理器の表示が上がり始め、鍋の縁から湯気がうっすら立つ",
+     "caution": null,
+     "timer": null,
+     "kid": null,
+     "ingredients": []
+    },
+    {
+     "dish": "ささみの低温調理 じゃがいもの85℃ミルクマッシュ添え",
+     "n": 2,
+     "title": "ささみに下味（ブライン）",
+     "kind": "prep",
+     "tag": "marinate",
+     "minutes": 8,
+     "start": 3,
+     "heat": null,
+     "text": "ささみ 4 本（200g）の白い筋をフォークで押さえて包丁で引き抜く。塩 小さじ 1/5（1.2g）と砂糖 小さじ 1/3 をもみ込み、耐熱の保存袋（湯せん可）に平らに並べ、水に沈めて空気を抜いて口を閉じる",
+     "cue": "表面がしっとりして塩の粒が見えない。袋の中に空気が残らず、ささみが重ならず平ら（厚さ 3cm 以下）",
+     "caution": "袋は湯せん可の物。空気が残ると浮いて火が入らないので皿を重しにする",
+     "timer": null,
+     "kid": null,
+     "ingredients": [
+      "ささみ",
+      "塩（下味）",
+      "砂糖"
+     ]
+    },
+    {
+     "dish": "ささみの低温調理 じゃがいもの85℃ミルクマッシュ添え",
+     "n": 3,
+     "title": "63℃ で低温調理",
+     "kind": "wait",
+     "tag": "wait",
+     "minutes": 90,
+     "start": 18,
+     "heat": {
+      "equipment": "sous-vide",
+      "level": "63℃"
+     },
+     "text": "低温調理器が 63℃ を示したら、ささみの袋を沈める。1 時間 30 分そのまま",
+     "cue": "袋全体が湯に沈み、浮いてこない。時間後、ささみは白く不透明で、押すとふっくら弾力がある",
+     "caution": "63℃ 1 時間 30 分より短くしない（鶏肉の安全の目安）",
+     "timer": 5400,
+     "kid": null,
+     "ingredients": []
+    },
+    {
+     "dish": "ささみの低温調理 じゃがいもの85℃ミルクマッシュ添え",
+     "n": 4,
+     "title": "じゃがいもを切って袋に",
+     "kind": "prep",
+     "tag": "cut",
+     "minutes": 10,
+     "start": 20,
+     "heat": null,
+     "text": "じゃがいも 3 個の皮をピーラーでむき、2cm 角に切る。水に 2 分さらして水を切り、別の耐熱袋に牛乳 大さじ 3 とバター 10g と一緒に入れ、空気を抜いて冷蔵庫へ",
+     "cue": "角がそろって 2cm 角。袋の中で重ならず平ら",
+     "caution": "大きさがそろわないと柔らかさがそろわない。厚さ 2cm まで",
+     "timer": null,
+     "kid": null,
+     "ingredients": [
+      "じゃがいも",
+      "牛乳",
+      "バター"
+     ]
+    },
+    {
+     "dish": "ささみの低温調理 じゃがいもの85℃ミルクマッシュ添え",
+     "n": 5,
+     "title": "たれを混ぜる",
+     "kind": "prep",
+     "tag": "season",
+     "minutes": 2,
+     "start": 30,
+     "heat": null,
+     "text": "ボウル（中）に醤油 小さじ 1、酢 小さじ 1、ごま油 小さじ 1 を混ぜる。使ったまな板と包丁はここで洗う",
+     "cue": "酢とごま油の香りが立ち、醤油が底に沈まず全体に混ざる",
+     "caution": null,
+     "timer": null,
+     "kid": null,
+     "ingredients": [
+      "醤油",
+      "酢",
+      "ごま油"
+     ]
+    },
+    {
+     "dish": "ささみの低温調理 じゃがいもの85℃ミルクマッシュ添え",
+     "n": 6,
+     "title": "ささみを取り出して休ませる",
+     "kind": "prep",
+     "tag": "wait",
+     "minutes": 2,
+     "start": 108,
+     "heat": null,
+     "text": "時間が来たら袋ごと取り出し、袋のまま平らに置いて休ませる。ケトルで湯 1L を沸かし直す",
+     "cue": "ささみの表面が白く、1 本を切ると中心まで白くしっとりして赤みが無く、汁が透明（中心 63℃ 以上が 1 時間 30 分続いた）",
+     "caution": null,
+     "timer": null,
+     "kid": null,
+     "ingredients": [
+      "ささみ"
+     ]
+    },
+    {
+     "dish": "ささみの低温調理 じゃがいもの85℃ミルクマッシュ添え",
+     "n": 7,
+     "title": "湯を 85℃ に上げる",
+     "kind": "wait",
+     "tag": "wait",
+     "minutes": 10,
+     "start": 110,
+     "heat": {
+      "equipment": "sous-vide",
+      "level": "85℃"
+     },
+     "text": "低温調理器の設定を 85℃ に変え、ケトルの湯を鍋に足して温度を上げる（あふれそうなら先に湯を少し捨てる）",
+     "cue": "表示が 85℃ に届き、湯の表面から湯気がはっきり立つ",
+     "caution": null,
+     "timer": null,
+     "kid": null,
+     "ingredients": []
+    },
+    {
+     "dish": "ささみの低温調理 じゃがいもの85℃ミルクマッシュ添え",
+     "n": 8,
+     "title": "子どもの分のささみに火を通す",
+     "kind": "heat",
+     "tag": "sear",
+     "minutes": 4,
+     "start": 110,
+     "heat": {
+      "equipment": "gas-r",
+      "level": "中火"
+     },
+     "text": "フライパン（fp26）を中火で 1 分予熱し、サラダ油 小さじ 1/2 をひく。ささみ 1 本を入れて両面 1 分ずつ焼き、火を止めて蓋をして 2 分",
+     "cue": "切ると中心まで白く、透明な汁が出る。表面にうっすら焼き色",
+     "caution": null,
+     "timer": null,
+     "kid": "この 1 本が子どもの分。冷ましてから 1cm 以下にほぐす。たれはかけない",
+     "ingredients": [
+      "ささみ",
+      "サラダ油"
+     ]
+    },
+    {
+     "dish": "ささみの低温調理 じゃがいもの85℃ミルクマッシュ添え",
+     "n": 9,
+     "title": "じゃがいもを 85℃ で 1 時間",
+     "kind": "wait",
+     "tag": "wait",
+     "minutes": 60,
+     "start": 120,
+     "heat": {
+      "equipment": "sous-vide",
+      "level": "85℃"
+     },
+     "text": "85℃ に届いたら、じゃがいもの袋を沈めて 1 時間",
+     "cue": "袋が沈んで浮かない。時間後、袋の上から押すとじゃがいもがすっと崩れる",
+     "caution": "牛乳が入っているので 85℃ を超えない設定のまま。袋は湯せん可の物",
+     "timer": 3600,
+     "kid": null,
+     "ingredients": []
+    },
+    {
+     "dish": "ささみの低温調理 じゃがいもの85℃ミルクマッシュ添え",
+     "n": 10,
+     "title": "大人のささみを切る",
+     "kind": "prep",
+     "tag": "cut",
+     "minutes": 3,
+     "start": 125,
+     "heat": null,
+     "text": "大人の 3 本を繊維を断つように 1cm 厚のそぎ切りにし、皿に並べてラップをして冷蔵。副菜はこの待ち時間に作る",
+     "cue": "断面が白くしっとりつやがあり、ぱさぱさに割れない",
+     "caution": null,
+     "timer": null,
+     "kid": null,
+     "ingredients": [
+      "ささみ"
+     ]
+    },
+    {
+     "dish": "ささみの低温調理 じゃがいもの85℃ミルクマッシュ添え",
+     "n": 11,
+     "title": "マッシュにする",
+     "kind": "prep",
+     "tag": "season",
+     "minutes": 4,
+     "start": 180,
+     "heat": null,
+     "text": "じゃがいもを袋から袋の汁ごとボウル（大）に出し、ぶんぶんチョッパーに入れて 10 回ほど引き、牛乳 大さじ 3 を足してさらに 5 回。子どもの分（大さじ 3 くらい）を先に取り分けてから、残りに塩 小さじ 1/10（0.6g）を混ぜる",
+     "cue": "粒が残らずなめらかで、スプーンから落とすとゆっくり形が崩れるくらいの柔らかさ",
+     "caution": "引きすぎると粘りが出るので 15 回まで",
+     "timer": null,
+     "kid": "塩の前に取り分ける。手づかみなら一口大に丸める。冷ましてから",
+     "ingredients": [
+      "じゃがいも",
+      "牛乳",
+      "塩（マッシュ）"
+     ]
+    },
+    {
+     "dish": "ささみの低温調理 じゃがいもの85℃ミルクマッシュ添え",
+     "n": 12,
+     "title": "盛り付け",
+     "kind": "serve",
+     "tag": "serve",
+     "minutes": 4,
+     "start": 184,
+     "heat": null,
+     "text": "皿にささみを並べ、たれをかけて白ごま 小さじ 1 を指でひねってふる。マッシュを横に盛る。子どもの皿にはほぐしたささみと塩なしのマッシュ",
+     "cue": "ささみにたれのつや、白ごまの香り。マッシュは淡い黄色でバターのつや",
+     "caution": null,
+     "timer": null,
+     "kid": "ささみとマッシュは人肌まで冷ます",
+     "ingredients": [
+      "白ごま"
+     ]
+    }
+   ],
+   "cleanup": {
+    "dishwasher": [
+     "bowl-l",
+     "bowl-m"
+    ],
+    "hand": [
+     "pot20",
+     "fp26"
+    ],
+    "note": "ぶんぶんチョッパーの容器と刃・計量スプーン・包丁・まな板は手洗い。使った袋は捨てる。低温調理器は湯を捨てて本体を拭いて乾かす"
+   },
+   "photo": null,
+   "stats": {
+    "cooked": 0,
+    "r_avg": null,
+    "f_avg": null,
+    "last": null
+   },
+   "detail": "full",
+   "together": [
+    "r-20261115-horenso-to-kamaboko-no-okaka-ae"
+   ],
+   "memo": []
+  },
+  "side_recipe_ids": [
+   "r-20261115-horenso-to-kamaboko-no-okaka-ae"
+  ],
+  "side_recipes": [
+   {
+    "id": "r-20261115-horenso-to-kamaboko-no-okaka-ae",
+    "title": "ほうれん草とかまぼこのおかか和え",
+    "version": 1,
+    "supersedes": null,
+    "status": "draft",
+    "created": "2026-11-15",
+    "request": "req-20261115-1852-oq1w",
+    "generated_by": {
+     "model": "claude-code",
+     "prompt_version": 10
+    },
+    "type": "recipe_detail",
+    "servings": {
+     "adults": 2,
+     "kids": 1
+    },
+    "time": {
+     "budget": 0,
+     "planned": 19,
+     "active": 13,
+     "raw_estimate": 13,
+     "speed_factor": 1.23
+    },
+    "image_text": "鮮やかな緑のほうれん草に、ピンクのかまぼこの細切りが混ざり、かつお節がふんわりのる。小鉢にこんもり盛る。",
+    "dishes": [
+     {
+      "name": "ほうれん草とかまぼこのおかか和え",
+      "role": "side"
+     }
+    ],
+    "equipment": [
+     "kettle",
+     "fp26",
+     "bowl-m"
+    ],
+    "ingredients": [
+     {
+      "name": "ほうれん草",
+      "qty": 1,
+      "unit": "束",
+      "grams": 200,
+      "pantry": "ほうれん草",
+      "for": "ほうれん草とかまぼこのおかか和え",
+      "substitute": null,
+      "use_up": false
+     },
+     {
+      "name": "かまぼこ",
+      "qty": 2,
+      "unit": "切れ",
+      "grams": 20,
+      "pantry": "かまぼこ",
+      "for": "ほうれん草とかまぼこのおかか和え",
+      "substitute": null,
+      "use_up": false
+     },
+     {
+      "name": "めんつゆ",
+      "qty": 1,
+      "unit": "小さじ",
+      "grams": 6,
+      "pantry": "めんつゆ",
+      "for": "ほうれん草とかまぼこのおかか和え",
+      "substitute": null,
+      "use_up": false
+     },
+     {
+      "name": "かつお節",
+      "qty": 1,
+      "unit": "袋",
+      "grams": 2,
+      "pantry": "かつお節",
+      "for": "ほうれん草とかまぼこのおかか和え",
+      "substitute": null,
+      "use_up": false
+     }
+    ],
+    "tags": [
+     "副菜",
+     "ケトル",
+     "おひたし"
+    ],
+    "salt": {
+     "total_g": 1.0,
+     "adult_per_serving_g": 0.5,
+     "kid_g": 0.0
+    },
+    "kid": {
+     "rule": "separate",
+     "cut": "葉先だけを 5mm に刻む",
+     "note": "めんつゆの前に取り分ける。かまぼこは弾力があり窒息しやすいので子どもには出さない"
+    },
+    "keep": {
+     "fridge_days": 2,
+     "freezer": false,
+     "reheat": "冷たいまま食べる"
+    },
+    "timeline": [
+     {
+      "minute": 0,
+      "lane": "hands",
+      "text": "ケトルで湯 1L を沸かす。かまぼこを細切り"
+     },
+     {
+      "minute": 3,
+      "lane": "gas-r",
+      "text": "フライパンに湯を移して強火、ほうれん草を茹でる"
+     },
+     {
+      "minute": 5,
+      "lane": "hands",
+      "text": "水にとって絞り、4cm に切る。子どもの分を取り分け"
+     },
+     {
+      "minute": 9,
+      "lane": "hands",
+      "text": "めんつゆ・かまぼこと和え、かつお節をのせる"
+     },
+     {
+      "minute": 11,
+      "lane": "hands",
+      "text": "盛り付け"
+     }
+    ],
+    "steps": [
+     {
+      "dish": "ほうれん草とかまぼこのおかか和え",
+      "n": 1,
+      "title": "湯を沸かしてかまぼこを切る",
+      "kind": "prep",
+      "tag": "cut",
+      "minutes": 3,
+      "start": 0,
+      "heat": null,
+      "text": "電気ケトルで湯 1L を沸かす。その間にかまぼこ 2 切れを 5mm 幅の細切りにする",
+      "cue": "ケトルのスイッチが切れる。かまぼこの幅がそろう",
+      "caution": null,
+      "timer": null,
+      "kid": null,
+      "ingredients": [
+       "かまぼこ"
+      ]
+     },
+     {
+      "dish": "ほうれん草とかまぼこのおかか和え",
+      "n": 2,
+      "title": "ほうれん草を茹でる",
+      "kind": "heat",
+      "tag": "boil",
+      "minutes": 2,
+      "start": 3,
+      "heat": {
+       "equipment": "gas-r",
+       "level": "強火"
+      },
+      "text": "フライパン（fp26）にケトルの湯を入れて強火。ほうれん草 1 束を根元から入れて 30 秒、葉も沈めてさらに 30 秒",
+      "cue": "茎を指でつまむとしんなりし、葉が鮮やかな緑",
+      "caution": "茹ですぎると色がくすむ。1 分で上げる",
+      "timer": null,
+      "kid": null,
+      "ingredients": [
+       "ほうれん草"
+      ]
+     },
+     {
+      "dish": "ほうれん草とかまぼこのおかか和え",
+      "n": 3,
+      "title": "水にとって絞る",
+      "kind": "prep",
+      "tag": "cut",
+      "minutes": 4,
+      "start": 5,
+      "heat": null,
+      "text": "ザルにあげて水にとり、根元をそろえて絞り、4cm に切る",
+      "cue": "握ると水が垂れないくらいの固さ",
+      "caution": null,
+      "timer": null,
+      "kid": "葉先を少し取り分け、5mm に刻む（味付け前）",
+      "ingredients": [
+       "ほうれん草"
+      ]
+     },
+     {
+      "dish": "ほうれん草とかまぼこのおかか和え",
+      "n": 4,
+      "title": "和える",
+      "kind": "prep",
+      "tag": "season",
+      "minutes": 2,
+      "start": 9,
+      "heat": null,
+      "text": "ボウル（中）でめんつゆ 小さじ 1 とかまぼこを和え、かつお節 1 袋をのせる",
+      "cue": "全体にめんつゆが行き渡り、底に汁がたまらない",
+      "caution": null,
+      "timer": null,
+      "kid": null,
+      "ingredients": [
+       "めんつゆ",
+       "かまぼこ",
+       "かつお節"
+      ]
+     },
+     {
+      "dish": "ほうれん草とかまぼこのおかか和え",
+      "n": 5,
+      "title": "盛り付け",
+      "kind": "serve",
+      "tag": "serve",
+      "minutes": 2,
+      "start": 11,
+      "heat": null,
+      "text": "小鉢に盛る",
+      "cue": "緑とピンクが混ざってこんもり",
+      "caution": null,
+      "timer": null,
+      "kid": "子どもは刻んだ葉先だけ。かつお節を少しのせてもよい",
+      "ingredients": []
+     }
+    ],
+    "cleanup": {
+     "dishwasher": [
+      "bowl-m"
+     ],
+     "hand": [
+      "fp26"
+     ],
+     "note": "ザル・包丁・まな板は手洗い"
+    },
+    "photo": null,
+    "stats": {
+     "cooked": 0,
+     "r_avg": null,
+     "f_avg": null,
+     "last": null
+    },
+    "detail": "full",
+    "together": [
+     "r-20261115-sasami-no-teion-chori-jagaimo-no-milk-ma"
+    ],
+    "memo": []
+   }
+  ],
+  "model": "claude-code",
+  "prompt_version": 10,
+  "tokens": {
+   "input": 0,
+   "output": 0,
+   "cache_read": 0,
+   "cache_write": 0
+  },
+  "cost_usd": 0.0,
+  "seconds": 0
+ },
+ "finished": "2026-11-15T18:54:02+09:00"
 }
