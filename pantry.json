@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-14T17:53:39+09:00",
+ "updated": "2026-11-15T17:46:50+09:00",
  "items": [
   {
    "id": "p1qnvb",
@@ -62,6 +62,13 @@
    "name": "なす",
    "loc": "fridge",
    "added": "2026-11-05",
+   "src": "manual"
+  },
+  {
+   "id": "pq28xb",
+   "name": "豚肩ロース肉",
+   "loc": "fridge",
+   "added": "2026-11-15",
    "src": "manual"
   }
  ],
