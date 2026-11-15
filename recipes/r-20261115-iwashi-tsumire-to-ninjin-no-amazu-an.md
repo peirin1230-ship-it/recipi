@@ -1,4 +1,5 @@
 ---
+listed: "2026-11-15T17:58:15+09:00"
 id: r-20261115-iwashi-tsumire-to-ninjin-no-amazu-an
 title: いわしつみれとにんじんの甘酢あん
 version: 1
