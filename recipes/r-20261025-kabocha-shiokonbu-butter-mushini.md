@@ -77,7 +77,7 @@ cleanup:
   hand: [pot20]
   note: 鍋は粗熱が取れてから洗う。
 photo: photos/r-20261025-kabocha-shiokonbu-butter-mushini/20261110-1.jpg
-stats: {cooked: 1, r_avg: 53, f_avg: 4.0, last: '2026-11-10'}
+stats: {cooked: 1, r_avg: 53, f_avg: 3.3, last: '2026-11-10'}
 detail: full
 together: [r-20261025-butakoma-eringi-shogayaki-fu]
 ---

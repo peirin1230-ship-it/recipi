@@ -129,7 +129,7 @@ cleanup:
   hand: [fp26]
   note: フライパンは冷めてから洗う
 photo: photos/r-20261108-butakata-rosu-to-burokkori-no-shiokonbu-/20261108-1.jpg
-stats: {cooked: 1, r_avg: 60, f_avg: 5.0, last: '2026-11-08'}
+stats: {cooked: 1, r_avg: 60, f_avg: 4.0, last: '2026-11-08'}
 detail: full
 together: [r-20261108-kabocha-to-iwashi-tsumire-no-misoni]
 ---

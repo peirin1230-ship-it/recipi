@@ -112,7 +112,7 @@ cleanup:
   hand: [fp26]
   note: 使った道具は待ち時間に洗う
 photo: photos/r-20261108-iwashi-tsumire-to-broccoli-no-toromi-tam/20261108-1.jpg
-stats: {cooked: 1, r_avg: 45, f_avg: 3.0, last: '2026-11-08'}
+stats: {cooked: 1, r_avg: 45, f_avg: 2.7, last: '2026-11-08'}
 detail: full
 together: [r-20261108-jagaimo-no-shiokonbu-butter-mushini]
 ---
