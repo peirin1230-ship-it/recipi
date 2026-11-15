@@ -1,0 +1,23 @@
+{
+ "id": "req-20261115-1852-oq1w",
+ "ts": "2026-11-15T18:52:12+09:00",
+ "type": "recipe_detail",
+ "time_budget": 0,
+ "servings": {
+  "adults": 2,
+  "kids": 1
+ },
+ "dishes": "main+side",
+ "mood": [],
+ "use_up": [
+  "ささみ"
+ ],
+ "exclude": [],
+ "note": "すべてささみの低温調理",
+ "mode": "auto",
+ "parent": "req-20261115-1848-hbmx",
+ "alternative": 0,
+ "status": "pending",
+ "error": null,
+ "result": null
+}
