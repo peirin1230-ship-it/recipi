@@ -1,0 +1,21 @@
+{
+ "id": "req-20261115-1845-jxp2",
+ "ts": "2026-11-15T18:45:12+09:00",
+ "type": "prep",
+ "time_budget": 0,
+ "servings": {
+  "adults": 2,
+  "kids": 1
+ },
+ "dishes": "main+side",
+ "mood": [],
+ "use_up": [
+  "ささみ"
+ ],
+ "exclude": [],
+ "note": "すべて低温調理",
+ "mode": "auto",
+ "status": "pending",
+ "error": null,
+ "result": null
+}
