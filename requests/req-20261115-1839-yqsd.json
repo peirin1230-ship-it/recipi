@@ -15,7 +15,667 @@
  "exclude": [],
  "note": "低温調理",
  "mode": "auto",
- "status": "pending",
+ "status": "done",
  "error": null,
- "result": null
+ "result": {
+  "feasible": true,
+  "infeasible_reason": null,
+  "nearest_options": [],
+  "alternatives": [
+   {
+    "title": "ささみのヨーグルト漬け トースター焼き",
+    "minutes": 35,
+    "why": "同じささみを低温調理ではなくヨーグルトの酵素とトースターの焼き目でしっとり",
+    "kind": "new"
+   },
+   {
+    "title": "豚こま切れ肉と玉ねぎのヨーグルト味噌漬け グリル焼き",
+    "minutes": 35,
+    "why": "主材料を豚こまに、調理法を魚焼きグリルに変えて漬けて焼くだけの仕込み",
+    "kind": "new"
+   }
+  ],
+  "recipe_id": "r-20261115-sasami-teion-chori-tamanegi-su-joyu-dare",
+  "recipe": {
+   "id": "r-20261115-sasami-teion-chori-tamanegi-su-joyu-dare",
+   "title": "ささみの低温調理 玉ねぎ酢醤油だれ",
+   "version": 1,
+   "supersedes": null,
+   "status": "draft",
+   "created": "2026-11-15",
+   "request": "req-20261115-1839-yqsd",
+   "generated_by": {
+    "model": "claude-code",
+    "prompt_version": 10
+   },
+   "type": "prep",
+   "servings": {
+    "adults": 2,
+    "kids": 1
+   },
+   "time": {
+    "budget": 0,
+    "planned": 156,
+    "active": 30,
+    "raw_estimate": 128,
+    "speed_factor": 1.23
+   },
+   "image_text": "淡いピンクがかった白でしっとり光るささみのそぎ切りに、透き通った玉ねぎのみじん切りだれと白ごまがたっぷりかかる。切り口はつやがあり、ごま油の香りが立つ。",
+   "dishes": [
+    {
+     "name": "ささみの低温調理 玉ねぎ酢醤油だれ",
+     "role": "main"
+    }
+   ],
+   "equipment": [
+    "sous-vide",
+    "pot20",
+    "kettle",
+    "bowl-m",
+    "microwave",
+    "fp26"
+   ],
+   "ingredients": [
+    {
+     "name": "ささみ",
+     "qty": 5,
+     "unit": "本",
+     "grams": 250,
+     "pantry": "ささみ",
+     "for": "ささみの低温調理 玉ねぎ酢醤油だれ",
+     "substitute": null,
+     "use_up": true
+    },
+    {
+     "name": "塩",
+     "qty": 0.25,
+     "unit": "小さじ",
+     "grams": 1.5,
+     "pantry": "塩",
+     "for": "ささみの低温調理 玉ねぎ酢醤油だれ",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "砂糖",
+     "qty": 0.5,
+     "unit": "小さじ",
+     "grams": 1.5,
+     "pantry": "砂糖",
+     "for": "ささみの低温調理 玉ねぎ酢醤油だれ",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "水",
+     "qty": 1,
+     "unit": "大さじ",
+     "grams": 15,
+     "pantry": null,
+     "for": "ささみの低温調理 玉ねぎ酢醤油だれ",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "玉ねぎ",
+     "qty": 0.25,
+     "unit": "個",
+     "grams": 50,
+     "pantry": "玉ねぎ",
+     "for": "ささみの低温調理 玉ねぎ酢醤油だれ",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "醤油",
+     "qty": 2,
+     "unit": "小さじ",
+     "grams": 12,
+     "pantry": "醤油",
+     "for": "ささみの低温調理 玉ねぎ酢醤油だれ",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "酢",
+     "qty": 1,
+     "unit": "大さじ",
+     "grams": 15,
+     "pantry": "酢",
+     "for": "ささみの低温調理 玉ねぎ酢醤油だれ",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "みりん",
+     "qty": 1,
+     "unit": "小さじ",
+     "grams": 6,
+     "pantry": "みりん",
+     "for": "ささみの低温調理 玉ねぎ酢醤油だれ",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "ごま油",
+     "qty": 1,
+     "unit": "小さじ",
+     "grams": 4,
+     "pantry": "ごま油",
+     "for": "ささみの低温調理 玉ねぎ酢醤油だれ",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "白ごま",
+     "qty": 1,
+     "unit": "小さじ",
+     "grams": 3,
+     "pantry": "白ごま",
+     "for": "ささみの低温調理 玉ねぎ酢醤油だれ",
+     "substitute": null,
+     "use_up": false
+    }
+   ],
+   "tags": [
+    "prep",
+    "低温調理",
+    "ささみ",
+    "チョッパー",
+    "子ども取り分け",
+    "和風"
+   ],
+   "salt": {
+    "total_g": 3.2,
+    "adult_per_serving_g": 1.5,
+    "kid_g": 0.3
+   },
+   "kid": {
+    "rule": "separate",
+    "cut": "1cm 角にほぐす・刻む。手づかみできる 1cm × 4cm の棒状も可",
+    "note": "低温調理の肉はそのまま子どもに出さない。翌日、ささみ 1 本を取り分けてフライパンで両面 1 分ずつ焼き、中心まで白くしてから、たれをかけずに冷まして出す（ブラインの塩だけで約 0.3g）"
+   },
+   "keep": {
+    "fridge_days": 2,
+    "freezer": false,
+    "reheat": "大人は冷たいまま切ってたれをかける。温めるなら袋のまま 60℃ くらいの湯に 5 分。子どもの分は必ずフライパンで両面 1 分ずつ焼いて中心まで火を通す"
+   },
+   "timeline": [
+    {
+     "minute": 0,
+     "lane": "hands",
+     "text": "ケトルで湯を沸かし、鍋に水と湯を合わせて低温調理器を 63℃ に設定"
+    },
+    {
+     "minute": 2,
+     "lane": "hands",
+     "text": "ささみの筋を取り、塩・砂糖・水を揉み込んで袋へ"
+    },
+    {
+     "minute": 10,
+     "lane": "hands",
+     "text": "ブラインで置く 15 分（この間に副菜のきんぴら）"
+    },
+    {
+     "minute": 25,
+     "lane": "sous-vide",
+     "text": "袋を沈めて 63℃ で 1 時間 30 分"
+    },
+    {
+     "minute": 30,
+     "lane": "hands",
+     "text": "チョッパーで玉ねぎをみじん切り"
+    },
+    {
+     "minute": 33,
+     "lane": "microwave",
+     "text": "玉ねぎを 900W 40 秒で辛みを抜き、たれを合わせて冷蔵"
+    },
+    {
+     "minute": 115,
+     "lane": "hands",
+     "text": "袋ごと氷水で 10 分急冷"
+    },
+    {
+     "minute": 125,
+     "lane": "hands",
+     "text": "袋のまま冷蔵庫へ。日付を書く"
+    },
+    {
+     "minute": 128,
+     "lane": "hands",
+     "text": "仕込み終わり（翌日は切ってたれをかけるだけ）"
+    }
+   ],
+   "steps": [
+    {
+     "dish": "ささみの低温調理 玉ねぎ酢醤油だれ",
+     "n": 1,
+     "title": "湯と低温調理器の準備",
+     "kind": "prep",
+     "tag": null,
+     "minutes": 3,
+     "start": 0,
+     "heat": null,
+     "text": "電気ケトルで湯 1L を沸かす。鍋（pot20）に水 1.5L と沸いた湯を合わせ、低温調理器を差して 63℃ に設定する。ケトルの湯を混ぜると設定温度まで早く上がる。",
+     "cue": "低温調理器の表示が 63℃ に届き、温度が止まっている",
+     "caution": null,
+     "timer": null,
+     "kid": null,
+     "ingredients": []
+    },
+    {
+     "dish": "ささみの低温調理 玉ねぎ酢醤油だれ",
+     "n": 2,
+     "title": "筋を取ってブライン",
+     "kind": "prep",
+     "tag": "marinate",
+     "minutes": 8,
+     "start": 2,
+     "heat": null,
+     "text": "ささみ 5 本の白い筋の端を包丁の背で押さえて引き抜く。ボウル（中）で塩 小さじ 1/4・砂糖 小さじ 1/2・水 大さじ 1 を揉み込み、耐熱の保存袋（湯せん可）に重ならないよう平らに並べ、水に沈めて空気を抜いて口を閉じる。",
+     "cue": "袋がささみに密着して空気の膨らみが無い。ささみの表面が少しつやっとしている",
+     "caution": "袋は湯せん可の物を使う。空気が残ると浮いて火が均一に入らない",
+     "timer": null,
+     "kid": "子どもの分も同じ袋でよい（翌日に中心まで焼き直す）",
+     "ingredients": [
+      "ささみ",
+      "塩",
+      "砂糖",
+      "水"
+     ]
+    },
+    {
+     "dish": "ささみの低温調理 玉ねぎ酢醤油だれ",
+     "n": 3,
+     "title": "ブラインで置く",
+     "kind": "prep",
+     "tag": "marinate",
+     "minutes": 15,
+     "start": 10,
+     "heat": null,
+     "text": "袋のまま冷蔵庫で 15 分置いて下味を入れる（手は空くので、この間に副菜の大豆とにんじんのきんぴらを作る）。",
+     "cue": "ささみの色が少し濃く、表面がしっとりしている",
+     "caution": null,
+     "timer": 900,
+     "kid": null,
+     "ingredients": []
+    },
+    {
+     "dish": "ささみの低温調理 玉ねぎ酢醤油だれ",
+     "n": 4,
+     "title": "63℃ で 1 時間 30 分",
+     "kind": "wait",
+     "tag": "wait",
+     "minutes": 90,
+     "start": 25,
+     "heat": {
+      "equipment": "sous-vide",
+      "level": "63℃"
+     },
+     "text": "低温調理器が 63℃ になった湯に袋を沈め、1 時間 30 分そのまま。袋が浮くなら皿をのせる。",
+     "cue": "袋の上から押すと弾力があり、ささみ全体が白く不透明になっている。端を切ると中心まで白っぽく、透明な汁が出る",
+     "caution": "63℃ 1 時間 30 分より短くしない（厚さ 3cm までの目安）。途中で湯が減ったら水ではなく湯を足す",
+     "timer": 5400,
+     "kid": null,
+     "ingredients": []
+    },
+    {
+     "dish": "ささみの低温調理 玉ねぎ酢醤油だれ",
+     "n": 5,
+     "title": "玉ねぎだれを作る",
+     "kind": "prep",
+     "tag": "cut",
+     "minutes": 6,
+     "start": 30,
+     "heat": null,
+     "text": "玉ねぎ 1/4 個をざく切りにしてぶんぶんチョッパーで 10 回ほど引いてみじん切りにする。耐熱のボウル（中）に入れ、ラップをして電子レンジ 900W で 40 秒加熱して辛みを抜く。醤油 小さじ 2・酢 大さじ 1・みりん 小さじ 1・ごま油 小さじ 1・白ごま 小さじ 1 を混ぜ、粗熱が取れたら保存容器に入れて冷蔵する。",
+     "cue": "玉ねぎが半透明になり、鼻にツンとくる辛い匂いが消えて甘い香りになる",
+     "caution": "加熱にムラがあるので、まだ白く辛い所があれば混ぜて 10 秒追加",
+     "timer": 40,
+     "kid": "たれは子どもにかけない",
+     "ingredients": [
+      "玉ねぎ",
+      "醤油",
+      "酢",
+      "みりん",
+      "ごま油",
+      "白ごま"
+     ]
+    },
+    {
+     "dish": "ささみの低温調理 玉ねぎ酢醤油だれ",
+     "n": 6,
+     "title": "急冷して冷蔵",
+     "kind": "prep",
+     "tag": null,
+     "minutes": 13,
+     "start": 115,
+     "heat": null,
+     "text": "袋ごとボウル（大）の氷水に 10 分沈めて急冷し、袋のまま冷蔵庫へ入れる。袋に日付を書く。低温調理器と鍋の湯を片付ける。",
+     "cue": "袋を触って中まで冷たく、ささみが締まっている",
+     "caution": "常温に置きっぱなしにしない。冷蔵で 2 日以内に食べ切る",
+     "timer": 600,
+     "kid": null,
+     "ingredients": []
+    },
+    {
+     "dish": "ささみの低温調理 玉ねぎ酢醤油だれ",
+     "n": 7,
+     "title": "翌日の仕上げ（切ってたれ・子どもは焼く）",
+     "kind": "serve",
+     "tag": "serve",
+     "minutes": 6,
+     "start": null,
+     "heat": {
+      "equipment": "gas-r",
+      "level": "中火"
+     },
+     "text": "【翌日】袋からささみを出し、子どもの分 1 本を取り分ける。子どもの分はフライパン（fp26）を中火で 1 分予熱してサラダ油を薄くひき、両面 1 分ずつ焼いて中心まで火を通す。大人の分 4 本は 1cm 厚のそぎ切りにして皿に並べ、玉ねぎだれをかける。",
+     "cue": "子どもの分は切った断面が真っ白で、ピンクが無く透明な汁が出る。大人の分は断面がしっとりつやがある",
+     "caution": "子どもの分は必ず焼き直してから出す（63℃ の鶏肉は大人向け）",
+     "timer": null,
+     "kid": "焼いたら 1cm 角にほぐす（手づかみなら 1cm × 4cm の棒）。たれはかけず、冷ましてから出す",
+     "ingredients": []
+    }
+   ],
+   "cleanup": {
+    "dishwasher": [
+     "bowl-m",
+     "bowl-l"
+    ],
+    "hand": [
+     "pot20",
+     "fp26",
+     "sous-vide"
+    ],
+    "note": "低温調理器は水気を拭いて乾かす。チョッパーの刃は手洗い"
+   },
+   "photo": null,
+   "stats": {
+    "cooked": 0,
+    "r_avg": null,
+    "f_avg": null,
+    "last": null
+   },
+   "detail": "full",
+   "together": [
+    "r-20261115-daizu-to-ninjin-no-hosogiri-kinpira"
+   ],
+   "memo": []
+  },
+  "side_recipe_ids": [
+   "r-20261115-daizu-to-ninjin-no-hosogiri-kinpira"
+  ],
+  "side_recipes": [
+   {
+    "id": "r-20261115-daizu-to-ninjin-no-hosogiri-kinpira",
+    "title": "大豆とにんじんの細切りきんぴら",
+    "version": 1,
+    "supersedes": null,
+    "status": "draft",
+    "created": "2026-11-15",
+    "request": "req-20261115-1839-yqsd",
+    "generated_by": {
+     "model": "claude-code",
+     "prompt_version": 10
+    },
+    "type": "prep",
+    "servings": {
+     "adults": 2,
+     "kids": 1
+    },
+    "time": {
+     "budget": 0,
+     "planned": 15,
+     "active": 13,
+     "raw_estimate": 13,
+     "speed_factor": 1.23
+    },
+    "image_text": "1.2mm の細いにんじんがつやつやのオレンジ色で、ふっくらした大豆と絡む。白ごまが散り、ごま油の照りがある。",
+    "dishes": [
+     {
+      "name": "大豆とにんじんの細切りきんぴら",
+      "role": "side"
+     }
+    ],
+    "equipment": [
+     "fp26"
+    ],
+    "ingredients": [
+     {
+      "name": "にんじん",
+      "qty": 1,
+      "unit": "本",
+      "grams": 150,
+      "pantry": "にんじん",
+      "for": "大豆とにんじんの細切りきんぴら",
+      "substitute": null,
+      "use_up": false
+     },
+     {
+      "name": "大豆水煮",
+      "qty": 0.5,
+      "unit": "袋",
+      "grams": 75,
+      "pantry": "大豆水煮",
+      "for": "大豆とにんじんの細切りきんぴら",
+      "substitute": null,
+      "use_up": false
+     },
+     {
+      "name": "ごま油",
+      "qty": 1,
+      "unit": "小さじ",
+      "grams": 4,
+      "pantry": "ごま油",
+      "for": "大豆とにんじんの細切りきんぴら",
+      "substitute": null,
+      "use_up": false
+     },
+     {
+      "name": "水",
+      "qty": 2,
+      "unit": "大さじ",
+      "grams": 30,
+      "pantry": null,
+      "for": "大豆とにんじんの細切りきんぴら",
+      "substitute": null,
+      "use_up": false
+     },
+     {
+      "name": "みりん",
+      "qty": 1,
+      "unit": "小さじ",
+      "grams": 6,
+      "pantry": "みりん",
+      "for": "大豆とにんじんの細切りきんぴら",
+      "substitute": null,
+      "use_up": false
+     },
+     {
+      "name": "醤油",
+      "qty": 1,
+      "unit": "小さじ",
+      "grams": 6,
+      "pantry": "醤油",
+      "for": "大豆とにんじんの細切りきんぴら",
+      "substitute": null,
+      "use_up": false
+     },
+     {
+      "name": "白ごま",
+      "qty": 1,
+      "unit": "小さじ",
+      "grams": 3,
+      "pantry": "白ごま",
+      "for": "大豆とにんじんの細切りきんぴら",
+      "substitute": null,
+      "use_up": false
+     }
+    ],
+    "tags": [
+     "副菜",
+     "スライサー",
+     "作り置き",
+     "和風",
+     "子ども取り分け"
+    ],
+    "salt": {
+     "total_g": 0.9,
+     "adult_per_serving_g": 0.45,
+     "kid_g": 0
+    },
+    "kid": {
+     "rule": "separate",
+     "cut": "にんじんは 1cm 長さに刻む。大豆はフォークで半分につぶす",
+     "note": "醤油を入れる前に取り分ける。大豆は丸いまま出さない"
+    },
+    "keep": {
+     "fridge_days": 2,
+     "freezer": true,
+     "reheat": "冷たいままでよい。温めるならレンジ 600W 40 秒、子どもの分は湯気が立つまで"
+    },
+    "timeline": [
+     {
+      "minute": 0,
+      "lane": "hands",
+      "text": "スライサーでにんじんを細切り、大豆の水気を切る"
+     },
+     {
+      "minute": 4,
+      "lane": "gas-r",
+      "text": "ごま油でにんじんを炒め、水を入れて蓋で蒸し焼き"
+     },
+     {
+      "minute": 8,
+      "lane": "gas-r",
+      "text": "大豆を加え、子どもの分を取り分けてから調味"
+     },
+     {
+      "minute": 11,
+      "lane": "hands",
+      "text": "保存容器に移して冷ます"
+     },
+     {
+      "minute": 13,
+      "lane": "hands",
+      "text": "終わり"
+     }
+    ],
+    "steps": [
+     {
+      "dish": "大豆とにんじんの細切りきんぴら",
+      "n": 1,
+      "title": "にんじんを細切り",
+      "kind": "prep",
+      "tag": "cut",
+      "minutes": 4,
+      "start": 0,
+      "heat": null,
+      "text": "にんじん 1 本の皮をピーラーでむき、スライサー（1.2mm 細切り）で細切りにする。最後の 2cm は包丁で細く切る。大豆水煮 1/2 袋（75g） はザルで水気を切る。",
+      "cue": "にんじんが均一な細い糸状になっている",
+      "caution": "指を守るため最後の 2cm はスライサーを使わない",
+      "timer": null,
+      "kid": null,
+      "ingredients": [
+       "にんじん",
+       "大豆水煮"
+      ]
+     },
+     {
+      "dish": "大豆とにんじんの細切りきんぴら",
+      "n": 2,
+      "title": "炒めて蒸し焼き",
+      "kind": "heat",
+      "tag": "stir-fry",
+      "minutes": 4,
+      "start": 4,
+      "heat": {
+       "equipment": "gas-r",
+       "level": "中火"
+      },
+      "text": "フライパンを中火で 1 分予熱し、ごま油 小さじ 1 でにんじんを 1 分炒める。水 大さじ 2 を入れて蓋をし、弱火で 2 分蒸し焼きにする。",
+      "cue": "にんじんがしんなりして色が鮮やかになり、箸でつまむとくたっと曲がる",
+      "caution": "レンジだとにんじんが固く残るので、ここはフライパンで蒸し焼きにする",
+      "timer": 120,
+      "kid": null,
+      "ingredients": [
+       "ごま油",
+       "水"
+      ]
+     },
+     {
+      "dish": "大豆とにんじんの細切りきんぴら",
+      "n": 3,
+      "title": "大豆を加えて取り分け・調味",
+      "kind": "heat",
+      "tag": "season",
+      "minutes": 3,
+      "start": 8,
+      "heat": {
+       "equipment": "gas-r",
+       "level": "中火"
+      },
+      "text": "大豆を加えて 1 分炒め合わせる。子どもの分（大さじ 3 ほど）を先に取り出す。残りにみりん 小さじ 1・醤油 小さじ 1 を入れて汁気が無くなるまで炒め、白ごま 小さじ 1 をふる。",
+      "cue": "フライパンの底に汁気が残らず、にんじんにつやが出る",
+      "caution": null,
+      "timer": null,
+      "kid": "味付け前に取り分け、にんじんを 1cm に刻み、大豆はフォークでつぶす。冷ましてから出す",
+      "ingredients": [
+       "みりん",
+       "醤油",
+       "白ごま"
+      ]
+     },
+     {
+      "dish": "大豆とにんじんの細切りきんぴら",
+      "n": 4,
+      "title": "保存",
+      "kind": "serve",
+      "tag": "serve",
+      "minutes": 2,
+      "start": 11,
+      "heat": null,
+      "text": "保存容器に浅く広げて粗熱を取り、30 分以内に冷蔵する。翌日はささみの横に盛るだけ。",
+      "cue": "湯気が落ち着き、容器の底が手で触れるくらいになっている",
+      "caution": null,
+      "timer": null,
+      "kid": "子どもの分は別の容器に",
+      "ingredients": []
+     }
+    ],
+    "cleanup": {
+     "dishwasher": [],
+     "hand": [
+      "fp26"
+     ],
+     "note": "スライサーは刃に気をつけて手洗い"
+    },
+    "photo": null,
+    "stats": {
+     "cooked": 0,
+     "r_avg": null,
+     "f_avg": null,
+     "last": null
+    },
+    "detail": "full",
+    "together": [
+     "r-20261115-sasami-teion-chori-tamanegi-su-joyu-dare"
+    ],
+    "memo": []
+   }
+  ],
+  "model": "claude-code",
+  "prompt_version": 10,
+  "tokens": {
+   "input": 0,
+   "output": 0,
+   "cache_read": 0,
+   "cache_write": 0
+  },
+  "cost_usd": 0.0,
+  "seconds": 0
+ },
+ "finished": "2026-11-15T18:41:59+09:00"
 }
