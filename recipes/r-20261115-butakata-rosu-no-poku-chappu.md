@@ -1,10 +1,10 @@
 ---
-listed: "2026-11-15T17:53:36+09:00"
+listed: "2026-11-15T18:39:15+09:00"
 id: r-20261115-butakata-rosu-no-poku-chappu
 title: 豚肩ロースのポークチャップ
 version: 1
 supersedes: null
-status: draft
+status: tried
 created: '2026-11-15'
 request: req-20261115-1751-c2de
 generated_by: {model: claude-code, prompt_version: 10}
@@ -214,4 +214,4 @@ together: [r-20261115-horenso-to-ninjin-no-goma-okaka-ae]
 - ケチャップが乾く前にフライパンにお湯を張っておくと落ちやすい
 
 ## 作ったときのメモ
-
+- 2026-11-15 ・ 40 分（見込み 30）・ R 79 ・ F 3.7 ・ そのまま ・ 📷 20261115-1.jpg
