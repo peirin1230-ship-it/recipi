@@ -1,4 +1,5 @@
 ---
+listed: "2026-11-17T22:55:03+09:00"
 id: r-20261117-uzura-no-tamago-iri-ninjin-to-tamanegi-n
 title: うずらの卵入り にんじんと玉ねぎのミルクポタージュ
 version: 1
