@@ -1,10 +1,10 @@
 ---
-listed: "2026-11-17T22:55:03+09:00"
+listed: "2026-11-18T01:29:34+09:00"
 id: r-20261117-uzura-no-tamago-iri-ninjin-to-tamanegi-n
 title: うずらの卵入り にんじんと玉ねぎのミルクポタージュ
 version: 1
 supersedes: null
-status: draft
+status: tried
 created: '2026-11-17'
 request: req-20261117-2250-rfmq
 generated_by: {model: claude-code, prompt_version: 11}
@@ -296,4 +296,4 @@ detail: full
 - スライサー・チョッパー・包丁・まな板は煮ている間に洗う。ミキサーは使ったらすぐ水を入れて数秒回すと汚れが落ちやすい
 
 ## 作ったときのメモ
-
+- 2026-11-18 ・ 26 分（見込み 38）・ R 87 ・ F 5 ・ そのまま ・ 📷 20261118-1.jpg
