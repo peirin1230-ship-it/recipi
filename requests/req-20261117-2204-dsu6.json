@@ -16,10 +16,475 @@
  ],
  "exclude": [],
  "note": "全て牛すじで",
- "mode": "pick",
+ "mode": "auto",
  "parent": "req-20261117-2201-dci7",
  "alternative": 1,
- "status": "pending",
+ "status": "done",
  "error": null,
- "result": null
+ "result": {
+  "feasible": true,
+  "infeasible_reason": null,
+  "nearest_options": [],
+  "alternatives": [
+   {
+    "title": "牛すじとほうれん草のだしうどん",
+    "minutes": 175,
+    "why": "同じ下茹で・煮込みの牛すじを、だしパックとめんつゆ控えめの汁で冷凍うどんに。子どもは柔らかいうどんを短く切って",
+    "kind": "new"
+   },
+   {
+    "title": "牛すじの低温調理 玉ねぎ酢醤油がけ",
+    "minutes": 500,
+    "why": "下茹でした牛すじを低温調理器 80℃ 8 時間でとろとろに。チョッパーの玉ねぎと酢醤油でさっぱり、前日の仕込み向き",
+    "kind": "new"
+   }
+  ],
+  "recipe_id": "r-20261117-gyusuji-to-daizu-no-sappari-shio-consomm",
+  "recipe": {
+   "id": "r-20261117-gyusuji-to-daizu-no-sappari-shio-consomm",
+   "title": "牛すじと大豆のさっぱり塩コンソメスープ",
+   "version": 1,
+   "supersedes": null,
+   "status": "draft",
+   "created": "2026-11-17",
+   "request": "req-20261117-2204-dsu6",
+   "generated_by": {
+    "model": "claude-code",
+    "prompt_version": 11
+   },
+   "type": "recipe_detail",
+   "servings": {
+    "adults": 2,
+    "kids": 1
+   },
+   "time": {
+    "budget": 0,
+    "planned": 174,
+    "active": 30,
+    "raw_estimate": 171,
+    "speed_factor": 1.12
+   },
+   "image_text": "透き通った琥珀色のスープに、ぷるんと透明になった牛すじと大豆、細かいオレンジのにんじんが沈む。表面の脂はほとんど無く、酢でさっぱりした香りが立つ。",
+   "dishes": [
+    {
+     "name": "牛すじと大豆のさっぱり塩コンソメスープ",
+     "role": "main"
+    }
+   ],
+   "equipment": [
+    "pot20",
+    "gas-l",
+    "kettle",
+    "bowl-m"
+   ],
+   "ingredients": [
+    {
+     "name": "牛すじ",
+     "qty": 300,
+     "unit": "g",
+     "grams": 300,
+     "pantry": "牛すじ",
+     "for": "牛すじと大豆のさっぱり塩コンソメスープ",
+     "substitute": null,
+     "use_up": true
+    },
+    {
+     "name": "大豆水煮",
+     "qty": 1,
+     "unit": "袋",
+     "grams": 120,
+     "pantry": "大豆水煮",
+     "for": "牛すじと大豆のさっぱり塩コンソメスープ",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "玉ねぎ",
+     "qty": 0.5,
+     "unit": "個",
+     "grams": 100,
+     "pantry": "玉ねぎ",
+     "for": "牛すじと大豆のさっぱり塩コンソメスープ",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "にんじん",
+     "qty": 0.5,
+     "unit": "本",
+     "grams": 75,
+     "pantry": "にんじん",
+     "for": "牛すじと大豆のさっぱり塩コンソメスープ",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "水",
+     "qty": 1000,
+     "unit": "ml",
+     "grams": 1000,
+     "pantry": null,
+     "for": "牛すじと大豆のさっぱり塩コンソメスープ",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "酒",
+     "qty": 2,
+     "unit": "大さじ",
+     "grams": 30,
+     "pantry": "酒",
+     "for": "牛すじと大豆のさっぱり塩コンソメスープ",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "コンソメ",
+     "qty": 1,
+     "unit": "個",
+     "grams": 5,
+     "pantry": "コンソメ",
+     "for": "牛すじと大豆のさっぱり塩コンソメスープ",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "酢",
+     "qty": 2,
+     "unit": "小さじ",
+     "grams": 10,
+     "pantry": "酢",
+     "for": "牛すじと大豆のさっぱり塩コンソメスープ",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "こしょう",
+     "qty": null,
+     "unit": "少々",
+     "grams": null,
+     "pantry": "こしょう",
+     "for": "牛すじと大豆のさっぱり塩コンソメスープ",
+     "substitute": null,
+     "use_up": false
+    }
+   ],
+   "tags": [
+    "スープ",
+    "鍋ひとつ",
+    "煮込み",
+    "牛すじ",
+    "さっぱり",
+    "チョッパー",
+    "子ども取り分け"
+   ],
+   "salt": {
+    "total_g": 3.1,
+    "adult_per_serving_g": 1.5,
+    "kid_g": 0.1
+   },
+   "kid": {
+    "rule": "separate",
+    "cut": "牛すじは 5mm 以下に刻む（ぷるぷるの部分を中心に、固い筋は大人へ）。大豆はフォークの背で軽くつぶす。玉ねぎ・にんじんはチョッパーで細かいのでそのまま",
+    "note": "コンソメ・酢を入れる前に汁ごと取り分ける。味が薄ければ牛乳 大さじ 1 を足すと甘めになって食べやすい。冷ましてから出す"
+   },
+   "keep": {
+    "fridge_days": 2,
+    "freezer": true,
+    "reheat": "鍋で湯気が立つまで温め直す（レンジなら 600W で 1 人分 2 分、途中で混ぜる）。冷やすと脂が白く固まるので、温める前に取り除くとさらにさっぱり"
+   },
+   "timeline": [
+    {
+     "minute": 0,
+     "lane": "hands",
+     "text": "電気ケトルで湯 1L を沸かす。牛すじを洗う"
+    },
+    {
+     "minute": 5,
+     "lane": "gas-l",
+     "text": "鍋に湯と牛すじ、中火で下茹で 10 分"
+    },
+    {
+     "minute": 5,
+     "lane": "hands",
+     "text": "電気ケトルでもう一度湯 1L を沸かす"
+    },
+    {
+     "minute": 15,
+     "lane": "hands",
+     "text": "ザルにあけて洗い、3cm に切る。鍋を洗う"
+    },
+    {
+     "minute": 22,
+     "lane": "gas-l",
+     "text": "牛すじ・湯 1000ml・酒を入れて強火で煮立てる"
+    },
+    {
+     "minute": 25,
+     "lane": "gas-l",
+     "text": "弱火で 2 時間煮る（30 分ごとにアクと脂をすくう）"
+    },
+    {
+     "minute": 30,
+     "lane": "hands",
+     "text": "チョッパーで玉ねぎ・にんじんを細かく刻む。大豆の水けを切る"
+    },
+    {
+     "minute": 142,
+     "lane": "gas-l",
+     "text": "大豆・玉ねぎ・にんじんを入れて弱火 20 分"
+    },
+    {
+     "minute": 162,
+     "lane": "hands",
+     "text": "子どもの分を取り分けて刻む"
+    },
+    {
+     "minute": 164,
+     "lane": "gas-l",
+     "text": "コンソメ・酢・こしょうで味を調える"
+    },
+    {
+     "minute": 167,
+     "lane": "hands",
+     "text": "盛り付け・配膳"
+    },
+    {
+     "minute": 171,
+     "lane": "hands",
+     "text": "完成"
+    }
+   ],
+   "steps": [
+    {
+     "dish": "牛すじと大豆のさっぱり塩コンソメスープ",
+     "n": 1,
+     "title": "湯を沸かし、牛すじを洗う",
+     "kind": "prep",
+     "tag": "cut",
+     "minutes": 5,
+     "start": 0,
+     "heat": null,
+     "text": "電気ケトルで湯 1L を沸かす。その間に牛すじ 300g を流水でさっと洗い、こぶし大より大きい塊は包丁で半分に切る。",
+     "cue": "表面の血やぬめりが流れ、水が澄んでくる",
+     "caution": null,
+     "timer": null,
+     "kid": null,
+     "ingredients": [
+      "牛すじ"
+     ]
+    },
+    {
+     "dish": "牛すじと大豆のさっぱり塩コンソメスープ",
+     "n": 2,
+     "title": "下茹でする",
+     "kind": "wait",
+     "tag": "boil",
+     "minutes": 10,
+     "start": 5,
+     "heat": {
+      "equipment": "gas-l",
+      "level": "中火"
+     },
+     "text": "鍋（pot20）にケトルの湯を入れて牛すじを入れ、強火で再び沸いたら中火にして 10 分茹でる。その間に電気ケトルでもう一度湯 1L を沸かしておく。",
+     "cue": "灰色のアクが表面に厚く浮き、牛すじの色が白っぽく変わる",
+     "caution": "下茹での湯は臭みと脂が多いので使わない（必ず捨てる）",
+     "timer": 600,
+     "kid": null,
+     "ingredients": [
+      "牛すじ"
+     ]
+    },
+    {
+     "dish": "牛すじと大豆のさっぱり塩コンソメスープ",
+     "n": 3,
+     "title": "洗って切る",
+     "kind": "prep",
+     "tag": "cut",
+     "minutes": 7,
+     "start": 15,
+     "heat": null,
+     "text": "ザルにあけ、流水で牛すじについたアクと脂を洗い落とす。粗熱が取れたら 3cm に切る。鍋も一度洗ってアクを落とす。",
+     "cue": "牛すじの表面がつるっとして、白い脂のかたまりが付いていない",
+     "caution": "熱いので、トングか菜箸で押さえて切る",
+     "timer": null,
+     "kid": null,
+     "ingredients": [
+      "牛すじ"
+     ]
+    },
+    {
+     "dish": "牛すじと大豆のさっぱり塩コンソメスープ",
+     "n": 4,
+     "title": "本煮を始める",
+     "kind": "heat",
+     "tag": "boil",
+     "minutes": 3,
+     "start": 22,
+     "heat": {
+      "equipment": "gas-l",
+      "level": "強火"
+     },
+     "text": "洗った鍋に牛すじ、ケトルで沸かした湯 1000ml（水）、酒 大さじ 2 を入れ、強火で煮立てる。浮いたアクをお玉ですくう。",
+     "cue": "ぐらっと沸き、灰色の泡が中央に集まる",
+     "caution": null,
+     "timer": null,
+     "kid": null,
+     "ingredients": [
+      "牛すじ",
+      "水",
+      "酒"
+     ]
+    },
+    {
+     "dish": "牛すじと大豆のさっぱり塩コンソメスープ",
+     "n": 5,
+     "title": "弱火で 2 時間煮る",
+     "kind": "wait",
+     "tag": "simmer",
+     "minutes": 117,
+     "start": 25,
+     "heat": {
+      "equipment": "gas-l",
+      "level": "弱火"
+     },
+     "text": "弱火にして蓋を少しずらし、表面がふつふつ揺れる程度で 1 時間 57 分煮る。30 分ごとにお玉で浮いた脂とアクをすくう。湯が減って牛すじが出たら、ケトルの湯を足してかぶるくらいに保つ。",
+     "cue": "牛すじが半透明でぷるんとし、竹串（菜箸）がすっと通る。スープが澄んでいる",
+     "caution": "ぐらぐら煮立てると脂がスープに混ざって濁り、さっぱりしなくなる。弱火を保つ",
+     "timer": 7020,
+     "kid": null,
+     "ingredients": []
+    },
+    {
+     "dish": "牛すじと大豆のさっぱり塩コンソメスープ",
+     "n": 6,
+     "title": "野菜を刻む",
+     "kind": "prep",
+     "tag": "cut",
+     "minutes": 6,
+     "start": 30,
+     "heat": null,
+     "text": "煮ている間に、玉ねぎ 1/2 個とにんじん 1/2 本をざく切りにして、ぶんぶんチョッパーで 5mm くらいに細かく刻む。大豆水煮 1 袋はザルで水けを切る。",
+     "cue": "玉ねぎ・にんじんが米粒〜5mm の大きさにそろう",
+     "caution": null,
+     "timer": null,
+     "kid": "チョッパーで細かくしておくと、子どもの分もそのまま食べられる",
+     "ingredients": [
+      "玉ねぎ",
+      "にんじん",
+      "大豆水煮"
+     ]
+    },
+    {
+     "dish": "牛すじと大豆のさっぱり塩コンソメスープ",
+     "n": 7,
+     "title": "大豆と野菜を煮る",
+     "kind": "wait",
+     "tag": "simmer",
+     "minutes": 20,
+     "start": 142,
+     "heat": {
+      "equipment": "gas-l",
+      "level": "弱火"
+     },
+     "text": "大豆水煮・玉ねぎ・にんじんを鍋に入れ、中火で一度煮立ててから弱火で 20 分煮る。最後にもう一度表面の脂をすくう。",
+     "cue": "にんじんが指でつぶせるほど柔らかく、玉ねぎが透き通って甘い匂いがする",
+     "caution": null,
+     "timer": 1200,
+     "kid": "にんじん・玉ねぎが柔らかくなっているか、一粒つぶして確かめる",
+     "ingredients": [
+      "大豆水煮",
+      "玉ねぎ",
+      "にんじん"
+     ]
+    },
+    {
+     "dish": "牛すじと大豆のさっぱり塩コンソメスープ",
+     "n": 8,
+     "title": "子どもの分を取り分ける",
+     "kind": "prep",
+     "tag": "kid",
+     "minutes": 2,
+     "start": 162,
+     "heat": null,
+     "text": "味付けの前に、子どもの分を汁ごと器に取り分ける。牛すじはキッチンばさみか包丁で 5mm 以下に刻み、大豆はフォークの背でつぶす。",
+     "cue": "牛すじが細かくなり、大豆の皮が割れている",
+     "caution": null,
+     "timer": null,
+     "kid": "固い筋は大人の鍋に戻し、ぷるぷるの部分だけ 5mm 以下に。冷ましてから出す",
+     "ingredients": []
+    },
+    {
+     "dish": "牛すじと大豆のさっぱり塩コンソメスープ",
+     "n": 9,
+     "title": "味を調える",
+     "kind": "heat",
+     "tag": "season",
+     "minutes": 3,
+     "start": 164,
+     "heat": {
+      "equipment": "gas-l",
+      "level": "弱火"
+     },
+     "text": "コンソメ 1 個を入れて溶かし、1 分煮る。火を止める直前に酢 小さじ 2 を回し入れ、こしょう 少々をふる。",
+     "cue": "コンソメが溶けきり、酢のつんとした匂いが飛んでやわらかい香りになる",
+     "caution": "酢は最後に入れる。長く煮ると酸味が飛んでさっぱり感が消える",
+     "timer": null,
+     "kid": null,
+     "ingredients": [
+      "コンソメ",
+      "酢",
+      "こしょう"
+     ]
+    },
+    {
+     "dish": "牛すじと大豆のさっぱり塩コンソメスープ",
+     "n": 10,
+     "title": "盛り付ける",
+     "kind": "serve",
+     "tag": "serve",
+     "minutes": 4,
+     "start": 167,
+     "heat": null,
+     "text": "大人の分を深めの器に盛り、牛すじと大豆が均等に入るようにお玉で底からすくう。",
+     "cue": "湯気が立ち、表面に脂の輪がほとんど無い",
+     "caution": null,
+     "timer": null,
+     "kid": "子どもの分は手で触って熱くないか確かめてから出す",
+     "ingredients": []
+    }
+   ],
+   "cleanup": {
+    "dishwasher": [
+     "bowl-m"
+    ],
+    "hand": [
+     "pot20"
+    ],
+    "note": "ぶんぶんチョッパー・ザル・お玉・包丁・まな板は手洗い。鍋の縁に付いた脂は熱いうちにキッチンペーパーで拭いてから洗うと落ちやすい。2 時間煮ている間に片付けを先に進める"
+   },
+   "photo": null,
+   "stats": {
+    "cooked": 0,
+    "r_avg": null,
+    "f_avg": null,
+    "last": null
+   },
+   "detail": "full",
+   "memo": []
+  },
+  "side_recipe_ids": [],
+  "side_recipes": [],
+  "model": "claude-code",
+  "prompt_version": 11,
+  "tokens": {
+   "input": 0,
+   "output": 0,
+   "cache_read": 0,
+   "cache_write": 0
+  },
+  "cost_usd": 0.0,
+  "seconds": 0
+ },
+ "finished": "2026-11-17T22:06:07+09:00"
 }
