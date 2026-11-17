@@ -17,7 +17,44 @@
  "exclude": [],
  "note": "",
  "mode": "pick",
- "status": "pending",
+ "status": "done",
  "error": null,
- "result": null
+ "result": {
+  "feasible": true,
+  "infeasible_reason": null,
+  "nearest_options": [],
+  "alternatives": [
+   {
+    "title": "豚ひき肉とうずらの卵のチョッパー肉団子ミルクスープ",
+    "minutes": 45,
+    "why": "玉ねぎ・にんじんをチョッパーで刻んだ肉団子と調理済みうずらを牛乳スープで煮て翌日は温めるだけ。子どもはうずらを 4 等分",
+    "kind": "new"
+   },
+   {
+    "title": "牛すじとうずらの卵の和風おでん風だしスープ",
+    "minutes": 150,
+    "why": "牛すじを鍋でじっくり下ゆでしてだしで煮込み、うずらと大根なしでも玉ねぎ・にんじんで甘みを出す仕込み向けの汁物",
+    "kind": "new"
+   },
+   {
+    "title": "うずらの卵入り にんじんと玉ねぎのミルクポタージュ（ミキサー）",
+    "minutes": 35,
+    "why": "にんじん・玉ねぎを柔らかく炒め煮して牛乳とミキサーにかけ、刻んだうずらを浮かべる。甘めのミルク味で子どもも食べやすい",
+    "kind": "new"
+   }
+  ],
+  "recipe_id": null,
+  "recipe": null,
+  "model": "claude-code",
+  "prompt_version": 11,
+  "tokens": {
+   "input": 0,
+   "output": 0,
+   "cache_read": 0,
+   "cache_write": 0
+  },
+  "cost_usd": 0.0,
+  "seconds": 0
+ },
+ "finished": "2026-11-17T22:49:53+09:00"
 }
