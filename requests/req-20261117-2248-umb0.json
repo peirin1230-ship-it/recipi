@@ -1,0 +1,23 @@
+{
+ "id": "req-20261117-2248-umb0",
+ "ts": "2026-11-17T22:48:56+09:00",
+ "type": "prep",
+ "time_budget": 0,
+ "servings": {
+  "adults": 2,
+  "kids": 1
+ },
+ "dishes": "main",
+ "mood": [
+  "スープ"
+ ],
+ "use_up": [
+  "調理済みうずら"
+ ],
+ "exclude": [],
+ "note": "",
+ "mode": "pick",
+ "status": "pending",
+ "error": null,
+ "result": null
+}
