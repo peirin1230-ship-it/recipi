@@ -49,12 +49,7 @@ async function setup(browser, viewport) {
     for (const h of ['今夜', 'レシピ', '記録', '在庫', '道具', '図鑑', 'レシピ一覧', '今週']) assert(heads.includes(h), `card heading present: ${h}`);
     assert(await page.$eval('#recipe .rc-title', e => e.textContent.includes('鶏もも肉の照り焼き')), 'sample recipe title rendered');
     assert(await page.$$eval('#recipe .memo li', li => li.length === 1 && li[0].textContent.includes('2026-10-06') && !!li[0].querySelector('input[data-act="late-photo"][data-log="abcabcabcabc"]')), 'memo line from the log without a photo offers 写真を足す');
-    const laneCols = await page.$$eval('#recipe table.tl thead th', ths => ths.length - 1);
-    assert(laneCols === 3, `段取り表 has 3 lane columns (got ${laneCols})`);
-    const laneLabels = await page.$$eval('#recipe table.tl thead th', ths => ths.map(t => t.textContent));
-    assert(laneLabels.join('|') === '分|ガスコンロ右|レンジ|手', `lane labels in equipment order: ${laneLabels.join('|')}`);
-    const tlRows = await page.$$eval('#recipe table.tl tbody tr', r => r.length);
-    assert(tlRows === 11, `段取り表 rows = 11 (got ${tlRows})`);
+    assert(await page.$('#recipe table.tl') === null && !(await page.$eval('#recipe', e => e.textContent.includes('段取り表'))), 'recipe card has no 段取り表 (not needed; steps are enough)');
     const steps = await page.$$eval('#recipe .step', s => s.length);
     assert(steps === 7, `7 steps rendered (got ${steps})`);
     assert(await page.$$eval('#recipe .step .heat', e => e.length) === 2, 'heat labels on 2 steps');
@@ -89,7 +84,7 @@ async function setup(browser, viewport) {
     assert(await page.$eval('#cook', e => !e.hidden), 'cook mode overlay opens');
     const timers = await page.$$eval('#cook .timer-btn', t => t.length);
     assert(timers === 7 && await page.$eval('#cook .ck-step .timer-btn', b => b.dataset.sec === '180'), `every cook step has a timer button, minutes×60 when no timer (got ${timers})`);
-    assert(await page.$$eval('#cook .ck-step', s => s.length) === 7 && await page.$$eval('#cook .ck-tl', s => s.length) === 11, 'cook mode shows 7 steps and 11 timeline rows');
+    assert(await page.$$eval('#cook .ck-step', s => s.length) === 7 && await page.$$eval('#cook .ck-tl', s => s.length) === 0 && !(await page.$eval('#cook', e => e.textContent.includes('段取り'))), 'cook mode shows 7 steps and no timeline');
     assert(await page.$eval('#cook .ck-step .ing', e => e.textContent.includes('片栗粉') && /小さじ 1/.test(e.textContent)) && await page.$eval('#recipe .step .ing', e => e.textContent.includes('片栗粉')), 'step shows its ingredients with amounts (matched from the step text for recipes without steps[].ingredients)');
     assert(await page.$$eval('#cook .ck-ing li', l => l.length) === 12 && await page.$eval('#cook .ck-ing', e => e.open && e.textContent.includes('鶏もも肉') && /300 g/.test(e.textContent)), 'cook mode lists all 12 ingredients with quantities (open by default)');
     await page.click('#cook .timer-btn');
@@ -130,7 +125,6 @@ async function setup(browser, viewport) {
     await page.click('#list .lrow [data-act="open-recipe"]'); await page.waitForFunction(() => document.querySelector('#recipe .rc-title'));
     const sw = await page.evaluate(() => document.documentElement.scrollWidth);
     assert(sw <= 375, `no horizontal page scroll at 375px (scrollWidth=${sw})`);
-    assert(await page.$eval('#recipe table.tl', e => e.closest('.tbl-wrap').scrollWidth >= e.closest('.tbl-wrap').clientWidth), '段取り表 scrolls inside its wrapper');
     const nav = await page.$eval('#nav', e => getComputedStyle(e).position);
     assert(nav === 'sticky', 'nav bar is sticky');
     await page.screenshot({ path: `${SHOTS}/top-375.png` });
@@ -312,7 +306,7 @@ async function setup(browser, viewport) {
     await page.click('[data-act="pending-cancel"]');
     await page.click('#o-budget .chip[data-v="30"]');
     assert(await page.$eval('#o-budget .chip[data-v="0"]', c => !c.classList.contains('is-on')) && await page.evaluate(() => { const o = JSON.parse(localStorage.getItem('recipi.order')); return o.time_budget === 0; }), 'picking a minutes chip again turns 無制限 off (stored order still 0 until next submit)');
-    // まとめて調理: 一覧で 2 品を選んで開く → 段取りは 1 つの表、手順は 2 本ぶん、開始のずらし → できた → 記録が 1 本ずつ続く
+    // まとめて調理: 一覧で 2 品を選んで開く → 手順は 2 本ぶんを始める順に、開始のずらし → できた → 記録が 1 本ずつ続く
     await page.evaluate(() => { const o = JSON.parse(localStorage.getItem('recipi.list') || '{}'); o.del = []; localStorage.setItem('recipi.list', JSON.stringify(o)); });
     await page.reload({ waitUntil: 'networkidle' }); await page.waitForFunction(() => document.querySelector('#week .stat'));
     assert(await page.$$eval('#list .lrow', r => r.length) === 2, 'two recipes in the list for the multi-cook test');
@@ -320,7 +314,7 @@ async function setup(browser, viewport) {
     assert(await page.$eval('#list .pickbar', e => e.textContent.includes('2 品')), 'pick bar shows 2 selected');
     await page.evaluate(() => { const ids = [...document.querySelectorAll('#list .lrow [data-act="cook-pick"].is-on')].map(b => b.dataset.id); localStorage.setItem('recipi.cook.' + ids.join('+'), JSON.stringify({ start: Date.now() - 60 * 60000, done: {}, tl: {}, timers: {} })); });   // 1 時間かけて作った
     await page.click('[data-act="cook-picked"]'); await page.waitForFunction(() => !document.querySelector('#cook').hidden);
-    assert(await page.$$eval('#cook .ck-tl', s => s.length) === 12 && await page.$$eval('#cook .ck-step', s => s.length) === 8 && await page.$$eval('#cook .ck-set-row', s => s.length) === 2, 'merged cook mode: 12 timeline rows, 8 steps, 2 recipes with start offsets');
+    assert(await page.$$eval('#cook .ck-tl', s => s.length) === 0 && await page.$$eval('#cook .ck-step', s => s.length) === 8 && await page.$$eval('#cook .ck-set-row', s => s.length) === 2, 'merged cook mode: no timeline, 8 steps, 2 recipes with start offsets');
     // 手順は全レシピを始める分の順に 1 列（段取りと同じ時計）。各手順に「N 分〜」とレシピの印
     const stepOrder = () => page.$$eval('#cook .ck-step', els => els.map(e => ({ at: parseInt(e.querySelector('.ck-at b').textContent, 10), rk: e.querySelector('.ck-at .rk').textContent.trim(), key: e.dataset.key })));
     const o1 = await stepOrder();

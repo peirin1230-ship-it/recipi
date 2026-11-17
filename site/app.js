@@ -164,11 +164,6 @@ function photoOf(r) {
   const good = ls.filter(e => (e.finish || 0) >= 4);
   return (good.length ? good : ls).sort((a, b) => logKey(b).localeCompare(logKey(a)))[0].photo;
 }
-function lanesUsed(r) {
-  const ids = new Set((r.timeline || []).map(t => t.lane)); const known = lanes().filter(l => ids.has(l.id));
-  const unknown = [...ids].filter(id => !lanes().some(l => l.id === id)).map(id => ({ id, label: equipLabel(id), kind: 'other' }));
-  return [...known, ...unknown];
-}
 function tipFor(step, di) {
   if (!step || !step.tag) return null; const tips = (state.knowledge.tips || []).filter(t => Array.isArray(t.tags) && t.tags.includes(step.tag));
   return tips.length ? tips[((+step.n || 0) + (di || 0)) % tips.length] : null;
@@ -439,7 +434,6 @@ function recipeBodyHTML(r, req, res) {
   <h3 class="group">材料（大人 ${sv.adults ?? '—'}・子 ${sv.kids ?? '—'}）</h3>
   <div class="tbl-wrap"><table class="tbl ing"><thead><tr><th>材料・用途</th><th>量</th><th>在庫</th></tr></thead><tbody>${(r.ingredients || []).map(i => `<tr><td class="n">${esc(i.name)}${i.use_up ? ' <span class="useup">使い切り</span>' : ''}<span class="sub">${esc(i.for || '')}${i.substitute ? ` ・ 代替: ${esc(i.substitute)}` : ''}</span></td><td class="q">${qtyText(i)}</td><td class="st">${pantryMark(i)}</td></tr>`).join('')}</tbody></table></div>
   ${r.salt ? `<p class="note">塩分: 合計 ${r.salt.total_g}g ・ 大人 1 人分 ${r.salt.adult_per_serving_g}g${r.salt.kid_g != null ? ` ・ 子ども ${r.salt.kid_g}g` : ''}</p>` : ''}
-  <h3 class="group">段取り表（${t.planned ?? '—'} 分）</h3>${timelineHTML(r)}
   <h3 class="group">手順</h3>${stepsHTML(r, view)}`;
   if (r.kid) h += `<h3 class="group">子どもの分</h3><div class="kv"><b>取り分け</b><span>${r.kid.rule === 'separate' ? '味付け前に取り分ける' : r.kid.rule === 'shared' ? '全体を薄味で' : esc(r.kid.rule || '')}</span><b>大きさ</b><span>${esc(r.kid.cut || '')}</span><b>メモ</b><span>${esc(r.kid.note || '')}</span></div>`;
   if (r.keep) h += `<h3 class="group">保存・翌日</h3><div class="kv"><b>冷蔵</b><span>${r.keep.fridge_days ?? '—'} 日 ・ 冷凍 ${r.keep.freezer ? '可' : '不可'}</span><b>温め直し</b><span>${esc(r.keep.reheat || '')}</span></div>`;
@@ -460,12 +454,6 @@ function togetherHTML(r, req) {
   return `<div class="together"><span class="sub">一緒に作る</span>${ids.map(id => { const x = recipeById(id); return x ? `<button type="button" class="chip" data-act="open-recipe" data-id="${esc(id)}">${esc(x.title)}${roleOf(x) ? `<span class="sub">${roleOf(x)}</span>` : ''}</button>` : `<span class="chip">${esc(id)}</span>`; }).join('')}</div>`;
 }
 const altsHTML = (alts, parentId) => `<ul class="alts">${alts.map((a, i) => `<li class="alt"><div class="t">${esc(a.title)} <span class="sub">${a.minutes != null ? `${a.minutes} 分` : ''}${a.kind === 'standard' ? '・定番' : a.kind === 'new' ? '・新しい' : ''}</span><small>${esc(a.why || '')}</small></div><button type="button" class="ghost small" data-act="o-detail" data-parent="${esc(parentId)}" data-alt="${i}">${ic('arrow-r')}詳細に</button></li>`).join('')}</ul>`;
-function timelineHTML(r) {
-  const used = lanesUsed(r); const byMin = new Map();
-  (r.timeline || []).slice().sort((a, b) => a.minute - b.minute).forEach(t => { if (!byMin.has(t.minute)) byMin.set(t.minute, {}); const m = byMin.get(t.minute); m[t.lane] = (m[t.lane] ? m[t.lane] + ' ／ ' : '') + (t.text || ''); });
-  if (!byMin.size) return '<p class="empty">段取り表が無い</p>';
-  return `<div class="tbl-wrap"><table class="tbl tl" style="min-width:${44 + 150 * used.length}px"><thead><tr><th>分</th>${used.map(l => `<th class="lane-${esc(l.kind)}">${esc(l.label)}</th>`).join('')}</tr></thead><tbody>${[...byMin.entries()].map(([m, row]) => `<tr><td class="n">${m}</td>${used.map(l => `<td>${esc(row[l.id] || '')}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
-}
 function dishesOf(r) { const d = []; (r.steps || []).forEach(s => { if (!d.includes(s.dish)) d.push(s.dish); }); return d; }
 function stepsHTML(r, view) {
   const steps = r.steps || []; if (!steps.length) return '<p class="empty">手順が無い</p>';
@@ -539,22 +527,16 @@ function saveCook() { if (cook.recipes.length) lsSet(cookKeyOf(cook.recipes), { 
 function closeCook() { $('#cook').hidden = true; document.body.style.overflow = ''; releaseWake(); clearInterval(cook.tick); cook.tick = 0; }
 function renderCook() {
   const rs = cook.recipes; const multi = rs.length > 1;
-  const lanes = []; rs.forEach(r => lanesUsed(r).forEach(l => { if (!lanes.some(x => x.id === l.id)) lanes.push(l); }));
   const total = Math.max(...rs.map((r, ri) => (cook.offsets[ri] || 0) + plannedOf(r)));
   const mark = ri => multi ? `<span class="rk rk${ri % 4}">${ri + 1}</span>` : '';
   const kOf = ri => cook.scales[ri] || 1;
   const scaleCtl = ri => `<span class="ck-scale"><button type="button" class="tiny-btn" data-act="ck-scale" data-ri="${ri}" data-d="-1" aria-label="分量を減らす">−</button><b class="num">${fmtScale(kOf(ri))}</b><button type="button" class="tiny-btn" data-act="ck-scale" data-ri="${ri}" data-d="1" aria-label="分量を増やす">＋</button></span>`;
   const scaledNote = rs.some((_, ri) => kOf(ri) !== 1) ? '<p class="sub ck-note">材料と工程ごとの量は倍率に合わせて直してある。手順の文の中の量と、加熱・待ちの時間は元のまま（量が多いと火の通りに時間がかかるので、目安で確かめる）</p>' : '';
   let h = multi
-    ? `<h3>まとめて調理 <span class="sub">${rs.length} 品 ・ ${total} 分の段取り</span></h3><div class="ck-set">${rs.map((r, ri) => `<div class="ck-set-row">${mark(ri)}<b>${esc(r.title)}</b><span class="sub">${plannedOf(r)} 分</span><span class="ck-off"><button type="button" class="tiny-btn" data-act="ck-offset" data-ri="${ri}" data-d="-1" aria-label="早く始める">−</button><span class="num">開始 +${cook.offsets[ri] || 0} 分</span><button type="button" class="tiny-btn" data-act="ck-offset" data-ri="${ri}" data-d="1" aria-label="遅く始める">＋</button></span><span class="sub">分量</span>${scaleCtl(ri)}</div>`).join('')}<p class="sub">段取りは全部を 1 つの表にしてある。短い物は遅く始めて同時に仕上げる。ずらす分は ＋/− で直せる</p></div>`
-    : `<h3>${esc(rs[0].title)} <span class="sub">${(rs[0].time || {}).planned ?? '—'} 分の段取り</span></h3><div class="ck-scale-row"><span class="sub">分量</span>${[0.5, 1, 1.5, 2].map(v => chip('ck-scale-set', v, fmtScale(v), kOf(0) === v, ' data-ri="0"')).join('')}${scaleCtl(0)}</div>`;
+    ? `<h3>まとめて調理 <span class="sub">${rs.length} 品 ・ 全体 ${total} 分</span></h3><div class="ck-set">${rs.map((r, ri) => `<div class="ck-set-row">${mark(ri)}<b>${esc(r.title)}</b><span class="sub">${plannedOf(r)} 分</span><span class="ck-off"><button type="button" class="tiny-btn" data-act="ck-offset" data-ri="${ri}" data-d="-1" aria-label="早く始める">−</button><span class="num">開始 +${cook.offsets[ri] || 0} 分</span><button type="button" class="tiny-btn" data-act="ck-offset" data-ri="${ri}" data-d="1" aria-label="遅く始める">＋</button></span><span class="sub">分量</span>${scaleCtl(ri)}</div>`).join('')}<p class="sub">短い物は遅く始めて同時に仕上げる。始める分は ＋/− で直せる（手順の並びも変わる）</p></div>`
+    : `<h3>${esc(rs[0].title)} <span class="sub">${(rs[0].time || {}).planned ?? '—'} 分</span></h3><div class="ck-scale-row"><span class="sub">分量</span>${[0.5, 1, 1.5, 2].map(v => chip('ck-scale-set', v, fmtScale(v), kOf(0) === v, ' data-ri="0"')).join('')}${scaleCtl(0)}</div>`;
   h += scaledNote;
   rs.forEach((r, ri) => { h += cookIngredientsHTML(r, multi ? `${ri + 1}. ${r.title}` : '', kOf(ri)); });
-  // 段取り: 全レシピの行に開始のずらしを足して、分の順に並べる
-  const rows = []; rs.forEach((r, ri) => (r.timeline || []).forEach((t, i) => rows.push({ ...t, ri, i, at: (+t.minute || 0) + (cook.offsets[ri] || 0) })));
-  rows.sort((a, b) => a.at - b.at || a.ri - b.ri);
-  if (rows.length) h += '<h3 class="sec">段取り（分）</h3>' + rows.map(t => { const lane = lanes.find(l => l.id === t.lane) || { label: equipLabel(t.lane), kind: 'other' }; const k = ck(t.ri, 't' + t.i); const on = !!cook.tl[k];
-    return `<div class="ck-tl${on ? ' is-done' : ''}" data-key="${k}"><div class="m">${t.at}</div><div>${mark(t.ri)}<span class="lane ${esc(lane.kind)}">${esc(lane.label)}</span><div>${esc(t.text)}</div></div><button type="button" class="tick-btn${on ? ' is-on' : ''}" data-act="ck-tl" data-key="${k}" aria-label="できた" aria-pressed="${on}">${ic('check')}</button></div>`; }).join('');
   // 手順の 1 枚。キーは前の版と同じ（1 本目は s0、2 本目からは "1:s0"）ので、途中の進み具合・タイマーはそのまま
   const stepCard = (r, ri, s, i, at = null) => { const k = ck(ri, 's' + i); const on = !!cook.done[k]; const sec = +s.timer || Math.round((+s.minutes || 0) * 60);
     return `<div class="ck-step${on ? ' is-done' : ''}" data-key="${k}">${at !== null ? `<div class="ck-at">${mark(ri)}<b class="num">${at} 分〜</b><span class="sub">${esc(dishesOf(r).length > 1 && s.dish ? s.dish : r.title)}</span></div>` : ''}<div class="hd"><button type="button" class="tick-btn big${on ? ' is-on' : ''}" data-act="ck-step" data-key="${k}" aria-label="できた" aria-pressed="${on}">${ic('check')}</button><div class="t">${s.n}. ${esc(s.title)}<small>${s.minutes} 分${s.heat ? ` ・ ${esc(equipLabel(s.heat.equipment))}・${esc(s.heat.level)}` : ''}${s.kind === 'wait' ? ' ・ 触らない' : ''}</small></div></div>
@@ -564,7 +546,7 @@ function renderCook() {
     // まとめて調理: 全部のレシピの手順を、始める分（段取りと同じ時計 + 開始のずらし）の順に 1 列に並べる
     const items = []; rs.forEach((r, ri) => { const st = stepStarts(r); (r.steps || []).forEach((s, i) => items.push({ r, ri, s, i, at: (st[i] || 0) + (cook.offsets[ri] || 0) })); });
     items.sort((a, b) => a.at - b.at || a.ri - b.ri || a.i - b.i);
-    h += '<h3 class="sec">手順（始める順）</h3><p class="sub ck-note">全部のレシピの手順を、段取りと同じ時計で始める順に並べた。番号はレシピの中の番号</p>' + items.map(x => stepCard(x.r, x.ri, x.s, x.i, x.at)).join('');
+    h += '<h3 class="sec">手順（始める順）</h3><p class="sub ck-note">全部のレシピの手順を、始める順に並べた。番号はレシピの中の番号</p>' + items.map(x => stepCard(x.r, x.ri, x.s, x.i, x.at)).join('');
   } else {
     h += '<h3 class="sec">手順</h3>';
     rs.forEach((r, ri) => {
@@ -1261,7 +1243,6 @@ document.addEventListener('click', ev => {
     case 'cook-picked': { const rs = [...state.cookPick].map(recipeById).filter(Boolean); if (!rs.length) break; state.cookPick.clear(); renderList(); decorateCards(); openCook(rs, null); break; }
     case 'cook-pick-clear': state.cookPick.clear(); renderList(); decorateCards(); break;
     case 'cook-finish': finishCook(); break;
-    case 'ck-tl': { const k = b.dataset.key; cook.tl[k] = cook.tl[k] ? 0 : Date.now(); const on = !!cook.tl[k]; b.classList.toggle('is-on', on); b.setAttribute('aria-pressed', on); b.closest('.ck-tl').classList.toggle('is-done', on); saveCook(); break; }
     case 'ck-step': { const k = b.dataset.key; cook.done[k] = cook.done[k] ? 0 : Date.now(); const on = !!cook.done[k]; b.classList.toggle('is-on', on); b.setAttribute('aria-pressed', on); b.closest('.ck-step').classList.toggle('is-done', on); saveCook(); break; }
     case 'ck-timer': toggleTimer(b.dataset.key, +b.dataset.sec); break;
     // 記録
