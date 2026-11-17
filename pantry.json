@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-18T01:29:37+09:00",
+ "updated": "2026-11-18T01:30:12+09:00",
  "items": [
   {
    "id": "p1qnvb",
@@ -65,13 +65,6 @@
    "src": "manual"
   },
   {
-   "id": "pydai1",
-   "name": "牛すじ",
-   "loc": "fridge",
-   "added": "2026-11-15",
-   "src": "manual"
-  },
-  {
    "id": "pdwqjn",
    "name": "豚こま切れ肉",
    "loc": "fridge",
@@ -96,13 +89,6 @@
    "id": "p2a7t6",
    "name": "ほうれん草",
    "loc": "fridge",
-   "added": "2026-11-15",
-   "src": "manual"
-  },
-  {
-   "id": "p98pox",
-   "name": "大豆水煮",
-   "loc": "pantry",
    "added": "2026-11-15",
    "src": "manual"
   }
