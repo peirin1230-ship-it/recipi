@@ -17,7 +17,44 @@
  "exclude": [],
  "note": "全て牛すじで",
  "mode": "pick",
- "status": "pending",
+ "status": "done",
  "error": null,
- "result": null
+ "result": {
+  "feasible": true,
+  "infeasible_reason": null,
+  "nearest_options": [],
+  "alternatives": [
+   {
+    "title": "牛すじとにんじんの南蛮漬け",
+    "minutes": 190,
+    "why": "鍋で下ゆで後に甘酢へ漬け、にんじんはスライサー細切りで翌日は冷たいまま出せるさっぱり仕込み",
+    "kind": "new"
+   },
+   {
+    "title": "牛すじと大豆のさっぱり塩コンソメスープ",
+    "minutes": 180,
+    "why": "鍋ひとつで煮て脂をすくい、酢を少し落として軽く。子どもは汁ごと取り分けやすいスープ",
+    "kind": "new"
+   },
+   {
+    "title": "牛すじとにんじんの炊き込みご飯",
+    "minutes": 200,
+    "why": "前日に下ゆでした牛すじと、チョッパーで米粒大に刻んだにんじんを炊飯器へ。翌日はスイッチを押すだけ",
+    "kind": "new"
+   }
+  ],
+  "recipe_id": null,
+  "recipe": null,
+  "model": "claude-code",
+  "prompt_version": 11,
+  "tokens": {
+   "input": 0,
+   "output": 0,
+   "cache_read": 0,
+   "cache_write": 0
+  },
+  "cost_usd": 0.0,
+  "seconds": 0
+ },
+ "finished": "2026-11-17T22:02:26+09:00"
 }
