@@ -171,7 +171,7 @@ cleanup:
   hand: [pot20]
   note: 鍋は粗熱が取れてから、煮汁をキッチンペーパーで拭いて洗う
 photo: photos/r-20261025-gyusuji-to-jagaimo-no-shio-butter-nikomi/20261025-1.jpg
-stats: {cooked: 1, r_avg: 75, f_avg: 5.0, last: '2026-10-25'}
+stats: {cooked: 1, r_avg: 92, f_avg: 5.0, last: '2026-10-25'}
 detail: full
 together: [r-20261025-seseri-to-eringi-no-grill-shioyaki]
 ---

@@ -213,3 +213,16 @@ def test_step_start_must_fit_the_timeline_and_keep_order():
     assert any("前の手順より早い" in e for e in validate.validate_recipe(r3, ctx()))
     same[0]["start"], same[1]["start"] = 0, 2
     assert not [e for e in validate.validate_recipe(r3, ctx()) if "start" in e]
+
+
+def test_amount_check_catches_a_step_amount_larger_than_the_list():
+    """手順の文の 1 回の量が材料表より多ければ不合格（家の記録「工程と材料が矛盾？」）。分数・長い名前・同じ名前の材料は誤検知しない。"""
+    r = {"ingredients": [{"name": "醤油", "qty": 1, "unit": "大さじ"}, {"name": "白味噌", "qty": 1, "unit": "大さじ"}, {"name": "味噌", "qty": 0.5, "unit": "大さじ"},
+                         {"name": "砂糖", "qty": 0.5, "unit": "小さじ"}, {"name": "砂糖", "qty": 1, "unit": "小さじ"}, {"name": "卵", "qty": 4, "unit": "個"}],
+         "steps": [{"text": "醤油 大さじ 2 を入れる。白味噌 大さじ 1 を溶く。味噌 小さじ 1/2 を足す。砂糖 小さじ 1/2 をすり込む"},
+                   {"text": "砂糖 小さじ 1 を加える。卵 3 個（大人用）と卵 1 個（子ども用）を割る。溶き卵 3 個の 2/3 を回し入れる"}]}
+    errs = validate.amount_errors(r)
+    assert len(errs) == 1 and "醤油" in errs[0]
+    ok = load_fixture()
+    assert validate.amount_errors(ok) == []
+    assert any("醤油" in e for e in validate.validate_recipe(r | {k: v for k, v in ok.items() if k not in ("ingredients", "steps")} | {"steps": [dict(ok["steps"][0], text="醤油 大さじ 9 を入れる")] + ok["steps"][1:], "ingredients": ok["ingredients"]}, ctx(amount_check=True)))

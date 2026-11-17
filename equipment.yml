@@ -27,7 +27,7 @@ appliances:
   - { id: grill, type: fish_grill, label: 魚焼きグリル, note: "焼き魚、鶏の皮目をパリッと、油揚げ・ししとう。両面焼きなら返さない。予熱 2 分。使った日は受け皿を洗う（kaji-quest のメニュー）" }
 
 cookware:
-  - { id: fp26, type: frying_pan, label: フライパン, size_cm: 26, lid: true, material: fluoro, dishwasher: false, note: "大きさは推定" }
+  - { id: fp26, type: frying_pan, label: フライパン, size_cm: 26, lid: true, material: fluoro, dishwasher: false, note: "大きさは推定。蒸し器は無いので蒸し物はこれで。蓋が閉まる高さの器（深さ 5〜6cm まで）だけ。ボウルは高すぎて蓋が閉まらない（茶碗蒸しで失敗した）" }
   - { id: pot20, type: pot, label: 鍋, size_cm: 20, liters: 3.0, lid: true, dishwasher: false, note: "大きさは推定" }
   - { id: bowl-l, type: bowl, label: ボウル（大）, note: "耐熱ならレンジ可", dishwasher: true }
   - { id: bowl-m, type: bowl, label: ボウル（中）, note: "耐熱ならレンジ可", dishwasher: true }

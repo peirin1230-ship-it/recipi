@@ -159,7 +159,7 @@ cleanup:
   hand: [pot20, blender]
   note: ミキサーは使ったらすぐ水を入れて回すと洗いやすい。低温調理器は湯が冷めてから外して拭く。
 photo: photos/r-20261026-kabocha-no-teiondyouri-potage-shirasu-zo/20261026-1.jpg
-stats: {cooked: 1, r_avg: 93, f_avg: 5.0, last: '2026-10-26'}
+stats: {cooked: 1, r_avg: 94, f_avg: 5.0, last: '2026-10-26'}
 detail: full
 together: [r-20261026-renkon-to-uzura-no-tamago-no-butter-shio]
 ---

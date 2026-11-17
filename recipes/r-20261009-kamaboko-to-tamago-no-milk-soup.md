@@ -102,7 +102,7 @@ cleanup:
   hand: [pot20]
   note: 鍋は牛乳の膜がつくので、使い終わったら先に水に浸けておく
 photo: photos/r-20261009-kamaboko-to-tamago-no-milk-soup/20261019-1.jpg
-stats: {cooked: 3, r_avg: 70, f_avg: 4.8, last: '2026-11-08'}
+stats: {cooked: 3, r_avg: 77, f_avg: 4.8, last: '2026-11-08'}
 detail: full
 ---
 

@@ -9,6 +9,7 @@ const PNG = Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAEklEQVR
 (async () => {
   const browser = await chromium.launch();
   const ctx = await browser.newContext({ viewport: { width: 375, height: 812 }, locale: 'ja-JP', timezoneId: 'Asia/Tokyo' });
+  await ctx.clock.install({ time: new Date('2026-10-26T12:00:00+09:00') });   // テストの記録（10 月上旬）が「30 日以内」に入る日に時計を合わせる（時計はそこから進む）
   await ctx.addInitScript(() => { try { localStorage.setItem('recipi.token', 'github_pat_test'); } catch {} });
   const page = await ctx.newPage(); const errors = []; const puts = []; const store = {};
   page.on('console', m => { if (m.type() === 'error' && !/Failed to load resource: .* 404/.test(m.text())) errors.push(m.text()); });
@@ -141,7 +142,7 @@ const PNG = Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAEklEQVR
   await page.waitForFunction(() => document.querySelector('#toast') && document.querySelector('#toast').textContent.includes('記録した')); await page.waitForTimeout(300);
   assert(await page.$eval('#toast', e => e.textContent.includes('kaji-quest に「昼ごはんを作る」')), 'toast names the kaji-quest task');
   { const kp = puts.slice(b6).filter(p => p.url.includes('/kaji-quest/contents/logs/2026/10.jsonl')); const kl = kp.length && JSON.parse(unb64(kp[0].body.content).trim().split('\n').pop());
-    assert(kp.length === 1 && kl.task_id === 'lunch-cook' && kl.title === '昼ごはんを作る' && kl.slot === 'noon' && kl.area === 'cooking' && kl.date === '2026-10-13' && kl.ts.startsWith('2026-10-13T12:30') && kl.actual_minutes === 10 && kl.weight === 1.25 && kl.weighted_minutes === 12.5 && kp[0].body.message.includes('昼ごはんを作る'), `kaji-quest line is lunch by the finish time: ${JSON.stringify(kl)}`); }
+    assert(kp.length === 1 && kl.task_id === 'lunch-cook' && kl.title === '昼ごはんを作る' && kl.slot === 'noon' && kl.area === 'cooking' && kl.date === '2026-10-13' && kl.ts.startsWith('2026-10-13T12:30') && kl.actual_minutes === 4 && kl.elapsed_minutes === 10 && kl.weight === 1.25 && kl.weighted_minutes === 5 && kp[0].body.message.includes('昼ごはんを作る'), `kaji-quest line is lunch by the finish time, with hands-on minutes (4 of 10; the wait is not a chore): ${JSON.stringify(kl)}`); }
   const lp6 = puts.slice(b6).find(p => p.path === 'logs/2026/10.jsonl' && !p.url.includes('/kaji-quest/')); const last6 = lp6 && JSON.parse(unb64(lp6.body.content).trim().split('\n').pop());
   assert(last6 && last6.scale === 2, `record keeps the scale (×2): ${last6 && last6.scale}`);
   assert(last6 && last6.recipe_id === 'r-20261009-test' && last6.request_id && last6.step_minutes && last6.step_minutes.prep === 4 && last6.step_minutes.wait === 4 && Object.keys(last6.step_minutes).length === 2, `step_minutes per kind from check timestamps: ${last6 && JSON.stringify(last6.step_minutes)} request_id=${last6 && last6.request_id}`);

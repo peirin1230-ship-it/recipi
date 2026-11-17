@@ -396,6 +396,7 @@ detail: full                           # full / compact（定番になると com
 | 項目 | 値 | 入力 |
 |------|----|------|
 | `scale` | 調理モードで分量の倍率を変えたとき（×1 以外）の倍率。夜間の学習は、この回を速度係数に使わない | 自動 |
+| `session` | まとめて調理の記録: `{id, n, total, main}`。`total` は全体の分、`actual_minutes` はそのうちこの料理の分（見込みの長さの割合で分ける。前は全部の料理に全体の分が入っていた）。`main` はいちばん長い料理。夜間の学習は速度係数を 1 回分（main）だけで数える | 自動 |
 | `title` | 記録したときのレシピの料理名。レシピを削除しても記録には名前が残る（ページは「削除済み」を付けて出す） | 自動 |
 | `planned_minutes` / `actual_minutes` | レシピの見込み／調理モードの開始〜「できた」の実測。手で直せる | 自動 |
 | `fidelity` | `exact`（そのまま）/ `minor`（少し変えた）/ `major`（かなり変えた） | 1 タップ |
@@ -522,6 +523,8 @@ Generator は JSON（structured output。`output_config.format` で JSON スキ�
 | 待ち時間 | 「触らない」「放っておく」と明記し、その間にやる他の工程を書く |
 | 失敗しやすい点 | 工程ごとに最大 1 つ。学習済みの器具の癖（`equipment_notes`）を優先して使う |
 | ぱさつきやすい食材 | 鶏むね・ささみ・豚ヒレ・たらを使うなら、低温調理器を使うか、柔らかくする手当て（ブライン・片栗粉・そぎ切り・余熱・蒸し焼きなど。`knowledge/basics/08_tender.md`）が手順に無いと不合格。低温調理器は仕込み（`prep`）や時間無制限のとき本命にする |
+| 手順の量と材料表 | 手順の文に「醤油 大さじ 2」のように書いた 1 回の量が、材料表の量（同じ名前は足す）より多いと不合格（生成と改訂のとき。家の記録「工程と材料が矛盾？」から）。分けて使う量の合計は数えない |
+| 失敗しやすい工程 | 包む・返す・蒸す（フライパン蒸しは蓋が閉まる高さの器）・豆腐・水溶き片栗粉・内臓肉は `knowledge/basics/09_technique.md` のコツを工程に書く（家の記録で難しかった工程） |
 | 道具を活かす | ぶんぶんチョッパー・スライサー・魚焼きグリル・トースター・ミキサー・炊飯器・電気ケトル・レンジ・低温調理器を、速く・楽に・うまくなる工程で使う（指示。無理には使わない） |
 | 1 品 | 1 レシピ 1 品。`dishes` は 1 つ、`title` は料理名 1 つ。副菜・汁物は `side_recipes` に別のレシピとして返し、スクリプトが別ファイルに書いて `together`（一緒に作るレシピの id）でつなぐ。注文の `dishes`（main / main+side / main+side+soup / onepot）はレシピの本数を決める。生成時の検査で 2 品以上は不合格（古いレシピは対象外） |
 | 工程の材料 | 各工程に `ingredients`（その工程で使う材料の `name`）。ページと Markdown は材料表から量を引いて「材料: 醤油 大さじ 1・…」と添える。材料表に無い名前、どの工程にも出てこない量のある材料は不合格。古いレシピ（`ingredients` 無し）はページが手順の文から材料名を拾う |
@@ -703,6 +706,8 @@ F = その回に食べた人の評価の平均
 レシピごとに直近 5 回の平均 `f_avg`。**個人別の集計は持たない。** 画面に出すのは F だけ。`partner` と `kid` の好みは §9.4 で「要素」に変換され、人の点数としては残らない。
 
 ### 9.4 夜間ジョブ（nightly-learn）の規則
+
+- まとめて調理の記録は、速度係数に 1 回分（`session.main`）だけ数える。分量の倍率を変えた回（`scale`）は数えない。英語で付いたタグ（milk・egg・quick …）は日本語にそろえて好き嫌いを数える。ページの注文が 2 日たっても処理されなければ `error` にする。
 
 毎晩 03:30 JST。新しいログがある日だけ動く。**統計は Python の決定的な計算、言葉の抽出だけ Generator** に任せる。
 
@@ -894,7 +899,7 @@ kaji-quest §8.4 と同じ。UTC 表記、数十分の遅延あり、長期間�
 |------|------|------|------|
 | kaji-quest → recipi | 買い物の記録（`mode: shop` の `items`）を在庫に取り込む | ページを開いたとき、または「取り込む」で kaji-quest の `logs/` を読む（公開リポジトリなので `raw.githubusercontent.com` から取得。未取込の行だけ `src: kaji-quest` で追加） | `kaji_quest.import_shopping: true` |
 | recipi → kaji-quest | 在庫に無くてレシピに要る物、`staples` の `none` を買い物メモに足す | kaji-quest の `shopping.json` に Contents API で追記（PAT の Repository access に両方を選ぶ） | `kaji_quest.push_shopping: true` |
-| recipi → kaji-quest | 調理の記録を kaji-quest の「朝ごはんを作る」（`breakfast-cook`）・「昼ごはんを作る」（`lunch-cook`。kaji-quest のルーチンには無いが、記録には料理・昼として出る）・「夜ご飯を作る」（`dinner-cook`）の完了としても書く。どれにするかは**調理が完成した時刻**（調理モードの「できた！」。調理モードを通らずに記録したときは記録した時刻）で決める。時間帯は kaji-quest と同じ（朝 4〜11 時・昼 11〜17 時・夜 17〜翌 4 時）。まとめて調理は 1 回分として 1 行だけ書く。記録画面に「kaji-quest には『…』で記録する」と出る | kaji-quest の `logs/` に 1 行追記（`date`・`ts` は完成した時刻、`slot` は morning / noon / night、`actual_minutes` は recipi の実測、`weight` は `kaji_quest.cook_tasks`、`learned` は気づき） | `kaji_quest.write_cook_log: false` で止める。タスクの id・名前・重みは `kaji_quest.cook_tasks` |
+| recipi → kaji-quest | 調理の記録を kaji-quest の「朝ごはんを作る」（`breakfast-cook`）・「昼ごはんを作る」（`lunch-cook`）・「夜ご飯を作る」（`dinner-cook`）の完了としても書く。どれにするかは**調理が完成した時刻**で決める（朝 4〜11 時・昼 11〜17 時・夜 17〜翌 4 時）。**仕込みのレシピ**（注文の種類が仕込み、または「仕込み」のタグ・料理名）は時刻に関係なく「翌日分の仕込み」（`cooking-prep`）。時間は**手を動かした分**（工程のチェック時刻から下ごしらえ・加熱・盛り付けを足す。チェックが無ければ待ちの見込みを引く。低温調理・炊飯の放置は家事に数えない）。まとめて調理は 1 回分として 1 行。**献立の注文を出したら「翌日の献立を決める」（`menu-decide`、5 分）も 1 日 1 回書く**（その日の記録があれば書かない） | kaji-quest の `logs/` に追記（`actual_minutes` は手を動かした分、`elapsed_minutes` は全体の分、`slot` は morning / noon / night） | `kaji_quest.write_cook_log` / `write_menu_log` / `cook_tasks`（`prep` を含む） |
 | kaji-quest → recipi | 「翌日の献立を決める」「夜ご飯を作る」の詳細に recipi のページへのリンク | kaji-quest の `routines/daily.yml` の `checklist` に URL を書く | kaji-quest 側 |
 
 XP・バッジ・ストリークは recipi に持たない。料理の継続は kaji-quest が数える。recipi が持つのは**料理の中身の記録**だけ。

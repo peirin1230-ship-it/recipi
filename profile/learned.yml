@@ -1,33 +1,34 @@
 # profile/learned.yml — nightly-learn（scripts/learn.py）が logs/ から生成する。手で直さない（直すなら profile/overrides.yml）。
-updated: '2026-11-16'
+updated: '2026-11-17'
 window_days: 90
 n_logs: 32
 last_log_id: zl5rxbpt63ib
-speed_factor: {overall: 1.45, prep: 1.67, heat: 0.7, serve: 1.05}
+speed_factor: {overall: 1.12, prep: 1.22, heat: 0.92, serve: 0.86}
 likes:
-- {key: milk, score: 0.84, n: 3}
-- {key: pot-one, score: 0.83, n: 4}
+- {key: 鍋ひとつ, score: 0.73, n: 5}
 - {key: しらす, score: 0.71, n: 3}
 - {key: 牛乳, score: 0.7, n: 6}
 - {key: チョッパー, score: 0.69, n: 5}
-- {key: soup, score: 0.64, n: 5}
 - {key: 炊飯器, score: 0.62, n: 4}
-- {key: egg, score: 0.56, n: 5}
+- {key: スープ, score: 0.56, n: 6}
 - {key: 卵, score: 0.5, n: 7}
 - {key: 炊き込みご飯, score: 0.5, n: 4}
 - {key: 米, score: 0.47, n: 5}
 - {key: かぼちゃ, score: 0.44, n: 6}
 - {key: 低温調理, score: 0.43, n: 4}
-- {key: 子ども取り分け, score: 0.35, n: 16}
-- {key: quick, score: 0.33, n: 6}
+- {key: 時短, score: 0.33, n: 6}
+- {key: にんじん, score: 0.33, n: 4}
+- {key: 子ども取り分け, score: 0.29, n: 17}
 dislikes:
+- {key: 煮物, score: -0.56, n: 3}
+- {key: レンジ, score: -0.47, n: 3}
 - {key: 作り置き, score: -0.4, n: 3}
 - {key: ブロッコリー, score: -0.24, n: 3}
 partner:
-  likes: [煮込み, じゃがいも, 炒め物, pot-one, 炊飯器, しらす, milk, 牛乳]
-  dislikes: [なす, 豆腐, レンジ, 野菜, いわしつみれ]
+  likes: [煮込み, じゃがいも, 炒め物, 鍋ひとつ, 炊飯器, しらす, 牛乳, チョッパー]
+  dislikes: [なす, レンジ, 豆腐, 野菜, いわしつみれ]
 kid:
-  eats_well: [子ども取り分け, 牛乳, チョッパー, 卵, 炊き込みご飯, 米, かぼちゃ, soup, egg, pot-one, 炊飯器, しらす]
+  eats_well: [子ども取り分け, 牛乳, チョッパー, スープ, 卵, 炊き込みご飯, 米, かぼちゃ, 鍋ひとつ, 炊飯器, しらす, 低温調理]
   refuses: []
   works_if: [甘めの味（BBQ風・ミルク・さつまいも）なら半分以上食べる]
 equipment_notes: [レンジ加熱ではにんじんが固く残るので、フライパンで炒めて柔らかくする, 低温調理の焼き芋風は硬め・甘み弱め。70℃に達してから入れ時間を長めに]
@@ -51,7 +52,7 @@ quality:
   generated: 0
   cooked: 5
   f_avg: 3.02
-  r_avg: 64
+  r_avg: 59
   time_err_median: 0.62
   new_ratio: 1.0
   adoption: null
@@ -60,8 +61,8 @@ quality:
   generated: 0
   cooked: 8
   f_avg: 4.2
-  r_avg: 76
-  time_err_median: 0.5
+  r_avg: 84
+  time_err_median: 0.22
   new_ratio: 0.75
   adoption: null
   prompt_versions: {}
@@ -69,8 +70,8 @@ quality:
   generated: 0
   cooked: 3
   f_avg: 4.0
-  r_avg: 77
-  time_err_median: 0.18
+  r_avg: 89
+  time_err_median: 0.15
   new_ratio: 0.67
   adoption: null
   prompt_versions: {}
@@ -78,8 +79,8 @@ quality:
   generated: 8
   cooked: 7
   f_avg: 4.11
-  r_avg: 62
-  time_err_median: 1.25
+  r_avg: 70
+  time_err_median: 0.4
   new_ratio: 0.86
   adoption: 0.88
   prompt_versions: {'10': 8}
@@ -87,7 +88,7 @@ quality:
   generated: 10
   cooked: 6
   f_avg: 3.88
-  r_avg: 71
+  r_avg: 74
   time_err_median: 0.39
   new_ratio: 1.0
   adoption: 0.6

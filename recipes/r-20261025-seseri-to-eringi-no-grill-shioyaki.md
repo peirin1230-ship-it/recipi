@@ -78,7 +78,7 @@ cleanup:
   hand: [grill]
   note: 使った日はグリルの受け皿を洗う
 photo: photos/r-20261025-seseri-to-eringi-no-grill-shioyaki/20261025-1.jpg
-stats: {cooked: 1, r_avg: 60, f_avg: 4.0, last: '2026-10-25'}
+stats: {cooked: 1, r_avg: 93, f_avg: 4.0, last: '2026-10-25'}
 detail: full
 together: [r-20261025-gyusuji-to-jagaimo-no-shio-butter-nikomi]
 ---

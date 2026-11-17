@@ -131,7 +131,7 @@ cleanup:
   hand: [fp26]
   note: ケチャップが乾く前にフライパンにお湯を張っておくと落ちやすい
 photo: photos/r-20261115-butakata-rosu-no-poku-chappu/20261115-1.jpg
-stats: {cooked: 1, r_avg: 79, f_avg: 3.7, last: '2026-11-15'}
+stats: {cooked: 1, r_avg: 80, f_avg: 3.7, last: '2026-11-15'}
 detail: full
 together: [r-20261115-horenso-to-ninjin-no-goma-okaka-ae]
 ---

@@ -142,7 +142,7 @@ cleanup:
   hand: [pot20]
   note: ハツを切ったまな板と包丁は、使ったらすぐ湯で洗う
 photo: photos/r-20261026-hatsu-to-renkon-no-amakara-ni/20261026-1.jpg
-stats: {cooked: 1, r_avg: 45, f_avg: 2.0, last: '2026-10-26'}
+stats: {cooked: 1, r_avg: 79, f_avg: 2.0, last: '2026-10-26'}
 detail: full
 together: [r-20261026-uzura-to-ginnan-no-shiobata-itame]
 ---

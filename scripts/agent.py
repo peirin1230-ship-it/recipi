@@ -272,7 +272,7 @@ def generate_recipe(ctx: Context, L: llmmod.LLM, req: dict, *, name: str = "reci
     dish = str(req.get("dish") or "").strip()
     vctx = {"equipment": ctx.equipment, "family": ctx.family, "pantry": None if dish else ctx.pantry, "ingredients": ctx.ingredients,
             "overrides": ctx.overrides, "budget": req.get("time_budget"), "speed_factor": ctx.speed_factor,
-            "servings": servings, "config": ctx.cfg, "existing_titles": taken, "one_dish": True}   # 指定の料理は在庫に無い物も使える（買い物に回す）
+            "servings": servings, "config": ctx.cfg, "existing_titles": taken, "one_dish": True, "amount_check": True}   # 指定の料理は在庫に無い物も使える（買い物に回す）
     vctx.update(validate_ctx_extra or {})
     retries = int(ctx.cfg["generation"].get("max_retries", 2))
     errors: list[str] = []
@@ -420,7 +420,7 @@ def action_revise(ctx: Context, L: llmmod.LLM, req: dict) -> dict:
     orig_clean = {k: v for k, v in orig.items() if k not in ("_path", "memo", "stats", "photo")}
     blocks = house_blocks(ctx) + [{"type": "text", "text": "# 元のレシピ（original）\n" + ydump(orig_clean) + "\n\n# このレシピの記録（logs）\n" + (ydump(rlogs) or "（無し）") + "\n\n# 作ったときのメモ\n" + ("\n".join("- " + m for m in orig.get("memo") or []) or "（無し）")}]
     vctx = {"equipment": ctx.equipment, "family": ctx.family, "ingredients": ctx.ingredients, "overrides": ctx.overrides,
-            "budget": (orig.get("time") or {}).get("budget"), "speed_factor": ctx.speed_factor, "servings": orig.get("servings") or {}, "config": ctx.cfg}
+            "budget": (orig.get("time") or {}).get("budget"), "speed_factor": ctx.speed_factor, "servings": orig.get("servings") or {}, "config": ctx.cfg, "amount_check": True}
     retries = int(ctx.cfg["generation"].get("max_retries", 2))
     errors: list[str] = []
     for attempt in range(retries + 1):

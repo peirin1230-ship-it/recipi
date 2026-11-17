@@ -316,6 +316,7 @@ async function startRequest(req, before) {
   });
   if (!ok) { renderPending(); return; }
   addPending({ id: req.id, type: req.type, since: Date.now(), status: 'pending' });
+  if (kq().write_menu_log && MENU_TYPES.has(req.type)) kqMenuLog().catch(e => console.warn('kaji-quest menu', e));   // 献立を決めた = kaji-quest の「翌日の献立を決める」
   toast(req.type === 'pantry_photo' ? '写真を送った。読み取り中（2〜4 分）。閉じても大丈夫' : req.type === 'suggest_items' ? '買い足す物を考え中（2〜4 分）。閉じても大丈夫' : req.dish ? `「${req.dish}」を注文した。考え中（2〜4 分）。閉じても大丈夫` : req.time_budget === 0 ? '時間無制限で注文した。考え中（2〜4 分）。閉じても大丈夫' : '注文した。考え中（2〜4 分）。閉じても大丈夫');
   clearTimeout(pollTimer); pollTimer = setTimeout(pollTick, POLL_MS);
 }
@@ -607,6 +608,14 @@ async function requestWake() {
 }
 function releaseWake() { try { if (cook.lock) cook.lock.release(); } catch { /* */ } cook.lock = null; }
 // 工程の種類ごとの実時間: 前のチェック（最初は開始）からこのチェックまでを、その工程の kind に入れる（学習の速度係数に使う）
+// 待ちの工程（低温調理・炊飯・煮込みの放置）の見込み分
+const waitMinutesOf = r => (r.steps || []).filter(s => s.kind === 'wait').reduce((a, s) => a + (+s.minutes || 0), 0);
+// 手を動かした分（kaji-quest の家事の時間）: 工程のチェック時刻から下ごしらえ・加熱・盛り付けの分を足す。チェックが無ければ、待ちの見込みを実時間の割合で引く
+function handsOnOf(r, actual, sm) {
+  if (sm) { const v = (sm.prep || 0) + (sm.heat || 0) + (sm.serve || 0); if (v > 0) return Math.max(1, Math.min(actual, Math.round(v))); }
+  const p = plannedOf(r); if (!p) return actual;
+  return Math.max(1, Math.round(actual * 0.2), Math.round(actual - waitMinutesOf(r) * (actual / p)));
+}
 function computeStepMinutes(r, start, done) {
   const checks = Object.entries(done || {}).filter(([k, ts]) => k.startsWith('s') && +ts > 0).map(([k, ts]) => ({ i: +k.slice(1), ts: +ts })).sort((a, b) => a.ts - b.ts);
   if (!checks.length) return null; const sum = {}; let prev = start;
@@ -618,11 +627,19 @@ function finishCook() {
   const rs = cook.recipes; const actual = Math.max(1, Math.round((Date.now() - cook.start) / 60000));
   const doneFor = ri => { const o = {}; Object.entries(cook.done).forEach(([k, v]) => { const m = /^(?:(\d+):)?(s\d+)$/.exec(k); if (m && (+m[1] || 0) === ri) o[m[2]] = v; }); return o; };
   const doneAt = Date.now();   // 調理が完成した時刻（kaji-quest の朝・昼・夜を決める）
-  const items = rs.map((r, ri) => ({ recipe: r, step_minutes: computeStepMinutes(r, cook.start, doneFor(ri)), doneAt, scale: cook.scales[ri] || 1 }));
+  // まとめて調理: 全体の時間を各レシピに分ける。同時に進めて同時に仕上げるので、各レシピの分 ≒ 見込みの長さ × (全体 ÷ 段取り表の長さ)
+  // （前は全部のレシピに全体の時間が入り、11 分の焼き物が 252 分になって R と速度係数が狂っていた）
+  const span = Math.max(1, ...rs.map((r, ri) => (cook.offsets[ri] || 0) + plannedOf(r)));
+  const own = rs.map(r => (rs.length === 1 ? actual : Math.max(1, Math.min(actual, Math.round(plannedOf(r) * actual / span)))));
+  const mainRi = rs.reduce((m, r, ri) => (plannedOf(r) > plannedOf(rs[m]) ? ri : m), 0);
+  const session = rs.length > 1 ? { id: uid(8), n: rs.length, total: actual } : null;
+  const items = rs.map((r, ri) => { const sm = computeStepMinutes(r, cook.start + (cook.offsets[ri] || 0) * 60000, doneFor(ri));
+    return { recipe: r, actual: own[ri], step_minutes: sm, doneAt, scale: cook.scales[ri] || 1, session: session ? { ...session, main: ri === mainRi } : null, handsOn: handsOnOf(r, own[ri], sm) }; });
+  const handsOn = Math.max(1, Math.min(actual, items.reduce((a, x) => a + x.handsOn, 0)));   // kaji-quest には手を動かした分を 1 回分
   const key = cookKeyOf(rs); const request = cook.request;
   closeCook(); lsDel(key); rs.forEach(markCookedLocal);
   const [first, ...queue] = items;
-  openRecord(first.recipe, { actual, request, step_minutes: first.step_minutes, fromCook: true, queue, queueTotal: items.length, doneAt, scale: first.scale }); goTo('record');
+  openRecord(first.recipe, { actual: first.actual, request, step_minutes: first.step_minutes, fromCook: true, queue, queueTotal: items.length, doneAt, scale: first.scale, session: first.session, handsOn }); goTo('record');
 }
 
 // ======================================================================
@@ -632,7 +649,7 @@ let rec = null;
 function openRecord(recipe, opts = {}) {
   const planned = recipe.time && isNum(recipe.time.planned) ? recipe.time.planned : null;
   if (rec && rec.photo && rec.photo.url) URL.revokeObjectURL(rec.photo.url);
-  rec = { recipe, request: opts.request || null, doneAt: +opts.doneAt || null, scale: +opts.scale || 1, kqLog: opts.kqLog !== false, actual: opts.actual || planned || 20, planned, fidelity: null, deviation: '', finish: null, me: null, partner: null, partnerLater: false, kid: null, kidLater: false, learned: '', photo: null, step_minutes: opts.step_minutes || null, fromCook: !!opts.fromCook, queue: Array.isArray(opts.queue) ? opts.queue : [], queueTotal: +opts.queueTotal || 0, startedAt: Date.now(), pantry: pantryRowsFor(recipe) };
+  rec = { recipe, request: opts.request || null, doneAt: +opts.doneAt || null, scale: +opts.scale || 1, session: opts.session || null, handsOn: +opts.handsOn || null, kqLog: opts.kqLog !== false, actual: opts.actual || planned || 20, planned, fidelity: null, deviation: '', finish: null, me: null, partner: null, partnerLater: false, kid: null, kidLater: false, learned: '', photo: null, step_minutes: opts.step_minutes || null, fromCook: !!opts.fromCook, queue: Array.isArray(opts.queue) ? opts.queue : [], queueTotal: +opts.queueTotal || 0, startedAt: Date.now(), pantry: pantryRowsFor(recipe) };
   renderRecord(); decorateCards();
 }
 // 材料のうち在庫（items）にある物。作ってなくなった物にチェックすると在庫から外す（在庫はあるかないかだけ）
@@ -667,7 +684,8 @@ function renderRecord() {
   <div class="rec-row full"><div class="lb">${ic('bulb')}気づき（1 行、任意）</div><input type="text" id="rec-learned" maxlength="140" placeholder="皮目 3 分は長い。2 分半で十分" value="${esc(rec.learned)}"></div>
   ${rec.pantry.length ? `<div class="rec-row full"><div class="lb">${ic('fridge')}なくなった食材を在庫から外す</div><p class="sub">使い切った物にチェック。在庫はあるかないかだけ</p><ul class="pc-list">${rec.pantry.map((p, i) => pcRowHTML(p, i)).join('')}</ul></div>` : ''}
   ${rec.scale && rec.scale !== 1 ? `<p class="note rec-scale">分量 ${fmtScale(rec.scale)} で作った記録（時間の学習には使わない）</p>` : ''}
-  ${kq().write_cook_log && kqRepo().owner ? `<p class="note rec-kq">${rec.kqLog ? `kaji-quest には「${esc(kqCookTask(rec.doneAt).title)}」で記録する（${rec.doneAt ? `完成 ${esc(kqCookTask(rec.doneAt).p.iso.slice(11, 16))}` : '記録した時刻'}で判断）` : 'kaji-quest には 1 本目の記録で書いた（まとめて調理は 1 回分）'}</p>` : ''}
+  ${rec.session ? `<p class="note rec-session">まとめて調理（${rec.session.n} 品・全体 ${rec.session.total} 分）のうち、この料理の分として見込みの割合で ${rec.actual} 分を入れた。違えば上で直す</p>` : ''}
+  ${kq().write_cook_log && kqRepo().owner ? `<p class="note rec-kq">${rec.kqLog ? (() => { const t = kqCookTask(rec.doneAt, rec.recipe); return `kaji-quest には「${esc(t.title)}」で、手を動かした ${kqMinutes()} 分を記録する（${t.prep ? '仕込みのレシピ' : rec.doneAt ? `完成 ${esc(t.p.iso.slice(11, 16))}で判断` : '記録した時刻で判断'}。待ち時間は入れない）`; })() : 'kaji-quest には 1 本目の記録で書いた（まとめて調理は 1 回分）'}</p>` : ''}
   <div class="actions"><button type="button" class="ghost" data-act="rec-cancel">やめる</button><button type="button" class="primary big" data-act="rec-save">${ic('check')}記録する</button></div>
   ${pendingPhotoHTML()}`;
 }
@@ -716,19 +734,33 @@ async function consumePantry(rows) {
   if (!rows.length) return;
   await savePantry(d => { rows.forEach(p => { d.items = d.items.filter(i => i.id !== p.item.id); }); }, 'なくなった物を外す');
 }
+// recipi で献立の注文を出したら、kaji-quest の「翌日の献立を決める」（menu-decide）の完了も書く。1 日 1 回まで（その日の記録があれば書かない）
+const MENU_TYPES = new Set(['dinner', 'prep', 'breakfast', 'lunchbox', 'recipe_detail', 'weekly']);
+async function kqMenuLog() {
+  const r = kqRepo(); if (!r.owner || !gh.hasToken()) return; const p = nowParts(); const n = 5, w = 1.3;
+  const line = { date: p.date, ts: p.iso, task_id: 'menu-decide', title: '翌日の献立を決める', area: 'cooking', slot: mealSlotOfHour(p.hour), status: 'done', mode: 'full', actual_minutes: n, weight: w, weighted_minutes: round1(n * w), xp: Math.round(n * w), id: uid(12), via: 'recipi' };
+  await gh.mutateFile(`logs/${ymOf(p.date)}.jsonl`, text => (String(text || '').split('\n').some(l => { try { const e = JSON.parse(l); return e && e.task_id === 'menu-decide' && e.date === p.date; } catch { return false; } }) ? null : appendLine(text, JSON.stringify(line))), gh.msg('recipi: 翌日の献立を決める'), r);
+}
 // kaji-quest の「朝ごはんを作る」「昼ごはんを作る」「夜ご飯を作る」の完了としても書く（config.kaji_quest.write_cook_log）。
 // どれにするかは調理が完成した時刻（調理モードの「できた！」。調理モードを通っていなければ記録した時刻）で決める。
 // 時間帯の区切りは kaji-quest と同じ: 朝 4〜11 時・昼 11〜17 時・夜 17〜翌 4 時。タスクの id・名前・重みは config.kaji_quest.cook_tasks
 const KQ_COOK = { morning: { task_id: 'breakfast-cook', title: '朝ごはんを作る', weight: 1.25 }, noon: { task_id: 'lunch-cook', title: '昼ごはんを作る', weight: 1.25 }, night: { task_id: 'dinner-cook', title: '夜ご飯を作る', weight: 1.35 } };
 const mealSlotOfHour = h => (h >= 4 && h < 11 ? 'morning' : h >= 11 && h < 17 ? 'noon' : 'night');
-function kqCookTask(at) {
+// 仕込みのレシピ（注文の種類が仕込み、または「仕込み」のタグ・料理名）は時刻に関係なく kaji-quest の「翌日分の仕込み」
+// （前は朝 5 時に仕込むと「朝ごはんを作る」、夜中 1 時だと「夜ご飯を作る」になっていた）
+const KQ_PREP = { task_id: 'cooking-prep', title: '翌日分の仕込み', weight: 1.35 };
+const isPrepRecipe = r => !!r && (r.type === 'prep' || (r.tags || []).includes('仕込み') || /仕込み/.test(r.title || ''));
+function kqCookTask(at, recipe) {
   const p = nowParts(at ? new Date(at) : new Date()); const slot = mealSlotOfHour(p.hour);
+  if (isPrepRecipe(recipe)) { const c = (kq().cook_tasks || {}).prep || {}; return { slot, p, prep: true, task_id: c.task_id || KQ_PREP.task_id, title: c.title || KQ_PREP.title, weight: +c.weight || KQ_PREP.weight }; }
   const c = (kq().cook_tasks || {})[slot] || {}; const d = KQ_COOK[slot];
   return { slot, p, task_id: c.task_id || d.task_id, title: c.title || d.title, weight: +c.weight || d.weight };
 }
-async function kqCookLog(e, at) {
-  const r = kqRepo(); if (!r.owner) return null; const n = +e.actual_minutes || 0; const t = kqCookTask(at); const w = t.weight;
-  const line = { date: t.p.date, ts: t.p.iso, task_id: t.task_id, title: t.title, area: 'cooking', slot: t.slot, status: 'done', mode: 'full', actual_minutes: n, weight: w, weighted_minutes: round1(n * w), xp: Math.round(n * w) };
+// kaji-quest に書く分: 手を動かした分（まとめて調理は全部のレシピの分を足した 1 回分）。待ち時間（低温調理・炊飯の放置）は家事に数えない
+const kqMinutes = () => (rec ? (rec.handsOn || handsOnOf(rec.recipe, +rec.actual || 0, rec.step_minutes)) : 0);
+async function kqCookLog(e, at, recipe, minutes) {
+  const r = kqRepo(); if (!r.owner) return null; const n = Math.max(1, Math.round(+minutes || +e.actual_minutes || 0)); const t = kqCookTask(at, recipe); const w = t.weight;
+  const line = { date: t.p.date, ts: t.p.iso, task_id: t.task_id, title: t.title, area: 'cooking', slot: t.slot, status: 'done', mode: 'full', actual_minutes: n, weight: w, weighted_minutes: round1(n * w), xp: Math.round(n * w), elapsed_minutes: (e.session && e.session.total) || +e.actual_minutes || n };
   if (e.learned) line.learned = e.learned; line.id = uid(12);
   await gh.mutateFile(`logs/${ymOf(t.p.date)}.jsonl`, text => appendLine(text, JSON.stringify(line)), gh.msg(`recipi: ${t.title}`), r);
   return t;
@@ -742,6 +774,7 @@ async function saveRecord() {
     pantry_used: rec.pantry.map(x => x.item.id), r_score: rScore(rec.planned, rec.actual, rec.fidelity, rec.finish), f_score: fScore(ratings) };
   if (rec.step_minutes) entry.step_minutes = rec.step_minutes;
   if (rec.scale && rec.scale !== 1) entry.scale = rec.scale;   // 分量の倍率（調理モードで変えたとき）
+  if (rec.session) entry.session = rec.session;   // まとめて調理: { id, n, total, main }。学習は 1 回分として数える
   if ((cfg().privacy || {}).log_time === false) delete entry.ts;
   let photoFailed = false, kqTask = null; const side = [];
   const ok = await run(async () => {
@@ -753,7 +786,7 @@ async function saveRecord() {
     await appendLog(entry);
     try { await appendMemo(r, memoLine(entry)); } catch (e) { side.push('レシピのメモ: ' + e.message); }
     try { await consumePantry(rec.pantry.filter(x => x.gone)); } catch (e) { side.push('在庫: ' + e.message); }
-    if (kq().write_cook_log && rec.kqLog) { try { kqTask = await kqCookLog(entry, rec.doneAt); } catch (e) { side.push('kaji-quest: ' + e.message); } }
+    if (kq().write_cook_log && rec.kqLog) { try { kqTask = await kqCookLog(entry, rec.doneAt, r, kqMinutes()); } catch (e) { side.push('kaji-quest: ' + e.message); } }
   });
   if (!ok) return;
   lsDel(cookKey(r.id)); if (rec.photo && rec.photo.url) URL.revokeObjectURL(rec.photo.url);
@@ -763,7 +796,7 @@ async function saveRecord() {
   if (side.length) toast(`記録はした。残りは失敗: ${side.join(' / ')}`, true);
   else toast(photoFailed ? '記録した。写真は送れなかった → 記録カードの「写真を再送」' : `記録した。一覧に「作った」として残した${kqTask ? `。kaji-quest に「${kqTask.title}」` : ''}（${secs} 秒）`);
   // まとめて調理のあとは、残りのレシピの記録を続ける
-  if (queue.length) { const nxt = queue[0]; openRecord(nxt.recipe, { actual, request: null, doneAt: nxt.doneAt, scale: nxt.scale, kqLog: false, step_minutes: nxt.step_minutes, fromCook: true, queue: queue.slice(1), queueTotal: total }); goTo('record'); toast(`続けて「${nxt.recipe.title}」の記録`); return; }
+  if (queue.length) { const nxt = queue[0]; openRecord(nxt.recipe, { actual: nxt.actual || actual, request: null, doneAt: nxt.doneAt, scale: nxt.scale, session: nxt.session, kqLog: false, step_minutes: nxt.step_minutes, fromCook: true, queue: queue.slice(1), queueTotal: total }); goTo('record'); toast(`続けて「${nxt.recipe.title}」の記録`); return; }
   goTo('list');
 }
 async function retryPhoto() {

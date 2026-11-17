@@ -69,9 +69,16 @@ def similar(a: str, b: str) -> bool:
 
 # ---- 要素（好みの学習に使う）----
 
+# 英語で付いたタグを日本語にそろえる（好き嫌いが「milk」と「牛乳」のように二重にならないように）
+TAG_JA = {"milk": "牛乳", "egg": "卵", "soup": "スープ", "quick": "時短", "side": "副菜", "kid-share": "子ども取り分け", "pot-one": "鍋ひとつ",
+          "one-pot": "鍋ひとつ", "fp-one": "フライパンひとつ", "potato": "じゃがいも", "steam": "蒸し物", "fish": "魚", "simmer": "煮物",
+          "breakfast": "朝食", "microwave": "レンジ", "sear": "焼き物", "pork": "豚肉", "kettle": "ケトル", "use_up": "使い切り", "sous-vide": "低温調理"}
+
+
 def elements(recipe: dict) -> list[str]:
     out = []
     for t in recipe.get("tags") or []:
+        t = TAG_JA.get(str(t).strip().lower(), t)
         if t and t not in out:
             out.append(t)
     for i in recipe.get("ingredients") or []:
@@ -188,6 +195,8 @@ class Learner:
         per_kind: dict[str, list[float]] = {"prep": [], "heat": [], "serve": []}
         for e in self.logs:
             if (e.get("scale") or 1) != 1:   # 分量を倍率で変えた回は時間が違うので、速度係数に使わない
+                continue
+            if (e.get("session") or {}).get("main") is False:   # まとめて調理は 1 回分（いちばん長いレシピ）だけ数える
                 continue
             meta = self.recipes.get(e.get("recipe_id") or "")
             raw = ((meta or {}).get("time") or {}).get("raw_estimate")
@@ -337,6 +346,15 @@ class Learner:
 
     # ---- 7. 掃除 ----
     def cleanup(self) -> None:
+        # ページの注文が 2 日たっても処理されていなければ error にする（考え中のまま残り続けないように）
+        stale = (common.now() - dt.timedelta(days=2)).isoformat(timespec="seconds")
+        for p in glob.glob(common.path("requests", "*.json")):
+            rel = os.path.relpath(p, common.ROOT)
+            d = common.read_json(rel) or {}
+            if d.get("type") not in SYSTEM_TYPES and d.get("status") in ("pending", "running") and (d.get("ts") or "") < stale:
+                d.update({"status": "error", "error": "2 日たっても処理されなかった（ルーティンが動かなかった）。もう一度注文する"})
+                common.write_json(rel, d)
+                self.changed_paths.add(rel)
         cutoff = (common.now() - dt.timedelta(days=30)).strftime("%Y-%m-%d")
         for p in glob.glob(common.path("requests", "*.json")):
             rel = os.path.relpath(p, common.ROOT)

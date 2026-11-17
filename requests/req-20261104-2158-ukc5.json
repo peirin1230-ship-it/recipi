@@ -15,7 +15,7 @@
  "exclude": [],
  "note": "",
  "mode": "auto",
- "status": "pending",
- "error": null,
+ "status": "error",
+ "error": "2 日たっても処理されなかった（ルーティンが動かなかった）。もう一度注文する",
  "result": null
 }

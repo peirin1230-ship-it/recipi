@@ -9,6 +9,7 @@ const assert = (cond, label) => { results.push(`${cond ? 'PASS' : 'FAIL'}: ${lab
 
 async function setup(browser, viewport) {
   const ctx = await browser.newContext({ viewport, locale: 'ja-JP', timezoneId: 'Asia/Tokyo' });
+  await ctx.clock.install({ time: new Date('2026-10-26T12:00:00+09:00') });   // テストの記録（10 月上旬）が「30 日以内」に入る日に時計を合わせる（時計はそこから進む）
   const page = await ctx.newPage();
   const errors = [];
   page.on('console', m => { if (m.type() === 'error' && !/Failed to load resource: .* 404/.test(m.text())) errors.push(m.text()); });
@@ -21,9 +22,10 @@ async function setup(browser, viewport) {
     if (req.method() === 'DELETE') { puts.push({ url, method: 'DELETE', body: JSON.parse(req.postData()) }); return route.fulfill({ status: 200, contentType: 'application/json', body: '{}' }); }
     if (req.method() === 'GET' && url.includes('/contents/recipes/') && extraHit(url)) return route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ sha: 'x1', content: b64('---\nid: x\n---\n') }) });
     if (req.method() === 'GET' && url.includes('/contents/recipes/') && (url.includes('torimomo') || (mock.recipe && url.includes(mock.recipe.id))) && mock.serve) { const text = mock.recipe && url.includes(mock.recipe.id) ? mock.recipe.text : fs.readFileSync(require('path').join(__dirname, '..', 'fixtures', 'recipes', 'r-20261008-torimomo-teriyaki.md'), 'utf8'); return route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ sha: 'r1', content: b64(text) }) }); }
-    if (req.method() === 'PUT') { const body = JSON.parse(req.postData()); puts.push({ url, body }); store[url.split('/contents/')[1].split('?')[0]] = body.content; return route.fulfill({ status: 201, contentType: 'application/json', body: JSON.stringify({ content: { sha: 'newsha' } }) }); }
+    if (req.method() === 'PUT') { const body = JSON.parse(req.postData()); puts.push({ url, body }); store[(url.includes('/kaji-quest/') ? 'kq:' : '') + url.split('/contents/')[1].split('?')[0]] = body.content; return route.fulfill({ status: 201, contentType: 'application/json', body: JSON.stringify({ content: { sha: 'newsha' } }) }); }
     if (req.method() === 'POST' && url.endsWith('/dispatches')) { puts.push({ url, body: JSON.parse(req.postData()) }); return route.fulfill({ status: 204, body: '' }); }
     if (url.includes('/contents/pantry.json')) return route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ sha: 'p1', content: store['pantry.json'] || b64(pantry) }) });
+    if (url.includes('/kaji-quest/contents/logs/') && store['kq:' + url.split('/contents/')[1].split('?')[0]]) return route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ sha: 'kq1', content: store['kq:' + url.split('/contents/')[1].split('?')[0]] }) });
     if (url.includes('/contents/logs/2026/10.jsonl')) {
       const line = JSON.stringify({ id: 'abcabcabcabc', date: '2026-10-06', ts: '2026-10-06T19:05:40+09:00', recipe_id: 'r-20261008-torimomo-teriyaki', title: '記録に残した照り焼きの名前', version: 1, request_id: null, type: 'dinner', planned_minutes: 18, actual_minutes: 22, fidelity: 'minor', deviation: '醤油を減らした', finish: 4, ratings: { me: 4, partner: null, kid: 'all' }, photo: null, learned: '皮目は 2 分半で十分', pantry_used: [], r_score: 73, f_score: 4.5 });
       return route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ sha: 'l1', content: store['logs/2026/10.jsonl'] || b64(line + '\nnot json\n') }) });
@@ -168,11 +170,11 @@ async function setup(browser, viewport) {
     const before = puts.length;
     await page.click('[data-act="rec-save"]');
     await page.waitForFunction(() => document.querySelector('#toast') && document.querySelector('#toast').textContent.includes('記録'));
-    const logPut = puts.slice(before).find(p => p.url.includes('/contents/logs/2026/10.jsonl'));
+    const logPut = puts.slice(before).find(p => p.url.includes('/recipi/contents/logs/2026/10.jsonl'));
     assert(!!logPut, 'record appends to logs/2026/10.jsonl');
     const logText = logPut ? Buffer.from(logPut.body.content, 'base64').toString('utf8') : '';
     const lines = logText.trim().split('\n'); const last = JSON.parse(lines[lines.length - 1]);
-    assert(lines.length === 3 && lines[1] === 'not json', 'existing lines kept (including the malformed one), new line appended');
+    assert(lines.length === 3 && lines[1] === 'not json', `existing lines kept (including the malformed one), new line appended: ${lines.length} lines; puts ${puts.slice(before).map(p => p.url.split('/repos/')[1]).join(' , ')}`);
     assert(last.title && last.title.includes('鶏もも肉の照り焼き'), `log line keeps the recipe title (survives a later delete): ${last.title}`);
     assert(last.recipe_id === 'r-20261008-torimomo-teriyaki' && last.planned_minutes === 18 && last.actual_minutes === 22 && last.fidelity === 'minor' && last.deviation === '醤油を減らした' && last.finish === 4 && last.ratings.me === 4 && last.ratings.partner === 5 && last.ratings.kid === 'all' && last.learned === '皮目は 2 分半' && last.id.length === 12 && /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\+09:00$/.test(last.ts) && last.pantry_used.length === 2, `log line matches contract: ${JSON.stringify(last)}`);
     assert(last.r_score === Math.round(40 * (1 - 4 / 18) + 20 + 22.5) && last.f_score === 4.7, `R=${last.r_score} (expected ${Math.round(40 * (1 - 4 / 18) + 20 + 22.5)}), F=${last.f_score} (expected 4.7)`);
@@ -316,6 +318,7 @@ async function setup(browser, viewport) {
     assert(await page.$$eval('#list .lrow', r => r.length) === 2, 'two recipes in the list for the multi-cook test');
     { const picks = await page.$$('#list .lrow [data-act="cook-pick"]'); await picks[0].click(); const picks2 = await page.$$('#list .lrow [data-act="cook-pick"]'); await picks2[1].click(); }   // 行の前に見出しがあるので nth-child は使わない
     assert(await page.$eval('#list .pickbar', e => e.textContent.includes('2 品')), 'pick bar shows 2 selected');
+    await page.evaluate(() => { const ids = [...document.querySelectorAll('#list .lrow [data-act="cook-pick"].is-on')].map(b => b.dataset.id); localStorage.setItem('recipi.cook.' + ids.join('+'), JSON.stringify({ start: Date.now() - 60 * 60000, done: {}, tl: {}, timers: {} })); });   // 1 時間かけて作った
     await page.click('[data-act="cook-picked"]'); await page.waitForFunction(() => !document.querySelector('#cook').hidden);
     assert(await page.$$eval('#cook .ck-tl', s => s.length) === 12 && await page.$$eval('#cook .ck-step', s => s.length) === 8 && await page.$$eval('#cook .ck-set-row', s => s.length) === 2, 'merged cook mode: 12 timeline rows, 8 steps, 2 recipes with start offsets');
     // 手順は全レシピを始める分の順に 1 列（段取りと同じ時計）。各手順に「N 分〜」とレシピの印
@@ -341,7 +344,15 @@ async function setup(browser, viewport) {
     { const kqPuts = puts.slice(b7).filter(p => /\/kaji-quest\/contents\/logs\//.test(p.url)); const kl = kqPuts.map(p => JSON.parse(Buffer.from(p.body.content, 'base64').toString('utf8').trim().split('\n').pop()));
       const h = await page.evaluate(() => +new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Tokyo', hour: '2-digit', hourCycle: 'h23' }).format(new Date())); const want = h >= 4 && h < 11 ? 'breakfast-cook' : h >= 11 && h < 17 ? 'lunch-cook' : 'dinner-cook';
       assert(kqPuts.length === 1 && kl[0].task_id === want && kl[0].area === 'cooking', `a multi-cook writes one kaji-quest line for the session, by the hour finished (${kl.map(x => x.task_id).join(', ')}; want ${want} at ${h}h)`); }
+    { const last = p => JSON.parse(Buffer.from(p.body.content, 'base64').toString('utf8').trim().split('\n').pop()); const a = last(logPuts[0]), b = last(logPuts[1]);
+      assert(a.session && b.session && a.session.id === b.session.id && a.session.n === 2 && a.session.total >= 59 && a.session.total <= 61 && (a.session.main !== b.session.main), `a multi-cook record carries the session (n 2, total ~60, one main): ${JSON.stringify(a.session)} ${JSON.stringify(b.session)}`);
+      assert(a.actual_minutes <= a.session.total && b.actual_minutes <= b.session.total && a.actual_minutes !== b.actual_minutes && Math.max(a.actual_minutes, b.actual_minutes) >= 55, `the session time is split by planned length, not copied to every dish: ${a.actual_minutes} / ${b.actual_minutes} of ${a.session.total}`);
+      const kq7 = puts.slice(b7).filter(p => /\/kaji-quest\/contents\/logs\//.test(p.url)).map(last);
+      assert(kq7.length === 1 && kq7[0].elapsed_minutes === a.session.total && kq7[0].actual_minutes <= kq7[0].elapsed_minutes, `kaji-quest gets one line with hands-on minutes (${kq7[0] && kq7[0].actual_minutes}) and the elapsed ${kq7[0] && kq7[0].elapsed_minutes}`); }
     assert(logPuts.length === 2 && lastId(logPuts[0]) === 'r-20261009-test-new' && lastId(logPuts[1]) === 'r-20261008-torimomo-teriyaki', `both recipes of the multi-cook get a log line, one record after another (${logPuts.map(lastId).join(', ')})`);
+    { const menu = puts.filter(p => /\/kaji-quest\/contents\/logs\//.test(p.url)).map(p => Buffer.from(p.body.content, 'base64').toString('utf8').trim().split('\n')).filter(ls => JSON.parse(ls[ls.length - 1]).task_id === 'menu-decide');
+      const orders = puts.filter(p => p.url.includes('/contents/requests/')).length;
+      assert(orders >= 2 && menu.length === 1 && JSON.parse(menu[0][menu[0].length - 1]).actual_minutes === 5, `ordering completes kaji-quest 翌日の献立を決める once a day (${orders} orders, ${menu.length} menu lines)`); }
     await ctx.close().catch(() => {}); await c2.close();
   }
   await browser.close();

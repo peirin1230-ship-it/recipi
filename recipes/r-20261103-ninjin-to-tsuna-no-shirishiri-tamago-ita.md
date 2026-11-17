@@ -107,7 +107,7 @@ cleanup:
   hand: [pot20]
   note: null
 photo: photos/r-20261103-ninjin-to-tsuna-no-shirishiri-tamago-ita/20261103-1.jpg
-stats: {cooked: 1, r_avg: 60, f_avg: 5.0, last: '2026-11-03'}
+stats: {cooked: 1, r_avg: 84, f_avg: 5.0, last: '2026-11-03'}
 detail: full
 together: [r-20261103-ebi-to-hakusai-no-yaki-gyoza]
 ---

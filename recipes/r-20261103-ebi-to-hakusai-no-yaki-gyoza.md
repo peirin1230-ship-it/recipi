@@ -176,7 +176,7 @@ cleanup:
   hand: [fp26]
   note: チョッパーの刃は手洗い
 photo: photos/r-20261103-ebi-to-hakusai-no-yaki-gyoza/20261103-1.jpg
-stats: {cooked: 1, r_avg: 78, f_avg: 4.7, last: '2026-11-03'}
+stats: {cooked: 1, r_avg: 84, f_avg: 4.7, last: '2026-11-03'}
 detail: full
 together: [r-20261103-ninjin-to-tsuna-no-shirishiri-tamago-ita]
 ---

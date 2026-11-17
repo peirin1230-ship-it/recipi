@@ -143,7 +143,7 @@ cleanup:
   hand: [fp26]
   note: たれが焦げ付いたらぬるま湯に浸す
 photo: photos/r-20261103-sake-to-maitake-no-miso-butter-mushiyaki/20261103-1.jpg
-stats: {cooked: 1, r_avg: 60, f_avg: 3.7, last: '2026-11-03'}
+stats: {cooked: 1, r_avg: 85, f_avg: 3.7, last: '2026-11-03'}
 detail: full
 together: [r-20261103-hakusai-to-ninjin-no-tuna-shiokombu-mush]
 ---

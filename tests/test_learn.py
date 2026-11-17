@@ -148,3 +148,29 @@ def test_scaled_cooks_do_not_move_the_speed_factor(root):
     add_log(30, actual_minutes=60, scale=2)
     L2 = learn.Learner(common.load_config(), use_llm=False, mock=True)
     assert L2.speed_factor()["overall"] == before
+
+
+def test_a_shared_cooking_session_counts_once_for_speed(root):
+    """まとめて調理は 1 回分（main）だけ速度係数に数える。ほかの品は session.main が false。"""
+    L = learn.Learner(common.load_config(), use_llm=False, mock=True)
+    before = L.speed_factor()["overall"]
+    add_log(40, actual_minutes=90, session={"id": "s1", "n": 2, "total": 90, "main": False})
+    assert learn.Learner(common.load_config(), use_llm=False, mock=True).speed_factor()["overall"] == before
+
+
+def test_english_tags_merge_into_japanese():
+    assert learn.elements({"tags": ["milk", "牛乳", "Quick", "子ども取り分け", "kid-share"], "ingredients": []}) == ["牛乳", "時短", "子ども取り分け"]
+
+
+def test_stale_page_orders_become_errors(root):
+    import agent
+    agent.save_request({"id": "req-20260101-0000-old1", "ts": "2026-01-01T00:00:00+09:00", "type": "dinner", "status": "pending", "error": None, "result": None})
+    L = learn.Learner(common.load_config(), use_llm=False, mock=True)
+    L.cleanup()
+    d = common.read_json("requests/req-20260101-0000-old1.json")
+    assert d is None or d["status"] == "error"   # 30 日より古いので消えることもある
+    agent.save_request({"id": "req-old2", "ts": (common.now() - __import__("datetime").timedelta(days=3)).isoformat(timespec="seconds"), "type": "recipe_detail", "status": "pending", "error": None, "result": None})
+    L.cleanup()
+    d = common.read_json("requests/req-old2.json")
+    assert d["status"] == "error" and "2 日" in d["error"]
+    os.remove(common.path("requests", "req-old2.json"))

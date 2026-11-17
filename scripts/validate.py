@@ -92,6 +92,87 @@ def alternatives_errors(title: str, alternatives: list, taken: list[str]) -> lis
     return errors
 
 
+_SPOON_ML = {"大さじ": 15.0, "小さじ": 5.0, "カップ": 200.0}
+_NUM = r"(\d+と\d+/\d+|\d+/\d+|\d+(?:\.\d+)?)"   # 分数を先に（1/4 を 1 と読まない）
+
+
+def _num(t: str) -> float:
+    t = t.strip()
+    if "と" in t:
+        a, b = t.split("と", 1)
+        return float(a) + _num(b)
+    if "/" in t:
+        a, b = t.split("/", 1)
+        return float(a) / float(b)
+    return float(t)
+
+
+def _to_base(qty: float, unit: str) -> tuple[float, str]:
+    """量を比べられる単位に。大さじ・小さじ・カップ・ml は ml、それ以外はそのまま（g・個・本 …）。"""
+    if unit in _SPOON_ML:
+        return qty * _SPOON_ML[unit], "ml"
+    if unit in ("ml", "mL", "cc"):
+        return qty, "ml"
+    return qty, unit
+
+
+_UNITS = r"(ml|mL|cc|g|個|本|枚|切れ|束|丁|株|袋|パック)(?![a-zA-Z])"
+
+
+def amount_errors(r: dict) -> list[str]:
+    """手順の文に「醤油 大さじ 2」のように書いた 1 回の量が、材料表の量（同じ名前は足す）より多ければ不合格（生成のときの検査）。
+    分けて使う量の合計は数えない（下ごしらえで分けた物を「溶き卵 1 個」のように後で呼ぶ書き方があるため）。
+    長い材料名の中の短い名前（「白味噌」の中の「味噌」）は数えない。"""
+    errs = []
+    texts = [str(st.get("text") or "") for st in r.get("steps") or []]
+    ings, totals = [], {}
+    for i in r.get("ingredients") or []:   # 同じ名前（下味用と仕上げ用など）は量を足して 1 つに
+        if not i.get("name"):
+            continue
+        if i.get("qty") is not None and (i.get("unit") or "") not in ("適量", "少々"):
+            b = _to_base(float(i["qty"]), i.get("unit") or "")
+            key = (i["name"], b[1])
+            totals[key] = totals.get(key, 0.0) + b[0]
+        if all(x["name"] != i["name"] for x in ings):
+            ings.append(i)
+    taken = [[] for _ in texts]   # 文ごとに、もっと長い材料名が使った位置
+    for ing in sorted(ings, key=lambda i: -len(i["name"])):
+        name, qty, unit = ing["name"], ing.get("qty"), ing.get("unit") or ""
+        spans_by_text = []
+        for ti, t in enumerate(texts):
+            spans = []
+            at = t.find(name)
+            while at >= 0:
+                end = at + len(name)
+                if not any(a < end and at < b for a, b in taken[ti]):
+                    spans.append((at, end))
+                at = t.find(name, at + 1)
+            spans_by_text.append(spans)
+        for ti, spans in enumerate(spans_by_text):
+            taken[ti].extend(spans)
+        if qty is None or name in schema.FREE_INGREDIENTS or unit in ("適量", "少々"):
+            continue
+        base_unit = _to_base(float(qty), unit)[1]
+        total = (totals.get((name, base_unit), 0.0), base_unit)
+        amounts = []
+        pat = re.compile(r"\s*(?:(大さじ|小さじ|カップ)\s*" + _NUM + r"|" + _NUM + r"\s*" + _UNITS + r")")
+        for ti, spans in enumerate(spans_by_text):
+            for a, b in spans:
+                m = pat.match(texts[ti], b)
+                if not m:
+                    continue
+                q = _to_base(_num(m.group(2)), m.group(1)) if m.group(1) else _to_base(_num(m.group(3)), m.group(4))
+                if q[1] == total[1]:
+                    amounts.append(q[0])
+        if not amounts or total[0] <= 0:
+            continue
+        unit_ja = "ml 相当" if total[1] == "ml" else total[1]
+        biggest = max(amounts)
+        if biggest > total[0] * 1.1 + 1e-9:
+            errs.append(f"「{name}」: 手順に {round(biggest, 1)} {unit_ja}と書いたが、材料表は {round(total[0], 1)} {unit_ja}。手順の量と材料表をそろえる")
+    return errs
+
+
 def validate_recipe(recipe: dict, ctx: dict | None = None) -> list[str]:
     """不合格の理由のリスト。空なら合格。"""
     ctx = ctx or {}
@@ -300,6 +381,10 @@ def validate_recipe(recipe: dict, ctx: dict | None = None) -> list[str]:
         missing = [i.get("name") for k, i in names.items() if k not in used and i.get("qty") is not None and i.get("name") not in schema.FREE_INGREDIENTS]
         if missing:
             errors.append("材料がどの工程の ingredients にも出てこない: " + "、".join(missing) + "（使う工程の ingredients に name を入れる）")
+
+    # ---- 手順の文の量と材料表の量（生成のときだけ。古いレシピは組み立てで落とさない）----
+    if ctx.get("amount_check"):
+        errors += amount_errors(r)
 
     # ---- 時間 ----
     budget = ctx.get("budget")
