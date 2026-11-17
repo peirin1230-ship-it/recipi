@@ -1,4 +1,5 @@
 ---
+listed: "2026-11-17T22:06:42+09:00"
 id: r-20261117-gyusuji-to-daizu-no-sappari-shio-consomm
 title: 牛すじと大豆のさっぱり塩コンソメスープ
 version: 1
