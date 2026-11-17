@@ -718,8 +718,15 @@ async function consumePantry(rows) {
 }
 // recipi で献立の注文を出したら、kaji-quest の「翌日の献立を決める」（menu-decide）の完了も書く。1 日 1 回まで（その日の記録があれば書かない）
 const MENU_TYPES = new Set(['dinner', 'prep', 'breakfast', 'lunchbox', 'recipe_detail', 'weekly']);
+// kaji-quest で消した（prefs.json の hidden。「id」か、その欄だけの「id@slot」）タスクには書かない。読めなければ消していない扱い
+async function kqHiddenHas(taskId, slot) {
+  try { const f = await gh.getFile('prefs.json', kqRepo()); const d = f.text ? JSON.parse(f.text) : {}; const h = Array.isArray(d.hidden) ? d.hidden : [];
+    return h.includes(taskId) || (!!slot && h.includes(`${taskId}@${slot}`)); }
+  catch { return false; }
+}
 async function kqMenuLog() {
   const r = kqRepo(); if (!r.owner || !gh.hasToken()) return; const p = nowParts(); const n = 5, w = 1.3;
+  if (await kqHiddenHas('menu-decide', mealSlotOfHour(p.hour))) return;   // kaji-quest で「翌日の献立を決める」を消していれば書かない
   const line = { date: p.date, ts: p.iso, task_id: 'menu-decide', title: '翌日の献立を決める', area: 'cooking', slot: mealSlotOfHour(p.hour), status: 'done', mode: 'full', actual_minutes: n, weight: w, weighted_minutes: round1(n * w), xp: Math.round(n * w), id: uid(12), via: 'recipi' };
   await gh.mutateFile(`logs/${ymOf(p.date)}.jsonl`, text => (String(text || '').split('\n').some(l => { try { const e = JSON.parse(l); return e && e.task_id === 'menu-decide' && e.date === p.date; } catch { return false; } }) ? null : appendLine(text, JSON.stringify(line))), gh.msg('recipi: 翌日の献立を決める'), r);
 }
@@ -742,6 +749,7 @@ function kqCookTask(at, recipe) {
 const kqMinutes = () => (rec ? (rec.handsOn || handsOnOf(rec.recipe, +rec.actual || 0, rec.step_minutes)) : 0);
 async function kqCookLog(e, at, recipe, minutes) {
   const r = kqRepo(); if (!r.owner) return null; const n = Math.max(1, Math.round(+minutes || +e.actual_minutes || 0)); const t = kqCookTask(at, recipe); const w = t.weight;
+  if (await kqHiddenHas(t.task_id, t.slot)) return null;   // kaji-quest で消したタスクには書かない
   const line = { date: t.p.date, ts: t.p.iso, task_id: t.task_id, title: t.title, area: 'cooking', slot: t.slot, status: 'done', mode: 'full', actual_minutes: n, weight: w, weighted_minutes: round1(n * w), xp: Math.round(n * w), elapsed_minutes: (e.session && e.session.total) || +e.actual_minutes || n };
   if (e.learned) line.learned = e.learned; line.id = uid(12);
   await gh.mutateFile(`logs/${ymOf(t.p.date)}.jsonl`, text => appendLine(text, JSON.stringify(line)), gh.msg(`recipi: ${t.title}`), r);
