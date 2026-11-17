@@ -1,0 +1,23 @@
+{
+ "id": "req-20261117-2201-dci7",
+ "ts": "2026-11-17T22:01:33+09:00",
+ "type": "prep",
+ "time_budget": 0,
+ "servings": {
+  "adults": 2,
+  "kids": 1
+ },
+ "dishes": "main",
+ "mood": [
+  "さっぱり"
+ ],
+ "use_up": [
+  "牛すじ"
+ ],
+ "exclude": [],
+ "note": "全て牛すじで",
+ "mode": "pick",
+ "status": "pending",
+ "error": null,
+ "result": null
+}
