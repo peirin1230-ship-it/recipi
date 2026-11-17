@@ -15,7 +15,514 @@
  "exclude": [],
  "note": "",
  "mode": "auto",
- "status": "pending",
+ "status": "done",
  "error": null,
- "result": null
+ "result": {
+  "feasible": true,
+  "infeasible_reason": null,
+  "nearest_options": [],
+  "alternatives": [
+   {
+    "title": "牛すじと玉ねぎのケチャップハヤシ煮込み",
+    "minutes": 180,
+    "why": "同じ牛すじを洋風の甘いケチャップ味に。子どもが好む甘めの味",
+    "kind": "new"
+   },
+   {
+    "title": "豚ひき肉とほうれん草のミルクうどんグラタン（トースター）",
+    "minutes": 30,
+    "why": "牛乳とうどんで子どもが食べやすい焼き物。仕込みなしで当日焼くだけ",
+    "kind": "new"
+   }
+  ],
+  "recipe_id": "r-20261117-gyusuji-to-daizu-no-amamiso-doteni",
+  "recipe": {
+   "id": "r-20261117-gyusuji-to-daizu-no-amamiso-doteni",
+   "title": "牛すじと大豆の甘みそどて煮",
+   "version": 1,
+   "supersedes": null,
+   "status": "draft",
+   "created": "2026-11-17",
+   "request": "req-20261117-2042-x5cj",
+   "generated_by": {
+    "model": "claude-code",
+    "prompt_version": 11
+   },
+   "type": "prep",
+   "servings": {
+    "adults": 2,
+    "kids": 1
+   },
+   "time": {
+    "budget": 0,
+    "planned": 183,
+    "active": 36,
+    "raw_estimate": 180,
+    "speed_factor": 1.12
+   },
+   "image_text": "ほろほろにほどけた牛すじと大豆、にんじんが、照りのある赤茶色の甘みそにからんでいる。器に盛って煮汁を少しかけ、白ごまを散らす。",
+   "dishes": [
+    {
+     "name": "牛すじと大豆の甘みそどて煮",
+     "role": "main"
+    }
+   ],
+   "equipment": [
+    "gas-l",
+    "gas-r",
+    "pot20",
+    "kettle",
+    "bowl-m"
+   ],
+   "ingredients": [
+    {
+     "name": "牛すじ",
+     "qty": 300,
+     "unit": "g",
+     "grams": 300,
+     "pantry": "牛すじ",
+     "for": "牛すじと大豆の甘みそどて煮",
+     "substitute": null,
+     "use_up": true
+    },
+    {
+     "name": "大豆水煮",
+     "qty": 1,
+     "unit": "袋",
+     "grams": 120,
+     "pantry": "大豆水煮",
+     "for": "牛すじと大豆の甘みそどて煮",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "にんじん",
+     "qty": 1,
+     "unit": "本",
+     "grams": 150,
+     "pantry": "にんじん",
+     "for": "牛すじと大豆の甘みそどて煮",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "玉ねぎ",
+     "qty": 1,
+     "unit": "個",
+     "grams": 200,
+     "pantry": "玉ねぎ",
+     "for": "牛すじと大豆の甘みそどて煮",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "水",
+     "qty": 4,
+     "unit": "カップ",
+     "grams": 800,
+     "pantry": null,
+     "for": "牛すじと大豆の甘みそどて煮",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "酒",
+     "qty": 2,
+     "unit": "大さじ",
+     "grams": 30,
+     "pantry": "酒",
+     "for": "牛すじと大豆の甘みそどて煮",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "味噌",
+     "qty": 1,
+     "unit": "大さじ",
+     "grams": 18,
+     "pantry": "味噌",
+     "for": "牛すじと大豆の甘みそどて煮",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "砂糖",
+     "qty": 1,
+     "unit": "大さじ",
+     "grams": 9,
+     "pantry": "砂糖",
+     "for": "牛すじと大豆の甘みそどて煮",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "みりん",
+     "qty": 2,
+     "unit": "大さじ",
+     "grams": 36,
+     "pantry": "みりん",
+     "for": "牛すじと大豆の甘みそどて煮",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "醤油",
+     "qty": 1,
+     "unit": "小さじ",
+     "grams": 6,
+     "pantry": "醤油",
+     "for": "牛すじと大豆の甘みそどて煮",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "白ごま",
+     "qty": 1,
+     "unit": "小さじ",
+     "grams": 3,
+     "pantry": "白ごま",
+     "for": "牛すじと大豆の甘みそどて煮",
+     "substitute": null,
+     "use_up": false
+    }
+   ],
+   "tags": [
+    "仕込み",
+    "煮込み",
+    "牛すじ",
+    "鍋ひとつ",
+    "子ども取り分け",
+    "チョッパー"
+   ],
+   "salt": {
+    "total_g": 3.67,
+    "adult_per_serving_g": 1.8,
+    "kid_g": 0.2
+   },
+   "kid": {
+    "rule": "separate",
+    "cut": "味付け前に取り分け、ぶんぶんチョッパーで 5mm 以下に刻む（大豆も丸ごと残さない）",
+    "note": "みその前、酒の香りが飛んだ素煮の段階で牛すじ 30g・にんじん・大豆を少し取り分ける。煮汁 大さじ 2 を足してしっとりさせ、冷ましてから出す。初めての牛すじなら少量から"
+   },
+   "keep": {
+    "fridge_days": 2,
+    "freezer": true,
+    "reheat": "鍋で弱火 5〜8 分、湯気が立つまで（レンジなら 600W 1 人分 2 分、途中で混ぜる）。子どもの分は別の器で 600W 40 秒、混ぜて冷ます"
+   },
+   "timeline": [
+    {
+     "minute": 0,
+     "lane": "hands",
+     "text": "電気ケトルで湯 1L を沸かす"
+    },
+    {
+     "minute": 3,
+     "lane": "gas-l",
+     "text": "牛すじを鍋で下茹で（強火→中火 15 分）"
+    },
+    {
+     "minute": 5,
+     "lane": "hands",
+     "text": "玉ねぎ・にんじんを切る"
+    },
+    {
+     "minute": 18,
+     "lane": "hands",
+     "text": "牛すじをザルにあけて洗い、3cm に切る"
+    },
+    {
+     "minute": 24,
+     "lane": "gas-l",
+     "text": "牛すじ・水・酒を入れて沸かし、あくを取る"
+    },
+    {
+     "minute": 30,
+     "lane": "gas-l",
+     "text": "弱火で 90 分、蓋をずらして煮込む"
+    },
+    {
+     "minute": 33,
+     "lane": "hands",
+     "text": "ザル・まな板を洗う（あとは放っておく）"
+    },
+    {
+     "minute": 120,
+     "lane": "gas-l",
+     "text": "にんじん・玉ねぎ・大豆を加え、弱火 30 分"
+    },
+    {
+     "minute": 150,
+     "lane": "hands",
+     "text": "子どもの分を取り分け、チョッパーで刻む"
+    },
+    {
+     "minute": 153,
+     "lane": "gas-l",
+     "text": "みそ・砂糖・みりん・醤油を入れ、蓋を取って弱火 20 分"
+    },
+    {
+     "minute": 173,
+     "lane": "hands",
+     "text": "火を止め、保存容器に移して粗熱を取る"
+    },
+    {
+     "minute": 180,
+     "lane": "hands",
+     "text": "冷蔵庫へ。翌日は温めて白ごまを散らすだけ"
+    }
+   ],
+   "steps": [
+    {
+     "dish": "牛すじと大豆の甘みそどて煮",
+     "n": 1,
+     "title": "湯を沸かす",
+     "kind": "prep",
+     "tag": "boil",
+     "minutes": 3,
+     "start": 0,
+     "heat": null,
+     "text": "電気ケトルで湯 1L を沸かす（下茹でが 5 分早くなる）。",
+     "cue": "ケトルのスイッチが切れる",
+     "caution": null,
+     "timer": null,
+     "kid": null,
+     "ingredients": []
+    },
+    {
+     "dish": "牛すじと大豆の甘みそどて煮",
+     "n": 2,
+     "title": "牛すじを下茹で",
+     "kind": "wait",
+     "tag": "boil",
+     "minutes": 15,
+     "start": 3,
+     "heat": {
+      "equipment": "gas-l",
+      "level": "強火"
+     },
+     "text": "牛すじ 300g を塊のまま鍋（pot20）に入れ、ケトルの湯をかぶるまで注ぐ。強火で再沸騰したら中火にして 15 分茹でる。",
+     "cue": "表面が灰色になり、灰色のあくが浮いて固まる",
+     "caution": "この湯は臭みとあくなので必ず捨てる",
+     "timer": 900,
+     "kid": null,
+     "ingredients": [
+      "牛すじ"
+     ]
+    },
+    {
+     "dish": "牛すじと大豆の甘みそどて煮",
+     "n": 3,
+     "title": "野菜を切る",
+     "kind": "prep",
+     "tag": "cut",
+     "minutes": 8,
+     "start": 5,
+     "heat": null,
+     "text": "下茹での間に、玉ねぎ 1 個をくし形 8 等分、にんじん 1 本を 2cm の乱切りにする。大豆水煮 1 袋は水けを切る。",
+     "cue": "にんじんの大きさがそろっている",
+     "caution": null,
+     "timer": null,
+     "kid": null,
+     "ingredients": [
+      "玉ねぎ",
+      "にんじん",
+      "大豆水煮"
+     ]
+    },
+    {
+     "dish": "牛すじと大豆の甘みそどて煮",
+     "n": 4,
+     "title": "洗って切る",
+     "kind": "prep",
+     "tag": "cut",
+     "minutes": 6,
+     "start": 18,
+     "heat": null,
+     "text": "牛すじをザルにあけ、流水で表面のあくと脂を洗い流す。鍋も一度すすぐ。牛すじを 3cm 幅に切る（固い筋は切りにくいので包丁を前後に引く）。",
+     "cue": "表面にぬめりや灰色の粒が残っていない",
+     "caution": "熱いので流水で冷ましてから触る",
+     "timer": null,
+     "kid": null,
+     "ingredients": [
+      "牛すじ"
+     ]
+    },
+    {
+     "dish": "牛すじと大豆の甘みそどて煮",
+     "n": 5,
+     "title": "煮立ててあくを取る",
+     "kind": "heat",
+     "tag": "simmer",
+     "minutes": 6,
+     "start": 24,
+     "heat": {
+      "equipment": "gas-l",
+      "level": "強火"
+     },
+     "text": "鍋に牛すじ、水 4 カップ（800ml）、酒 大さじ 2 を入れて強火にかける。沸いたらお玉で浮いたあくを 2〜3 回すくう。",
+     "cue": "汁が澄んで、表面の泡が白く細かくなる",
+     "caution": null,
+     "timer": null,
+     "kid": null,
+     "ingredients": [
+      "牛すじ",
+      "水",
+      "酒"
+     ]
+    },
+    {
+     "dish": "牛すじと大豆の甘みそどて煮",
+     "n": 6,
+     "title": "弱火で煮込む",
+     "kind": "wait",
+     "tag": "simmer",
+     "minutes": 90,
+     "start": 30,
+     "heat": {
+      "equipment": "gas-l",
+      "level": "弱火"
+     },
+     "text": "弱火にして蓋を少しずらしてのせ、90 分煮込む。30 分ごとに見て、牛すじが汁から出ていたら水を足す（足した水は塩分に影響しない）。",
+     "cue": "牛すじのゼラチン質が半透明でぷるんとし、菜箸がすっと通る",
+     "caution": "ぐらぐら煮立てると汁が濁り、肉が固く締まる。表面がふつふつする程度を保つ",
+     "timer": 5400,
+     "kid": null,
+     "ingredients": [
+      "牛すじ"
+     ]
+    },
+    {
+     "dish": "牛すじと大豆の甘みそどて煮",
+     "n": 7,
+     "title": "野菜と大豆を加える",
+     "kind": "wait",
+     "tag": "simmer",
+     "minutes": 30,
+     "start": 120,
+     "heat": {
+      "equipment": "gas-l",
+      "level": "弱火"
+     },
+     "text": "にんじん・玉ねぎ・大豆を加え、蓋をずらして弱火でさらに 30 分煮る。",
+     "cue": "にんじんに竹串がすっと通り、玉ねぎが透き通ってくたっとする",
+     "caution": null,
+     "timer": 1800,
+     "kid": null,
+     "ingredients": [
+      "にんじん",
+      "玉ねぎ",
+      "大豆水煮"
+     ]
+    },
+    {
+     "dish": "牛すじと大豆の甘みそどて煮",
+     "n": 8,
+     "title": "子どもの分を取り分ける",
+     "kind": "prep",
+     "tag": "kid",
+     "minutes": 3,
+     "start": 150,
+     "heat": null,
+     "text": "味付けの前に、牛すじ 30g・にんじん 2〜3 切れ・大豆 大さじ 1 と煮汁 大さじ 2 を器に取る。ぶんぶんチョッパーで 5〜6 回引いて 5mm 以下に刻む。",
+     "cue": "牛すじが細かくそぼろ状になり、大豆の粒が残っていない",
+     "caution": null,
+     "timer": null,
+     "kid": "1-2y は 5mm 以下に。大豆は丸ごとだと窒息しやすいので必ず刻む。甘めが好きなので、食べにくそうなら翌日にみそ汁を数滴（みそ 小さじ 1/4 以下）垂らす",
+     "ingredients": []
+    },
+    {
+     "dish": "牛すじと大豆の甘みそどて煮",
+     "n": 9,
+     "title": "甘みそで煮詰める",
+     "kind": "heat",
+     "tag": "simmer",
+     "minutes": 20,
+     "start": 153,
+     "heat": {
+      "equipment": "gas-l",
+      "level": "弱火"
+     },
+     "text": "お玉に煮汁を少し取って味噌 大さじ 1 を溶き、鍋に戻す。砂糖 大さじ 1、みりん 大さじ 2、醤油 小さじ 1 を加え、蓋を取って弱火で 20 分、ときどき底から混ぜて煮詰める。",
+     "cue": "煮汁が 1/3 ほどに減り、木べらで底をなぞると一瞬筋が残る。具に照りが出る",
+     "caution": "糖分で焦げやすいので最後の 5 分は底から混ぜ続ける",
+     "timer": 1200,
+     "kid": null,
+     "ingredients": [
+      "味噌",
+      "砂糖",
+      "みりん",
+      "醤油"
+     ]
+    },
+    {
+     "dish": "牛すじと大豆の甘みそどて煮",
+     "n": 10,
+     "title": "冷まして冷蔵",
+     "kind": "prep",
+     "tag": "cleanup",
+     "minutes": 7,
+     "start": 173,
+     "heat": null,
+     "text": "火を止めて浅い保存容器に移し、広げて粗熱を取る。30 分以内に冷蔵庫へ。子どもの分も別の容器に入れて冷蔵する。",
+     "cue": "容器の底が手で触れるくらいまで冷めている",
+     "caution": "鍋のまま常温に置かない（ウェルシュ菌）",
+     "timer": null,
+     "kid": null,
+     "ingredients": []
+    },
+    {
+     "dish": "牛すじと大豆の甘みそどて煮",
+     "n": 11,
+     "title": "当日の仕上げ",
+     "kind": "serve",
+     "tag": "serve",
+     "minutes": 8,
+     "start": null,
+     "heat": {
+      "equipment": "gas-r",
+      "level": "弱火"
+     },
+     "text": "翌日、食べる分を鍋に移して水 大さじ 1 を足し、弱火で 5〜8 分温める。器に盛って白ごま 小さじ 1 を散らす。",
+     "cue": "全体から湯気が立ち、牛すじの白く固まった脂が溶けて透明になる",
+     "caution": null,
+     "timer": null,
+     "kid": "子どもの分は別の器で温め、湯気が立ったら混ぜて冷ましてから出す",
+     "ingredients": [
+      "白ごま"
+     ]
+    }
+   ],
+   "cleanup": {
+    "dishwasher": [
+     "bowl-m"
+    ],
+    "hand": [
+     "pot20"
+    ],
+    "note": "ザル・まな板・包丁・ぶんぶんチョッパーは手洗い、保存容器は食洗機へ。煮込みの 90 分の間にザル・まな板を洗っておく"
+   },
+   "photo": null,
+   "stats": {
+    "cooked": 0,
+    "r_avg": null,
+    "f_avg": null,
+    "last": null
+   },
+   "detail": "full",
+   "memo": []
+  },
+  "side_recipe_ids": [],
+  "side_recipes": [],
+  "model": "claude-code",
+  "prompt_version": 11,
+  "tokens": {
+   "input": 0,
+   "output": 0,
+   "cache_read": 0,
+   "cache_write": 0
+  },
+  "cost_usd": 0.0,
+  "seconds": 0
+ },
+ "finished": "2026-11-17T20:44:42+09:00"
 }
