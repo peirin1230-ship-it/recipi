@@ -16,10 +16,470 @@
  ],
  "exclude": [],
  "note": "",
- "mode": "pick",
+ "mode": "auto",
  "parent": "req-20261117-2248-umb0",
  "alternative": 2,
- "status": "pending",
+ "status": "done",
  "error": null,
- "result": null
+ "result": {
+  "feasible": true,
+  "infeasible_reason": null,
+  "nearest_options": [],
+  "alternatives": [
+   {
+    "title": "かまぼこと卵のミルクスープ",
+    "minutes": 20,
+    "why": "家の定番で評価 4.8。牛乳と卵で子どもがよく食べる",
+    "kind": "standard"
+   },
+   {
+    "title": "豚ひき肉となすのチョッパーそぼろ炊き込みご飯",
+    "minutes": 70,
+    "why": "炊飯器とチョッパーで鍋ひとつ、ひき肉そぼろは子どもも手づかみで食べやすい",
+    "kind": "new"
+   }
+  ],
+  "recipe_id": "r-20261117-uzura-no-tamago-iri-ninjin-to-tamanegi-n",
+  "recipe": {
+   "id": "r-20261117-uzura-no-tamago-iri-ninjin-to-tamanegi-n",
+   "title": "うずらの卵入り にんじんと玉ねぎのミルクポタージュ",
+   "version": 1,
+   "supersedes": null,
+   "status": "draft",
+   "created": "2026-11-17",
+   "request": "req-20261117-2250-rfmq",
+   "generated_by": {
+    "model": "claude-code",
+    "prompt_version": 11
+   },
+   "type": "recipe_detail",
+   "servings": {
+    "adults": 2,
+    "kids": 1
+   },
+   "time": {
+    "budget": 0,
+    "planned": 38,
+    "active": 24,
+    "raw_estimate": 36,
+    "speed_factor": 1.12
+   },
+   "image_text": "やさしいオレンジ色のなめらかなポタージュに、白と黄色のうずらの卵の切り口が浮かんでいる。表面にバターの小さな油の輪が光る、湯気の立つスープ皿。",
+   "dishes": [
+    {
+     "name": "うずらの卵入り にんじんと玉ねぎのミルクポタージュ",
+     "role": "main"
+    }
+   ],
+   "equipment": [
+    "gas-l",
+    "pot20",
+    "blender",
+    "bowl-m"
+   ],
+   "ingredients": [
+    {
+     "name": "にんじん",
+     "qty": 1,
+     "unit": "本",
+     "grams": 150,
+     "pantry": "にんじん",
+     "for": "うずらの卵入り にんじんと玉ねぎのミルクポタージュ",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "玉ねぎ",
+     "qty": 0.5,
+     "unit": "個",
+     "grams": 100,
+     "pantry": "玉ねぎ",
+     "for": "うずらの卵入り にんじんと玉ねぎのミルクポタージュ",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "バター",
+     "qty": 10,
+     "unit": "g",
+     "grams": 10,
+     "pantry": "バター",
+     "for": "うずらの卵入り にんじんと玉ねぎのミルクポタージュ",
+     "substitute": "オリーブオイル 小さじ 2",
+     "use_up": false
+    },
+    {
+     "name": "水",
+     "qty": 200,
+     "unit": "ml",
+     "grams": 200,
+     "pantry": null,
+     "for": "うずらの卵入り にんじんと玉ねぎのミルクポタージュ",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "牛乳",
+     "qty": 300,
+     "unit": "ml",
+     "grams": 310,
+     "pantry": "牛乳",
+     "for": "うずらの卵入り にんじんと玉ねぎのミルクポタージュ",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "調理済みうずら",
+     "qty": 6,
+     "unit": "個",
+     "grams": 60,
+     "pantry": "調理済みうずら",
+     "for": "うずらの卵入り にんじんと玉ねぎのミルクポタージュ",
+     "substitute": null,
+     "use_up": true
+    },
+    {
+     "name": "コンソメ",
+     "qty": 1,
+     "unit": "個",
+     "grams": 5,
+     "pantry": "コンソメ",
+     "for": "うずらの卵入り にんじんと玉ねぎのミルクポタージュ",
+     "substitute": "鶏がらスープの素 小さじ 2",
+     "use_up": false
+    }
+   ],
+   "tags": [
+    "スープ",
+    "ポタージュ",
+    "ミキサー",
+    "チョッパー",
+    "牛乳",
+    "にんじん",
+    "卵",
+    "鍋ひとつ",
+    "子ども取り分け"
+   ],
+   "salt": {
+    "total_g": 2.6,
+    "adult_per_serving_g": 1.3,
+    "kid_g": 0.1
+   },
+   "kid": {
+    "rule": "separate",
+    "cut": "うずらの卵は 4 等分（丸いまま出さない）。スープはなめらかなのでそのまま",
+    "note": "コンソメを入れる前に 1/4 量とうずら 1 個分を取り分け、人肌まで冷ましてから出す。味付けは無しで、にんじんと玉ねぎ・牛乳の甘さだけ"
+   },
+   "keep": {
+    "fridge_days": 2,
+    "freezer": false,
+    "reheat": "鍋で弱火にかけ、混ぜながら湯気が立つまで温める。沸騰させると牛乳が分離する。うずらは食べる直前に入れる。子どもの分は 1 日以内"
+   },
+   "timeline": [
+    {
+     "minute": 0,
+     "lane": "hands",
+     "text": "にんじんの皮をむき、スライサーで 1.2mm の細切り"
+    },
+    {
+     "minute": 3,
+     "lane": "hands",
+     "text": "玉ねぎをぶんぶんチョッパーでみじん切り"
+    },
+    {
+     "minute": 5,
+     "lane": "gas-l",
+     "text": "鍋（pot20）にバター、玉ねぎ・にんじんを中火で炒める"
+    },
+    {
+     "minute": 9,
+     "lane": "gas-l",
+     "text": "水 200ml を入れて煮立て、弱火で蓋をして 12 分煮る"
+    },
+    {
+     "minute": 9,
+     "lane": "hands",
+     "text": "うずらを切る（大人は半分、子どもは 4 等分）"
+    },
+    {
+     "minute": 12,
+     "lane": "hands",
+     "text": "スライサー・チョッパー・まな板を洗う。ミキサーと器を出す"
+    },
+    {
+     "minute": 21,
+     "lane": "gas-l",
+     "text": "火を止めて牛乳 300ml を加え、粗熱を取る"
+    },
+    {
+     "minute": 24,
+     "lane": "hands",
+     "text": "ミキサーでなめらかにする"
+    },
+    {
+     "minute": 27,
+     "lane": "gas-l",
+     "text": "鍋に戻して弱火で温める（沸騰させない）"
+    },
+    {
+     "minute": 30,
+     "lane": "hands",
+     "text": "子どもの分を取り分けて冷ます"
+    },
+    {
+     "minute": 31,
+     "lane": "gas-l",
+     "text": "大人の分にコンソメを溶かす"
+    },
+    {
+     "minute": 33,
+     "lane": "hands",
+     "text": "器に盛り、うずらを浮かべて配膳"
+    },
+    {
+     "minute": 36,
+     "lane": "hands",
+     "text": "配膳完了"
+    }
+   ],
+   "steps": [
+    {
+     "dish": "うずらの卵入り にんじんと玉ねぎのミルクポタージュ",
+     "n": 1,
+     "title": "にんじんを細切り",
+     "kind": "prep",
+     "tag": "cut",
+     "minutes": 3,
+     "start": 0,
+     "heat": null,
+     "text": "にんじん 1 本の皮をピーラーでむき、スライサー（1.2mm 細切り）で細切りにする。最後の 2cm は包丁で薄く刻む。細いほど早く柔らかくなる。",
+     "cue": "細い糸状のにんじんが山になり、芯の太い部分が残っていない",
+     "caution": "指を守るため、最後の 2cm はスライサーを使わず包丁で",
+     "timer": null,
+     "kid": null,
+     "ingredients": [
+      "にんじん"
+     ]
+    },
+    {
+     "dish": "うずらの卵入り にんじんと玉ねぎのミルクポタージュ",
+     "n": 2,
+     "title": "玉ねぎをみじん切り",
+     "kind": "prep",
+     "tag": "cut",
+     "minutes": 2,
+     "start": 3,
+     "heat": null,
+     "text": "玉ねぎ 1/2 個を 4 つに切って、ぶんぶんチョッパーで 10 回ほど引いてみじん切りにする。",
+     "cue": "米粒より少し大きいくらいにそろっている",
+     "caution": null,
+     "timer": null,
+     "kid": null,
+     "ingredients": [
+      "玉ねぎ"
+     ]
+    },
+    {
+     "dish": "うずらの卵入り にんじんと玉ねぎのミルクポタージュ",
+     "n": 3,
+     "title": "バターで炒める",
+     "kind": "heat",
+     "tag": "stir-fry",
+     "minutes": 4,
+     "start": 5,
+     "heat": {
+      "equipment": "gas-l",
+      "level": "中火"
+     },
+     "text": "鍋（pot20）を中火にかけてバター 10g を溶かし、玉ねぎとにんじんを入れて、焦がさないように混ぜながら 4 分炒める。レンジ加熱ではにんじんが固く残るので、ここで鍋でしっかり火を入れる。",
+     "cue": "玉ねぎが透き通ってしんなりし、にんじんがくたっと曲がる。甘い匂いが立つ",
+     "caution": "色が付き始めたら火を弱める（焦げると色がくすみ苦くなる）",
+     "timer": null,
+     "kid": null,
+     "ingredients": [
+      "バター",
+      "玉ねぎ",
+      "にんじん"
+     ]
+    },
+    {
+     "dish": "うずらの卵入り にんじんと玉ねぎのミルクポタージュ",
+     "n": 4,
+     "title": "水で蓋をして煮る",
+     "kind": "wait",
+     "tag": "simmer",
+     "minutes": 12,
+     "start": 9,
+     "heat": {
+      "equipment": "gas-l",
+      "level": "弱火"
+     },
+     "text": "水 200ml を入れて中火で煮立て、弱火にして蓋をし 12 分煮る。待つ間にうずらを切り、スライサーとチョッパーを洗う。",
+     "cue": "にんじんをお玉の背で押すと簡単につぶれる。水分は具がひたひたに残る程度",
+     "caution": "水が少なくなって焦げそうなら水 大さじ 2 を足す（量外）",
+     "timer": 720,
+     "kid": null,
+     "ingredients": [
+      "水"
+     ]
+    },
+    {
+     "dish": "うずらの卵入り にんじんと玉ねぎのミルクポタージュ",
+     "n": 5,
+     "title": "うずらを切る",
+     "kind": "prep",
+     "tag": "cut",
+     "minutes": 3,
+     "start": 9,
+     "heat": null,
+     "text": "調理済みうずら 6 個のうち、大人の分 5 個は縦半分に、子どもの分 1 個は 4 等分に切る。",
+     "cue": "黄身の断面が見えている。子どもの分は丸い形が残っていない",
+     "caution": null,
+     "timer": null,
+     "kid": "うずらは丸いままだと窒息しやすいので必ず 4 等分。1-2y はさらに半分に刻んでもよい",
+     "ingredients": [
+      "調理済みうずら"
+     ]
+    },
+    {
+     "dish": "うずらの卵入り にんじんと玉ねぎのミルクポタージュ",
+     "n": 6,
+     "title": "牛乳を入れて粗熱を取る",
+     "kind": "prep",
+     "tag": null,
+     "minutes": 3,
+     "start": 21,
+     "heat": null,
+     "text": "火を止め、冷たい牛乳 300ml を加えて混ぜる。牛乳で温度が下がり、ミキサーにかけられる熱さになる。",
+     "cue": "鍋の縁に手をかざしても湯気が強く上がらず、触れる程度の熱さ",
+     "caution": "熱いままミキサーにかけると蓋が飛ぶ。湯気が強いうちは回さない",
+     "timer": null,
+     "kid": null,
+     "ingredients": [
+      "牛乳"
+     ]
+    },
+    {
+     "dish": "うずらの卵入り にんじんと玉ねぎのミルクポタージュ",
+     "n": 7,
+     "title": "ミキサーにかける",
+     "kind": "prep",
+     "tag": null,
+     "minutes": 3,
+     "start": 24,
+     "heat": null,
+     "text": "鍋の中身をミキサーに入れ、蓋を手で押さえて 1 分ほど回す。量が多ければ 2 回に分ける。",
+     "cue": "にんじんの粒が見えず、とろりとなめらか。お玉からゆっくり落ちる",
+     "caution": "ミキサーの容量の半分までにして、蓋を布巾で押さえて回す",
+     "timer": null,
+     "kid": null,
+     "ingredients": []
+    },
+    {
+     "dish": "うずらの卵入り にんじんと玉ねぎのミルクポタージュ",
+     "n": 8,
+     "title": "温め直す",
+     "kind": "heat",
+     "tag": "simmer",
+     "minutes": 3,
+     "start": 27,
+     "heat": {
+      "equipment": "gas-l",
+      "level": "弱火"
+     },
+     "text": "鍋に戻し、弱火で底から混ぜながら温める。",
+     "cue": "縁がふつふつしかけ、湯気が立つ。沸騰の手前で止める",
+     "caution": "沸騰させると牛乳が分離して膜が張る。混ぜ続ける",
+     "timer": null,
+     "kid": null,
+     "ingredients": []
+    },
+    {
+     "dish": "うずらの卵入り にんじんと玉ねぎのミルクポタージュ",
+     "n": 9,
+     "title": "子どもの分を取り分ける",
+     "kind": "prep",
+     "tag": "kid",
+     "minutes": 1,
+     "start": 30,
+     "heat": null,
+     "text": "味付け前に 1/4 量（お玉 1 杯半）をボウル（中）に取り分け、4 等分したうずらを入れて冷ます。",
+     "cue": "子どもの器が人肌（手の甲に付けて熱くない）になっている",
+     "caution": null,
+     "timer": null,
+     "kid": "コンソメを入れる前に取り分ける。味はにんじん・玉ねぎ・牛乳の甘さだけ。冷ましてから出す",
+     "ingredients": []
+    },
+    {
+     "dish": "うずらの卵入り にんじんと玉ねぎのミルクポタージュ",
+     "n": 10,
+     "title": "大人の分を味付け",
+     "kind": "heat",
+     "tag": "season",
+     "minutes": 2,
+     "start": 31,
+     "heat": {
+      "equipment": "gas-l",
+      "level": "弱火"
+     },
+     "text": "鍋に残った大人の分にコンソメ 1 個を砕いて入れ、弱火で混ぜて溶かす。味を見て薄ければ仕上げに塩 少々。",
+     "cue": "コンソメの粒が残らず溶け、全体がつやのあるオレンジ色",
+     "caution": null,
+     "timer": null,
+     "kid": null,
+     "ingredients": [
+      "コンソメ"
+     ]
+    },
+    {
+     "dish": "うずらの卵入り にんじんと玉ねぎのミルクポタージュ",
+     "n": 11,
+     "title": "盛り付け",
+     "kind": "serve",
+     "tag": "serve",
+     "minutes": 3,
+     "start": 33,
+     "heat": null,
+     "text": "大人の分をスープ皿に盛り、半分に切ったうずらを断面を上にして浮かべる。子どもの分も小さい器に移して出す。",
+     "cue": "うずらの黄身の断面がオレンジの上に並んで見える",
+     "caution": null,
+     "timer": null,
+     "kid": "スプーンで飲める器か、パンを浸して手づかみでも",
+     "ingredients": []
+    }
+   ],
+   "cleanup": {
+    "dishwasher": [
+     "bowl-m"
+    ],
+    "hand": [
+     "pot20",
+     "blender"
+    ],
+    "note": "スライサー・チョッパー・包丁・まな板は煮ている間に洗う。ミキサーは使ったらすぐ水を入れて数秒回すと汚れが落ちやすい"
+   },
+   "photo": null,
+   "stats": {
+    "cooked": 0,
+    "r_avg": null,
+    "f_avg": null,
+    "last": null
+   },
+   "detail": "full",
+   "memo": []
+  },
+  "side_recipe_ids": [],
+  "side_recipes": [],
+  "model": "claude-code",
+  "prompt_version": 11,
+  "tokens": {
+   "input": 0,
+   "output": 0,
+   "cache_read": 0,
+   "cache_write": 0
+  },
+  "cost_usd": 0.0,
+  "seconds": 0
+ },
+ "finished": "2026-11-17T22:52:31+09:00"
 }
