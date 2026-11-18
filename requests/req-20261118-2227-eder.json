@@ -15,7 +15,44 @@
  "exclude": [],
  "note": "",
  "mode": "pick",
- "status": "pending",
+ "status": "done",
  "error": null,
- "result": null
+ "result": {
+  "feasible": true,
+  "infeasible_reason": null,
+  "nearest_options": [],
+  "alternatives": [
+   {
+    "title": "豚こま切れ肉のミルク味噌煮込み",
+    "minutes": 40,
+    "why": "好評の煮込み×牛乳で子どもも食べやすく、片栗粉をまぶして柔らかく。翌日は温めるだけ",
+    "kind": "new"
+   },
+   {
+    "title": "豚こま切れ肉のチョッパーつくね 甘めの照り焼き",
+    "minutes": 35,
+    "why": "チョッパーで刻んだ豚こまを手づかみサイズに。甘めのたれで子どもが食べやすく、翌日は焼き直すだけ",
+    "kind": "new"
+   },
+   {
+    "title": "豚こま切れ肉の甘煮（翌日は冷凍うどんにのせて肉うどん）",
+    "minutes": 25,
+    "why": "鍋ひとつで仕込めて、翌日はうどんを温めてのせるだけ。だしを効かせて塩分は控えめ",
+    "kind": "new"
+   }
+  ],
+  "recipe_id": null,
+  "recipe": null,
+  "model": "claude-code",
+  "prompt_version": 11,
+  "tokens": {
+   "input": 0,
+   "output": 0,
+   "cache_read": 0,
+   "cache_write": 0
+  },
+  "cost_usd": 0.0,
+  "seconds": 0
+ },
+ "finished": "2026-11-18T22:28:37+09:00"
 }
