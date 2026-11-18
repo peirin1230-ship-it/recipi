@@ -1,5 +1,5 @@
 ---
-listed: "2026-11-17T22:06:42+09:00"
+listed: '2026-11-17T22:06:42+09:00'
 id: r-20261117-gyusuji-to-daizu-no-sappari-shio-consomm
 title: 牛すじと大豆のさっぱり塩コンソメスープ
 version: 1
@@ -188,8 +188,8 @@ cleanup:
   dishwasher: [bowl-m]
   hand: [pot20]
   note: ぶんぶんチョッパー・ザル・お玉・包丁・まな板は手洗い。鍋の縁に付いた脂は熱いうちにキッチンペーパーで拭いてから洗うと落ちやすい。2 時間煮ている間に片付けを先に進める
-photo: null
-stats: {cooked: 0, r_avg: null, f_avg: null, last: null}
+photo: photos/r-20261117-gyusuji-to-daizu-no-sappari-shio-consomm/20261118-1.jpg
+stats: {cooked: 1, r_avg: 88, f_avg: 5.0, last: '2026-11-18'}
 detail: full
 ---
 
@@ -284,4 +284,5 @@ detail: full
 - ぶんぶんチョッパー・ザル・お玉・包丁・まな板は手洗い。鍋の縁に付いた脂は熱いうちにキッチンペーパーで拭いてから洗うと落ちやすい。2 時間煮ている間に片付けを先に進める
 
 ## 作ったときのメモ
+
 - 2026-11-18 ・ 121 分（見込み 174）・ R 88 ・ F 5 ・ そのまま ・ 📷 20261118-1.jpg
