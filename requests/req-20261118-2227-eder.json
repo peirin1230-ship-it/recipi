@@ -1,0 +1,21 @@
+{
+ "id": "req-20261118-2227-eder",
+ "ts": "2026-11-18T22:27:49+09:00",
+ "type": "prep",
+ "time_budget": 0,
+ "servings": {
+  "adults": 2,
+  "kids": 1
+ },
+ "dishes": "main+side",
+ "mood": [],
+ "use_up": [
+  "豚こま切れ肉"
+ ],
+ "exclude": [],
+ "note": "",
+ "mode": "pick",
+ "status": "pending",
+ "error": null,
+ "result": null
+}
