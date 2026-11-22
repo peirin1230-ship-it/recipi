@@ -1,5 +1,5 @@
 ---
-listed: "2026-11-22T23:23:27+09:00"
+listed: '2026-11-22T23:23:27+09:00'
 id: r-20261122-buta-hikiniku-no-chopper-nikomi-hamburg-
 title: 豚ひき肉のチョッパー煮込みハンバーグ ミルクソース
 version: 1
@@ -157,8 +157,8 @@ cleanup:
   dishwasher: [bowl-m]
   hand: [fp26]
   note: ぶんぶんチョッパーは手洗い。刃は肉の脂が固まる前に、煮込みの待ち時間にお湯で洗う
-photo: null
-stats: {cooked: 0, r_avg: null, f_avg: null, last: null}
+photo: photos/r-20261122-buta-hikiniku-no-chopper-nikomi-hamburg-/20261123-1.jpg
+stats: {cooked: 1, r_avg: 63, f_avg: 5.0, last: '2026-11-23'}
 detail: full
 together: [r-20261122-horenso-no-okaka-ae]
 ---
@@ -247,4 +247,5 @@ together: [r-20261122-horenso-no-okaka-ae]
 - ぶんぶんチョッパーは手洗い。刃は肉の脂が固まる前に、煮込みの待ち時間にお湯で洗う
 
 ## 作ったときのメモ
+
 - 2026-11-23 ・ 85 分（見込み 44）・ R 63 ・ F 5 ・ そのまま ・ 分量 ×2 ・ 📷 20261123-1.jpg

@@ -1,35 +1,35 @@
 # profile/learned.yml — nightly-learn（scripts/learn.py）が logs/ から生成する。手で直さない（直すなら profile/overrides.yml）。
-updated: '2026-11-18'
+updated: '2026-11-23'
 window_days: 90
-n_logs: 34
-last_log_id: zw41cg4gnqhh
+n_logs: 36
+last_log_id: 1wpzljmwabwk
 speed_factor: {overall: 1.05, prep: 1.17, heat: 1.04, serve: 0.86}
 likes:
-- {key: 煮込み, score: 0.93, n: 3}
-- {key: 鍋ひとつ, score: 0.81, n: 7}
-- {key: チョッパー, score: 0.78, n: 7}
-- {key: 牛乳, score: 0.74, n: 7}
+- {key: 煮込み, score: 0.95, n: 4}
+- {key: 鍋ひとつ, score: 0.83, n: 8}
+- {key: チョッパー, score: 0.81, n: 8}
+- {key: 牛乳, score: 0.8, n: 9}
 - {key: しらす, score: 0.71, n: 3}
-- {key: スープ, score: 0.67, n: 8}
+- {key: スープ, score: 0.7, n: 9}
 - {key: 炊飯器, score: 0.62, n: 4}
-- {key: 卵, score: 0.56, n: 8}
+- {key: 卵, score: 0.61, n: 9}
 - {key: 炊き込みご飯, score: 0.5, n: 4}
 - {key: 米, score: 0.47, n: 5}
 - {key: にんじん, score: 0.47, n: 5}
 - {key: かぼちゃ, score: 0.44, n: 6}
+- {key: 時短, score: 0.43, n: 7}
 - {key: 低温調理, score: 0.43, n: 4}
-- {key: 子ども取り分け, score: 0.37, n: 19}
-- {key: 玉ねぎ, score: 0.37, n: 5}
+- {key: 子ども取り分け, score: 0.4, n: 20}
 dislikes:
 - {key: 煮物, score: -0.56, n: 3}
 - {key: レンジ, score: -0.47, n: 3}
 - {key: 作り置き, score: -0.4, n: 3}
 - {key: ブロッコリー, score: -0.24, n: 3}
 partner:
-  likes: [煮込み, 牛すじ, じゃがいも, ミキサー, 炒め物, 大豆水煮, 鍋ひとつ, チョッパー]
+  likes: [煮込み, 牛すじ, じゃがいも, ミキサー, 炒め物, 大豆水煮, 鍋ひとつ, 牛乳]
   dislikes: [なす, レンジ, 豆腐, 野菜, いわしつみれ]
 kid:
-  eats_well: [子ども取り分け, チョッパー, スープ, 牛乳, 卵, 鍋ひとつ, 炊き込みご飯, 米, かぼちゃ, にんじん, 玉ねぎ, 炊飯器]
+  eats_well: [子ども取り分け, 牛乳, チョッパー, スープ, 卵, 鍋ひとつ, 炊き込みご飯, 米, かぼちゃ, 時短, 煮込み, にんじん]
   refuses: []
   works_if: [甘めの味（BBQ風・ミルク・さつまいも）なら半分以上食べる]
 equipment_notes: [レンジ加熱ではにんじんが固く残るので、フライパンで炒めて柔らかくする, 低温調理の焼き芋風は硬め・甘み弱め。70℃に達してから入れ時間を長めに]
@@ -103,3 +103,12 @@ quality:
   new_ratio: 1.0
   adoption: 1.0
   prompt_versions: {'11': 2}
+- week: 2026-W48
+  generated: 0
+  cooked: 2
+  f_avg: 5.0
+  r_avg: 62
+  time_err_median: 0.94
+  new_ratio: 0.5
+  adoption: null
+  prompt_versions: {}
