@@ -1,0 +1,19 @@
+{
+ "id": "req-20261122-2320-v8vw",
+ "ts": "2026-11-22T23:20:03+09:00",
+ "type": "prep",
+ "time_budget": 0,
+ "servings": {
+  "adults": 2,
+  "kids": 1
+ },
+ "dishes": "main+side",
+ "mood": [],
+ "use_up": [],
+ "exclude": [],
+ "note": "副菜のみ",
+ "mode": "pick",
+ "status": "pending",
+ "error": null,
+ "result": null
+}
