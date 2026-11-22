@@ -12,10 +12,635 @@
  "use_up": [],
  "exclude": [],
  "note": "",
- "mode": "pick",
+ "mode": "auto",
  "parent": "req-20261122-2313-so1m",
  "alternative": 1,
- "status": "pending",
+ "status": "done",
  "error": null,
- "result": null
+ "result": {
+  "feasible": true,
+  "infeasible_reason": null,
+  "nearest_options": [],
+  "alternatives": [
+   {
+    "title": "かまぼこと卵のミルクスープ",
+    "minutes": 20,
+    "why": "家族の評価が高い定番。牛乳とかまぼこが在庫にある",
+    "kind": "standard"
+   },
+   {
+    "title": "鶏もも肉の魚焼きグリル焼き ヨーグルト漬け",
+    "minutes": 35,
+    "why": "ひき肉の煮込みから、グリルの焼き目とヨーグルト漬けの鶏ももへ主材料と調理法を変える",
+    "kind": "new"
+   }
+  ],
+  "recipe_id": "r-20261122-buta-hikiniku-no-chopper-nikomi-hamburg-",
+  "recipe": {
+   "id": "r-20261122-buta-hikiniku-no-chopper-nikomi-hamburg-",
+   "title": "豚ひき肉のチョッパー煮込みハンバーグ ミルクソース",
+   "version": 1,
+   "supersedes": null,
+   "status": "draft",
+   "created": "2026-11-22",
+   "request": "req-20261122-2319-umc2",
+   "generated_by": {
+    "model": "claude-code",
+    "prompt_version": 11
+   },
+   "type": "recipe_detail",
+   "servings": {
+    "adults": 2,
+    "kids": 1
+   },
+   "time": {
+    "budget": 0,
+    "planned": 44,
+    "active": 29,
+    "raw_estimate": 41,
+    "speed_factor": 1.05
+   },
+   "image_text": "焼き色の付いた小判形のハンバーグが、とろりとした白いミルクソースに半分つかっている。子どもの分は 1cm 幅のスティックに切って、ソースを少しだけからめて別の小皿に。",
+   "dishes": [
+    {
+     "name": "豚ひき肉のチョッパー煮込みハンバーグ ミルクソース",
+     "role": "main"
+    }
+   ],
+   "equipment": [
+    "gas-r",
+    "fp26",
+    "bowl-m"
+   ],
+   "ingredients": [
+    {
+     "name": "豚ひき肉",
+     "qty": 300,
+     "unit": "g",
+     "grams": 300,
+     "pantry": "豚ひき肉",
+     "for": "豚ひき肉のチョッパー煮込みハンバーグ ミルクソース",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "牛乳",
+     "qty": 245,
+     "unit": "ml",
+     "grams": 250,
+     "pantry": "牛乳",
+     "for": "豚ひき肉のチョッパー煮込みハンバーグ ミルクソース",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "片栗粉",
+     "qty": 1,
+     "unit": "大さじ",
+     "grams": 9,
+     "pantry": "片栗粉",
+     "for": "豚ひき肉のチョッパー煮込みハンバーグ ミルクソース",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "塩",
+     "qty": 0.17,
+     "unit": "小さじ",
+     "grams": 1,
+     "pantry": "塩",
+     "for": "豚ひき肉のチョッパー煮込みハンバーグ ミルクソース",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "サラダ油",
+     "qty": 1,
+     "unit": "小さじ",
+     "grams": 4,
+     "pantry": "サラダ油",
+     "for": "豚ひき肉のチョッパー煮込みハンバーグ ミルクソース",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "小麦粉",
+     "qty": 1,
+     "unit": "大さじ",
+     "grams": 9,
+     "pantry": "小麦粉",
+     "for": "豚ひき肉のチョッパー煮込みハンバーグ ミルクソース",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "コンソメ",
+     "qty": 0.5,
+     "unit": "個",
+     "grams": 2.5,
+     "pantry": "コンソメ",
+     "for": "豚ひき肉のチョッパー煮込みハンバーグ ミルクソース",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "バター",
+     "qty": 10,
+     "unit": "g",
+     "grams": 10,
+     "pantry": "バター",
+     "for": "豚ひき肉のチョッパー煮込みハンバーグ ミルクソース",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "こしょう",
+     "qty": null,
+     "unit": "少々",
+     "grams": null,
+     "pantry": "こしょう",
+     "for": "豚ひき肉のチョッパー煮込みハンバーグ ミルクソース",
+     "substitute": null,
+     "use_up": false
+    }
+   ],
+   "tags": [
+    "煮込み",
+    "チョッパー",
+    "牛乳",
+    "ひき肉",
+    "子ども取り分け",
+    "フライパンひとつ"
+   ],
+   "salt": {
+    "total_g": 2.4,
+    "adult_per_serving_g": 1.1,
+    "kid_g": 0.2
+   },
+   "kid": {
+    "rule": "separate",
+    "cut": "1cm 幅・5cm 長さのスティック（手づかみ用）",
+    "note": "肉だねは塩ひとつまみだけ。牛乳で煮込んだあと、コンソメ・バターを入れる前に子どもの分を取り出す。冷ましてから出す。"
+   },
+   "keep": {
+    "fridge_days": 2,
+    "freezer": true,
+    "reheat": "ソースごと耐熱容器に入れ、レンジ 600W で 1 人分 1 分 30 秒〜2 分。途中で返し、湯気が立つまで。冷凍はソースごと平らにして 3 週間。"
+   },
+   "timeline": [
+    {
+     "minute": 0,
+     "lane": "hands",
+     "text": "チョッパーでひき肉・牛乳 大さじ 3・片栗粉・塩を混ぜる"
+    },
+    {
+     "minute": 8,
+     "lane": "hands",
+     "text": "大人 4 個の小判と子ども 3 本のスティックに成形"
+    },
+    {
+     "minute": 14,
+     "lane": "gas-r",
+     "text": "fp26 中火で両面を焼く"
+    },
+    {
+     "minute": 20,
+     "lane": "gas-r",
+     "text": "脂を拭いて小麦粉をふり、牛乳 200ml を注ぐ"
+    },
+    {
+     "minute": 22,
+     "lane": "gas-r",
+     "text": "弱火・蓋で 10 分煮込む（待ち）"
+    },
+    {
+     "minute": 22,
+     "lane": "hands",
+     "text": "成形に使ったボウル・チョッパーを洗う。副菜のほうれん草をゆでる"
+    },
+    {
+     "minute": 32,
+     "lane": "hands",
+     "text": "子どもの分を取り出してスティックに切り、冷ます"
+    },
+    {
+     "minute": 34,
+     "lane": "gas-r",
+     "text": "コンソメ・バターを入れてソースを 3 分煮詰める"
+    },
+    {
+     "minute": 37,
+     "lane": "hands",
+     "text": "盛り付け・配膳"
+    },
+    {
+     "minute": 41,
+     "lane": "hands",
+     "text": "完成"
+    }
+   ],
+   "steps": [
+    {
+     "dish": "豚ひき肉のチョッパー煮込みハンバーグ ミルクソース",
+     "n": 1,
+     "title": "チョッパーで肉だねを作る",
+     "kind": "prep",
+     "tag": "cut",
+     "minutes": 8,
+     "start": 0,
+     "heat": null,
+     "text": "ぶんぶんチョッパーに豚ひき肉 300g、牛乳 大さじ 3、片栗粉 大さじ 1、塩 小さじ 1/6 を入れ、ひもを 15〜20 回引いて混ぜる。玉ねぎが無くても、牛乳を吸った片栗粉が水分を抱えてふんわり仕上がる。",
+     "cue": "肉だねが白っぽくなり、ふたを開けると全体がねっとりまとまって容器の壁に付く",
+     "caution": "引きすぎると肉が温まって脂が溶ける。20 回で止め、まとまらなければ 5 回ずつ足す",
+     "timer": null,
+     "kid": null,
+     "ingredients": [
+      "豚ひき肉",
+      "牛乳",
+      "片栗粉",
+      "塩"
+     ]
+    },
+    {
+     "dish": "豚ひき肉のチョッパー煮込みハンバーグ ミルクソース",
+     "n": 2,
+     "title": "成形する",
+     "kind": "prep",
+     "tag": "cut",
+     "minutes": 6,
+     "start": 8,
+     "heat": null,
+     "text": "手にサラダ油を薄く付け、肉だねの 1/5 を子どもの分にして 1cm 厚・5cm 長さのスティック 3 本に。残りを 4 等分し、厚さ 1.5cm の小判形にして真ん中を指で軽くへこませる。",
+     "cue": "表面にひびが無く、縁がなめらか。大人の分は手のひらに収まる大きさ",
+     "caution": "厚さを 1.5cm までにそろえる。厚いと中まで火が通る前にソースが煮詰まる",
+     "timer": null,
+     "kid": "子どもの分は手づかみできる 1cm 厚のスティックにする（1-2y は肉 1cm 以下）",
+     "ingredients": []
+    },
+    {
+     "dish": "豚ひき肉のチョッパー煮込みハンバーグ ミルクソース",
+     "n": 3,
+     "title": "両面を焼く",
+     "kind": "heat",
+     "tag": "sear",
+     "minutes": 6,
+     "start": 14,
+     "heat": {
+      "equipment": "gas-r",
+      "level": "中火"
+     },
+     "text": "fp26 を gas-r の中火で 1 分予熱し、サラダ油 小さじ 1 をひいてハンバーグとスティックを並べる。3 分触らずに焼き、フライ返しで返してもう 3 分焼く。",
+     "cue": "裏返すと濃いきつね色の焼き目が付いている。じゅうじゅうという音が続く",
+     "caution": "焼き目が付く前に動かすと崩れる。フライ返しを差し込んで底がはがれるのを確かめてから返す",
+     "timer": 180,
+     "kid": null,
+     "ingredients": [
+      "サラダ油"
+     ]
+    },
+    {
+     "dish": "豚ひき肉のチョッパー煮込みハンバーグ ミルクソース",
+     "n": 4,
+     "title": "小麦粉と牛乳でソースを作る",
+     "kind": "heat",
+     "tag": "simmer",
+     "minutes": 2,
+     "start": 20,
+     "heat": {
+      "equipment": "gas-r",
+      "level": "弱火"
+     },
+     "text": "火を弱火に落とし、出た脂をキッチンペーパーで半分ほど拭く。ハンバーグのすき間に小麦粉 大さじ 1 をふり入れ、菜箸で 30 秒混ぜて脂となじませる。牛乳 200ml を少しずつ注ぎ、底をこそげるように混ぜる。",
+     "cue": "粉のかたまりが無くなり、ソースがうっすら色づいてなめらかになる",
+     "caution": "牛乳は一度に入れず 3 回に分けて混ぜる。強火だと噴いて分離する",
+     "timer": null,
+     "kid": null,
+     "ingredients": [
+      "小麦粉",
+      "牛乳"
+     ]
+    },
+    {
+     "dish": "豚ひき肉のチョッパー煮込みハンバーグ ミルクソース",
+     "n": 5,
+     "title": "蓋をして煮込む",
+     "kind": "wait",
+     "tag": "simmer",
+     "minutes": 10,
+     "start": 22,
+     "heat": {
+      "equipment": "gas-r",
+      "level": "弱火"
+     },
+     "text": "蓋をして弱火で 10 分煮込む。途中 5 分で一度ハンバーグを返す。待っている間に、チョッパーとボウルを洗い、副菜のほうれん草をゆでる。",
+     "cue": "いちばん厚いハンバーグの真ん中に竹串を刺すと透明な肉汁が出る。割ると中まで白く、赤みが無い（中心 75℃ 1 分以上）",
+     "caution": "ふつふつ小さな泡が出る火加減を保つ。ぐらぐら煮立てると牛乳が分離する",
+     "timer": 600,
+     "kid": null,
+     "ingredients": []
+    },
+    {
+     "dish": "豚ひき肉のチョッパー煮込みハンバーグ ミルクソース",
+     "n": 6,
+     "title": "子どもの分を取り出す",
+     "kind": "prep",
+     "tag": "kid",
+     "minutes": 2,
+     "start": 32,
+     "heat": null,
+     "text": "コンソメを入れる前に、スティック 3 本をミルクソース 大さじ 1 と一緒に小皿へ取り出す。1 本を半分に割って中まで白いのを確かめ、皿に広げて冷ます。",
+     "cue": "割った断面が白く、指で触ってぬるいくらいまで冷めている",
+     "caution": null,
+     "timer": null,
+     "kid": "味付け前のミルク煮。熱いので必ず冷ましてから出す。手で持てるスティックのまま",
+     "ingredients": []
+    },
+    {
+     "dish": "豚ひき肉のチョッパー煮込みハンバーグ ミルクソース",
+     "n": 7,
+     "title": "大人の分の味を決める",
+     "kind": "heat",
+     "tag": "season",
+     "minutes": 3,
+     "start": 34,
+     "heat": {
+      "equipment": "gas-r",
+      "level": "中火"
+     },
+     "text": "コンソメ 1/2 個を砕いて入れ、バター 10g を加えて中火で 3 分、ソースを煮詰める。最後にこしょうを少々ふる。",
+     "cue": "ソースがスプーンの背をうっすら覆う濃さになり、ふちに小さな泡がふつふつ立つ",
+     "caution": "煮詰めすぎると塩気が強くなる。3 分で火を止める",
+     "timer": null,
+     "kid": null,
+     "ingredients": [
+      "コンソメ",
+      "バター",
+      "こしょう"
+     ]
+    },
+    {
+     "dish": "豚ひき肉のチョッパー煮込みハンバーグ ミルクソース",
+     "n": 8,
+     "title": "盛り付ける",
+     "kind": "serve",
+     "tag": "serve",
+     "minutes": 4,
+     "start": 37,
+     "heat": null,
+     "text": "大人の皿にハンバーグを 2 個ずつ盛り、ソースをたっぷりかける。副菜のほうれん草を添える。",
+     "cue": "ハンバーグがソースに半分つかり、湯気が立っている",
+     "caution": null,
+     "timer": null,
+     "kid": "子どもの小皿は手の届く所に。冷めているか指で確かめる",
+     "ingredients": []
+    }
+   ],
+   "cleanup": {
+    "dishwasher": [
+     "bowl-m"
+    ],
+    "hand": [
+     "fp26"
+    ],
+    "note": "ぶんぶんチョッパーは手洗い。刃は肉の脂が固まる前に、煮込みの待ち時間にお湯で洗う"
+   },
+   "photo": null,
+   "stats": {
+    "cooked": 0,
+    "r_avg": null,
+    "f_avg": null,
+    "last": null
+   },
+   "detail": "full",
+   "together": [
+    "r-20261122-horenso-no-okaka-ae"
+   ],
+   "memo": []
+  },
+  "side_recipe_ids": [
+   "r-20261122-horenso-no-okaka-ae"
+  ],
+  "side_recipes": [
+   {
+    "id": "r-20261122-horenso-no-okaka-ae",
+    "title": "ほうれん草のおかか和え",
+    "version": 1,
+    "supersedes": null,
+    "status": "draft",
+    "created": "2026-11-22",
+    "request": "req-20261122-2319-umc2",
+    "generated_by": {
+     "model": "claude-code",
+     "prompt_version": 11
+    },
+    "type": "recipe_detail",
+    "servings": {
+     "adults": 2,
+     "kids": 1
+    },
+    "time": {
+     "budget": 0,
+     "planned": 12,
+     "active": 9,
+     "raw_estimate": 11,
+     "speed_factor": 1.05
+    },
+    "image_text": "鮮やかな緑のほうれん草が 3cm の長さにそろい、ふわっとかつお節がのっている。子どもの分は葉先を細かく刻んで小さく丸めて。",
+    "dishes": [
+     {
+      "name": "ほうれん草のおかか和え",
+      "role": "side"
+     }
+    ],
+    "equipment": [
+     "kettle",
+     "gas-l",
+     "pot20"
+    ],
+    "ingredients": [
+     {
+      "name": "ほうれん草",
+      "qty": 1,
+      "unit": "束",
+      "grams": 200,
+      "pantry": "ほうれん草",
+      "for": "ほうれん草のおかか和え",
+      "substitute": null,
+      "use_up": false
+     },
+     {
+      "name": "醤油",
+      "qty": 1,
+      "unit": "小さじ",
+      "grams": 6,
+      "pantry": "醤油",
+      "for": "ほうれん草のおかか和え",
+      "substitute": null,
+      "use_up": false
+     },
+     {
+      "name": "かつお節",
+      "qty": 2,
+      "unit": "g",
+      "grams": 2,
+      "pantry": "かつお節",
+      "for": "ほうれん草のおかか和え",
+      "substitute": null,
+      "use_up": false
+     }
+    ],
+    "tags": [
+     "副菜",
+     "青菜",
+     "ケトル"
+    ],
+    "salt": {
+     "total_g": 0.9,
+     "adult_per_serving_g": 0.45,
+     "kid_g": 0.0
+    },
+    "kid": {
+     "rule": "separate",
+     "cut": "葉先だけ 5mm に刻む",
+     "note": "醤油をかける前に取り分け、かつお節少しで風味だけ付ける"
+    },
+    "keep": {
+     "fridge_days": 2,
+     "freezer": false,
+     "reheat": "冷たいまま食べる。和えるのは食べる直前に"
+    },
+    "timeline": [
+     {
+      "minute": 0,
+      "lane": "hands",
+      "text": "ケトルで湯を沸かし、ほうれん草を洗う"
+     },
+     {
+      "minute": 3,
+      "lane": "gas-l",
+      "text": "pot20 で 1 分ゆでる"
+     },
+     {
+      "minute": 5,
+      "lane": "hands",
+      "text": "水に取って絞り、切る。子どもの分を刻む"
+     },
+     {
+      "minute": 9,
+      "lane": "hands",
+      "text": "醤油・かつお節で和える"
+     },
+     {
+      "minute": 11,
+      "lane": "hands",
+      "text": "完成"
+     }
+    ],
+    "steps": [
+     {
+      "dish": "ほうれん草のおかか和え",
+      "n": 1,
+      "title": "湯を沸かす",
+      "kind": "prep",
+      "tag": "cut",
+      "minutes": 3,
+      "start": 0,
+      "heat": null,
+      "text": "電気ケトルで湯 1L を沸かす。その間にほうれん草 1 束の根元に十字の切り込みを入れ、ボウルの水で泥を洗う。",
+      "cue": "ケトルのスイッチが切れ、根元に泥が残っていない",
+      "caution": null,
+      "timer": null,
+      "kid": null,
+      "ingredients": [
+       "ほうれん草"
+      ]
+     },
+     {
+      "dish": "ほうれん草のおかか和え",
+      "n": 2,
+      "title": "さっとゆでる",
+      "kind": "heat",
+      "tag": "boil",
+      "minutes": 2,
+      "start": 3,
+      "heat": {
+       "equipment": "gas-l",
+       "level": "強火"
+      },
+      "text": "ケトルの湯を pot20 に入れて gas-l の強火にかけ、根元から入れて 30 秒、葉まで沈めてさらに 30 秒ゆでる。",
+      "cue": "葉が鮮やかな緑になり、茎を指でつまむと少しやわらかい",
+      "caution": "ゆですぎると色が黒ずむ。1 分で上げる",
+      "timer": 60,
+      "kid": null,
+      "ingredients": []
+     },
+     {
+      "dish": "ほうれん草のおかか和え",
+      "n": 3,
+      "title": "絞って切る",
+      "kind": "prep",
+      "tag": "cut",
+      "minutes": 4,
+      "start": 5,
+      "heat": null,
+      "text": "ザルに上げて冷水に取り、根元をそろえて両手で絞る。3cm の長さに切る。子どもの分は葉先をひとつまみ取り、5mm に刻む。",
+      "cue": "握っても水が垂れず、切り口がそろっている",
+      "caution": null,
+      "timer": null,
+      "kid": "葉先だけを 5mm に刻む。茎は大人へ",
+      "ingredients": []
+     },
+     {
+      "dish": "ほうれん草のおかか和え",
+      "n": 4,
+      "title": "和える",
+      "kind": "serve",
+      "tag": "season",
+      "minutes": 2,
+      "start": 9,
+      "heat": null,
+      "text": "子どもの分を小皿に取ったあと、大人の分に醤油 小さじ 1 とかつお節 2g（子どもの分にひとつまみ）をのせて和える。",
+      "cue": "かつお節が水分を吸ってしっとり全体にからむ",
+      "caution": null,
+      "timer": null,
+      "kid": "醤油はかけず、かつお節ひとつまみだけ",
+      "ingredients": [
+       "醤油",
+       "かつお節"
+      ]
+     }
+    ],
+    "cleanup": {
+     "dishwasher": [],
+     "hand": [
+      "pot20"
+     ],
+     "note": "ザルは手洗い"
+    },
+    "photo": null,
+    "stats": {
+     "cooked": 0,
+     "r_avg": null,
+     "f_avg": null,
+     "last": null
+    },
+    "detail": "full",
+    "together": [
+     "r-20261122-buta-hikiniku-no-chopper-nikomi-hamburg-"
+    ],
+    "memo": []
+   }
+  ],
+  "model": "claude-code",
+  "prompt_version": 11,
+  "tokens": {
+   "input": 0,
+   "output": 0,
+   "cache_read": 0,
+   "cache_write": 0
+  },
+  "cost_usd": 0.0,
+  "seconds": 0
+ },
+ "finished": "2026-11-22T23:21:50+09:00"
 }
