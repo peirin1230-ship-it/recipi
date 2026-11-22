@@ -1,0 +1,21 @@
+{
+ "id": "req-20261122-2319-umc2",
+ "ts": "2026-11-22T23:19:39+09:00",
+ "type": "recipe_detail",
+ "time_budget": 0,
+ "servings": {
+  "adults": 2,
+  "kids": 1
+ },
+ "dishes": "main+side",
+ "mood": [],
+ "use_up": [],
+ "exclude": [],
+ "note": "",
+ "mode": "pick",
+ "parent": "req-20261122-2313-so1m",
+ "alternative": 1,
+ "status": "pending",
+ "error": null,
+ "result": null
+}
