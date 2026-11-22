@@ -1,4 +1,5 @@
 ---
+listed: "2026-11-22T23:23:27+09:00"
 id: r-20261122-buta-hikiniku-no-chopper-nikomi-hamburg-
 title: 豚ひき肉のチョッパー煮込みハンバーグ ミルクソース
 version: 1
