@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-22T22:09:41+09:00",
+ "updated": "2026-11-22T22:09:51+09:00",
  "items": [
   {
    "id": "p1qnvb",
@@ -67,6 +67,13 @@
   {
    "id": "p3z86t",
    "name": "豚ひき肉",
+   "loc": "fridge",
+   "added": "2026-11-22",
+   "src": "manual"
+  },
+  {
+   "id": "pzzc1z",
+   "name": "豚肩ロース肉",
    "loc": "fridge",
    "added": "2026-11-22",
    "src": "manual"
