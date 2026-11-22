@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-22T22:10:00+09:00",
+ "updated": "2026-11-22T23:32:54+09:00",
  "items": [
   {
    "id": "p1qnvb",
@@ -81,6 +81,13 @@
   {
    "id": "p7w4he",
    "name": "たこ",
+   "loc": "fridge",
+   "added": "2026-11-22",
+   "src": "manual"
+  },
+  {
+   "id": "pl27ah",
+   "name": "卵",
    "loc": "fridge",
    "added": "2026-11-22",
    "src": "manual"
