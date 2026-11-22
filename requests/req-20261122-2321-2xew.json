@@ -15,7 +15,44 @@
  "exclude": [],
  "note": "副菜のみ",
  "mode": "pick",
- "status": "pending",
+ "status": "done",
  "error": null,
- "result": null
+ "result": {
+  "feasible": true,
+  "infeasible_reason": null,
+  "nearest_options": [],
+  "alternatives": [
+   {
+    "title": "ホタテとほうれん草のだし浸し",
+    "minutes": 15,
+    "why": "ケトルの湯でほうれん草をさっと茹で、ホタテと一緒にだしに一晩浸すと翌日は盛るだけ。醤油控えめでだしの旨みが効く",
+    "kind": "new"
+   },
+   {
+    "title": "ホタテとかまぼこのチョッパーしんじょう（フライパン蒸し）",
+    "minutes": 25,
+    "why": "チョッパーでペーストにして小さな器で蒸すふわふわ食感は子どもの手づかみにも向き、冷蔵 2 日で温め直すだけ",
+    "kind": "new"
+   },
+   {
+    "title": "ホタテとほうれん草のごまマヨ和え",
+    "minutes": 15,
+    "why": "レンジを使わず鍋でさっと火を通し、白ごまとマヨのまろやかな洋風の和え物にして味付けで差を出す",
+    "kind": "new"
+   }
+  ],
+  "recipe_id": null,
+  "recipe": null,
+  "model": "claude-code",
+  "prompt_version": 11,
+  "tokens": {
+   "input": 0,
+   "output": 0,
+   "cache_read": 0,
+   "cache_write": 0
+  },
+  "cost_usd": 0.0,
+  "seconds": 0
+ },
+ "finished": "2026-11-22T23:22:42+09:00"
 }
