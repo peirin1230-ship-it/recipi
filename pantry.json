@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-23T00:58:43+09:00",
+ "updated": "2026-11-23T00:59:01+09:00",
  "items": [
   {
    "id": "p1qnvb",
@@ -34,13 +34,6 @@
    "name": "納豆",
    "loc": "fridge",
    "added": "2026-10-28",
-   "src": "kaji-quest"
-  },
-  {
-   "id": "pfroor",
-   "name": "かまぼこ",
-   "loc": "fridge",
-   "added": "2026-11-03",
    "src": "kaji-quest"
   },
   {
