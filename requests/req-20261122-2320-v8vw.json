@@ -13,7 +13,44 @@
  "exclude": [],
  "note": "副菜のみ",
  "mode": "pick",
- "status": "pending",
+ "status": "done",
  "error": null,
- "result": null
+ "result": {
+  "feasible": true,
+  "infeasible_reason": null,
+  "nearest_options": [],
+  "alternatives": [
+   {
+    "title": "ほうれん草のミルクポタージュ（ミキサー）",
+    "minutes": 20,
+    "why": "牛乳とスープは子どもがよく食べる。ケトルで下ゆでしてミキサーで滑らかに、冷蔵2日で翌日は温めるだけ",
+    "kind": "new"
+   },
+   {
+    "title": "ホタテとほうれん草のバター炒め",
+    "minutes": 12,
+    "why": "ホタテのうまみとバターで醤油は少しで足りる。子どもの分は味付け前に取り分けて細かく刻む",
+    "kind": "new"
+   },
+   {
+    "title": "たことほうれん草のヨーグルト酢味噌和え",
+    "minutes": 12,
+    "why": "酸味で減塩、和えて冷蔵しておけば翌日は盛るだけ。たこは大人だけ、子どもはほうれん草をそのまま",
+    "kind": "new"
+   }
+  ],
+  "recipe_id": null,
+  "recipe": null,
+  "model": "claude-code",
+  "prompt_version": 11,
+  "tokens": {
+   "input": 0,
+   "output": 0,
+   "cache_read": 0,
+   "cache_write": 0
+  },
+  "cost_usd": 0.0,
+  "seconds": 0
+ },
+ "finished": "2026-11-22T23:20:56+09:00"
 }
