@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-22T22:09:17+09:00",
+ "updated": "2026-11-22T22:09:20+09:00",
  "items": [
   {
    "id": "p1qnvb",
@@ -14,13 +14,6 @@
    "loc": "fridge",
    "added": "2026-10-28",
    "src": "manual"
-  },
-  {
-   "id": "pl6d66",
-   "name": "豆腐",
-   "loc": "fridge",
-   "added": "2026-10-18",
-   "src": "kaji-quest"
   },
   {
    "id": "p4vctj",
