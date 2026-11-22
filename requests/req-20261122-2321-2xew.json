@@ -1,0 +1,21 @@
+{
+ "id": "req-20261122-2321-2xew",
+ "ts": "2026-11-22T23:21:44+09:00",
+ "type": "prep",
+ "time_budget": 0,
+ "servings": {
+  "adults": 2,
+  "kids": 1
+ },
+ "dishes": "main+side",
+ "mood": [],
+ "use_up": [
+  "ホタテ"
+ ],
+ "exclude": [],
+ "note": "副菜のみ",
+ "mode": "pick",
+ "status": "pending",
+ "error": null,
+ "result": null
+}
