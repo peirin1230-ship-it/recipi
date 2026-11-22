@@ -13,7 +13,44 @@
  "exclude": [],
  "note": "",
  "mode": "pick",
- "status": "pending",
+ "status": "done",
  "error": null,
- "result": null
+ "result": {
+  "feasible": true,
+  "infeasible_reason": null,
+  "nearest_options": [],
+  "alternatives": [
+   {
+    "title": "鶏もも肉の低温調理 ヨーグルト味噌漬け グリル仕上げ",
+    "minutes": 150,
+    "why": "ヨーグルト味噌に漬けて65℃で2時間。翌日はグリルで皮目を焼くだけ（子どもの分は中心まで焼いて1cm角）",
+    "kind": "new"
+   },
+   {
+    "title": "豚ひき肉のチョッパー煮込みハンバーグ ミルクソース",
+    "minutes": 50,
+    "why": "チョッパーで玉ねぎ無しでもふんわり、牛乳の煮込みで子どもも手づかみの小判に。翌日は温めるだけ",
+    "kind": "new"
+   },
+   {
+    "title": "豚肩ロース肉の甘めBBQ風ケチャップ煮込み",
+    "minutes": 70,
+    "why": "焼かずに鍋ひとつでことこと煮込む。甘めの味で子どもが食べやすく、翌日は温め直すだけ",
+    "kind": "new"
+   }
+  ],
+  "recipe_id": null,
+  "recipe": null,
+  "model": "claude-code",
+  "prompt_version": 11,
+  "tokens": {
+   "input": 0,
+   "output": 0,
+   "cache_read": 0,
+   "cache_write": 0
+  },
+  "cost_usd": 0.0,
+  "seconds": 0
+ },
+ "finished": "2026-11-22T23:13:58+09:00"
 }
