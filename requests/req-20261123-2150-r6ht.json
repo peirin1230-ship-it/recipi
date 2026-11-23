@@ -15,7 +15,44 @@
  "exclude": [],
  "note": "副菜のみ",
  "mode": "pick",
- "status": "pending",
+ "status": "done",
  "error": null,
- "result": null
+ "result": {
+  "feasible": true,
+  "infeasible_reason": null,
+  "nearest_options": [],
+  "alternatives": [
+   {
+    "title": "ホタテとにんじんのスライサー細切り 甘酢だしマリネ",
+    "minutes": 15,
+    "why": "にんじんをスライサーで細切り、ホタテはケトルの湯でさっと火を通して甘酢だしに漬けるだけ。翌日は味がなじんで出すだけ",
+    "kind": "new"
+   },
+   {
+    "title": "ホタテと玉ねぎのチョッパー卵焼き",
+    "minutes": 15,
+    "why": "ホタテと玉ねぎをチョッパーで細かくして卵に混ぜて焼く。子どもが手づかみで食べやすく、冷めてもおいしく翌日はそのまま",
+    "kind": "new"
+   },
+   {
+    "title": "かぼちゃとホタテの85℃低温調理 だし含め",
+    "minutes": 70,
+    "why": "かぼちゃを低温調理器で煮崩れなく柔らかくし、火を通したホタテとだしに浸して冷蔵。少ない塩で味が入る",
+    "kind": "new"
+   }
+  ],
+  "recipe_id": null,
+  "recipe": null,
+  "model": "claude-code",
+  "prompt_version": 11,
+  "tokens": {
+   "input": 0,
+   "output": 0,
+   "cache_read": 0,
+   "cache_write": 0
+  },
+  "cost_usd": 0.0,
+  "seconds": 0
+ },
+ "finished": "2026-11-23T21:50:59+09:00"
 }
