@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-23T21:06:21+09:00",
+ "updated": "2026-11-23T21:06:25+09:00",
  "items": [
   {
    "id": "p1qnvb",
@@ -39,13 +39,6 @@
   {
    "id": "pgazog",
    "name": "ホタテ",
-   "loc": "fridge",
-   "added": "2026-11-15",
-   "src": "manual"
-  },
-  {
-   "id": "p2a7t6",
-   "name": "ほうれん草",
    "loc": "fridge",
    "added": "2026-11-15",
    "src": "manual"
