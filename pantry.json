@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-23T21:33:17+09:00",
+ "updated": "2026-11-23T21:33:22+09:00",
  "items": [
   {
    "id": "p1qnvb",
@@ -68,6 +68,13 @@
    "id": "pcjdnc",
    "name": "にんじん",
    "loc": "fridge",
+   "added": "2026-11-23",
+   "src": "manual"
+  },
+  {
+   "id": "poe71q",
+   "name": "じゃがいも",
+   "loc": "pantry",
    "added": "2026-11-23",
    "src": "manual"
   }
