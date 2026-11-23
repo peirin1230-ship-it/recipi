@@ -1,0 +1,21 @@
+{
+ "id": "req-20261123-2147-1bqa",
+ "ts": "2026-11-23T21:47:23+09:00",
+ "type": "recipe_detail",
+ "time_budget": 0,
+ "servings": {
+  "adults": 2,
+  "kids": 1
+ },
+ "dishes": "main+side",
+ "mood": [],
+ "use_up": [],
+ "exclude": [],
+ "note": "副菜のみ",
+ "mode": "pick",
+ "parent": "req-20261123-2133-r60u",
+ "alternative": 1,
+ "status": "pending",
+ "error": null,
+ "result": null
+}
