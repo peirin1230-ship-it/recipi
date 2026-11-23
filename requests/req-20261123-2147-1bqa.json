@@ -12,10 +12,329 @@
  "use_up": [],
  "exclude": [],
  "note": "副菜のみ",
- "mode": "pick",
+ "mode": "auto",
  "parent": "req-20261123-2133-r60u",
  "alternative": 1,
- "status": "pending",
+ "status": "done",
  "error": null,
- "result": null
+ "result": {
+  "feasible": true,
+  "infeasible_reason": null,
+  "nearest_options": [],
+  "alternatives": [
+   {
+    "title": "かまぼこと卵のミルクスープ",
+    "minutes": 20,
+    "why": "定番。牛乳と卵で子どもがよく食べる",
+    "kind": "standard"
+   },
+   {
+    "title": "じゃがいもとにんじんのスライサーガレット",
+    "minutes": 20,
+    "why": "スライサーの細切りをフライパンで焼くだけ。手づかみしやすい棒状に切れる",
+    "kind": "new"
+   }
+  ],
+  "recipe_id": "r-20261123-kabocha-no-chopper-milk-chakin",
+  "recipe": {
+   "id": "r-20261123-kabocha-no-chopper-milk-chakin",
+   "title": "かぼちゃのチョッパーミルク茶巾",
+   "version": 1,
+   "supersedes": null,
+   "status": "draft",
+   "created": "2026-11-23",
+   "request": "req-20261123-2147-1bqa",
+   "generated_by": {
+    "model": "claude-code",
+    "prompt_version": 11
+   },
+   "type": "recipe_detail",
+   "servings": {
+    "adults": 2,
+    "kids": 1
+   },
+   "time": {
+    "budget": 0,
+    "planned": 29,
+    "active": 16,
+    "raw_estimate": 26,
+    "speed_factor": 1.05
+   },
+   "image_text": "ラップでひねった跡がついた、濃い黄色の小さな丸い茶巾が 6 つ。表面はなめらかで、上に白ごまが少し散っている。",
+   "dishes": [
+    {
+     "name": "かぼちゃのチョッパーミルク茶巾",
+     "role": "side"
+    }
+   ],
+   "equipment": [
+    "microwave",
+    "bowl-m"
+   ],
+   "ingredients": [
+    {
+     "name": "かぼちゃ",
+     "qty": 0.25,
+     "unit": "個",
+     "grams": 300,
+     "pantry": "かぼちゃ",
+     "for": "かぼちゃのチョッパーミルク茶巾",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "水",
+     "qty": 1,
+     "unit": "大さじ",
+     "grams": 15,
+     "pantry": null,
+     "for": "かぼちゃのチョッパーミルク茶巾",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "牛乳",
+     "qty": 2,
+     "unit": "大さじ",
+     "grams": 30,
+     "pantry": "牛乳",
+     "for": "かぼちゃのチョッパーミルク茶巾",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "バター",
+     "qty": 10,
+     "unit": "g",
+     "grams": 10,
+     "pantry": "バター",
+     "for": "かぼちゃのチョッパーミルク茶巾",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "砂糖",
+     "qty": 1,
+     "unit": "小さじ",
+     "grams": 3,
+     "pantry": "砂糖",
+     "for": "かぼちゃのチョッパーミルク茶巾",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "白ごま",
+     "qty": 0.5,
+     "unit": "小さじ",
+     "grams": 1,
+     "pantry": "白ごま",
+     "for": "かぼちゃのチョッパーミルク茶巾",
+     "substitute": null,
+     "use_up": false
+    }
+   ],
+   "tags": [
+    "副菜",
+    "かぼちゃ",
+    "チョッパー",
+    "牛乳",
+    "子ども取り分け",
+    "手づかみ"
+   ],
+   "salt": {
+    "total_g": 0.2,
+    "adult_per_serving_g": 0.1,
+    "kid_g": 0.03
+   },
+   "kid": {
+    "rule": "塩は入れないので全員同じペースト。子どもの分は小さく丸め、白ごまは付けない",
+    "cut": "直径 2cm ほどの小さな茶巾（手で持てて、歯ぐきでつぶせる柔らかさ）。皮はすべて外す",
+    "note": "1-2y。熱いまま出さず、人肌まで冷ましてから。甘めのミルク味なので手づかみで食べやすい"
+   },
+   "keep": {
+    "fridge_days": 2,
+    "freezer": true,
+    "reheat": "冷たいままでよい。温めるなら 1 個ずつ 600W 10 秒（子どもの分は冷えたままか人肌）。冷凍はラップのまま保存袋で 2 週間、冷蔵庫で解凍"
+   },
+   "timeline": [
+    {
+     "minute": 0,
+     "lane": "hands",
+     "text": "かぼちゃの種とわたを取り、3cm 角に切る"
+    },
+    {
+     "minute": 5,
+     "lane": "microwave",
+     "text": "かぼちゃを 900W で 3 分 30 秒＋様子を見て 30 秒"
+    },
+    {
+     "minute": 5,
+     "lane": "hands",
+     "text": "まな板と包丁を洗う。ラップを 20cm 角に 6 枚切っておく"
+    },
+    {
+     "minute": 10,
+     "lane": "hands",
+     "text": "熱いうちに皮を外し、チョッパーに牛乳・バター・砂糖と入れてペーストに"
+    },
+    {
+     "minute": 14,
+     "lane": "hands",
+     "text": "ボウルに広げて粗熱を取る"
+    },
+    {
+     "minute": 19,
+     "lane": "hands",
+     "text": "ラップで 6 等分に丸めてひねる"
+    },
+    {
+     "minute": 25,
+     "lane": "hands",
+     "text": "盛り付け（子どもの分は小さく）"
+    }
+   ],
+   "steps": [
+    {
+     "dish": "かぼちゃのチョッパーミルク茶巾",
+     "n": 1,
+     "title": "かぼちゃを切る",
+     "kind": "prep",
+     "tag": "cut",
+     "minutes": 5,
+     "start": 0,
+     "heat": null,
+     "text": "かぼちゃ 1/4 個の種とわたを計量スプーンでかき出し、包丁で 3cm 角に切る。皮は硬いので今はむかず、レンジの後に外す。",
+     "cue": "大きさがそろって 3cm 角。わたの繊維が残っていない",
+     "caution": "かぼちゃは硬く刃が滑りやすい。平らな面を下にして置き、包丁の背に手を添えて少しずつ押し切る",
+     "timer": null,
+     "kid": null,
+     "ingredients": [
+      "かぼちゃ"
+     ]
+    },
+    {
+     "dish": "かぼちゃのチョッパーミルク茶巾",
+     "n": 2,
+     "title": "レンジで柔らかくする",
+     "kind": "wait",
+     "tag": "microwave",
+     "minutes": 5,
+     "start": 5,
+     "heat": {
+      "equipment": "microwave",
+      "level": "900W"
+     },
+     "text": "耐熱のボウル（中）に皮を下にしてかぼちゃを並べ、水 大さじ 1 をふってふんわりラップ。電子レンジ 900W で 3 分 30 秒。菜箸が硬ければ上下を返して 30 秒ずつ追加する。待つ間にまな板と包丁を洗い、ラップを 20cm 角に 6 枚切っておく。",
+     "cue": "箸がすっと通り、皮のきわまで黄色い身がほっくり崩れる",
+     "caution": "加熱ムラが出やすい。端が硬ければ上下を入れ替えて 30 秒追加。ラップを外すときは蒸気でやけどしないよう奥から開ける",
+     "timer": 210,
+     "kid": null,
+     "ingredients": [
+      "かぼちゃ",
+      "水"
+     ]
+    },
+    {
+     "dish": "かぼちゃのチョッパーミルク茶巾",
+     "n": 3,
+     "title": "チョッパーでペーストにする",
+     "kind": "prep",
+     "tag": "season",
+     "minutes": 4,
+     "start": 10,
+     "heat": null,
+     "text": "熱いうちにスプーンで身をすくって皮を外し、身をぶんぶんチョッパーに入れる。牛乳 大さじ 2、バター 10g、砂糖 小さじ 1 を加え、ひもを 15〜20 回引いてなめらかなペーストにする。",
+     "cue": "粒が見えず、スプーンですくうとぽってり落ちる固さ（ゆるければ丸められないので、牛乳はここで足さない）",
+     "caution": "皮が混ざると子どもの分で引っかかる。緑の皮は全部外す",
+     "timer": null,
+     "kid": "皮は全部外す。なめらかになるまで回すと歯ぐきでつぶせる",
+     "ingredients": [
+      "かぼちゃ",
+      "牛乳",
+      "バター",
+      "砂糖"
+     ]
+    },
+    {
+     "dish": "かぼちゃのチョッパーミルク茶巾",
+     "n": 4,
+     "title": "粗熱を取る",
+     "kind": "prep",
+     "tag": null,
+     "minutes": 5,
+     "start": 14,
+     "heat": null,
+     "text": "ペーストをボウル（中）に薄く広げ、5 分置いて手で触れる温かさまで冷ます。その間にチョッパーの刃を外して洗う。",
+     "cue": "手のひらで持っても熱くない、人肌くらい",
+     "caution": null,
+     "timer": 300,
+     "kid": null,
+     "ingredients": []
+    },
+    {
+     "dish": "かぼちゃのチョッパーミルク茶巾",
+     "n": 5,
+     "title": "ラップで茶巾に包む",
+     "kind": "prep",
+     "tag": null,
+     "minutes": 5,
+     "start": 19,
+     "heat": null,
+     "text": "ペーストを 6 等分（大人 2 個ずつ、子ども 2 個は小さめ）にしてラップの中央にのせ、四隅を集めて上をきゅっとひねり、丸く形を整える。",
+     "cue": "ラップを開くと上にひねり跡が残り、丸い形が崩れない",
+     "caution": "ラップは 1 回で強くひねると破れる。軽く 2〜3 回ひねって形を整える",
+     "timer": null,
+     "kid": "子どもの分は直径 2cm ほど。手で持ちやすい大きさに",
+     "ingredients": []
+    },
+    {
+     "dish": "かぼちゃのチョッパーミルク茶巾",
+     "n": 6,
+     "title": "盛り付け",
+     "kind": "serve",
+     "tag": "serve",
+     "minutes": 2,
+     "start": 24,
+     "heat": null,
+     "text": "ラップを外して器に盛り、大人の分だけ白ごま 小さじ 1/2 を上に散らす。作り置きにする分はラップのまま保存容器へ。",
+     "cue": "ひねり跡が上を向いて並んでいる",
+     "caution": null,
+     "timer": null,
+     "kid": "白ごまは付けない。人肌に冷めているのを確かめて出す",
+     "ingredients": [
+      "白ごま"
+     ]
+    }
+   ],
+   "cleanup": {
+    "dishwasher": [
+     "bowl-m"
+    ],
+    "hand": [],
+    "note": "ぶんぶんチョッパー・包丁・まな板は手洗い。チョッパーはかぼちゃが乾くと落ちにくいので、粗熱を取る間に刃を外して洗う"
+   },
+   "photo": null,
+   "stats": {
+    "cooked": 0,
+    "r_avg": null,
+    "f_avg": null,
+    "last": null
+   },
+   "detail": "full",
+   "memo": []
+  },
+  "side_recipe_ids": [],
+  "side_recipes": [],
+  "model": "claude-code",
+  "prompt_version": 11,
+  "tokens": {
+   "input": 0,
+   "output": 0,
+   "cache_read": 0,
+   "cache_write": 0
+  },
+  "cost_usd": 0.0,
+  "seconds": 0
+ },
+ "finished": "2026-11-23T21:48:49+09:00"
 }
