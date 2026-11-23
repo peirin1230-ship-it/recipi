@@ -1,4 +1,5 @@
 ---
+listed: "2026-11-23T21:49:47+09:00"
 id: r-20261123-kabocha-no-chopper-milk-chakin
 title: かぼちゃのチョッパーミルク茶巾
 version: 1
