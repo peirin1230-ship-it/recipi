@@ -13,7 +13,44 @@
  "exclude": [],
  "note": "副菜のみ",
  "mode": "pick",
- "status": "pending",
+ "status": "done",
  "error": null,
- "result": null
+ "result": {
+  "feasible": true,
+  "infeasible_reason": null,
+  "nearest_options": [],
+  "alternatives": [
+   {
+    "title": "じゃがいもとにんじんの低温調理ポテトサラダ ヨーグルトマヨ",
+    "minutes": 75,
+    "why": "85℃で1時間、煮崩れずほくほく。チョッパーの玉ねぎとヨーグルトで塩控えめ、翌日は盛るだけで子どもは取り分けて1cm角に",
+    "kind": "new"
+   },
+   {
+    "title": "かぼちゃのチョッパーミルク茶巾",
+    "minutes": 25,
+    "why": "レンジで柔らかくしたかぼちゃをチョッパーで牛乳とペーストにしてラップで丸めるだけ。甘めで手づかみしやすく、冷蔵2日",
+    "kind": "new"
+   },
+   {
+    "title": "にんじんのスライサー細切り ヨーグルトラペ",
+    "minutes": 15,
+    "why": "1.2mm細切りを酢・オリーブオイル・ヨーグルトで和えて一晩なじませる。子どもの分は先にフライパンで炒めて柔らかくしてから",
+    "kind": "new"
+   }
+  ],
+  "recipe_id": null,
+  "recipe": null,
+  "model": "claude-code",
+  "prompt_version": 11,
+  "tokens": {
+   "input": 0,
+   "output": 0,
+   "cache_read": 0,
+   "cache_write": 0
+  },
+  "cost_usd": 0.0,
+  "seconds": 0
+ },
+ "finished": "2026-11-23T21:34:25+09:00"
 }
