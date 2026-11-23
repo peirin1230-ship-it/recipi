@@ -13,7 +13,44 @@
  "exclude": [],
  "note": "副菜のみ",
  "mode": "pick",
- "status": "pending",
+ "status": "done",
  "error": null,
- "result": null
+ "result": {
+  "feasible": true,
+  "infeasible_reason": null,
+  "nearest_options": [],
+  "alternatives": [
+   {
+    "title": "卵と牛乳のふんわり甘め卵焼き",
+    "minutes": 15,
+    "why": "卵・牛乳・甘めは子どもがよく食べる組み合わせ。前日に焼いて冷蔵、翌日は切って出すだけ（子どもは手づかみの棒状に）",
+    "kind": "new"
+   },
+   {
+    "title": "固ゆで卵のだし醤油漬け",
+    "minutes": 20,
+    "why": "ケトルの湯で固ゆでにしてだしパックのだしに一晩漬けるだけ。醤油控えめでも味が入り、子どもの分は漬ける前に取り分けて刻む",
+    "kind": "new"
+   },
+   {
+    "title": "たこの甘酢だし漬け",
+    "minutes": 10,
+    "why": "一覧に無いたこの漬け物で、切って漬けるだけの大人向け副菜。酢とだしで塩を抑え、翌日は器に盛るだけ（子どもには固いので出さない）",
+    "kind": "new"
+   }
+  ],
+  "recipe_id": null,
+  "recipe": null,
+  "model": "claude-code",
+  "prompt_version": 11,
+  "tokens": {
+   "input": 0,
+   "output": 0,
+   "cache_read": 0,
+   "cache_write": 0
+  },
+  "cost_usd": 0.0,
+  "seconds": 0
+ },
+ "finished": "2026-11-23T21:07:24+09:00"
 }
