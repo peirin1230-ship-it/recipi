@@ -13,7 +13,44 @@
  "exclude": [],
  "note": "副菜のみ、ホタテのバリエーションをいろんな角度から",
  "mode": "pick",
- "status": "pending",
+ "status": "done",
  "error": null,
- "result": null
+ "result": {
+  "feasible": true,
+  "infeasible_reason": null,
+  "nearest_options": [],
+  "alternatives": [
+   {
+    "title": "ホタテと玉ねぎの甘酢南蛮漬け",
+    "minutes": 20,
+    "why": "片栗粉をまぶして蒸し焼きにし甘めの酢だしに漬ける。一晩で味がなじみ翌日は盛るだけ、子どもの分は漬ける前に取り分け",
+    "kind": "new"
+   },
+   {
+    "title": "ホタテの味噌マヨトースター焼き",
+    "minutes": 15,
+    "why": "トースターで焼き目を付ける角度。味噌は少量でマヨのコクで補い、翌日は温め直して焼き目を戻すだけ",
+    "kind": "new"
+   },
+   {
+    "title": "ホタテとじゃがいものチョッパーおやき",
+    "minutes": 25,
+    "why": "レンジで柔らかくしたじゃがいもとチョッパーで刻んだホタテを焼く。手づかみできる形で、焼いて冷凍もできる",
+    "kind": "new"
+   }
+  ],
+  "recipe_id": null,
+  "recipe": null,
+  "model": "claude-code",
+  "prompt_version": 11,
+  "tokens": {
+   "input": 0,
+   "output": 0,
+   "cache_read": 0,
+   "cache_write": 0
+  },
+  "cost_usd": 0.0,
+  "seconds": 0
+ },
+ "finished": "2026-11-23T21:58:06+09:00"
 }
