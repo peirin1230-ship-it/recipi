@@ -1,0 +1,19 @@
+{
+ "id": "req-20261123-2147-ezva",
+ "ts": "2026-11-23T21:47:30+09:00",
+ "type": "prep",
+ "time_budget": 0,
+ "servings": {
+  "adults": 2,
+  "kids": 1
+ },
+ "dishes": "main+side",
+ "mood": [],
+ "use_up": [],
+ "exclude": [],
+ "note": "副菜のみ",
+ "mode": "pick",
+ "status": "pending",
+ "error": null,
+ "result": null
+}
