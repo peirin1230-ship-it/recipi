@@ -1,5 +1,5 @@
 ---
-listed: "2026-11-23T21:49:47+09:00"
+listed: '2026-11-23T21:49:47+09:00'
 id: r-20261123-kabocha-no-chopper-milk-chakin
 title: かぼちゃのチョッパーミルク茶巾
 version: 1
@@ -124,8 +124,8 @@ cleanup:
   dishwasher: [bowl-m]
   hand: []
   note: ぶんぶんチョッパー・包丁・まな板は手洗い。チョッパーはかぼちゃが乾くと落ちにくいので、粗熱を取る間に刃を外して洗う
-photo: null
-stats: {cooked: 0, r_avg: null, f_avg: null, last: null}
+photo: photos/r-20261123-kabocha-no-chopper-milk-chakin/20261123-1.jpg
+stats: {cooked: 1, r_avg: 82, f_avg: 5.0, last: '2026-11-23'}
 detail: full
 ---
 
@@ -199,4 +199,5 @@ detail: full
 - ぶんぶんチョッパー・包丁・まな板は手洗い。チョッパーはかぼちゃが乾くと落ちにくいので、粗熱を取る間に刃を外して洗う
 
 ## 作ったときのメモ
+
 - 2026-11-23 ・ 16 分（見込み 29）・ R 82 ・ F 5 ・ そのまま ・ 📷 20261123-1.jpg
