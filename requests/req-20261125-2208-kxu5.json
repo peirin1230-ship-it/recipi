@@ -1,0 +1,22 @@
+{
+ "id": "req-20261125-2208-kxu5",
+ "ts": "2026-11-25T22:08:59+09:00",
+ "type": "prep",
+ "time_budget": 0,
+ "servings": {
+  "adults": 2,
+  "kids": 1
+ },
+ "dishes": "main+side",
+ "mood": [],
+ "use_up": [
+  "豚肩ロース肉",
+  "たこ"
+ ],
+ "exclude": [],
+ "note": "",
+ "mode": "auto",
+ "status": "pending",
+ "error": null,
+ "result": null
+}
