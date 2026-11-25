@@ -1,4 +1,5 @@
 ---
+listed: "2026-11-25T22:56:50+09:00"
 id: r-20261125-tako-to-ninjin-no-dashi-takikomi-gohan
 title: たことにんじんのだし炊き込みご飯
 version: 1
