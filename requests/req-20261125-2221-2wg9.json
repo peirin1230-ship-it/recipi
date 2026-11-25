@@ -16,7 +16,751 @@
  "exclude": [],
  "note": "タコは炊き込みご飯。豚肩ロースはフライパンで",
  "mode": "auto",
- "status": "pending",
+ "status": "done",
  "error": null,
- "result": null
+ "result": {
+  "feasible": true,
+  "infeasible_reason": null,
+  "nearest_options": [],
+  "alternatives": [
+   {
+    "title": "豚肩ロース肉とじゃがいものジャーマンポテト風炒め",
+    "minutes": 25,
+    "why": "豚肩ロースをフライパンで、じゃがいもと炒めて一皿に。バターと牛乳好きに合う",
+    "kind": "new"
+   },
+   {
+    "title": "たこと玉ねぎのふんわりオムレツ",
+    "minutes": 20,
+    "why": "たこを卵で包んで焼く新しい組み合わせ。炊飯を待たずに作れる",
+    "kind": "new"
+   }
+  ],
+  "recipe_id": "r-20261125-butakata-rosu-no-saute-chopper-tamanegi-",
+  "recipe": {
+   "id": "r-20261125-butakata-rosu-no-saute-chopper-tamanegi-",
+   "title": "豚肩ロース肉のソテー チョッパー玉ねぎソース",
+   "version": 1,
+   "supersedes": null,
+   "status": "draft",
+   "created": "2026-11-25",
+   "request": "req-20261125-2221-2wg9",
+   "generated_by": {
+    "model": "claude-code",
+    "prompt_version": 11
+   },
+   "type": "dinner",
+   "servings": {
+    "adults": 2,
+    "kids": 1
+   },
+   "time": {
+    "budget": 0,
+    "planned": 37,
+    "active": 21,
+    "raw_estimate": 34,
+    "speed_factor": 0.96
+   },
+   "image_text": "きつね色の焼き目が付いた豚肩ロースに、とろりと甘い茶色の玉ねぎソースがたっぷりかかる。バターのつやが光り、皿の端に子どもの分の小さな棒状の肉が添えてある。",
+   "dishes": [
+    {
+     "name": "豚肩ロース肉のソテー チョッパー玉ねぎソース",
+     "role": "main"
+    }
+   ],
+   "equipment": [
+    "fp26",
+    "gas-r",
+    "bowl-m"
+   ],
+   "ingredients": [
+    {
+     "name": "豚肩ロース肉",
+     "qty": 300,
+     "unit": "g",
+     "grams": 300,
+     "pantry": "豚肩ロース肉",
+     "for": "豚肩ロース肉のソテー チョッパー玉ねぎソース",
+     "substitute": null,
+     "use_up": true
+    },
+    {
+     "name": "砂糖",
+     "qty": 0.5,
+     "unit": "小さじ",
+     "grams": 2,
+     "pantry": "砂糖",
+     "for": "豚肩ロース肉のソテー チョッパー玉ねぎソース",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "水",
+     "qty": 3,
+     "unit": "大さじ",
+     "grams": 45,
+     "pantry": null,
+     "for": "豚肩ロース肉のソテー チョッパー玉ねぎソース",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "片栗粉",
+     "qty": 2,
+     "unit": "小さじ",
+     "grams": 6,
+     "pantry": "片栗粉",
+     "for": "豚肩ロース肉のソテー チョッパー玉ねぎソース",
+     "substitute": "小麦粉",
+     "use_up": false
+    },
+    {
+     "name": "玉ねぎ",
+     "qty": 0.5,
+     "unit": "個",
+     "grams": 100,
+     "pantry": "玉ねぎ",
+     "for": "豚肩ロース肉のソテー チョッパー玉ねぎソース",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "サラダ油",
+     "qty": 1,
+     "unit": "小さじ",
+     "grams": 4,
+     "pantry": "サラダ油",
+     "for": "豚肩ロース肉のソテー チョッパー玉ねぎソース",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "醤油",
+     "qty": 2,
+     "unit": "小さじ",
+     "grams": 12,
+     "pantry": "醤油",
+     "for": "豚肩ロース肉のソテー チョッパー玉ねぎソース",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "みりん",
+     "qty": 1,
+     "unit": "大さじ",
+     "grams": 18,
+     "pantry": "みりん",
+     "for": "豚肩ロース肉のソテー チョッパー玉ねぎソース",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "酒",
+     "qty": 1,
+     "unit": "大さじ",
+     "grams": 15,
+     "pantry": "酒",
+     "for": "豚肩ロース肉のソテー チョッパー玉ねぎソース",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "酢",
+     "qty": 1,
+     "unit": "小さじ",
+     "grams": 5,
+     "pantry": "酢",
+     "for": "豚肩ロース肉のソテー チョッパー玉ねぎソース",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "バター",
+     "qty": 10,
+     "unit": "g",
+     "grams": 10,
+     "pantry": "バター",
+     "for": "豚肩ロース肉のソテー チョッパー玉ねぎソース",
+     "substitute": null,
+     "use_up": false
+    }
+   ],
+   "tags": [
+    "焼く",
+    "豚肉",
+    "チョッパー",
+    "子ども取り分け",
+    "フライパンひとつ"
+   ],
+   "salt": {
+    "total_g": 2.2,
+    "adult_per_serving_g": 1.1,
+    "kid_g": 0.0
+   },
+   "kid": {
+    "rule": "separate",
+    "cut": "豚肉は脂身と筋を外して 1cm 幅の棒状（手づかみ用）か 1cm 角。歯ぐきで噛み切れる薄さに",
+    "note": "ソースを作る前、蒸し焼きが終わった所で 2〜3 切れ取り分ける。味付けは砂糖水の下味だけ。冷ましてから出す"
+   },
+   "keep": {
+    "fridge_days": 2,
+    "freezer": true,
+    "reheat": "600W で 1 人分 1 分 30 秒、途中で返して湯気が立つまで。水 小さじ 1 を足すと乾かない"
+   },
+   "timeline": [
+    {
+     "minute": 0,
+     "lane": "hands",
+     "text": "豚の筋切りと叩き、砂糖水を揉み込んで 15 分置く"
+    },
+    {
+     "minute": 3,
+     "lane": "hands",
+     "text": "玉ねぎをぶんぶんチョッパーでみじん切り、ソースの調味料を混ぜる"
+    },
+    {
+     "minute": 8,
+     "lane": "hands",
+     "text": "まな板と包丁を洗う・下味の待ち"
+    },
+    {
+     "minute": 15,
+     "lane": "hands",
+     "text": "豚に片栗粉をまぶす"
+    },
+    {
+     "minute": 17,
+     "lane": "gas-r",
+     "text": "中火で予熱 → 豚を片面 2 分触らず焼き、裏返して 1 分"
+    },
+    {
+     "minute": 20,
+     "lane": "gas-r",
+     "text": "水を入れて蓋、弱火で蒸し焼き 4 分"
+    },
+    {
+     "minute": 20,
+     "lane": "hands",
+     "text": "盛り付ける皿を出す"
+    },
+    {
+     "minute": 24,
+     "lane": "hands",
+     "text": "豚を取り出し、子どもの分を切る"
+    },
+    {
+     "minute": 26,
+     "lane": "gas-r",
+     "text": "玉ねぎを炒め、ソースを煮詰め、豚を戻してからめる"
+    },
+    {
+     "minute": 31,
+     "lane": "hands",
+     "text": "盛り付け・配膳"
+    },
+    {
+     "minute": 34,
+     "lane": "hands",
+     "text": "できあがり"
+    }
+   ],
+   "steps": [
+    {
+     "dish": "豚肩ロース肉のソテー チョッパー玉ねぎソース",
+     "n": 1,
+     "title": "筋切りと下味",
+     "kind": "prep",
+     "tag": "marinate",
+     "minutes": 3,
+     "start": 0,
+     "heat": null,
+     "text": "豚肩ロース肉 300g を一口大（4cm くらい）に切り、脂身と赤身の境目の筋を包丁の先で 4〜5 か所切り、包丁の背で軽く叩いて厚さ 1cm にそろえる。ボウル（中）で砂糖 小さじ 1/2 と水 大さじ 1 を揉み込み、15 分置く。",
+     "cue": "肉が一回り広がって厚さが均一、砂糖水が肉に吸われて表面がしっとりしている",
+     "caution": "筋を切らないと焼いたときに反って固くなる",
+     "timer": 900,
+     "kid": "脂身の少ない所を 2〜3 切れ選んでおく",
+     "ingredients": [
+      "豚肩ロース肉",
+      "砂糖",
+      "水"
+     ]
+    },
+    {
+     "dish": "豚肩ロース肉のソテー チョッパー玉ねぎソース",
+     "n": 2,
+     "title": "玉ねぎとソースの用意",
+     "kind": "prep",
+     "tag": "cut",
+     "minutes": 5,
+     "start": 3,
+     "heat": null,
+     "text": "下味の待ちの間に、玉ねぎ 1/2 個を 4 等分してぶんぶんチョッパーで 30 秒、2〜3mm のみじん切りにする。醤油 小さじ 2・みりん 大さじ 1・酒 大さじ 1・酢 小さじ 1 を小さな器で混ぜておく。",
+     "cue": "玉ねぎが米粒くらいにそろい、大きな塊が残っていない",
+     "caution": null,
+     "timer": null,
+     "kid": null,
+     "ingredients": [
+      "玉ねぎ",
+      "醤油",
+      "みりん",
+      "酒",
+      "酢"
+     ]
+    },
+    {
+     "dish": "豚肩ロース肉のソテー チョッパー玉ねぎソース",
+     "n": 3,
+     "title": "片栗粉をまぶす",
+     "kind": "prep",
+     "tag": "season",
+     "minutes": 2,
+     "start": 15,
+     "heat": null,
+     "text": "15 分置いた豚肉に片栗粉 小さじ 2 を全体に薄くまぶす（片栗粉の膜で肉汁を閉じ込め、ソースも絡みやすくなる）。",
+     "cue": "表面が白く薄い粉の膜で覆われ、粉のだまが無い",
+     "caution": null,
+     "timer": null,
+     "kid": null,
+     "ingredients": [
+      "片栗粉"
+     ]
+    },
+    {
+     "dish": "豚肩ロース肉のソテー チョッパー玉ねぎソース",
+     "n": 4,
+     "title": "両面を焼く",
+     "kind": "heat",
+     "tag": "sear",
+     "minutes": 3,
+     "start": 17,
+     "heat": {
+      "equipment": "gas-r",
+      "level": "中火"
+     },
+     "text": "フライパンを中火で 1 分予熱し、サラダ油 小さじ 1 をなじませて豚肉を並べる。2 分触らずに焼き、裏返して 1 分焼く。",
+     "cue": "焼いた面にきつね色の焼き目、裏返した面の縁が白く変わり始める",
+     "caution": "フッ素加工なので強火にしない。粉が焦げやすい",
+     "timer": 120,
+     "kid": null,
+     "ingredients": [
+      "サラダ油"
+     ]
+    },
+    {
+     "dish": "豚肩ロース肉のソテー チョッパー玉ねぎソース",
+     "n": 5,
+     "title": "蒸し焼き",
+     "kind": "wait",
+     "tag": "simmer",
+     "minutes": 4,
+     "start": 20,
+     "heat": {
+      "equipment": "gas-r",
+      "level": "弱火"
+     },
+     "text": "水 大さじ 2 を入れてすぐ蓋をし、弱火で 4 分蒸し焼きにする。待つ間に盛り付ける皿を出す。",
+     "cue": "いちばん厚い肉を切ると中まで白く赤みが無く、肉汁が透明",
+     "caution": "火を止めたら肉を取り出す。フライパンに残すと余熱で固くなる",
+     "timer": 240,
+     "kid": null,
+     "ingredients": [
+      "水"
+     ]
+    },
+    {
+     "dish": "豚肩ロース肉のソテー チョッパー玉ねぎソース",
+     "n": 6,
+     "title": "取り出して子どもの分を切る",
+     "kind": "prep",
+     "tag": "kid",
+     "minutes": 2,
+     "start": 24,
+     "heat": null,
+     "text": "火を止め、豚肉を全部皿に取り出す。選んでおいた 2〜3 切れは脂身と筋を外し、1cm 幅の棒状（または 1cm 角）に切って別の器へ。",
+     "cue": "断面が白く、指で押すと弾力があり、歯ぐきで噛み切れる柔らかさ",
+     "caution": null,
+     "timer": null,
+     "kid": "ソース前に取り分け。手づかみできる棒状に。冷ましてから出す",
+     "ingredients": []
+    },
+    {
+     "dish": "豚肩ロース肉のソテー チョッパー玉ねぎソース",
+     "n": 7,
+     "title": "玉ねぎソースを作ってからめる",
+     "kind": "heat",
+     "tag": "season",
+     "minutes": 5,
+     "start": 26,
+     "heat": {
+      "equipment": "gas-r",
+      "level": "中火"
+     },
+     "text": "同じフライパンを中火にかけ、みじん切りの玉ねぎを 3 分炒める（焼いた肉の脂で炒める）。混ぜておいた調味料を入れて 1 分煮立て、バター 10g を溶かし、豚肉を戻して返しながら 1 分からめる。",
+     "cue": "玉ねぎが透き通って薄い茶色になり甘い匂い。ソースがふつふつと泡立ち、へらでなぞると底に跡が残る",
+     "caution": "みりんで焦げやすいので、泡が大きくなったら火を弱める",
+     "timer": null,
+     "kid": null,
+     "ingredients": [
+      "玉ねぎ",
+      "醤油",
+      "みりん",
+      "酒",
+      "酢",
+      "バター"
+     ]
+    },
+    {
+     "dish": "豚肩ロース肉のソテー チョッパー玉ねぎソース",
+     "n": 8,
+     "title": "盛り付け",
+     "kind": "serve",
+     "tag": "serve",
+     "minutes": 3,
+     "start": 31,
+     "heat": null,
+     "text": "豚肉を皿に盛り、玉ねぎソースを上からたっぷりかける。子どもの分は冷めているか触って確かめて出す。",
+     "cue": "ソースにつやがあり、肉の上に玉ねぎがこんもりのっている",
+     "caution": null,
+     "timer": null,
+     "kid": "人肌に冷めているか確かめる",
+     "ingredients": []
+    }
+   ],
+   "cleanup": {
+    "dishwasher": [
+     "bowl-m"
+    ],
+    "hand": [
+     "fp26"
+    ],
+    "note": "ぶんぶんチョッパーの容器と刃は玉ねぎを刻んだらすぐ水につけて、包丁・まな板と一緒に洗う"
+   },
+   "photo": null,
+   "stats": {
+    "cooked": 0,
+    "r_avg": null,
+    "f_avg": null,
+    "last": null
+   },
+   "detail": "full",
+   "together": [
+    "r-20261125-tako-to-ninjin-no-dashi-takikomi-gohan"
+   ],
+   "memo": []
+  },
+  "side_recipe_ids": [
+   "r-20261125-tako-to-ninjin-no-dashi-takikomi-gohan"
+  ],
+  "side_recipes": [
+   {
+    "id": "r-20261125-tako-to-ninjin-no-dashi-takikomi-gohan",
+    "title": "たことにんじんのだし炊き込みご飯",
+    "version": 1,
+    "supersedes": null,
+    "status": "draft",
+    "created": "2026-11-25",
+    "request": "req-20261125-2221-2wg9",
+    "generated_by": {
+     "model": "claude-code",
+     "prompt_version": 11
+    },
+    "type": "dinner",
+    "servings": {
+     "adults": 2,
+     "kids": 1
+    },
+    "time": {
+     "budget": 0,
+     "planned": 79,
+     "active": 15,
+     "raw_estimate": 77,
+     "speed_factor": 0.96
+    },
+    "image_text": "薄い醤油色のご飯に、赤紫のたこの角切りとオレンジ色の細かいにんじんが散る。湯気からだしの香りが立ち、白ごまが軽くかかっている。",
+    "dishes": [
+     {
+      "name": "たことにんじんのだし炊き込みご飯",
+      "role": "rice"
+     }
+    ],
+    "equipment": [
+     "rice-cooker",
+     "bowl-l"
+    ],
+    "ingredients": [
+     {
+      "name": "米",
+      "qty": 2,
+      "unit": "合",
+      "grams": 300,
+      "pantry": "米",
+      "for": "たことにんじんのだし炊き込みご飯",
+      "substitute": null,
+      "use_up": false
+     },
+     {
+      "name": "たこ",
+      "qty": 150,
+      "unit": "g",
+      "grams": 150,
+      "pantry": "たこ",
+      "for": "たことにんじんのだし炊き込みご飯",
+      "substitute": null,
+      "use_up": true
+     },
+     {
+      "name": "にんじん",
+      "qty": 0.33,
+      "unit": "本",
+      "grams": 50,
+      "pantry": "にんじん",
+      "for": "たことにんじんのだし炊き込みご飯",
+      "substitute": null,
+      "use_up": false
+     },
+     {
+      "name": "醤油",
+      "qty": 2,
+      "unit": "小さじ",
+      "grams": 12,
+      "pantry": "醤油",
+      "for": "たことにんじんのだし炊き込みご飯",
+      "substitute": null,
+      "use_up": false
+     },
+     {
+      "name": "酒",
+      "qty": 1,
+      "unit": "大さじ",
+      "grams": 15,
+      "pantry": "酒",
+      "for": "たことにんじんのだし炊き込みご飯",
+      "substitute": null,
+      "use_up": false
+     },
+     {
+      "name": "みりん",
+      "qty": 1,
+      "unit": "小さじ",
+      "grams": 6,
+      "pantry": "みりん",
+      "for": "たことにんじんのだし炊き込みご飯",
+      "substitute": null,
+      "use_up": false
+     },
+     {
+      "name": "だしパック",
+      "qty": 1,
+      "unit": "袋",
+      "grams": 8,
+      "pantry": "だしパック",
+      "for": "たことにんじんのだし炊き込みご飯",
+      "substitute": null,
+      "use_up": false
+     },
+     {
+      "name": "白ごま",
+      "qty": 1,
+      "unit": "小さじ",
+      "grams": 3,
+      "pantry": "白ごま",
+      "for": "たことにんじんのだし炊き込みご飯",
+      "substitute": null,
+      "use_up": false
+     }
+    ],
+    "tags": [
+     "炊き込みご飯",
+     "炊飯器",
+     "たこ",
+     "チョッパー",
+     "子ども取り分け"
+    ],
+    "salt": {
+     "total_g": 2.0,
+     "adult_per_serving_g": 0.8,
+     "kid_g": 0.3
+    },
+    "kid": {
+     "rule": "separate",
+     "cut": "たこは弾力があり窒息しやすいので子どもの分からは全部取り除く。ご飯とにんじんだけを小さなおにぎりに",
+     "note": "炊き上がって混ぜる前に、たこの少ない所からよそい、たこを除く。熱いので冷ましてから出す"
+    },
+    "keep": {
+     "fridge_days": 1,
+     "freezer": true,
+     "reheat": "1 膳ずつラップで包んで冷凍。600W で 1 膳 2 分、湯気が立つまで。たこは温め直すと固くなりやすいので早めに食べる"
+    },
+    "timeline": [
+     {
+      "minute": 0,
+      "lane": "hands",
+      "text": "米を研いでザルに上げる"
+     },
+     {
+      "minute": 5,
+      "lane": "hands",
+      "text": "にんじんをぶんぶんチョッパーで米粒大に、たこを 1cm 角に切る"
+     },
+     {
+      "minute": 10,
+      "lane": "hands",
+      "text": "調味料と水を入れ、具とだしパックをのせて通常炊飯（60 分）"
+     },
+     {
+      "minute": 12,
+      "lane": "hands",
+      "text": "炊飯中は主菜の下ごしらえと焼きへ"
+     },
+     {
+      "minute": 72,
+      "lane": "hands",
+      "text": "炊き上がり。だしパックを出し、子どもの分を取ってから混ぜる"
+     },
+     {
+      "minute": 75,
+      "lane": "hands",
+      "text": "盛り付け・配膳"
+     },
+     {
+      "minute": 77,
+      "lane": "hands",
+      "text": "できあがり"
+     }
+    ],
+    "steps": [
+     {
+      "dish": "たことにんじんのだし炊き込みご飯",
+      "n": 1,
+      "title": "米を研ぐ",
+      "kind": "prep",
+      "tag": "rice",
+      "minutes": 5,
+      "start": 0,
+      "heat": null,
+      "text": "米 2 合をボウル（大）で 3 回研ぎ、ザルに上げて水けを切る。",
+      "cue": "研ぎ汁がうっすら白く、底の米が透けて見える",
+      "caution": null,
+      "timer": null,
+      "kid": null,
+      "ingredients": [
+       "米"
+      ]
+     },
+     {
+      "dish": "たことにんじんのだし炊き込みご飯",
+      "n": 2,
+      "title": "具を刻む",
+      "kind": "prep",
+      "tag": "cut",
+      "minutes": 5,
+      "start": 5,
+      "heat": null,
+      "text": "にんじん 1/3 本は皮をむいて 3cm に切り、ぶんぶんチョッパーで 20 秒、米粒くらいに刻む。たこ 150g は 1cm 角に切る。",
+      "cue": "にんじんが米粒大にそろい、たこの角切りの大きさがそろっている",
+      "caution": null,
+      "timer": null,
+      "kid": "にんじんは米粒大なのでそのまま食べられる",
+      "ingredients": [
+       "にんじん",
+       "たこ"
+      ]
+     },
+     {
+      "dish": "たことにんじんのだし炊き込みご飯",
+      "n": 3,
+      "title": "仕掛けて炊く",
+      "kind": "wait",
+      "tag": "rice",
+      "minutes": 62,
+      "start": 10,
+      "heat": {
+       "equipment": "rice-cooker",
+       "level": "通常炊飯"
+      },
+      "text": "内釜に米を入れ、醤油 小さじ 2・酒 大さじ 1・みりん 小さじ 1 を入れてから 2 合の目盛りまで水を足し、ひと混ぜする。にんじんを広げ、たことだしパック 1 袋を上にのせて（混ぜない）通常炊飯（60 分）。炊いている間に主菜を作る。",
+      "cue": "炊き上がりの合図が鳴り、蓋を開けると表面に小さな穴があいて、だしと醤油の香りが立つ",
+      "caution": "調味料を先に入れてから目盛りまで水を足す。後から入れると水が多くなりべちゃつく",
+      "timer": 3600,
+      "kid": null,
+      "ingredients": [
+       "米",
+       "醤油",
+       "酒",
+       "みりん",
+       "にんじん",
+       "たこ",
+       "だしパック"
+      ]
+     },
+     {
+      "dish": "たことにんじんのだし炊き込みご飯",
+      "n": 4,
+      "title": "子どもの分を取ってから混ぜる",
+      "kind": "prep",
+      "tag": "kid",
+      "minutes": 3,
+      "start": 72,
+      "heat": null,
+      "text": "だしパックを取り出す。混ぜる前に、たこの少ない所から子どもの分を茶碗に取り、たこを全部取り除いて小さなおにぎりにする。残りを底から切るように混ぜる。",
+      "cue": "ご飯全体が薄い醤油色にそろい、たこが全体に散っている。子どもの分にたこが残っていない",
+      "caution": "子どもの分のたこは小さくても弾力があるので必ず除く",
+      "timer": null,
+      "kid": "たこを除いた小さなおにぎりに。冷ましてから出す",
+      "ingredients": []
+     },
+     {
+      "dish": "たことにんじんのだし炊き込みご飯",
+      "n": 5,
+      "title": "盛り付け",
+      "kind": "serve",
+      "tag": "serve",
+      "minutes": 2,
+      "start": 75,
+      "heat": null,
+      "text": "大人の分を茶碗に盛り、白ごま 小さじ 1 を指でひねってふる。",
+      "cue": "ごまの香りが立ち、たことにんじんの色が表面に見える",
+      "caution": null,
+      "timer": null,
+      "kid": null,
+      "ingredients": [
+       "白ごま"
+      ]
+     }
+    ],
+    "cleanup": {
+     "dishwasher": [
+      "bowl-l"
+     ],
+     "hand": [
+      "rice-cooker"
+     ],
+     "note": "内釜は醤油が残るのでぬるま湯につけてから洗う。ザルとぶんぶんチョッパーの容器・刃も手洗い"
+    },
+    "photo": null,
+    "stats": {
+     "cooked": 0,
+     "r_avg": null,
+     "f_avg": null,
+     "last": null
+    },
+    "detail": "full",
+    "together": [
+     "r-20261125-butakata-rosu-no-saute-chopper-tamanegi-"
+    ],
+    "memo": []
+   }
+  ],
+  "model": "claude-code",
+  "prompt_version": 11,
+  "tokens": {
+   "input": 0,
+   "output": 0,
+   "cache_read": 0,
+   "cache_write": 0
+  },
+  "cost_usd": 0.0,
+  "seconds": 0
+ },
+ "finished": "2026-11-25T22:23:56+09:00"
 }
