@@ -16,7 +16,742 @@
  "exclude": [],
  "note": "",
  "mode": "auto",
- "status": "pending",
+ "status": "done",
  "error": null,
- "result": null
+ "result": {
+  "feasible": true,
+  "infeasible_reason": null,
+  "nearest_options": [],
+  "alternatives": [
+   {
+    "title": "たことじゃがいものガーリック風オリーブオイル炒め",
+    "minutes": 20,
+    "why": "煮込まずに炒め物で短く。たこは大人の分だけ、じゃがいもは子どもにも棒状で",
+    "kind": "new"
+   },
+   {
+    "title": "豚肩ロース肉とたこの和風炊き込みご飯（炊飯器）",
+    "minutes": 75,
+    "why": "炊飯器に任せて手が空く。たこは大人の分によそい、豚肉は刻んで子どもにも",
+    "kind": "new"
+   }
+  ],
+  "recipe_id": "r-20261125-buta-kata-rosu-to-tako-no-pot-au-feu-fu-",
+  "recipe": {
+   "id": "r-20261125-buta-kata-rosu-to-tako-no-pot-au-feu-fu-",
+   "title": "豚肩ロース肉とたこのポトフ風コンソメ煮込み",
+   "version": 1,
+   "supersedes": null,
+   "status": "draft",
+   "created": "2026-11-25",
+   "request": "req-20261125-2215-j6ib",
+   "generated_by": {
+    "model": "claude-code",
+    "prompt_version": 11
+   },
+   "type": "dinner",
+   "servings": {
+    "adults": 2,
+    "kids": 1
+   },
+   "time": {
+    "budget": 0,
+    "planned": 85,
+    "active": 26,
+    "raw_estimate": 83,
+    "speed_factor": 0.96
+   },
+   "image_text": "大きめのじゃがいもとにんじん、くし形の玉ねぎが澄んだ金色のスープに浸り、ほろりとほどける豚肩ロースと赤い縁のたこがのぞく。黒こしょうをひと振りした、湯気の立つ深皿の煮込み。",
+   "dishes": [
+    {
+     "name": "豚肩ロース肉とたこのポトフ風コンソメ煮込み",
+     "role": "main"
+    }
+   ],
+   "equipment": [
+    "kettle",
+    "pot20",
+    "gas-l"
+   ],
+   "ingredients": [
+    {
+     "name": "豚肩ロース肉",
+     "qty": 300,
+     "unit": "g",
+     "grams": 300,
+     "pantry": "豚肩ロース肉",
+     "substitute": null,
+     "use_up": true,
+     "for": "豚肩ロース肉とたこのポトフ風コンソメ煮込み"
+    },
+    {
+     "name": "たこ",
+     "qty": 150,
+     "unit": "g",
+     "grams": 150,
+     "pantry": "たこ",
+     "substitute": null,
+     "use_up": true,
+     "for": "豚肩ロース肉とたこのポトフ風コンソメ煮込み"
+    },
+    {
+     "name": "じゃがいも",
+     "qty": 2,
+     "unit": "個",
+     "grams": 300,
+     "pantry": "じゃがいも",
+     "substitute": null,
+     "use_up": false,
+     "for": "豚肩ロース肉とたこのポトフ風コンソメ煮込み"
+    },
+    {
+     "name": "にんじん",
+     "qty": 1,
+     "unit": "本",
+     "grams": 150,
+     "pantry": "にんじん",
+     "substitute": null,
+     "use_up": false,
+     "for": "豚肩ロース肉とたこのポトフ風コンソメ煮込み"
+    },
+    {
+     "name": "玉ねぎ",
+     "qty": 1,
+     "unit": "個",
+     "grams": 200,
+     "pantry": "玉ねぎ",
+     "substitute": null,
+     "use_up": false,
+     "for": "豚肩ロース肉とたこのポトフ風コンソメ煮込み"
+    },
+    {
+     "name": "水",
+     "qty": 700,
+     "unit": "ml",
+     "grams": 700,
+     "pantry": null,
+     "substitute": null,
+     "use_up": false,
+     "for": "豚肩ロース肉とたこのポトフ風コンソメ煮込み"
+    },
+    {
+     "name": "酒",
+     "qty": 1,
+     "unit": "大さじ",
+     "grams": 15,
+     "pantry": "酒",
+     "substitute": null,
+     "use_up": false,
+     "for": "豚肩ロース肉とたこのポトフ風コンソメ煮込み"
+    },
+    {
+     "name": "サラダ油",
+     "qty": 1,
+     "unit": "小さじ",
+     "grams": 4,
+     "pantry": "サラダ油",
+     "substitute": null,
+     "use_up": false,
+     "for": "豚肩ロース肉とたこのポトフ風コンソメ煮込み"
+    },
+    {
+     "name": "コンソメ",
+     "qty": 1,
+     "unit": "個",
+     "grams": 5,
+     "pantry": "コンソメ",
+     "substitute": null,
+     "use_up": false,
+     "for": "豚肩ロース肉とたこのポトフ風コンソメ煮込み"
+    },
+    {
+     "name": "こしょう",
+     "qty": null,
+     "unit": "少々",
+     "grams": null,
+     "pantry": "こしょう",
+     "substitute": null,
+     "use_up": false,
+     "for": "豚肩ロース肉とたこのポトフ風コンソメ煮込み"
+    }
+   ],
+   "tags": [
+    "煮込み",
+    "鍋ひとつ",
+    "豚肉",
+    "たこ",
+    "スープ",
+    "子ども取り分け",
+    "時間無制限"
+   ],
+   "salt": {
+    "total_g": 2.8,
+    "adult_per_serving_g": 1.4,
+    "kid_g": 0.1
+   },
+   "kid": {
+    "rule": "separate",
+    "cut": "豚肉は 1cm 以下に刻み、じゃがいも・にんじんは 1cm 角か手づかみ用の 1cm 幅の棒状に。たこは弾力があり窒息しやすいので入れない",
+    "note": "コンソメを入れる前に、具（豚肉 30g・じゃがいも・にんじん）とスープ少しを取り分ける。脂身と筋は外す。冷ましてから出す。"
+   },
+   "keep": {
+    "fridge_days": 2,
+    "freezer": false,
+    "reheat": "鍋で中火、湯気が立つまで温め直す。じゃがいもは冷凍で食感が落ちるので冷蔵で 2 日以内に。常温で鍋ごと置かない。"
+   },
+   "timeline": [
+    {
+     "minute": 0,
+     "lane": "hands",
+     "text": "電気ケトルで水 700ml を沸かす。豚肩ロースを 3cm 角、たこを 2cm のぶつ切りにする"
+    },
+    {
+     "minute": 5,
+     "lane": "gas-l",
+     "text": "鍋で豚肉の表面を中火で焼く"
+    },
+    {
+     "minute": 9,
+     "lane": "gas-l",
+     "text": "ケトルの湯・酒・たこを入れ、アクを取る"
+    },
+    {
+     "minute": 12,
+     "lane": "gas-l",
+     "text": "蓋をして弱火で 40 分煮込む"
+    },
+    {
+     "minute": 12,
+     "lane": "hands",
+     "text": "じゃがいも・にんじん・玉ねぎを切る。まな板と包丁を洗う"
+    },
+    {
+     "minute": 52,
+     "lane": "gas-l",
+     "text": "野菜を入れ、煮立ったら弱火で 20 分"
+    },
+    {
+     "minute": 58,
+     "lane": "hands",
+     "text": "副菜（かぼちゃのバター醤油焼き）を作る"
+    },
+    {
+     "minute": 72,
+     "lane": "hands",
+     "text": "子どもの分を取り分けて刻む"
+    },
+    {
+     "minute": 75,
+     "lane": "gas-l",
+     "text": "コンソメを入れて弱火で 5 分"
+    },
+    {
+     "minute": 80,
+     "lane": "hands",
+     "text": "盛り付け、こしょうをふって配膳"
+    },
+    {
+     "minute": 83,
+     "lane": "hands",
+     "text": "配膳完了"
+    }
+   ],
+   "steps": [
+    {
+     "dish": "豚肩ロース肉とたこのポトフ風コンソメ煮込み",
+     "n": 1,
+     "title": "湯を沸かし、肉とたこを切る",
+     "kind": "prep",
+     "tag": "cut",
+     "minutes": 5,
+     "start": 0,
+     "heat": null,
+     "text": "電気ケトルで水 700ml を沸かす（2 回に分けてよい）。その間に豚肩ロース肉 300g を 3cm 角に、たこ 150g を 2cm のぶつ切りにする。豚肉の大きな脂身は切り落とす。",
+     "cue": "豚肉の角がそろい、たこの切り口がきれいに立っている",
+     "caution": null,
+     "timer": null,
+     "kid": "子どもの分の豚肉は脂身と筋の少ない所を覚えておく",
+     "ingredients": [
+      "水",
+      "豚肩ロース肉",
+      "たこ"
+     ]
+    },
+    {
+     "dish": "豚肩ロース肉とたこのポトフ風コンソメ煮込み",
+     "n": 2,
+     "title": "豚肉の表面を焼く",
+     "kind": "heat",
+     "tag": "sear",
+     "minutes": 4,
+     "start": 5,
+     "heat": {
+      "equipment": "gas-l",
+      "level": "中火"
+     },
+     "text": "鍋（pot20）を中火で温め、サラダ油 小さじ 1 をなじませて豚肉を並べる。1 分ほど触らずに焼き、転がして全面に焼き色を付ける。",
+     "cue": "表面が白からきつね色に変わり、香ばしい匂いがする",
+     "caution": null,
+     "timer": null,
+     "kid": null,
+     "ingredients": [
+      "サラダ油",
+      "豚肩ロース肉"
+     ]
+    },
+    {
+     "dish": "豚肩ロース肉とたこのポトフ風コンソメ煮込み",
+     "n": 3,
+     "title": "湯・酒・たこを入れてアクを取る",
+     "kind": "heat",
+     "tag": "boil",
+     "minutes": 3,
+     "start": 9,
+     "heat": {
+      "equipment": "gas-l",
+      "level": "中火"
+     },
+     "text": "ケトルの湯 700ml と酒 大さじ 1、たこを入れ、煮立ったら浮いたアクをお玉ですくう。",
+     "cue": "スープが澄んで、表面の灰色の泡がほとんど無くなる",
+     "caution": null,
+     "timer": null,
+     "kid": null,
+     "ingredients": [
+      "水",
+      "酒",
+      "たこ"
+     ]
+    },
+    {
+     "dish": "豚肩ロース肉とたこのポトフ風コンソメ煮込み",
+     "n": 4,
+     "title": "蓋をして弱火で煮込む",
+     "kind": "wait",
+     "tag": "simmer",
+     "minutes": 40,
+     "start": 12,
+     "heat": {
+      "equipment": "gas-l",
+      "level": "弱火"
+     },
+     "text": "蓋をして弱火で 40 分煮込む。ことこと小さく泡が上がる火加減を保つ。肩ロースは長く煮るほど筋がほどけ、たこもいったん固くなってから柔らかくなる。",
+     "cue": "豚肉に菜箸がすっと通り、たこを指で押すと弾力が和らいでいる",
+     "caution": "グラグラ沸かすと肉が締まって固くなる。泡が小さく揺れる弱火で",
+     "timer": 2400,
+     "kid": null,
+     "ingredients": []
+    },
+    {
+     "dish": "豚肩ロース肉とたこのポトフ風コンソメ煮込み",
+     "n": 5,
+     "title": "野菜を切る",
+     "kind": "prep",
+     "tag": "cut",
+     "minutes": 8,
+     "start": 12,
+     "heat": null,
+     "text": "煮込みの間に、じゃがいも 2 個は皮をむいて 4 等分、にんじん 1 本は 3cm の乱切り、玉ねぎ 1 個は 8 等分のくし形に切る。じゃがいもは水にさらす。切り終えたらまな板と包丁を洗う。",
+     "cue": "大きさがそろい、じゃがいもの切り口が白いまま",
+     "caution": null,
+     "timer": null,
+     "kid": "子どもの分は、煮えてから 1cm に刻むので大きいままでよい",
+     "ingredients": [
+      "じゃがいも",
+      "にんじん",
+      "玉ねぎ"
+     ]
+    },
+    {
+     "dish": "豚肩ロース肉とたこのポトフ風コンソメ煮込み",
+     "n": 6,
+     "title": "野菜を入れてさらに煮込む",
+     "kind": "wait",
+     "tag": "simmer",
+     "minutes": 20,
+     "start": 52,
+     "heat": {
+      "equipment": "gas-l",
+      "level": "弱火"
+     },
+     "text": "水けを切ったじゃがいも、にんじん、玉ねぎを加え、中火で煮立てたら弱火にして蓋をし 20 分煮る。",
+     "cue": "にんじんとじゃがいもに竹串がすっと通る。豚肉を 1 つ切って赤みが無く、肉汁が透明（中まで火が通った目安）",
+     "caution": null,
+     "timer": 1200,
+     "kid": null,
+     "ingredients": [
+      "じゃがいも",
+      "にんじん",
+      "玉ねぎ"
+     ]
+    },
+    {
+     "dish": "豚肩ロース肉とたこのポトフ風コンソメ煮込み",
+     "n": 7,
+     "title": "子どもの分を取り分ける",
+     "kind": "prep",
+     "tag": "cut",
+     "minutes": 3,
+     "start": 72,
+     "heat": null,
+     "text": "味付けの前に、豚肉 30g（脂身と筋を外す）、じゃがいも・にんじん少しとスープ 大さじ 3 を小鉢に取り分ける。豚肉は 1cm 以下に刻み、じゃがいも・にんじんは 1cm 角か手づかみ用の棒状にする。たこは入れない。",
+     "cue": "指でつぶせるくらい柔らかい",
+     "caution": null,
+     "timer": null,
+     "kid": "たこは弾力があり窒息しやすいので取り分けない。冷ましてから出す",
+     "ingredients": []
+    },
+    {
+     "dish": "豚肩ロース肉とたこのポトフ風コンソメ煮込み",
+     "n": 8,
+     "title": "コンソメで味を付ける",
+     "kind": "wait",
+     "tag": "season",
+     "minutes": 5,
+     "start": 75,
+     "heat": {
+      "equipment": "gas-l",
+      "level": "弱火"
+     },
+     "text": "コンソメ 1 個を入れて溶かし、弱火で 5 分煮て味をなじませる。",
+     "cue": "スープが透き通った金色になり、コンソメの香りが立つ",
+     "caution": null,
+     "timer": 300,
+     "kid": null,
+     "ingredients": [
+      "コンソメ"
+     ]
+    },
+    {
+     "dish": "豚肩ロース肉とたこのポトフ風コンソメ煮込み",
+     "n": 9,
+     "title": "盛り付ける",
+     "kind": "serve",
+     "tag": "serve",
+     "minutes": 3,
+     "start": 80,
+     "heat": null,
+     "text": "深皿に具とスープを盛り、大人の分にこしょうをふる。",
+     "cue": "湯気が立ち、具がスープに半分ほど浸っている",
+     "caution": null,
+     "timer": null,
+     "kid": "子どもの分は手で触って温かい程度まで冷ましてから出す",
+     "ingredients": [
+      "こしょう"
+     ]
+    }
+   ],
+   "cleanup": {
+    "dishwasher": [
+     "bowl-m"
+    ],
+    "hand": [
+     "pot20",
+     "kettle"
+    ],
+    "note": "鍋は煮込みの残りを保存容器に移してから、ぬるま湯につけて洗う"
+   },
+   "photo": null,
+   "stats": {
+    "cooked": 0,
+    "r_avg": null,
+    "f_avg": null,
+    "last": null
+   },
+   "detail": "full",
+   "together": [
+    "r-20261125-kabocha-no-butter-shoyu-yaki-okaka-mabus"
+   ],
+   "memo": []
+  },
+  "side_recipe_ids": [
+   "r-20261125-kabocha-no-butter-shoyu-yaki-okaka-mabus"
+  ],
+  "side_recipes": [
+   {
+    "id": "r-20261125-kabocha-no-butter-shoyu-yaki-okaka-mabus",
+    "title": "かぼちゃのバター醤油焼き おかかまぶし",
+    "version": 1,
+    "supersedes": null,
+    "status": "draft",
+    "created": "2026-11-25",
+    "request": "req-20261125-2215-j6ib",
+    "generated_by": {
+     "model": "claude-code",
+     "prompt_version": 11
+    },
+    "type": "dinner",
+    "servings": {
+     "adults": 2,
+     "kids": 1
+    },
+    "time": {
+     "budget": 0,
+     "planned": 17,
+     "active": 10,
+     "raw_estimate": 16,
+     "speed_factor": 0.96
+    },
+    "image_text": "こんがり焼き色の付いた三日月形のかぼちゃに、バター醤油の照りが薄くまとい、かつお節がふわりと踊る。鮮やかな黄色の断面がほくほくに見える。",
+    "dishes": [
+     {
+      "name": "かぼちゃのバター醤油焼き おかかまぶし",
+      "role": "side"
+     }
+    ],
+    "equipment": [
+     "fp26",
+     "gas-r"
+    ],
+    "ingredients": [
+     {
+      "name": "かぼちゃ",
+      "qty": 0.25,
+      "unit": "個",
+      "grams": 300,
+      "pantry": "かぼちゃ",
+      "substitute": null,
+      "use_up": false,
+      "for": "かぼちゃのバター醤油焼き おかかまぶし"
+     },
+     {
+      "name": "バター",
+      "qty": 10,
+      "unit": "g",
+      "grams": 10,
+      "pantry": "バター",
+      "substitute": null,
+      "use_up": false,
+      "for": "かぼちゃのバター醤油焼き おかかまぶし"
+     },
+     {
+      "name": "水",
+      "qty": 2,
+      "unit": "大さじ",
+      "grams": 30,
+      "pantry": null,
+      "substitute": null,
+      "use_up": false,
+      "for": "かぼちゃのバター醤油焼き おかかまぶし"
+     },
+     {
+      "name": "醤油",
+      "qty": 1,
+      "unit": "小さじ",
+      "grams": 6,
+      "pantry": "醤油",
+      "substitute": null,
+      "use_up": false,
+      "for": "かぼちゃのバター醤油焼き おかかまぶし"
+     },
+     {
+      "name": "みりん",
+      "qty": 1,
+      "unit": "小さじ",
+      "grams": 6,
+      "pantry": "みりん",
+      "substitute": null,
+      "use_up": false,
+      "for": "かぼちゃのバター醤油焼き おかかまぶし"
+     },
+     {
+      "name": "かつお節",
+      "qty": 2,
+      "unit": "g",
+      "grams": 2,
+      "pantry": "かつお節",
+      "substitute": null,
+      "use_up": false,
+      "for": "かぼちゃのバター醤油焼き おかかまぶし"
+     }
+    ],
+    "tags": [
+     "かぼちゃ",
+     "焼き物",
+     "子ども取り分け",
+     "副菜",
+     "手づかみ"
+    ],
+    "salt": {
+     "total_g": 1.0,
+     "adult_per_serving_g": 0.5,
+     "kid_g": 0.05
+    },
+    "kid": {
+     "rule": "separate",
+     "cut": "1cm 幅 × 4cm の棒状（手づかみ用）。皮は外す",
+     "note": "醤油を入れる前に 3 切れ取り出し、皮を外して棒状に切る。バターの味だけで甘い。冷ましてから出す。"
+    },
+    "keep": {
+     "fridge_days": 2,
+     "freezer": true,
+     "reheat": "レンジ 600W で 1 人分 40 秒、またはフライパンで弱火 2 分。冷凍は 2 週間"
+    },
+    "timeline": [
+     {
+      "minute": 0,
+      "lane": "hands",
+      "text": "かぼちゃの種とわたを取り、1cm 厚に切る"
+     },
+     {
+      "minute": 5,
+      "lane": "gas-r",
+      "text": "バターで並べ、水を入れて蓋、弱火で蒸し焼き 6 分"
+     },
+     {
+      "minute": 11,
+      "lane": "gas-r",
+      "text": "返して蓋を取り、中火で 2 分焼く"
+     },
+     {
+      "minute": 13,
+      "lane": "hands",
+      "text": "子どもの分を取り出す"
+     },
+     {
+      "minute": 14,
+      "lane": "gas-r",
+      "text": "醤油・みりんをからめ、かつお節をまぶして盛る"
+     },
+     {
+      "minute": 16,
+      "lane": "hands",
+      "text": "配膳"
+     }
+    ],
+    "steps": [
+     {
+      "dish": "かぼちゃのバター醤油焼き おかかまぶし",
+      "n": 1,
+      "title": "かぼちゃを切る",
+      "kind": "prep",
+      "tag": "cut",
+      "minutes": 5,
+      "start": 0,
+      "heat": null,
+      "text": "かぼちゃ 1/4 個の種とわたをスプーンで取り、1cm 厚のくし形に切る。",
+      "cue": "厚さがそろい、断面が平らになっている",
+      "caution": "かぼちゃは固いので、まな板に平らな面を下にして置き、包丁の背に手を添えて体重をかけて切る",
+      "timer": null,
+      "kid": null,
+      "ingredients": [
+       "かぼちゃ"
+      ]
+     },
+     {
+      "dish": "かぼちゃのバター醤油焼き おかかまぶし",
+      "n": 2,
+      "title": "バターで蒸し焼きにする",
+      "kind": "wait",
+      "tag": "sear",
+      "minutes": 6,
+      "start": 5,
+      "heat": {
+       "equipment": "gas-r",
+       "level": "弱火"
+      },
+      "text": "フライパン（fp26）を中火で温めてバター 10g を溶かし、かぼちゃを並べる。水 大さじ 2 を入れてすぐ蓋をし、弱火で 6 分蒸し焼きにする。",
+      "cue": "竹串がすっと通り、下の面にきつね色の焼き色が付いている",
+      "caution": null,
+      "timer": 360,
+      "kid": null,
+      "ingredients": [
+       "バター",
+       "水",
+       "かぼちゃ"
+      ]
+     },
+     {
+      "dish": "かぼちゃのバター醤油焼き おかかまぶし",
+      "n": 3,
+      "title": "返して焼き色を付ける",
+      "kind": "heat",
+      "tag": "sear",
+      "minutes": 2,
+      "start": 11,
+      "heat": {
+       "equipment": "gas-r",
+       "level": "中火"
+      },
+      "text": "蓋を取ってかぼちゃを返し、中火で 2 分、水けを飛ばしながらもう片面を焼く。",
+      "cue": "両面にこんがり焼き色が付き、フライパンの水けが無くなる",
+      "caution": null,
+      "timer": null,
+      "kid": null,
+      "ingredients": [
+       "かぼちゃ"
+      ]
+     },
+     {
+      "dish": "かぼちゃのバター醤油焼き おかかまぶし",
+      "n": 4,
+      "title": "子どもの分を取り出す",
+      "kind": "prep",
+      "tag": "kid",
+      "minutes": 1,
+      "start": 13,
+      "heat": null,
+      "text": "味付けの前に 3 切れを取り出し、皮を外して 1cm 幅の棒状に切る。",
+      "cue": "指で押すとほろっと崩れるくらい柔らかい",
+      "caution": null,
+      "timer": null,
+      "kid": "手づかみ用の棒状に。冷ましてから出す",
+      "ingredients": []
+     },
+     {
+      "dish": "かぼちゃのバター醤油焼き おかかまぶし",
+      "n": 5,
+      "title": "バター醤油をからめて仕上げる",
+      "kind": "heat",
+      "tag": "season",
+      "minutes": 2,
+      "start": 14,
+      "heat": {
+       "equipment": "gas-r",
+       "level": "弱火"
+      },
+      "text": "火を弱火に落とし、醤油 小さじ 1 とみりん 小さじ 1 を回し入れて全体にからめる。皿に盛り、かつお節 2g をまぶす。",
+      "cue": "醤油が焦げる香ばしい匂いがして、表面に薄く照りが出る",
+      "caution": "醤油とみりんは焦げやすいので、必ず弱火にしてから入れ、30 秒ほどで火を止める",
+      "timer": null,
+      "kid": null,
+      "ingredients": [
+       "醤油",
+       "みりん",
+       "かつお節"
+      ]
+     }
+    ],
+    "cleanup": {
+     "dishwasher": [],
+     "hand": [
+      "fp26"
+     ],
+     "note": null
+    },
+    "photo": null,
+    "stats": {
+     "cooked": 0,
+     "r_avg": null,
+     "f_avg": null,
+     "last": null
+    },
+    "detail": "full",
+    "together": [
+     "r-20261125-buta-kata-rosu-to-tako-no-pot-au-feu-fu-"
+    ],
+    "memo": []
+   }
+  ],
+  "model": "claude-code",
+  "prompt_version": 11,
+  "tokens": {
+   "input": 0,
+   "output": 0,
+   "cache_read": 0,
+   "cache_write": 0
+  },
+  "cost_usd": 0.0,
+  "seconds": 0
+ },
+ "finished": "2026-11-25T22:17:27+09:00"
 }
