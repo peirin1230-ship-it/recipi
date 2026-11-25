@@ -1,4 +1,5 @@
 ---
+listed: "2026-11-25T22:59:17+09:00"
 id: r-20261125-tako-no-takikomi-gohan
 title: たこの炊き込みご飯
 version: 1
