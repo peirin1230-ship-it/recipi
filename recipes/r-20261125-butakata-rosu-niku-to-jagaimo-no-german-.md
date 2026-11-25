@@ -1,4 +1,5 @@
 ---
+listed: "2026-11-25T22:59:15+09:00"
 id: r-20261125-butakata-rosu-niku-to-jagaimo-no-german-
 title: 豚肩ロース肉とじゃがいものジャーマンポテト風炒め
 version: 1
