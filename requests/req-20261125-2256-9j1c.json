@@ -1,0 +1,24 @@
+{
+ "id": "req-20261125-2256-9j1c",
+ "ts": "2026-11-25T22:56:36+09:00",
+ "type": "recipe_detail",
+ "time_budget": 0,
+ "servings": {
+  "adults": 2,
+  "kids": 1
+ },
+ "dishes": "main+side",
+ "mood": [],
+ "use_up": [
+  "豚肩ロース肉",
+  "たこ"
+ ],
+ "exclude": [],
+ "note": "タコは炊き込みご飯。豚肩ロースはフライパンで",
+ "mode": "auto",
+ "parent": "req-20261125-2221-2wg9",
+ "alternative": 0,
+ "status": "pending",
+ "error": null,
+ "result": null
+}
