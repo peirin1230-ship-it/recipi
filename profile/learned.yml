@@ -1,22 +1,22 @@
 # profile/learned.yml — nightly-learn（scripts/learn.py）が logs/ から生成する。手で直さない（直すなら profile/overrides.yml）。
-updated: '2026-11-24'
+updated: '2026-11-26'
 window_days: 90
-n_logs: 37
-last_log_id: fa6h32m7rvrn
+n_logs: 38
+last_log_id: o4z9ii983jlj
 speed_factor: {overall: 0.96, prep: 1.18, heat: 1.04, serve: 0.86}
 likes:
 - {key: 煮込み, score: 0.95, n: 4}
-- {key: チョッパー, score: 0.83, n: 9}
+- {key: チョッパー, score: 0.85, n: 10}
 - {key: 鍋ひとつ, score: 0.83, n: 8}
 - {key: 牛乳, score: 0.82, n: 10}
 - {key: しらす, score: 0.71, n: 3}
 - {key: スープ, score: 0.7, n: 9}
-- {key: 炊飯器, score: 0.62, n: 4}
+- {key: 炊飯器, score: 0.69, n: 5}
 - {key: 卵, score: 0.61, n: 9}
+- {key: 炊き込みご飯, score: 0.6, n: 5}
+- {key: 米, score: 0.56, n: 6}
+- {key: にんじん, score: 0.56, n: 6}
 - {key: かぼちゃ, score: 0.52, n: 7}
-- {key: 炊き込みご飯, score: 0.5, n: 4}
-- {key: 米, score: 0.47, n: 5}
-- {key: にんじん, score: 0.47, n: 5}
 - {key: 子ども取り分け, score: 0.43, n: 21}
 - {key: 時短, score: 0.43, n: 7}
 - {key: 低温調理, score: 0.43, n: 4}
@@ -104,11 +104,11 @@ quality:
   adoption: 1.0
   prompt_versions: {'11': 2}
 - week: 2026-W48
-  generated: 0
-  cooked: 3
+  generated: 4
+  cooked: 4
   f_avg: 5.0
-  r_avg: 69
-  time_err_median: 0.93
-  new_ratio: 0.67
-  adoption: null
-  prompt_versions: {}
+  r_avg: 76
+  time_err_median: 0.69
+  new_ratio: 0.75
+  adoption: 1.0
+  prompt_versions: {'11': 4}

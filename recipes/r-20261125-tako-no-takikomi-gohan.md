@@ -1,10 +1,10 @@
 ---
-listed: "2026-11-25T22:59:17+09:00"
+listed: '2026-11-25T22:59:17+09:00'
 id: r-20261125-tako-no-takikomi-gohan
 title: たこの炊き込みご飯
 version: 1
 supersedes: null
-status: draft
+status: tried
 created: '2026-11-25'
 request: req-20261125-2256-9j1c
 generated_by: {model: claude-code, prompt_version: 11}
@@ -123,8 +123,8 @@ cleanup:
   dishwasher: [bowl-m]
   hand: [rice-cooker]
   note: チョッパーは刃を外して手洗い。内釜は水につけておくとこびりつきが取れる
-photo: null
-stats: {cooked: 0, r_avg: null, f_avg: null, last: null}
+photo: photos/r-20261125-tako-no-takikomi-gohan/20261126-1.jpg
+stats: {cooked: 1, r_avg: 96, f_avg: 5.0, last: '2026-11-26'}
 detail: full
 together: [r-20261125-butakata-rosu-niku-to-jagaimo-no-german-]
 ---
