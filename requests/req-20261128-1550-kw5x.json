@@ -1,0 +1,22 @@
+{
+ "id": "req-20261128-1550-kw5x",
+ "ts": "2026-11-28T15:50:21+09:00",
+ "type": "dinner",
+ "time_budget": 0,
+ "servings": {
+  "adults": 2,
+  "kids": 1
+ },
+ "dishes": "main+side",
+ "mood": [],
+ "use_up": [
+  "かぼちゃ",
+  "ホタテ"
+ ],
+ "exclude": [],
+ "note": "",
+ "mode": "auto",
+ "status": "pending",
+ "error": null,
+ "result": null
+}
