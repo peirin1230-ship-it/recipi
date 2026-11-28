@@ -16,7 +16,810 @@
  "exclude": [],
  "note": "",
  "mode": "auto",
- "status": "pending",
+ "status": "done",
  "error": null,
- "result": null
+ "result": {
+  "feasible": true,
+  "infeasible_reason": null,
+  "nearest_options": [],
+  "alternatives": [
+   {
+    "title": "豚肩ロース肉とかぼちゃの甘めケチャップ蒸し焼き",
+    "minutes": 30,
+    "why": "主材料を豚に替え、子どもが食べる甘めの味でかぼちゃを使い切る",
+    "kind": "new"
+   },
+   {
+    "title": "ホタテとにんじんのふんわり卵とじ丼",
+    "minutes": 20,
+    "why": "ホタテを卵とじにして鍋ひとつ・短時間で、煮込みと調理法を変える",
+    "kind": "new"
+   }
+  ],
+  "recipe_id": "r-20261128-hotate-to-kabocha-no-milk-cream-nikomi",
+  "recipe": {
+   "id": "r-20261128-hotate-to-kabocha-no-milk-cream-nikomi",
+   "title": "ホタテとかぼちゃのミルククリーム煮込み",
+   "version": 1,
+   "supersedes": null,
+   "status": "draft",
+   "created": "2026-11-28",
+   "request": "req-20261128-1550-kw5x",
+   "generated_by": {
+    "model": "claude-code",
+    "prompt_version": 11
+   },
+   "type": "dinner",
+   "servings": {
+    "adults": 2,
+    "kids": 1
+   },
+   "time": {
+    "budget": 0,
+    "planned": 43,
+    "active": 27,
+    "raw_estimate": 40,
+    "speed_factor": 0.96
+   },
+   "image_text": "かぼちゃが少し溶けた淡い山吹色のクリームの中に、白くふっくらしたホタテとかぼちゃのかたまりがごろっと見える。黒こしょうを少しふった大人の皿と、1cm に刻んだ子どもの小皿が並ぶ。",
+   "dishes": [
+    {
+     "name": "ホタテとかぼちゃのミルククリーム煮込み",
+     "role": "main"
+    }
+   ],
+   "equipment": [
+    "pot20",
+    "kettle",
+    "bowl-m"
+   ],
+   "ingredients": [
+    {
+     "name": "かぼちゃ",
+     "qty": 0.25,
+     "unit": "個",
+     "grams": 300,
+     "pantry": "かぼちゃ",
+     "for": "ホタテとかぼちゃのミルククリーム煮込み",
+     "substitute": null,
+     "use_up": true
+    },
+    {
+     "name": "ホタテ",
+     "qty": 8,
+     "unit": "個",
+     "grams": 200,
+     "pantry": "ホタテ",
+     "for": "ホタテとかぼちゃのミルククリーム煮込み",
+     "substitute": null,
+     "use_up": true
+    },
+    {
+     "name": "玉ねぎ",
+     "qty": 0.5,
+     "unit": "個",
+     "grams": 100,
+     "pantry": "玉ねぎ",
+     "for": "ホタテとかぼちゃのミルククリーム煮込み",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "牛乳",
+     "qty": 300,
+     "unit": "ml",
+     "grams": 310,
+     "pantry": "牛乳",
+     "for": "ホタテとかぼちゃのミルククリーム煮込み",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "水",
+     "qty": 150,
+     "unit": "ml",
+     "grams": 150,
+     "pantry": null,
+     "for": "ホタテとかぼちゃのミルククリーム煮込み",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "バター",
+     "qty": 10,
+     "unit": "g",
+     "grams": 10,
+     "pantry": "バター",
+     "for": "ホタテとかぼちゃのミルククリーム煮込み",
+     "substitute": "オリーブオイル 小さじ 2",
+     "use_up": false
+    },
+    {
+     "name": "小麦粉",
+     "qty": 1.5,
+     "unit": "大さじ",
+     "grams": 13,
+     "pantry": "小麦粉",
+     "for": "ホタテとかぼちゃのミルククリーム煮込み",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "酒",
+     "qty": 1,
+     "unit": "小さじ",
+     "grams": 5,
+     "pantry": "酒",
+     "for": "ホタテとかぼちゃのミルククリーム煮込み",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "片栗粉",
+     "qty": 1,
+     "unit": "小さじ",
+     "grams": 3,
+     "pantry": "片栗粉",
+     "for": "ホタテとかぼちゃのミルククリーム煮込み",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "コンソメ",
+     "qty": 1,
+     "unit": "個",
+     "grams": 5,
+     "pantry": "コンソメ",
+     "for": "ホタテとかぼちゃのミルククリーム煮込み",
+     "substitute": null,
+     "use_up": false
+    },
+    {
+     "name": "こしょう",
+     "qty": null,
+     "unit": "少々",
+     "grams": null,
+     "pantry": "こしょう",
+     "for": "ホタテとかぼちゃのミルククリーム煮込み",
+     "substitute": null,
+     "use_up": false
+    }
+   ],
+   "tags": [
+    "煮込み",
+    "鍋ひとつ",
+    "牛乳",
+    "かぼちゃ",
+    "ホタテ",
+    "子ども取り分け"
+   ],
+   "salt": {
+    "total_g": 2.8,
+    "adult_per_serving_g": 1.4,
+    "kid_g": 0.1
+   },
+   "kid": {
+    "rule": "separate",
+    "cut": "ホタテ・かぼちゃとも 1cm 角。かぼちゃの皮は外す",
+    "note": "コンソメを入れる前に取り分ける。かぼちゃと牛乳の甘さだけで食べられる。ホタテは中まで白くなったのを確かめ、冷ましてから出す"
+   },
+   "keep": {
+    "fridge_days": 2,
+    "freezer": false,
+    "reheat": "鍋で弱火、または 600W で 1 人分 1 分 30 秒。途中で混ぜ、湯気が立つまで。牛乳 大さじ 1 を足すとのびる"
+   },
+   "timeline": [
+    {
+     "minute": 0,
+     "lane": "hands",
+     "text": "電気ケトルで水 150ml を沸かす。かぼちゃの種を取り 3cm 角、玉ねぎを薄切り"
+    },
+    {
+     "minute": 10,
+     "lane": "gas-l",
+     "text": "鍋にバター、玉ねぎを中火で 3 分"
+    },
+    {
+     "minute": 13,
+     "lane": "gas-l",
+     "text": "かぼちゃを入れ小麦粉をふって 1 分炒める"
+    },
+    {
+     "minute": 14,
+     "lane": "gas-l",
+     "text": "湯を入れ、煮立ったら蓋をして弱火 10 分"
+    },
+    {
+     "minute": 14,
+     "lane": "hands",
+     "text": "ホタテの水けを拭き、酒と片栗粉をまぶす（副菜もここで作る）"
+    },
+    {
+     "minute": 24,
+     "lane": "gas-l",
+     "text": "牛乳を入れ中火、かぼちゃを数個お玉でつぶす"
+    },
+    {
+     "minute": 28,
+     "lane": "gas-l",
+     "text": "ホタテを入れ弱火 2 分 → 火を止め蓋 3 分"
+    },
+    {
+     "minute": 33,
+     "lane": "hands",
+     "text": "子どもの分を取り分けて 1cm 角に刻み、冷ます"
+    },
+    {
+     "minute": 35,
+     "lane": "gas-l",
+     "text": "コンソメを入れて弱火 2 分"
+    },
+    {
+     "minute": 37,
+     "lane": "hands",
+     "text": "盛り付け・こしょう・配膳"
+    },
+    {
+     "minute": 40,
+     "lane": "hands",
+     "text": "完成"
+    }
+   ],
+   "steps": [
+    {
+     "dish": "ホタテとかぼちゃのミルククリーム煮込み",
+     "n": 1,
+     "title": "湯を沸かし、野菜を切る",
+     "kind": "prep",
+     "tag": "cut",
+     "minutes": 10,
+     "start": 0,
+     "heat": null,
+     "text": "電気ケトルで水 150ml を沸かしておく。かぼちゃ 1/4 個は種とわたを取り、皮をところどころむいて 3cm 角に切る。玉ねぎ 1/2 個は薄切りにする。",
+     "cue": "かぼちゃの大きさがそろっている。玉ねぎは 2〜3mm の厚さ",
+     "caution": "かぼちゃは硬いので、平らな面を下にして置き、包丁の背に手を添えて押し切る",
+     "timer": null,
+     "kid": "子どもの分のかぼちゃは皮をむいた所を使う",
+     "ingredients": [
+      "かぼちゃ",
+      "玉ねぎ",
+      "水"
+     ]
+    },
+    {
+     "dish": "ホタテとかぼちゃのミルククリーム煮込み",
+     "n": 2,
+     "title": "玉ねぎを炒める",
+     "kind": "heat",
+     "tag": "stir-fry",
+     "minutes": 3,
+     "start": 10,
+     "heat": {
+      "equipment": "gas-l",
+      "level": "中火"
+     },
+     "text": "鍋（pot20）にバター 10g を中火で溶かし、玉ねぎを入れて 3 分炒める。",
+     "cue": "玉ねぎがしんなりして透き通り、甘い匂いがする。茶色くはしない",
+     "caution": null,
+     "timer": null,
+     "kid": null,
+     "ingredients": [
+      "バター"
+     ]
+    },
+    {
+     "dish": "ホタテとかぼちゃのミルククリーム煮込み",
+     "n": 3,
+     "title": "かぼちゃと粉を炒める",
+     "kind": "heat",
+     "tag": "stir-fry",
+     "minutes": 1,
+     "start": 13,
+     "heat": {
+      "equipment": "gas-l",
+      "level": "中火"
+     },
+     "text": "かぼちゃを加えて全体にバターを絡め、小麦粉 大さじ 1.5 をふり入れて 1 分炒める。",
+     "cue": "粉が見えなくなり、かぼちゃの表面がうっすら白っぽくなる",
+     "caution": "粉が鍋底に付きやすいので、菜箸ではなくお玉の背で底をこそげながら混ぜる",
+     "timer": null,
+     "kid": null,
+     "ingredients": [
+      "かぼちゃ",
+      "玉ねぎ",
+      "小麦粉"
+     ]
+    },
+    {
+     "dish": "ホタテとかぼちゃのミルククリーム煮込み",
+     "n": 4,
+     "title": "湯で煮る",
+     "kind": "wait",
+     "tag": "simmer",
+     "minutes": 10,
+     "start": 14,
+     "heat": {
+      "equipment": "gas-l",
+      "level": "弱火"
+     },
+     "text": "ケトルの湯 150ml を注いで混ぜ、煮立ったら蓋をして弱火で 10 分煮る。この間にホタテの下ごしらえと副菜を進める。",
+     "cue": "かぼちゃに竹串がすっと通る",
+     "caution": null,
+     "timer": 600,
+     "kid": null,
+     "ingredients": [
+      "水"
+     ]
+    },
+    {
+     "dish": "ホタテとかぼちゃのミルククリーム煮込み",
+     "n": 5,
+     "title": "ホタテに下味の膜",
+     "kind": "prep",
+     "tag": "marinate",
+     "minutes": 2,
+     "start": 14,
+     "heat": null,
+     "text": "ホタテ 8 個の水けをキッチンペーパーで拭き、ボウル（bowl-m）で酒 小さじ 1 をからめてから片栗粉 小さじ 1 を薄くまぶす（片栗粉の膜で水分を閉じ込め、縮んで固くなるのを防ぐ）。",
+     "cue": "表面がうっすら白く粉をまとっている。粉の塊が無い",
+     "caution": null,
+     "timer": null,
+     "kid": null,
+     "ingredients": [
+      "ホタテ",
+      "酒",
+      "片栗粉"
+     ]
+    },
+    {
+     "dish": "ホタテとかぼちゃのミルククリーム煮込み",
+     "n": 6,
+     "title": "牛乳を入れてとろみを付ける",
+     "kind": "heat",
+     "tag": "simmer",
+     "minutes": 4,
+     "start": 24,
+     "heat": {
+      "equipment": "gas-l",
+      "level": "中火"
+     },
+     "text": "牛乳 300ml を入れ中火にし、かぼちゃを 3〜4 個お玉の背でつぶして溶かす。沸騰させないように混ぜながら 4 分温める。",
+     "cue": "鍋のふちに小さな泡がふつふつ出て湯気が立ち、山吹色のクリームがお玉の背にうっすら残る",
+     "caution": "牛乳はぐらぐら煮立てると分離する。ふちが泡立ったら弱火に落とす",
+     "timer": null,
+     "kid": null,
+     "ingredients": [
+      "牛乳"
+     ]
+    },
+    {
+     "dish": "ホタテとかぼちゃのミルククリーム煮込み",
+     "n": 7,
+     "title": "ホタテを入れて余熱で火を通す",
+     "kind": "heat",
+     "tag": "simmer",
+     "minutes": 5,
+     "start": 28,
+     "heat": {
+      "equipment": "gas-l",
+      "level": "弱火"
+     },
+     "text": "ホタテを入れて弱火で 2 分、そっと混ぜる。火を止めて蓋をし、3 分置いて余熱で中まで火を通す。",
+     "cue": "ホタテを 1 個切ってみて、中心まで白く不透明。ふっくらして弾力がある",
+     "caution": "煮すぎると縮んで固くなる。2 分で火を止め、あとは余熱に任せる",
+     "timer": 180,
+     "kid": null,
+     "ingredients": [
+      "ホタテ"
+     ]
+    },
+    {
+     "dish": "ホタテとかぼちゃのミルククリーム煮込み",
+     "n": 8,
+     "title": "子どもの分を取り分ける",
+     "kind": "prep",
+     "tag": "kid",
+     "minutes": 2,
+     "start": 33,
+     "heat": null,
+     "text": "コンソメを入れる前に、ホタテ 1〜2 個、かぼちゃ 3〜4 個、クリーム お玉 1/2 杯を子どもの器に取り分ける。",
+     "cue": "子どもの器が湯気の立たない温かさになっている",
+     "caution": null,
+     "timer": null,
+     "kid": "ホタテとかぼちゃをキッチンばさみで 1cm 角に切り、皮は外す。手づかみしやすいようかぼちゃは少し大きめでもよい。冷ましてから出す",
+     "ingredients": []
+    },
+    {
+     "dish": "ホタテとかぼちゃのミルククリーム煮込み",
+     "n": 9,
+     "title": "大人の味付け",
+     "kind": "heat",
+     "tag": "season",
+     "minutes": 2,
+     "start": 35,
+     "heat": {
+      "equipment": "gas-l",
+      "level": "弱火"
+     },
+     "text": "コンソメ 1 個を刻んで入れ、弱火で 2 分、溶けるまでそっと混ぜる。",
+     "cue": "コンソメが溶けて香りが立ち、ふちがふつふつする程度",
+     "caution": null,
+     "timer": null,
+     "kid": null,
+     "ingredients": [
+      "コンソメ"
+     ]
+    },
+    {
+     "dish": "ホタテとかぼちゃのミルククリーム煮込み",
+     "n": 10,
+     "title": "盛り付け",
+     "kind": "serve",
+     "tag": "serve",
+     "minutes": 3,
+     "start": 37,
+     "heat": null,
+     "text": "大人の器に盛り、こしょう少々をふる。",
+     "cue": "ホタテが上に見えるように盛れている",
+     "caution": null,
+     "timer": null,
+     "kid": "子どもの分はこしょうをかけない",
+     "ingredients": [
+      "こしょう"
+     ]
+    }
+   ],
+   "cleanup": {
+    "dishwasher": [
+     "bowl-m"
+    ],
+    "hand": [
+     "pot20"
+    ],
+    "note": "鍋は牛乳が焦げ付く前に、食べ始める前に湯を張っておくと落ちやすい"
+   },
+   "photo": null,
+   "stats": {
+    "cooked": 0,
+    "r_avg": null,
+    "f_avg": null,
+    "last": null
+   },
+   "detail": "full",
+   "together": [
+    "r-20261128-ninjin-to-jagaimo-no-slicer-hosogiri-gom"
+   ],
+   "memo": []
+  },
+  "side_recipe_ids": [
+   "r-20261128-ninjin-to-jagaimo-no-slicer-hosogiri-gom"
+  ],
+  "side_recipes": [
+   {
+    "id": "r-20261128-ninjin-to-jagaimo-no-slicer-hosogiri-gom",
+    "title": "にんじんとじゃがいものスライサー細切り ごま酢炒め",
+    "version": 1,
+    "supersedes": null,
+    "status": "draft",
+    "created": "2026-11-28",
+    "request": "req-20261128-1550-kw5x",
+    "generated_by": {
+     "model": "claude-code",
+     "prompt_version": 11
+    },
+    "type": "dinner",
+    "servings": {
+     "adults": 2,
+     "kids": 1
+    },
+    "time": {
+     "budget": 0,
+     "planned": 13,
+     "active": 9,
+     "raw_estimate": 12,
+     "speed_factor": 0.96
+    },
+    "image_text": "オレンジと淡い黄色の細切りがしんなりと絡み、白ごまが散っている。ごま油のつやがあり、酢の香りがふわっと立つ。",
+    "dishes": [
+     {
+      "name": "にんじんとじゃがいものスライサー細切り ごま酢炒め",
+      "role": "side"
+     }
+    ],
+    "equipment": [
+     "fp26",
+     "gas-r"
+    ],
+    "ingredients": [
+     {
+      "name": "にんじん",
+      "qty": 1,
+      "unit": "本",
+      "grams": 150,
+      "pantry": "にんじん",
+      "for": "にんじんとじゃがいものスライサー細切り ごま酢炒め",
+      "substitute": null,
+      "use_up": false
+     },
+     {
+      "name": "じゃがいも",
+      "qty": 1,
+      "unit": "個",
+      "grams": 130,
+      "pantry": "じゃがいも",
+      "for": "にんじんとじゃがいものスライサー細切り ごま酢炒め",
+      "substitute": null,
+      "use_up": false
+     },
+     {
+      "name": "ごま油",
+      "qty": 2,
+      "unit": "小さじ",
+      "grams": 8,
+      "pantry": "ごま油",
+      "for": "にんじんとじゃがいものスライサー細切り ごま酢炒め",
+      "substitute": null,
+      "use_up": false
+     },
+     {
+      "name": "水",
+      "qty": 2,
+      "unit": "大さじ",
+      "grams": 30,
+      "pantry": null,
+      "for": "にんじんとじゃがいものスライサー細切り ごま酢炒め",
+      "substitute": null,
+      "use_up": false
+     },
+     {
+      "name": "酢",
+      "qty": 2,
+      "unit": "小さじ",
+      "grams": 10,
+      "pantry": "酢",
+      "for": "にんじんとじゃがいものスライサー細切り ごま酢炒め",
+      "substitute": null,
+      "use_up": false
+     },
+     {
+      "name": "醤油",
+      "qty": 1,
+      "unit": "小さじ",
+      "grams": 6,
+      "pantry": "醤油",
+      "for": "にんじんとじゃがいものスライサー細切り ごま酢炒め",
+      "substitute": null,
+      "use_up": false
+     },
+     {
+      "name": "砂糖",
+      "qty": 0.5,
+      "unit": "小さじ",
+      "grams": 1.5,
+      "pantry": "砂糖",
+      "for": "にんじんとじゃがいものスライサー細切り ごま酢炒め",
+      "substitute": null,
+      "use_up": false
+     },
+     {
+      "name": "白ごま",
+      "qty": 1,
+      "unit": "小さじ",
+      "grams": 3,
+      "pantry": "白ごま",
+      "for": "にんじんとじゃがいものスライサー細切り ごま酢炒め",
+      "substitute": null,
+      "use_up": false
+     }
+    ],
+    "tags": [
+     "副菜",
+     "時短",
+     "にんじん",
+     "子ども取り分け"
+    ],
+    "salt": {
+     "total_g": 0.9,
+     "adult_per_serving_g": 0.45,
+     "kid_g": 0.0
+    },
+    "kid": {
+     "rule": "separate",
+     "cut": "細切りを 1cm の長さに切る",
+     "note": "味付け前に取り分ける。にんじんは指でつぶせるくらいまで蒸し焼きにしてから。冷ましてから出す"
+    },
+    "keep": {
+     "fridge_days": 2,
+     "freezer": false,
+     "reheat": "冷たいままでもおいしい。温めるならレンジ 600W 30 秒"
+    },
+    "timeline": [
+     {
+      "minute": 0,
+      "lane": "hands",
+      "text": "にんじん・じゃがいもをスライサーで細切り。じゃがいもは水にさらす"
+     },
+     {
+      "minute": 4,
+      "lane": "gas-r",
+      "text": "フライパンにごま油、にんじんを中火で 2 分"
+     },
+     {
+      "minute": 6,
+      "lane": "gas-r",
+      "text": "じゃがいもと水を入れ、蓋をして弱火 3 分"
+     },
+     {
+      "minute": 9,
+      "lane": "hands",
+      "text": "子どもの分を取り分けて刻む"
+     },
+     {
+      "minute": 10,
+      "lane": "gas-r",
+      "text": "酢・醤油・砂糖で 1 分炒め、白ごま"
+     },
+     {
+      "minute": 11,
+      "lane": "hands",
+      "text": "盛り付け"
+     },
+     {
+      "minute": 12,
+      "lane": "hands",
+      "text": "完成"
+     }
+    ],
+    "steps": [
+     {
+      "dish": "にんじんとじゃがいものスライサー細切り ごま酢炒め",
+      "n": 1,
+      "title": "スライサーで細切り",
+      "kind": "prep",
+      "tag": "cut",
+      "minutes": 4,
+      "start": 0,
+      "heat": null,
+      "text": "にんじん 1 本とじゃがいも 1 個の皮をピーラーでむき、スライサー（1.2mm 細切り）で細切りにする。じゃがいもは水に 1 分さらしてザルで水けを切る。",
+      "cue": "細切りの太さがそろっている。じゃがいもの水が軽く白く濁る",
+      "caution": "最後の 2cm はスライサーを使わず包丁で切る（指を守る）",
+      "timer": null,
+      "kid": null,
+      "ingredients": [
+       "にんじん",
+       "じゃがいも"
+      ]
+     },
+     {
+      "dish": "にんじんとじゃがいものスライサー細切り ごま酢炒め",
+      "n": 2,
+      "title": "にんじんを炒める",
+      "kind": "heat",
+      "tag": "stir-fry",
+      "minutes": 2,
+      "start": 4,
+      "heat": {
+       "equipment": "gas-r",
+       "level": "中火"
+      },
+      "text": "フライパン（fp26）を中火で 1 分予熱し、ごま油 小さじ 2 を入れてにんじんを 2 分炒める。",
+      "cue": "にんじんの色が濃くなり、しんなりしてかさが減る",
+      "caution": null,
+      "timer": null,
+      "kid": null,
+      "ingredients": [
+       "ごま油"
+      ]
+     },
+     {
+      "dish": "にんじんとじゃがいものスライサー細切り ごま酢炒め",
+      "n": 3,
+      "title": "じゃがいもを入れて蒸し焼き",
+      "kind": "wait",
+      "tag": "simmer",
+      "minutes": 3,
+      "start": 6,
+      "heat": {
+       "equipment": "gas-r",
+       "level": "弱火"
+      },
+      "text": "じゃがいもと水 大さじ 2 を入れてさっと混ぜ、蓋をして弱火で 3 分蒸し焼きにする。",
+      "cue": "じゃがいもが透き通り、にんじんが指でつぶせるくらい柔らかい。水けがほぼ無い",
+      "caution": "にんじんが固ければ水 大さじ 1 を足して 1 分延ばす（レンジより炒め蒸しの方が柔らかくなる）",
+      "timer": 180,
+      "kid": null,
+      "ingredients": [
+       "水"
+      ]
+     },
+     {
+      "dish": "にんじんとじゃがいものスライサー細切り ごま酢炒め",
+      "n": 4,
+      "title": "子どもの分を取り分ける",
+      "kind": "prep",
+      "tag": "kid",
+      "minutes": 1,
+      "start": 9,
+      "heat": null,
+      "text": "味付け前に、子どもの分をひとつかみ小皿に取る。",
+      "cue": "湯気が落ち着いた温かさ",
+      "caution": null,
+      "timer": null,
+      "kid": "キッチンばさみで 1cm の長さに切る。味付けはしない。冷ましてから出す",
+      "ingredients": []
+     },
+     {
+      "dish": "にんじんとじゃがいものスライサー細切り ごま酢炒め",
+      "n": 5,
+      "title": "ごま酢で味付け",
+      "kind": "heat",
+      "tag": "season",
+      "minutes": 1,
+      "start": 10,
+      "heat": {
+       "equipment": "gas-r",
+       "level": "中火"
+      },
+      "text": "中火にして酢 小さじ 2・醤油 小さじ 1・砂糖 小さじ 1/2 を回し入れ、1 分炒めて汁けを飛ばす。火を止めて白ごま 小さじ 1 をふる。",
+      "cue": "酢のツンとした匂いがやわらぎ、鍋底に汁が残らない",
+      "caution": null,
+      "timer": null,
+      "kid": null,
+      "ingredients": [
+       "酢",
+       "醤油",
+       "砂糖",
+       "白ごま"
+      ]
+     },
+     {
+      "dish": "にんじんとじゃがいものスライサー細切り ごま酢炒め",
+      "n": 6,
+      "title": "盛り付け",
+      "kind": "serve",
+      "tag": "serve",
+      "minutes": 1,
+      "start": 11,
+      "heat": null,
+      "text": "小鉢にふんわり盛る。",
+      "cue": "細切りがからまってこんもり盛れている",
+      "caution": null,
+      "timer": null,
+      "kid": null,
+      "ingredients": []
+     }
+    ],
+    "cleanup": {
+     "dishwasher": [],
+     "hand": [
+      "fp26"
+     ],
+     "note": "スライサーとザルも手洗い。スライサーの刃はスポンジで刃の向きに沿って洗う"
+    },
+    "photo": null,
+    "stats": {
+     "cooked": 0,
+     "r_avg": null,
+     "f_avg": null,
+     "last": null
+    },
+    "detail": "full",
+    "together": [
+     "r-20261128-hotate-to-kabocha-no-milk-cream-nikomi"
+    ],
+    "memo": []
+   }
+  ],
+  "model": "claude-code",
+  "prompt_version": 11,
+  "tokens": {
+   "input": 0,
+   "output": 0,
+   "cache_read": 0,
+   "cache_write": 0
+  },
+  "cost_usd": 0.0,
+  "seconds": 0
+ },
+ "finished": "2026-11-28T15:52:46+09:00"
 }
