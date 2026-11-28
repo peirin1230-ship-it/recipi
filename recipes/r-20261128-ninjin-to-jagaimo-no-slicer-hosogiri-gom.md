@@ -1,4 +1,5 @@
 ---
+listed: "2026-11-28T16:20:52+09:00"
 id: r-20261128-ninjin-to-jagaimo-no-slicer-hosogiri-gom
 title: にんじんとじゃがいものスライサー細切り ごま酢炒め
 version: 1
