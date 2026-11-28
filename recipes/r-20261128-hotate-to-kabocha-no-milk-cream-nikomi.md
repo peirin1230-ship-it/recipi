@@ -1,4 +1,5 @@
 ---
+listed: "2026-11-28T16:20:50+09:00"
 id: r-20261128-hotate-to-kabocha-no-milk-cream-nikomi
 title: ホタテとかぼちゃのミルククリーム煮込み
 version: 1
